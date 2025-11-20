@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>30 Dias: A Justiça de Deus (Devocional)</title>
     <style>
-        /* CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
+        /* 1. CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
         body {
             font-family: 'Georgia', serif;
             margin: 0;
@@ -13,10 +13,11 @@
             color: #333;
             line-height: 1.6;
             display: flex;
-            flex-direction: column; /* Necessário para empilhar o container e o footer */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px 0; /* Adicionado padding para garantir espaço em telas pequenas */
             transition: background-color 0.3s, color 0.3s;
         }
         .book-container {
@@ -81,28 +82,14 @@
             font-style: italic;
         }
         
-        /* 2. NAVEGAÇÃO E UTILS (Ajustado para Mobile) */
+        /* 2. NAVEGAÇÃO E UTILS */
         .top-utils {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; 
             align-items: center;
             margin-bottom: 15px;
             flex-wrap: wrap; 
             gap: 15px; 
-        }
-        
-        /* REMOVENDO ESTILOS ANTIGOS DO language-selector DE BOTÕES SIMPLES */
-        
-        #themeToggle {
-            background: none;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            color: #333;
-            transition: all 0.2s;
-            margin-left: auto; 
-            white-space: nowrap; 
         }
 
         .navigation {
@@ -115,8 +102,8 @@
             flex-wrap: wrap; 
             gap: 15px; 
         }
-        /* CLASSE progress-check REMOVIDA DA ESTRUTURA, USANDO completion-status */
         
+        /* ESTILO PADRÃO DOS BOTÕES DE NAVEGAÇÃO (Anterior/Próximo) */
         .nav-button {
             padding: 10px 15px;
             cursor: pointer;
@@ -124,7 +111,7 @@
             border-radius: 5px;
             background-color: #007bff;
             color: white;
-            transition: opacity 0.2s, background 0.2s;
+            transition: opacity 0.2s, background 0.2s, border-color 0.2s;
         }
         .nav-button:disabled {
             opacity: 0.5;
@@ -165,76 +152,110 @@
             background-color: #33331c;
             border-left-color: #ffd600;
         }
-        .dark-theme #themeToggle {
-            color: #f4f4f4;
-            border-color: #555;
-            background: #1e1e1e;
-        }
         
-        /* DARK THEME PARA BOTÕES DE IDIOMA (APLICADO AO NOVO DROPDOWN) */
-        .dark-theme #langSelectButton {
-            background-color: #bb86fc;
-            color: #1e1e1e;
-        }
-        .dark-theme #langSelectButton:hover {
-            background-color: #a26ffc;
-        }
-        .dark-theme .lang-dropdown-content {
-            background-color: #1e1e1e;
-        }
-        .dark-theme .lang-dropdown-content a {
-            color: #f4f4f4;
-        }
-        .dark-theme .lang-dropdown-content a:hover {
-            background-color: #333;
-        }
-        
+        /* Tema: Botoes de Navegação escuros (Anterior/Próximo) */
         .dark-theme .nav-button {
             background-color: #03dac6;
             border-color: #03dac6;
             color: #1e1e1e;
         }
-
-        /* 4. ANIMAÇÕES DE VIRADA DE PÁGINA */
-        #devotionalContent {
-            min-height: 400px; 
-        }
-        .page-out-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
-        }
-        .page-out-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
-        }
-        .page-in-right {
-            opacity: 1;
-            transform: translateX(0);
-            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-        }
-        .page-in-left {
-            opacity: 1;
-            transform: translateX(0);
-            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        
+        /* 4. SELETOR DE IDIOMA E TEMA (FUNDO NEUTRO UNIFICADO) */
+        .language-selector-wrapper {
+            position: relative;
+            display: inline-block;
+            z-index: 10;
         }
 
-        /* 5. ESTILO DO RODAPÉ COM ITÁLICO */
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 10px 0;
-            font-size: 0.8em;
-            color: #777;
-            width: 100%;
-            font-style: italic; /* Aplica o itálico */
-        }
-        .dark-theme footer {
-            color: #888;
+        /* Aplicando o estilo de fundo neutro para o seletor de idiomas E o botão de tema */
+        #langSelectButton, #themeToggle { 
+            /* ESTILO NEUTRO UNIFICADO: Cinza Claro */
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            color: #333;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            font-weight: bold; 
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
         }
 
-        /* 6. MEDIA QUERIES (Ajustes para Celular) */
+        #langSelectButton:hover, #themeToggle:hover {
+            background-color: #e0e0e0;
+        }
+
+        .lang-flag-active {
+            width: 24px;
+            height: 18px;
+            margin-right: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #langDropdown {
+            display: none; 
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 150px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        #langDropdown a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        #langDropdown a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .lang-flag-dropdown {
+            width: 20px;
+            height: 15px;
+            margin-right: 10px;
+            border: 1px solid #eee;
+        }
+
+        /* Ajustes de Tema Escuro para Seletor de Idioma e Botão de Tema (UNIFICADOS) */
+        .dark-theme #langSelectButton, .dark-theme #themeToggle {
+            background-color: #2c2c2c;
+            border-color: #444;
+            color: #f4f4f4;
+        }
+        
+        .dark-theme #langSelectButton:hover, .dark-theme #themeToggle:hover {
+            background-color: #333;
+        }
+
+
+        .dark-theme #langDropdown {
+            background-color: #1e1e1e;
+            border-color: #444;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-theme #langDropdown a {
+            color: #f4f4f4;
+        }
+
+        .dark-theme #langDropdown a:hover {
+            background-color: #333;
+        }
+        
+        /* 5. MEDIA QUERIES (Ajustes para Celular) */
         @media (max-width: 600px) {
             .book-container {
                 padding: 20px 25px; 
@@ -245,9 +266,7 @@
                 align-items: flex-start; 
                 gap: 10px; 
             }
-            #themeToggle {
-                margin-left: 0; 
-            }
+
             .navigation {
                 flex-direction: column; 
                 gap: 10px; 
@@ -255,13 +274,14 @@
             .nav-button {
                 width: 100%; 
             }
-            .completion-status { /* Usando a nova classe */
+             
+            .progress-check { 
                 order: -1; 
-                width: 100%;
+                width: 100%; 
             }
         }
         
-        /* NOVO: 7. ESTILOS DA BARRA DE PROGRESSO */
+        /* 6. ESTILOS DA BARRA DE PROGRESSO E CHECKBOX (mantidos) */
         .progress-bar-wrapper {
             background-color: #ddd;
             border-radius: 10px;
@@ -273,12 +293,11 @@
         .progress-bar {
             height: 100%;
             width: 0%; 
-            background-color: #28a745; /* Cor da barra de progresso */
+            background-color: #28a745;
             border-radius: 10px;
             transition: width 0.5s ease-in-out;
         }
         
-        /* Dark Theme para Progresso */
         .dark-theme #progressLabel {
             color: #03dac6;
         }
@@ -291,112 +310,59 @@
             background-color: #03dac6;
         }
         
-        /* NOVO: 8. CHECKBOX DE CONCLUÍDO (Estilo Aprimorado) */
-        .completion-status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 0; /* Ajustado para caber na navegação */
-            padding: 5px 10px;
-            background-color: #e6f7ff; /* Cor clara de fundo */
-            border: 1px solid #b3e0ff;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+        .progress-check {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             margin: 0;
+             flex-grow: 0;
+             flex-shrink: 0;
+             padding: 5px 10px;
+             background-color: #e6f7ff; 
+             border: 1px solid #b3e0ff;
+             border-radius: 5px;
+             transition: background-color 0.3s;
+             order: 0;
         }
-        .completion-status label {
+        .progress-check label {
             margin-left: 10px;
             font-weight: bold;
-            color: #1e8449; /* Cor do texto */
+            color: #1e8449;
             cursor: pointer;
         }
-        .completion-status input[type="checkbox"] {
+        .progress-check input[type="checkbox"] {
             transform: scale(1.3);
             cursor: pointer;
         }
         
-        .dark-theme .completion-status {
+        .dark-theme .progress-check {
             background-color: #2c2c2c;
             border-color: #444;
         }
-        .dark-theme .completion-status label {
+        .dark-theme .progress-check label {
             color: #03dac6;
         }
-
-        /* NOVO: 9. ESTILO PARA BANDEIRAS E DROPDOWN */
-        .language-selector-wrapper { /* Novo wrapper para o dropdown */
-            position: relative;
-            display: inline-block;
-        }
-
-        #langSelectButton { /* Novo botão de seleção principal */
-            background-color: #007bff;
-            color: white;
-            padding: 8px 15px;
-            font-size: 1em;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.2s;
-            line-height: 1; /* Garante que o texto/bandeira fiquem bem alinhados */
-        }
-
-        #langSelectButton:hover {
-            background-color: #0056b3;
-        }
-
-        .lang-dropdown-content { /* Conteúdo do dropdown */
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 10; /* Garante que fique sobre outros elementos */
-            border-radius: 5px;
-            padding: 5px 0;
-            right: 0;
-            top: 100%;
-            margin-top: 5px;
-        }
-
-        .lang-dropdown-content a {
-            color: black;
-            padding: 8px 16px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-
-        .lang-dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .lang-flag { /* Estilo da bandeira */
-            width: 20px; 
-            height: auto;
-            margin-right: 8px;
-            vertical-align: middle;
-            border: 1px solid #ccc;
-            border-radius: 2px;
-        }
-        /* FIM DOS NOVOS ESTILOS */
-
     </style>
 </head>
 <body class="light-theme">
 
     <div class="book-container">
+        <!-- Estruturas de Utilidade: Tema e Idioma -->
         <div class="top-utils">
-            
+            <!-- Seletor de Idioma -->
             <div class="language-selector-wrapper">
-                <button id="langSelectButton" title="Selecione o Idioma"></button>
-                <div id="langDropdown" class="lang-dropdown-content">
-                    </div>
+                <button id="langSelectButton" aria-haspopup="true" aria-expanded="false" title="Selecionar Idioma">
+                    <!-- Conteúdo será preenchido pelo JS (bandeira ativa e nome) -->
+                </button>
+                <div id="langDropdown">
+                    <!-- Links dos idiomas serão preenchidos pelo JS -->
+                </div>
             </div>
-            <button id="themeToggle" title="Alternar Tema">☀️ Escuro/Claro 🌙</button>
+            
+            <!-- Toggle de Tema: Agora terá o mesmo estilo do seletor de idiomas -->
+            <button id="themeToggle" class="nav-button" title="Mudar Tema">
+                <!-- Conteúdo será preenchido pelo JS (Ícone + Texto) -->
+            </button>
         </div>
         
         <h1 id="mainTitle">30 Dias: A Justiça de Deus (Livro de Romanos)</h1>
@@ -416,141 +382,335 @@
         <div class="navigation">
             <button id="prevButton" class="nav-button" disabled>← Anterior</button>
             
-            <div class="completion-status"> 
+            <div class="progress-check">
                 <input type="checkbox" id="completedCheck">
-                <label for="completedCheck" id="completedLabel">Marcar como Concluído</label>
+                <label for="completedCheck" id="checkLabel">Marcar como Concluído</label>
             </div>
+            
             <button id="nextButton" class="nav-button">Próximo →</button>
         </div>
-
     </div>
 
     <footer>
         <p>Devocional adaptado e criado por Alex Silva | <span id="footerText"></span></p>
     </footer>
+
     <script>
+        // --- DADOS MULTI-IDIOMA E TEMA ---
+        const flagMap = {
+            'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
+            'en-US': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-dropdown" alt="English">', text: 'English', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-active" alt="English">' },
+            'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
+            'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
+        };
+        
+        const themeMap = {
+            'light': { icon: '☀️', next: 'dark' },
+            'dark': { icon: '🌙', next: 'light' }
+        };
+
+        const SAVED_THEME = localStorage.getItem('theme') || 'light'; 
+        const SAVED_LANG = localStorage.getItem('language') || 'pt-BR'; 
+
+        let currentTheme = SAVED_THEME;
+        
+        // --- VARIÁVEIS DE ESTADO ---
         const totalDays = 30;
         let currentDay = 1;
-        let currentLang = localStorage.getItem('devotionalLang') || 'pt';
-        let currentTheme = localStorage.getItem('devotionalTheme') || 'light-theme';
-        const devotionalContentDiv = document.getElementById('devotionalContent');
-
-        // --- DADOS MULTI-IDIOMA ---
+        let currentLang = SAVED_LANG; 
         
-        // NOVO: Dicionário de Textos atualizado com 'controls' e 'progress'
-        const langData = {
-            'pt': {
-                title: "30 Dias: A Justiça de Deus (Livro de Romanos)",
-                subtitle: "Da Condenação à Glória: A Jornada da Justificação pela Fé e a Soberania na Vida do Crente.",
-                page: "Dia",
-                of: "de",
-                controls: { 
-                    prev: "← Anterior",
-                    next: "Próximo →",
-                    check: "Marcar como Concluído", 
-                    themeToggle: "☀️ Escuro/Claro 🌙"
-                },
-                progress: { 
-                    total: "Progresso Total:",
-                    days: "Dias",
-                    of: "de" 
-                },
-                sections: {
-                    resumo: "Breve Resumo:",
-                    aplicacao: "Aplicação Prática:",
-                    oracao: "Ore para que Deus te fortaleça e te ajude a colocar esses ensinamentos em prática."
-                }
+        // --- DADOS MULTI-IDIOMA (Traduções) ---
+        const translations = {
+            'pt-BR': {
+                mainTitle: "30 Dias: A Justiça de Deus (Livro de Romanos)",
+                subTitle: "Da Condenação à Glória: A Jornada da Justificação pela Fé e a Soberania na Vida do Crente.",
+                dayTitle: "Dia",
+                progressLabelPrefix: "Progresso: ",
+                checkLabel: "Marcar como Concluído",
+                navPrev: "← Anterior",
+                navNext: "Próximo →",
+                footerText: "Direitos Reservados 2024",
+                themeLight: "🌙 Modo Escuro", 
+                themeDark: "☀️ Modo Claro" 
             },
-            'en': {
-                title: "30 Days: The Justice of God (Book of Romans)",
-                subtitle: "From Condemnation to Glory: The Journey of Justification by Faith and Sovereignty in the Believer's Life.",
-                page: "Day",
-                of: "of",
-                controls: {
-                    prev: "« Previous",
-                    next: "Next »",
-                    check: "Devotional Completed",
-                    themeToggle: "☀️ Dark/Light 🌙"
-                },
-                progress: {
-                    total: "Total Progress:",
-                    days: "Days",
-                    of: "of"
-                },
-                sections: {
-                    resumo: "Brief Summary:",
-                    aplicacao: "Practical Application:",
-                    oracao: "Pray that God will strengthen you and help you put these teachings into practice."
-                }
+            'en-US': {
+                mainTitle: "30 Days: The Justice of God (Book of Romans)",
+                subTitle: "From Condemnation to Glory: The Journey of Justification by Faith and Sovereignty in the Believer's Life.",
+                dayTitle: "Day",
+                progressLabelPrefix: "Progress: ",
+                checkLabel: "Mark as Completed",
+                navPrev: "← Previous",
+                navNext: "Next →",
+                footerText: "All Rights Reserved 2024",
+                themeLight: "🌙 Dark Mode",
+                themeDark: "☀️ Light Mode"
             },
-            'es': {
-                title: "30 días: La justicia de Dios (Libro de Romanos)",
-                subtitle: "De la condenación a la gloria: El camino de la justificación por la fe y la soberanía en la vida del creyente.",
-                page: "Día",
-                of: "de",
-                controls: {
-                    prev: "« Anterior",
-                    next: "Próximo »",
-                    check: "Devocional Realizado",
-                    themeToggle: "☀️ Oscuro/Claro 🌙"
-                },
-                progress: {
-                    total: "Progreso Total:",
-                    days: "Días",
-                    of: "de"
-                },
-                sections: {
-                    resumo: "Resumen Breve:",
-                    aplicacion: "Aplicación Práctica:",
-                    oracao: "Ora para que Dios te fortalezca y te ayude a poner estas enseñanzas en práctica."
-                }
+            'es-ES': {
+                mainTitle: "30 días: La justicia de Dios (Libro de Romanos)",
+                subTitle: "De la condenación a la gloria: El camino de la justificación por la fe y la soberanía en la vida del creyente.",
+                dayTitle: "Día",
+                progressLabelPrefix: "Progreso: ",
+                checkLabel: "Marcar como Concluido",
+                navPrev: "← Anterior",
+                navNext: "Siguiente →",
+                footerText: "Todos los derechos reservados 2024",
+                themeLight: "🌙 Modo Oscuro",
+                themeDark: "☀️ Modo Claro"
             },
-            'fr': {
-                title: "30 jours : La justice de Dieu (Livre des Romains)",
-                subtitle: "De la condamnation à la gloire : le chemin de la justification par la foi et la souveraineté dans la vie du croyant.",
-                page: "Jour",
-                of: "sur",
-                controls: {
-                    prev: "« Précédent",
-                    next: "Suivant »",
-                    check: "Dévotion Accomplie",
-                    themeToggle: "☀️ Sombre/Clair 🌙"
-                },
-                progress: {
-                    total: "Progression Totale:",
-                    days: "Jours",
-                    of: "sur"
-                },
-                sections: {
-                    resumo: "Bref Résumé:",
-                    aplicacao: "Application Pratique:",
-                    oracao: "Priez pour que Dieu vous fortifie et vous aide à mettre ces enseignements en pratique."
-                }
+            'fr-FR': {
+                mainTitle: "30 jours : La justice de Dieu (Livre des Romains)",
+                subTitle: "De la condamnation à la gloire : le chemin de la justification par la foi et la souveraineté dans la vie du croyant.",
+                dayTitle: "Jour",
+                progressLabelPrefix: "Progression : ",
+                checkLabel: "Marquer comme Accomplie",
+                navPrev: "← Précédent",
+                navNext: "Suivant →",
+                footerText: "Tous droits réservés 2024",
+                themeLight: "🌙 Mode Sombre",
+                themeDark: "☀️ Mode Clair"
             }
         };
 
-        // NOVO: Mapeamento de Bandeiras (USANDO IMAGENS/SVG DE UM CDN)
-        const flagMap = {
-            'pt': {
-                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag" alt="Português">',
-                text: 'Português'
-            },
-            'en': {
-                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag" alt="English">',
-                text: 'English'
-            },
-            'es': {
-                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag" alt="Español">',
-                text: 'Español'
-            },
-            'fr': {
-                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag" alt="Français">',
-                text: 'Français'
+        // --- ELEMENTOS DOM ---
+        const mainTitle = document.getElementById('mainTitle');
+        const subTitle = document.getElementById('subTitle');
+        const progressLabel = document.getElementById('progressLabel');
+        const checkLabel = document.getElementById('checkLabel');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const completedCheck = document.getElementById('completedCheck');
+        const devotionalContentDiv = document.getElementById('devotionalContent');
+        const footerText = document.getElementById('footerText');
+        const progressBar = document.getElementById('progressBar');
+
+        // NOVOS ELEMENTOS DOM
+        const langSelectButton = document.getElementById('langSelectButton');
+        const langDropdown = document.getElementById('langDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const langSelectorWrapper = document.querySelector('.language-selector-wrapper');
+
+
+        // *************** FUNÇÕES DE UTILIDADE ***************
+
+        function getSavedProgress() {
+            const savedProgress = localStorage.getItem('devotionalProgress');
+            return savedProgress ? parseInt(savedProgress) : 1;
+        }
+        
+        function getCompletionStatus(day) {
+            const completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            return completedDays.includes(day);
+        }
+
+        function saveCompletion(day, isCompleted) {
+            let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            if (isCompleted) {
+                if (!completedDays.includes(day)) {
+                    completedDays.push(day);
+                }
+            } else {
+                completedDays = completedDays.filter(d => d !== day);
             }
+            localStorage.setItem('completedDays', JSON.stringify(completedDays));
+            updateOverallProgress();
+        }
+
+
+        function updateOverallProgress() {
+             const percent = (currentDay / totalDays) * 100;
+             progressBar.style.width = `${percent}%`;
+             
+             prevButton.disabled = currentDay <= 1;
+             nextButton.disabled = currentDay >= totalDays;
+             
+             // Atualiza o estado do checkbox
+             completedCheck.checked = getCompletionStatus(currentDay);
+        }
+        
+        function handleCompletedCheck() {
+            saveCompletion(currentDay, completedCheck.checked);
+        }
+        
+        // --- FUNÇÕES DE TEMA ---
+        function applyTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('theme', theme);
+            
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(theme === 'dark' ? 'dark-theme' : 'light-theme');
+            
+            // A atualização do texto do botão é feita em updateTexts()
+        }
+
+        function toggleDarkMode() {
+            const newTheme = themeMap[currentTheme].next;
+            applyTheme(newTheme);
+            updateTexts(); // Chamado aqui para atualizar o texto do botão imediatamente
+        }
+        
+        // --- FUNÇÕES DE IDIOMA (COM BANDEIRAS) ---
+        function setLanguage(langCode) {
+            currentLang = langCode;
+            localStorage.setItem('language', langCode);
+            
+            updateTexts(0); // Força a atualização de todos os textos
+            updateLanguageSelector(); 
+        }
+
+        function updateLanguageSelector() {
+            if (!langSelectButton || !langDropdown) return;
+            
+            const currentFlag = flagMap[currentLang];
+            // 1. Atualiza o botão com a bandeira e nome do idioma ativo
+            langSelectButton.innerHTML = currentFlag.iconActive + currentFlag.text;
+            
+            // 2. Limpa e reconstrói o dropdown, excluindo o idioma ativo
+            langDropdown.innerHTML = '';
+            Object.keys(flagMap).forEach(lang => {
+                if (lang !== currentLang) {
+                    const flag = flagMap[lang];
+                    const link = document.createElement('a');
+                    link.innerHTML = flag.icon + flag.text; 
+                    link.setAttribute('data-lang', lang);
+                    link.setAttribute('href', '#'); 
+                    
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setLanguage(lang);
+                        langDropdown.style.display = 'none';
+                    });
+                    
+                    langDropdown.appendChild(link);
+                }
+            });
+        }
+        
+        // --- FUNÇÃO DE ATUALIZAÇÃO DE TEXTOS ---
+        function updateTexts(direction = 1) { // direction: 1 (next), -1 (prev), 0 (load/no anim)
+            const langKey = currentLang.includes('-') ? currentLang : `${currentLang.toLowerCase()}-${currentLang.toUpperCase()}`;
+            const t = translations[langKey] || translations['pt-BR']; 
+
+            // 1. Aplica o idioma na tag <html>
+            document.documentElement.lang = langKey.split('-')[0];
+
+            // 2. Aplica as traduções nos elementos específicos
+            mainTitle.innerText = t.mainTitle;
+            subTitle.innerText = t.subTitle;
+            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
+            checkLabel.innerText = t.checkLabel;
+            prevButton.innerText = t.navPrev;
+            nextButton.innerText = t.navNext;
+            footerText.innerText = t.footerText;
+            
+            // 3. Atualiza o texto do botão de tema
+            if (currentTheme === 'light') {
+                themeToggle.innerHTML = t.themeLight; 
+            } else {
+                themeToggle.innerHTML = t.themeDark; 
+            }
+
+            // 4. Atualiza o conteúdo DEVOCIONAL com animação
+            loadDevotionalContent(currentDay, langKey, direction);
+            
+            updateOverallProgress();
+        }
+        
+        // --- FUNÇÕES DE NAVEGAÇÃO (mantidas) ---
+        function loadDevotionalContent(day, langKey, direction) {
+            const data = devotionalContent[day] ? devotionalContent[day][langKey.substring(0, 2)] || devotionalContent[day]['pt'] : null;
+            
+            if (!data) {
+                devotionalContentDiv.innerHTML = `<p style="text-align: center;">Conteúdo não disponível para o Dia ${day} neste idioma.</p>`;
+                return;
+            }
+            
+            const animationClassIn = direction === 1 ? 'page-in-right' : 'page-in-left';
+            const animationClassOut = direction === 1 ? 'page-out-left' : 'page-out-right';
+            
+            // Aplica a classe de saída apenas se houver animação (direction != 0)
+            if (direction !== 0) {
+                devotionalContentDiv.classList.add(animationClassOut);
+            }
+            
+            // Timeout para transição de saída e troca de conteúdo
+            setTimeout(() => {
+                devotionalContentDiv.innerHTML = `
+                    <h2 id="dayTitle">${translations[langKey].dayTitle} ${day}: ${data.h2}</h2>
+                    <div class="section">
+                        <strong>Versículo Chave:</strong>
+                        <p class="versiculos">${data.versiculos}</p>
+                    </div>
+                    <div class="section">
+                        <strong>Resumo/Meditação:</strong>
+                        <p>${data.resumo}</p>
+                    </div>
+                    <div class="section">
+                        <strong>Aplicação Prática:</strong>
+                        <p>${data.aplicacao}</p>
+                    </div>
+                    <p class="oracao-final">Oração: ${data.oracao}</p>
+                `;
+                
+                document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`;
+
+                // Remove a classe de saída e aplica a classe de entrada
+                if (direction !== 0) {
+                    devotionalContentDiv.classList.remove(animationClassOut);
+                    devotionalContentDiv.classList.add(animationClassIn);
+                } else {
+                    // Para o carregamento inicial, apenas garante que está visível
+                    devotionalContentDiv.classList.add('page-in-right');
+                }
+            }, direction !== 0 ? 300 : 0); // 300ms para animação, 0ms para carregamento inicial
+        }
+        
+        function nextDay() {
+            if (currentDay < totalDays) {
+                currentDay++;
+                localStorage.setItem('devotionalProgress', currentDay);
+                updateTexts(1);
+            }
+        }
+        
+        function prevDay() {
+            if (currentDay > 1) {
+                currentDay--;
+                localStorage.setItem('devotionalProgress', currentDay);
+                updateTexts(-1);
+            }
+        }
+
+        // *************** EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) ***************
+        window.onload = () => {
+            
+            // 1. Carrega o tema e idioma
+            applyTheme(SAVED_THEME);
+            updateLanguageSelector();
+            
+            // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
+            currentDay = getSavedProgress();
+            updateTexts(0); 
+            
+            // 3. Configura os Listeners de Eventos
+            themeToggle.addEventListener('click', toggleDarkMode);
+            langSelectButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+            document.addEventListener('click', (event) => {
+                const wrapper = document.querySelector('.language-selector-wrapper');
+                if (langDropdown.style.display === 'block' && !wrapper.contains(event.target)) {
+                    langDropdown.style.display = 'none';
+                }
+            });
+
+            prevButton.addEventListener('click', prevDay);
+            nextButton.addEventListener('click', nextDay);
+            completedCheck.addEventListener('change', handleCompletedCheck);
         };
-
-
-        // --- CONTEÚDO DEVOCIONAL (OMITIDO POR SER LONGO) ---
+        
+        // --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
         
       const devotionalContent = {
     1: {
@@ -1456,252 +1616,218 @@
 };
    // FIM DO CONTEÚDO DEVOCIONAL
 
-        // --- FUNÇÕES DE ARMAZENAMENTO E STATUS (NOVO/ATUALIZADO) ---
-        
-        function getSavedProgress() { 
-            const savedDay = localStorage.getItem('devotionalCurrentDay'); 
-            return savedDay ? parseInt(savedDay) : 1; 
-        } 
-        
-        function saveProgress(day) { 
-            localStorage.setItem('devotionalCurrentDay', day); 
-        } 
-        
-        // NOVO: Funções para status de conclusão (Marcar como Concluído)
-        function getDayStatus(day) { 
-            // Usa 'dayComplete_' para evitar conflito com 'devotionalDay_' do arquivo original se existisse.
-            return localStorage.getItem(`dayComplete_${day}`) === 'true'; 
-        } 
-        
-        function saveDayStatus(day, isComplete) { 
-            localStorage.setItem(`dayComplete_${day}`, isComplete ? 'true' : 'false'); 
+        // *************** FUNÇÕES DE PERSISTÊNCIA E ESTADO ***************
+
+        function getCompletedDays() {
+            const completed = localStorage.getItem('completedDays');
+            return completed ? JSON.parse(completed) : {};
         }
 
-        // NOVO: Função para atualizar a barra de progresso
-        function updateOverallProgress() { 
-            let completedDaysCount = 0; 
-            for (let i = 1; i <= totalDays; i++) { 
-                if (getDayStatus(i)) { 
-                    completedDaysCount++; 
-                } 
-            } 
-            const percentage = Math.round((completedDaysCount / totalDays) * 100); 
-            const progressBar = document.getElementById('progressBar'); 
-            const progressLabel = document.getElementById('progressLabel'); 
-            const progressTexts = langData[currentLang].progress;
-            
-            // Atualiza a barra de progresso visual 
-            if(progressBar) progressBar.style.width = percentage + '%'; 
-            
-            // Atualiza o texto de progresso 
-            if(progressLabel) progressLabel.textContent = `${progressTexts.total} ${completedDaysCount} ${progressTexts.of} ${totalDays} ${progressTexts.days} (${percentage}%)`; 
+        function saveCompletion(day, isChecked) {
+            const completedDays = getCompletedDays();
+            completedDays[day] = isChecked;
+            localStorage.setItem('completedDays', JSON.stringify(completedDays));
+            updateOverallProgress(); 
         }
-        
-        // --- FUNÇÕES DE INTERFACE (ATUALIZADO) ---
-        
-        // NOVO: Função para atualizar o seletor de idioma (Dropdown)
+
+        function isCompleted(day) {
+            const completedDays = getCompletedDays();
+            return completedDays[day] === true;
+        }
+
+        function updateCompletedState() {
+            completedCheck.checked = isCompleted(currentDay);
+        }
+
+        function getSavedProgress() {
+            return parseInt(localStorage.getItem('devotionalProgress')) || 1; 
+        }
+
+        function updateOverallProgress() {
+            const completedDaysMap = getCompletedDays();
+            const completedCount = Object.values(completedDaysMap).filter(v => v).length;
+            
+            const percent = (completedCount / totalDays) * 100;
+            progressBar.style.width = `${percent}%`;
+            
+            prevButton.disabled = currentDay <= 1;
+            nextButton.disabled = currentDay >= totalDays;
+        }
+
+        // *************** FUNÇÕES DE TEMA E IDIOMA ***************
+
+        function loadThemePreference() {
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(currentTheme === 'dark' ? 'dark-theme' : 'light-theme');
+            themeToggle.textContent = currentTheme === 'dark' ? translations[currentLang].themeDark : translations[currentLang].themeLight;
+        }
+
+        function toggleDarkMode() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', currentTheme);
+            loadThemePreference();
+        }
+
+        function changeLanguage(langKey) {
+            if (langKey in translations) {
+                currentLang = langKey;
+                localStorage.setItem('language', currentLang);
+                updateTexts();
+                updateLanguageSelector();
+            }
+        }
+
         function updateLanguageSelector() {
-            const button = document.getElementById('langSelectButton');
-            const dropdown = document.getElementById('langDropdown');
             const currentFlag = flagMap[currentLang];
-            
-            if (button) button.innerHTML = currentFlag.icon + currentFlag.text;
-            
-            dropdown.innerHTML = '';
-            
+            if (langSelectButton) {
+                langSelectButton.innerHTML = `${currentFlag.icon} ${currentFlag.text}`;
+            }
+
+            langDropdown.innerHTML = '';
             Object.keys(flagMap).forEach(lang => {
-                if (lang !== currentLang) {
-                    const flag = flagMap[lang];
-                    const link = document.createElement('a');
-                    link.innerHTML = flag.icon + flag.text;
-                    link.setAttribute('data-lang', lang);
-                    link.onclick = (e) => {
-                        e.preventDefault();
-                        changeLanguage(lang);
-                        dropdown.style.display = 'none'; // Fecha após a seleção
-                    };
-                    dropdown.appendChild(link);
+                const flag = flagMap[lang];
+                const link = document.createElement('a');
+                link.innerHTML = `${flag.icon} ${flag.text}`;
+                link.setAttribute('data-lang', lang);
+                link.classList.add('dropdown-item');
+                if (lang === currentLang) {
+                    link.classList.add('active');
                 }
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    changeLanguage(lang);
+                    langDropdown.style.display = 'none';
+                };
+                langDropdown.appendChild(link);
             });
         }
-        
-        // ATUALIZADO: Função para atualizar todos os textos da UI
-        function updateTexts() { 
-            const data = langData[currentLang]; 
-            const controls = data.controls; // NOVO: Usa o novo objeto controls
+
+        // *************** FUNÇÕES DE CONTEÚDO E RENDERIZAÇÃO ***************
+
+        function loadDevotionalContent(day, langKey, direction) {
+            const t = translations[langKey] || translations[DEFAULT_LANGUAGE];
+            const content = devotionalContent[day] ? devotionalContent[day][langKey.split('-')[0].toLowerCase()] || devotionalContent[day].pt : null;
+
+            if (!content) {
+                devotionalContentDiv.innerHTML = `<p style="text-align:center; color: red;">Conteúdo não encontrado para o Dia ${day} no idioma ${t.dayTitle}.</p>`;
+                return;
+            }
+
+            const directionClass = direction > 0 ? 'page-out-right' : 'page-out-left';
+
+            // 1. Aplica animação de saída
+            devotionalContentDiv.classList.add(directionClass);
             
-            document.getElementById('mainTitle').textContent = data.title; 
-            document.getElementById('subTitle').textContent = data.subtitle; 
-            document.getElementById('prevButton').textContent = controls.prev; 
-            document.getElementById('nextButton').textContent = controls.next; 
-            
-            // NOVO ID: De checkLabel para completedLabel
-            const completedLabel = document.getElementById('completedLabel');
-            if (completedLabel) completedLabel.textContent = controls.check; 
-            
-            document.getElementById('themeToggle').textContent = controls.themeToggle; 
-
-            // NOVO: Atualiza o texto do footer
-            const year = new Date().getFullYear(); 
-            const footerText = document.getElementById('footerText');
-            if (footerText) footerText.innerHTML = `Copyright &copy; ${year}`; 
-            
-            updateLanguageSelector(); // NOVO: Chama o atualizador do seletor de idioma
-            updateOverallProgress(); // NOVO: Atualiza a barra de progresso após a mudança de idioma/texto
-
-            renderDayContent(currentDay); 
-        }
-
-        // ATUALIZADO: Função para renderizar o conteúdo do dia
-        function renderDayContent(day) {
-            const content = devotionalContent[day];
-            const langContent = content ? (content[currentLang] || content['pt']) : devotionalContent[1]['pt'];
-            const labels = langData[currentLang].sections; 
-            
-            const resumoKey = 'resumo'; 
-            const aplicacaoKey = currentLang === 'es' ? 'aplicacion' : 'aplicacao'; // Mantém a correção para ES
-            const oracaoKey = 'oracao'; 
-
-            const aplicacaoText = langContent[aplicacaoKey] || langContent['aplicacao'];
-            const resumoText = langContent[resumoKey] || langContent['resumo'];
-            const oracaoText = langContent[oracaoKey] || langContent['oracao']; 
-            
-            let html = `
-                <h2>${langContent.h2}</h2>
-                <p class="versiculos">${langContent.versiculos}</p>
-                
-                <div class="section">
-                    <strong>${labels.resumo}</strong>
-                    <p>${resumoText}</p>
-                </div>
-                
-                <div class="section">
-                    <strong>${labels.aplicacao}</strong>
-                    <p>${aplicacaoText}</p>
-                </div>
-                
-                <p class="oracao-final">${oracaoText}</p>
-            `;
-
-            devotionalContentDiv.innerHTML = html;
-            
-            document.getElementById('pageCounter').textContent = `${langData[currentLang].page} ${day} ${langData[currentLang].of} ${totalDays}`;
-
-            updateDayView(day);
-        }
-
-        // ATUALIZADO: Lógica de controle de botões e checkbox
-        function updateDayView(day) {
-            document.getElementById('prevButton').disabled = day === 1;
-            document.getElementById('nextButton').disabled = day === totalDays;
-            
-            // NOVO: Lógica do checkbox de conclusão
-            const check = document.getElementById('completedCheck'); 
-            check.onchange = null; // Remove o listener anterior para evitar duplicidade
-            check.checked = getDayStatus(day); 
-            
-            check.onchange = () => { 
-                saveDayStatus(currentDay, check.checked); 
-                updateOverallProgress(); // Atualiza a barra de progresso
-                
-                // Navegação automática para o próximo dia se for concluído
-                if (check.checked && currentDay < totalDays) { 
-                    setTimeout(() => { 
-                        handleNavigation(1); 
-                    }, 300); // Pequeno atraso para feedback visual
-                } 
-            };
-        }
-
-        // --- FUNÇÃO CENTRAL DE NAVEGAÇÃO COM ANIMAÇÃO ---
-        function handleNavigation(direction) {
-            // direction: 1 para Próximo, -1 para Anterior
-            const newDay = currentDay + direction;
-            if (newDay < 1 || newDay > totalDays) return;
-
-            const outClass = direction === 1 ? 'page-out-left' : 'page-out-right';
-            const inClass = direction === 1 ? 'page-in-right' : 'page-in-left';
-
-            devotionalContentDiv.classList.add(outClass);
-
+            // 2. Espera a animação de saída, insere novo conteúdo
             setTimeout(() => {
-                // Atualiza o dia e o conteúdo
-                currentDay = newDay;
-                saveProgress(currentDay);
-                renderDayContent(currentDay);
+                devotionalContentDiv.innerHTML = `
+                    <h2>${t.dayTitle} ${day}: ${content.h2}</h2>
+                    <p class="versiculos">"${content.versiculos}"</p>
+                    <div class="section">
+                        <strong>Meditação:</strong> ${content.resumo}
+                    </div>
+                    <div class="section">
+                        <strong>Aplicação:</strong> ${content.aplicacao}
+                    </div>
+                    <div class="oracao-final">
+                        Oração: "${content.oracao}"
+                    </div>
+                `;
 
-                // Prepara a animação de entrada
-                devotionalContentDiv.classList.remove(outClass, 'page-in-right', 'page-in-left');
-                devotionalContentDiv.classList.add(inClass);
+                // 3. Aplica animação de entrada
+                const newDirectionClass = direction > 0 ? 'page-in-left' : 'page-in-right';
+                devotionalContentDiv.classList.remove('page-out-right', 'page-out-left');
+                devotionalContentDiv.classList.add(newDirectionClass);
 
-                // Remove a classe de entrada após a animação
+                // 4. Remove a classe de entrada após a transição para redefinir
                 setTimeout(() => {
-                    devotionalContentDiv.classList.remove(inClass);
+                    devotionalContentDiv.classList.remove('page-in-left', 'page-in-right');
                 }, 400); 
 
-            }, 300); 
+            }, 200); // Meio do tempo da animação (0.3s)
         }
 
-        // --- FUNÇÕES DE TEMA E IDIOMA ---
+        function updateTexts(direction = 0) {
+            const langKey = currentLang; 
+            const t = translations[langKey] || translations[DEFAULT_LANGUAGE];
 
-        function toggleTheme() {
-            if (document.body.classList.contains('light-theme')) {
-                document.body.classList.replace('light-theme', 'dark-theme');
-                currentTheme = 'dark-theme';
-            } else {
-                document.body.classList.replace('dark-theme', 'light-theme');
-                currentTheme = 'light-theme';
-            }
-            localStorage.setItem('devotionalTheme', currentTheme);
-            updateTexts();
+            // 1. Aplica o idioma na tag <html>
+            document.documentElement.lang = langKey.split('-')[0];
+
+            // 2. Aplica as traduções nos elementos específicos
+            mainTitle.innerText = t.mainTitle;
+            subTitle.innerText = t.subTitle;
+            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
+            checkLabel.innerText = t.checkLabel;
+            prevButton.innerText = t.navPrev;
+            nextButton.innerText = t.navNext;
+            footerText.innerText = t.footerText;
+            
+            // 3. Atualiza o conteúdo Devocional e anima
+            loadDevotionalContent(currentDay, langKey, direction);
+
+            // 4. Atualiza o estado do checkbox
+            updateCompletedState();
+
+            // 5. Atualiza a barra de progresso e os botões de navegação
+            updateOverallProgress();
+
+            // 6. Atualiza o texto do toggle de tema
+            themeToggle.textContent = currentTheme === 'dark' ? t.themeDark : t.themeLight;
         }
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('devotionalLang', lang);
-            updateTexts();
-        }
-
-        // --- MANUSEIO DE EVENTOS E INICIALIZAÇÃO (ATUALIZADO) ---
-        document.getElementById('prevButton').addEventListener('click', () => handleNavigation(-1));
-        document.getElementById('nextButton').addEventListener('click', () => handleNavigation(1));
-
-        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         
-        // NOVO: Event Listener para abrir/fechar o Dropdown de Idiomas
-        const langSelectButton = document.getElementById('langSelectButton');
-        if (langSelectButton) {
+        // --- FUNÇÕES DE NAVEGAÇÃO ---
+        function nextDay() {
+            if (currentDay < totalDays) {
+                currentDay++;
+                localStorage.setItem('devotionalProgress', currentDay);
+                updateTexts(1); // Direção 1 (Próximo)
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        function prevDay() {
+            if (currentDay > 1) {
+                currentDay--;
+                localStorage.setItem('devotionalProgress', currentDay);
+                updateTexts(-1); // Direção -1 (Anterior)
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function handleCompletedCheck() {
+            saveCompletion(currentDay, completedCheck.checked);
+        }
+
+        // *************** EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) ***************
+        window.onload = () => {
+            
+            // 1. Carrega o tema e idioma
+            loadThemePreference();
+            updateLanguageSelector();
+            
+            // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
+            currentDay = getSavedProgress();
+            updateTexts(0); 
+            
+            // 3. Configura os Listeners de Eventos
+            themeToggle.addEventListener('click', toggleDarkMode);
             langSelectButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                const dropdown = document.getElementById('langDropdown');
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
             });
-        }
+            document.addEventListener('click', (event) => {
+                const wrapper = document.querySelector('.language-selector-wrapper');
+                if (langDropdown.style.display === 'block' && !wrapper.contains(event.target)) {
+                    langDropdown.style.display = 'none';
+                }
+            });
 
-        // NOVO: Fecha o dropdown se o usuário clicar fora
-        document.addEventListener('click', (event) => {
-            const dropdown = document.getElementById('langDropdown');
-            const wrapper = document.querySelector('.language-selector-wrapper');
-            if (dropdown && dropdown.style.display === 'block' && !wrapper.contains(event.target)) {
-                dropdown.style.display = 'none';
-            }
-        });
-
-
-        window.onload = () => {
-            document.body.classList.remove('light-theme', 'dark-theme');
-            document.body.classList.add(currentTheme);
-            
-            currentDay = getSavedProgress();
-            
-            updateTexts();
-            // updateLanguageSelector() é chamado dentro de updateTexts()
-            // updateOverallProgress() é chamado dentro de updateTexts()
-            
-            devotionalContentDiv.classList.add('page-in-right');
+            prevButton.addEventListener('click', prevDay);
+            nextButton.addEventListener('click', nextDay);
+            completedCheck.addEventListener('change', handleCompletedCheck);
         };
-
+        
     </script>
-
 </body>
 </html>
