@@ -777,16 +777,29 @@
   // Mapeamento para o plano '1 Capítulo/Dia' (365 capítulos selecionados)
   // Apenas uma lista de 365 capítulos (pode ser o tradicional truncado)
   
-  // ---------- STATE MANAGEMENT ----------
-  let state = {
-    idioma: localStorage.getItem('bib_idioma') || 'pt',
-    planoId: localStorage.getItem('bib_planoId') || null,
-    planDuration: parseInt(localStorage.getItem('bib_duration')) || 365,
-    planStartDate: localStorage.getItem('bib_start_date') || null,
-    selectedDay: null,
-    selectedMonth: new Date().getMonth() + 1, // Mês atual
-    pendingPlanoId: null, // Usado para gerenciar a troca de plano via modal de confirmação
-  };
+// ---------- STATE MANAGEMENT (AJUSTE FINAL) ----------
+
+// 1. Definição da lista de códigos de idiomas que sua página suporta.
+const IDIOMAS_SUPORTADOS = ['pt', 'en', 'es']; 
+
+// 2. Carrega as duas chaves possíveis do LocalStorage.
+const newLangKey = localStorage.getItem('language');
+const oldLangKey = localStorage.getItem('bib_idioma');
+
+// 3. Determina o idioma a ser usado (newKey || oldKey)
+const langToUseRaw = newLangKey || oldLangKey; 
+
+// 4. NORMALIZAÇÃO: Se houver um valor, pegue apenas as duas primeiras letras
+// (ex: 'en-US' se torna 'en', 'es-ES' se torna 'es', 'pt' permanece 'pt').
+const langToUse = langToUseRaw ? langToUseRaw.substring(0, 2) : null; 
+// Usamos .substring(0, 2) para garantir que 'en-US' se torne 'en'.
+
+let state = {
+    // 5. Inicialização segura com o valor NORMALIZADO.
+    idioma: (langToUse && IDIOMAS_SUPORTADOS.includes(langToUse)) ? langToUse : 'pt', 
+    
+    // ...
+};
   
   // Cache de Planos Gerados
   let CACHE = {}; 
@@ -1566,40 +1579,41 @@
 
     // Garante que o progresso seja atualizado com os novos textos
     updateProgressUI();
-  }
+ }
 
-  idiomaToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isHidden = idiomaMenu.classList.contains('hidden');
-      if(isHidden){
-          idiomaMenu.classList.remove('hidden');
-          setTimeout(() => {
-              idiomaMenu.classList.remove('scale-95', 'opacity-0');
-          }, 10);
-      } else {
-          idiomaMenu.classList.add('scale-95', 'opacity-0');
-          setTimeout(() => {
-              idiomaMenu.classList.add('hidden');
-          }, 150);
-      }
-  });
+  idiomaToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = idiomaMenu.classList.contains('hidden');
+      if(isHidden){
+          idiomaMenu.classList.remove('hidden');
+          setTimeout(() => {
+              idiomaMenu.classList.remove('scale-95', 'opacity-0');
+          }, 10);
+      } else {
+          idiomaMenu.classList.add('scale-95', 'opacity-0');
+          setTimeout(() => {
+              idiomaMenu.classList.add('hidden');
+          }, 150);
+      }
+  });
 
-  idiomaItems.forEach(item => {
-      item.addEventListener('click', () => {
-          const newLang = item.getAttribute('data-lang');
-          if (state.idioma !== newLang) {
-              state.idioma = newLang;
-              localStorage.setItem('bib_idioma', newLang);
-              CACHE = {}; // Invalida o cache ao mudar de idioma
-              updateIdiomaDisplay(newLang);
-              fecharModal(); // Fecha o modal de leituras se estiver aberto
-          }
-          idiomaMenu.classList.add('scale-95', 'opacity-0');
-          setTimeout(() => {
-              idiomaMenu.classList.add('hidden');
-          }, 150);
-      });
-  });
+  idiomaItems.forEach(item => {
+      item.addEventListener('click', () => {
+          const newLang = item.getAttribute('data-lang');
+          if (state.idioma !== newLang) {
+              state.idioma = newLang;
+              // CORREÇÃO APLICADA AQUI: Salva na chave 'language' para herdar a persistência.
+              localStorage.setItem('language', newLang); 
+              CACHE = {}; // Invalida o cache ao mudar de idioma
+              updateIdiomaDisplay(newLang);
+              fecharModal(); // Fecha o modal de leituras se estiver aberto
+          }
+          idiomaMenu.classList.add('scale-95', 'opacity-0');
+          setTimeout(() => {
+              idiomaMenu.classList.add('hidden');
+          }, 150);
+      });
+  });
 
   // Fecha o menu de idiomas se clicar fora
   document.addEventListener('click', (e) => {
@@ -2034,50 +2048,55 @@ authorContentArea.innerHTML = `
     if(e.target.id === 'reviewerModal') closeReviewerModal();
   });
 
+// ---------- INITIALIZATION ----------
+// Função de inicialização
+function initialize() {
+  // 1. Aplica o tema
+  const root = document.documentElement;
+  const themeStatusText = document.getElementById('themeStatusText'); 
 
-  // ---------- INITIALIZATION ----------
-  // Função de inicialização
-  function initialize() {
-    // 1. Aplica o tema
-    const root = document.documentElement;
-    const themeStatusText = document.getElementById('themeStatusText'); 
-
-    function applyTheme(isDark) {
-        root.classList.toggle('dark', !!isDark);
-        if (isDark) {
-            localStorage.setItem('bib_theme', 'dark');
-            if (themeStatusText) themeStatusText.innerText = '🌞'; 
-        } else {
-            localStorage.removeItem('bib_theme');
-            if (themeStatusText) themeStatusText.innerText = '🌙';
-        }
-    }
-
-    function toggleTheme() {
-        const nowDark = root.classList.contains('dark');
-        applyTheme(!nowDark);
-    }
-    
-    const storedDark = localStorage.getItem('bib_theme') === 'dark';
-    applyTheme(storedDark);
-    
-    // Adiciona listener ao botão de tema
-    const btnTema = document.getElementById('btnTema');
-    if(btnTema) btnTema.addEventListener('click', toggleTheme);
-    
-    // 2. Define o idioma e atualiza a UI
-    updateIdiomaDisplay(state.idioma);
-
-    // 3. Exibe a página correta
-    if (state.planoId) {
-      showPage('paginaPlano');
-    } else {
-      showPage('paginaSelecao');
-    }
+  function applyTheme(isDark) {
+      root.classList.toggle('dark', !!isDark);
+      if (isDark) {
+          // Salva usando a chave 'theme' para herdar a persistência da página principal
+          localStorage.setItem('theme', 'dark'); 
+          if (themeStatusText) themeStatusText.innerText = '🌞'; 
+      } else {
+          // Remove/limpa usando a chave 'theme'
+          localStorage.removeItem('theme'); 
+          if (themeStatusText) themeStatusText.innerText = '🌙';
+      }
   }
 
-  // Inicia a aplicação
-  initialize();
+  // Carrega o tema usando a chave 'theme' para herdar a persistência da página principal
+  const storedDark = localStorage.getItem('theme') === 'dark';
+  applyTheme(storedDark);
+
+  function toggleTheme() {
+      const nowDark = root.classList.contains('dark');
+      applyTheme(!nowDark);
+  }
+  
+  // As linhas de código que estavam aqui (const storedDark = localStorage.getItem('bib_theme') === 'dark'; applyTheme(storedDark);) foram removidas por serem redundantes e usarem a chave antiga.
+  
+  // Adiciona listener ao botão de tema
+  const btnTema = document.getElementById('btnTema');
+  if(btnTema) btnTema.addEventListener('click', toggleTheme);
+  
+  // 2. Define o idioma e atualiza a UI
+  // *VERIFIQUE SE state.idioma FOI INICIALIZADO USANDO 'language' e não 'bib_idioma'*
+  updateIdiomaDisplay(state.idioma);
+
+  // 3. Exibe a página correta
+  if (state.planoId) {
+    showPage('paginaPlano');
+  } else {
+    showPage('paginaSelecao');
+  }
+}
+
+// Inicia a aplicação
+initialize();
 
   </script>
 </body>
