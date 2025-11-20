@@ -98,9 +98,7 @@
             z-index: 100;
         }
 
-        /* ------------------------------------------- */
-        /* ESTILO SELETOR DE MODO (SOL/LUA) COMO TOKEN */
-        /* ------------------------------------------- */
+        /* --- Estilos de tema e dropdown (Mantidos) --- */
         
         #theme-toggle {
             display: flex; 
@@ -115,40 +113,32 @@
             font-size: 20px; 
         }
         
-        /* Estilo do token do tema no MODO CLARO (Fundo Branco) */
         body:not(.dark-mode) #theme-toggle.light-active { 
-            background-color: #ffffff; /* Fundo Branco */
+            background-color: #ffffff; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
-        /* Estilo do token do tema no MODO ESCURO (Fundo Preto Puro) */
         body.dark-mode #theme-toggle.dark-active {
-            background-color: #000000; /* Fundo Preto Puro */
+            background-color: #000000; 
             box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
         }
 
         #theme-toggle:hover {
-            background-color: rgba(0, 0, 0, 0.05); /* Hover leve */
+            background-color: rgba(0, 0, 0, 0.05);
         }
         body.dark-mode #theme-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Hover no dark mode */
+            background-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* Oculta o sol no modo escuro */
         body.dark-mode #theme-toggle .sun-icon {
             display: none;
         }
         
-        /* Oculta a lua no modo claro */
         body:not(.dark-mode) #theme-toggle .moon-icon {
             display: none;
         }
 
 
-        /* ------------------------------------------- */
-        /* ESTILO DROP-DOWN DE BANDEIRAS (TOKEN DE IDIOMA) */
-        /* ------------------------------------------- */
-        
         #language-selector-container {
             position: relative;
         }
@@ -156,10 +146,10 @@
         #active-language-button {
             display: flex;
             align-items: center;
-            justify-content: center; /* CENTRALIZA A BANDEIRA */
+            justify-content: center;
             width: 45px;
             height: 32px;
-            background-color: #ffffff; /* Fundo Branco */
+            background-color: #ffffff;
             border-radius: 8px;
             cursor: pointer;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -168,12 +158,10 @@
             padding: 0; 
         }
         
-        /* Estilo do token de bandeira no MODO ESCURO (Fundo Preto Puro) */
         body.dark-mode #active-language-button {
-            background-color: #000000; /* Fundo Preto Puro */
+            background-color: #000000; 
             box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2); 
         }
-
 
         #active-language-button:hover {
             background-color: #e5e7eb;
@@ -212,12 +200,176 @@
         .lang-flag-dropdown, .lang-flag-active {
             width: 25px; 
             height: auto;
-            margin-right: 0; /* Centralização garantida */
+            margin-right: 0;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 3px;
         }
+
+
+        /* ------------------------------------------- */
+        /* ESTILO BOTÕES DE INFORMAÇÃO NA PÁGINA PRINCIPAL */
+        /* ------------------------------------------- */
+        .info-buttons-container {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 10px; 
+            justify-content: center;
+            max-width: 900px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .info-button {
+            padding: 10px 15px;
+            background-color: #e5e7eb;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s, border-color 0.2s;
+            flex-grow: 1; 
+            max-width: 200px; 
+        }
+
+        .info-button:hover {
+            background-color: #d1d5db;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .info-button {
+            background-color: #1c1c1c;
+            color: #e2e8f0;
+            border-color: #333333;
+        }
+
+        body.dark-mode .info-button:hover {
+            background-color: #333333;
+            border-color: #6b7280;
+        }
         
-        /* --- O restante do CSS do conteúdo principal (Mantido) --- */
+        /* Ajuste responsivo para os botões */
+        @media (max-width: 480px) {
+            .info-buttons-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .info-button {
+                max-width: 100%;
+            }
+        }
+
+
+        /* ------------------------------------------- */
+        /* NOVO: ESTILOS DO MODAL/POP-UP */
+        /* ------------------------------------------- */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            text-align: left; 
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #121212;
+            color: #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        #modal-title {
+            margin: 0;
+            color: #2563eb;
+            font-size: 1.5em;
+        }
+        
+        body.dark-mode #modal-title {
+            color: #90cdf4;
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: #6b7280;
+            line-height: 1;
+        }
+        
+        body.dark-mode .close-modal-btn {
+            color: #a0aec0;
+        }
+
+        /* ESTILO CONTEÚDO CRÉDITOS (Para replicar a estrutura da imagem) */
+        .credit-item {
+            margin-bottom: 10px; /* Adiciona um pequeno espaço entre os itens */
+            display: block; 
+            line-height: 1.2;
+        }
+        
+        .credit-title {
+            display: block; /* Título em uma linha */
+            font-weight: bold;
+            color: #2563eb; 
+            margin-top: 15px; /* Espaçamento entre as seções */
+        }
+        
+        /* Remove o margin-top do primeiro item de crédito */
+        .credit-item:first-child .credit-title {
+            margin-top: 0;
+        }
+
+        .credit-name {
+            display: block; /* Nome em outra linha */
+            font-style: normal; 
+            color: inherit;
+        }
+        
+        body.dark-mode .credit-title {
+             color: #90cdf4;
+        }
+        
+        /* Estilos para o conteúdo genérico (LGPD, Ajuda, Quem Somos) */
+        #modal-body-content p {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /* --- O restante do CSS principal (Mantido) --- */
         
         .header-logo {
             max-width: 230px; 
@@ -302,7 +454,17 @@
     </style>
 </head>
 <body>
-
+    
+    <div class="modal-overlay" id="info-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2> <button class="close-modal-btn" id="close-modal-btn">×</button>
+            </div>
+            
+            <div id="modal-body-content">
+                </div>
+        </div>
+    </div>
     <header class="main-header">
         
         <div class="header-controls">
@@ -368,7 +530,15 @@
                 <small data-i18n="menu5Subtitle">Um convite a refletir com Salomão sobre o sentido da vida.</small>
             </div>
         </a>
-        </div>
+
+    </div>
+    
+    <div class="info-buttons-container">
+        <button class="info-button" data-modal-type="privacy" data-i18n="privacyButtonText">Privacidade (LGPD)</button>
+        <button class="info-button" data-modal-type="help" data-i18n="helpButtonText">Ajuda</button>
+        <button class="info-button" data-modal-type="about" data-i18n="aboutButtonText">Quem Somos</button>
+        <button class="info-button" data-modal-type="credits" data-i18n="creditsButtonText">Créditos</button>
+    </div>
 
     <footer class="simple-footer">
         © 2025 Alex Silva — <em>Uso livre com atribuição</em>
@@ -379,7 +549,7 @@
         const LOGO_LIGHT = 'img/logo_light.png';
         const LOGO_DARK = 'img/logo_dark.png';
         
-        // Configurações do Idioma (Mantido)
+        // Configurações do Idioma
         const DEFAULT_LANGUAGE = 'pt-BR';
         const flagMap = {
             'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
@@ -387,6 +557,7 @@
             'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
             'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
         };
+        // *** TRADUÇÕES ATUALIZADAS (com Eclesiastes e textos do Modal) ***
         const translations = {
              'pt-BR': {
                 headerTitle: "Devocionais e Planos de Leitura Bíblica",
@@ -399,8 +570,31 @@
                 menu3Subtitle: "Estudo aprofundado sobre a Justificação pela Fé.",
                 menu4Title: "Devocional Livro de Provérbios",
                 menu4Subtitle: "Lições diárias de Sabedoria e Conduta.",
-                menu5Title: "Devocional Livro de Eclesiastes", // NOVO
-                menu5Subtitle: "Um convite a refletir com Salomão sobre o sentido da vida." // NOVO
+                menu5Title: "Devocional Livro de Eclesiastes",
+                menu5Subtitle: "Um convite a refletir com Salomão sobre o sentido da vida.",
+                
+                // Chaves para botões
+                creditsButtonText: "Créditos",
+                privacyButtonText: "Privacidade (LGPD)",
+                helpButtonText: "Ajuda",
+                aboutButtonText: "Quem Somos",
+
+                // Chaves de Título do Modal
+                modalTitle_credits: "Créditos",
+                modalTitle_privacy: "Política de Privacidade (LGPD)",
+                modalTitle_help: "Ajuda e Contato",
+                modalTitle_about: "Quem Somos",
+                
+                // Conteúdo de Créditos (Detalhado)
+                creditAuthorTitle: "Autor:",
+                creditTechReviewTitle: "Revisão Técnica:",
+                creditTheologicalReviewTitle: "Revisão Teológica:",
+                
+                // Conteúdo Genérico para o Modal (LGPD, Ajuda, Quem Somos)
+                // NOVO: Versão Adicionada
+                modalContent_privacy: 'Esta seção detalha nossa Política de Privacidade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\nAfirmamos que este site/aplicativo não coleta dados pessoais dos usuários.\n\nNenhuma informação é armazenada, exceto suas preferências locais de idioma e tema (Modo Escuro/Claro), que são salvas no seu próprio navegador.',
+                modalContent_help: 'Para dúvidas, sugestões ou suporte técnico, por favor, entre em contato através do email [seu_email@exemplo.com].\n\nNosso objetivo é fornecer a melhor experiência de estudo bíblico possível. Por favor, inclua capturas de tela se reportar um problema técnico.\n\nVersão Atual: v1.0.5 - 2025',
+                modalContent_about: 'Somos uma iniciativa dedicada a promover o estudo aprofundado e a devoção cristã, unindo o Conhecimento da Palavra de Deus com a Fé prática.\n\nNossos materiais são elaborados com base nas Escrituras Sagradas para auxiliar você em sua jornada espiritual.'
             },
             'en-US': {
                 headerTitle: "Devotionals and Bible Reading Plans",
@@ -413,8 +607,26 @@
                 menu3Subtitle: "In-depth study on Justification by Faith.",
                 menu4Title: "Devotional Book of Proverbs",
                 menu4Subtitle: "Daily lessons of Wisdom and Conduct.",
-                menu5Title: "Devotional Book of Ecclesiastes", // NOVO
-                menu5Subtitle: "An invitation to reflect with Solomon on the meaning of life." // NOVO
+                menu5Title: "Devotional Book of Ecclesiastes",
+                menu5Subtitle: "An invitation to reflect with Solomon on the meaning of life.",
+                
+                creditsButtonText: "Credits",
+                privacyButtonText: "Privacy (LGPD)",
+                helpButtonText: "Help",
+                aboutButtonText: "About Us",
+
+                modalTitle_credits: "Credits",
+                modalTitle_privacy: "Privacy Policy (LGPD)",
+                modalTitle_help: "Help & Contact",
+                modalTitle_about: "About Us",
+                
+                creditAuthorTitle: "Author:",
+                creditTechReviewTitle: "Technical Review:",
+                creditTheologicalReviewTitle: "Theological Review:",
+                
+                modalContent_privacy: 'This section details our Privacy Policy, in compliance with the General Data Protection Law (LGPD).\n\nWe state that this website/application does not collect personal user data.\n\nNo information is stored, except your local language and theme preferences (Dark/Light Mode), which are saved in your own browser.',
+                modalContent_help: 'For questions, suggestions, or technical support, please contact us via email at [your_email@example.com].\n\nOur goal is to provide the best possible Bible study experience. Please include screenshots if reporting a technical issue.\n\nCurrent Version: v1.0.5 - 2025',
+                modalContent_about: 'We are an initiative dedicated to promoting in-depth study and Christian devotion, uniting the Knowledge of God\'s Word with practical Faith.\n\nOur materials are developed based on the Holy Scriptures to assist you in your spiritual journey.'
             },
             'es-ES': {
                 headerTitle: "Devocionales y Planes de Lectura Bíblica",
@@ -427,8 +639,26 @@
                 menu3Subtitle: "Estudio profundo sobre la Justificación por la Fe.",
                 menu4Title: "Devocional Libro de Provérbios",
                 menu4Subtitle: "Lições diárias de Sabedoria e Conduta.",
-                menu5Title: "Devocional Libro de Eclesiastés", // NOVO
-                menu5Subtitle: "Una invitación a reflexionar con Salomón sobre el sentido de la vida." // NOVO
+                menu5Title: "Devocional Libro de Eclesiastés",
+                menu5Subtitle: "Una invitación a reflexionar con Salomón sobre el sentido de la vida.",
+                
+                creditsButtonText: "Créditos",
+                privacyButtonText: "Privacidad (LGPD)",
+                helpButtonText: "Ayuda",
+                aboutButtonText: "Quienes Somos",
+
+                modalTitle_credits: "Créditos",
+                modalTitle_privacy: "Política de Privacidad (LGPD)",
+                modalTitle_help: "Ayuda y Contacto",
+                modalTitle_about: "Quienes Somos",
+                
+                creditAuthorTitle: "Autor:",
+                creditTechReviewTitle: "Revisión Técnica:",
+                creditTheologicalReviewTitle: "Revisión Teológica:",
+                
+                modalContent_privacy: 'Esta sección detalla nuestra Política de Privacidad, en cumplimiento con la Ley General de Protección de Datos (LGPD).\n\nDeclaramos que este sitio web/aplicación no recopila datos personales de los usuarios.\n\nNo se almacena ninguna información, excepto sus preferencias locales de idioma y tema (Modo Oscuro/Claro), que se guardan en su propio navegador.',
+                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico [su_email@ejemplo.com].\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, incluya capturas de pantalla si informa un problema técnico.\n\nVersión Actual: v1.0.5 - 2025',
+                modalContent_about: 'Somos una iniciativa dedicada a promover el estudio profundo y la devoción cristiana, uniendo el Conocimiento de la Palabra de Dios con la Fe práctica.\n\nNuestros materiales se elaboran basándose en las Sagradas Escrituras para ayudarle en su camino espiritual.'
             },
             'fr-FR': {
                 headerTitle: "Dévotionnels et Plans de Lecture de la Bible",
@@ -441,8 +671,26 @@
                 menu3Subtitle: "Étude approfondie sur la Justification par la Foi.",
                 menu4Title: "Dévotionnel Livre des Proverbes",
                 menu4Subtitle: "Leçons quotidiennes de Sagesse et de Conduite.",
-                menu5Title: "Dévotionnel Livre de l'Ecclésiaste", // NOVO
-                menu5Subtitle: "Une invitation à réfléchir avec Salomon sur le sens de la vie." // NOVO
+                menu5Title: "Dévotionnel Livre de l'Ecclésiaste",
+                menu5Subtitle: "Une invitation à réfléchir avec Salomon sur le sens de la vie.",
+                
+                creditsButtonText: "Crédits",
+                privacyButtonText: "Confidentialité (LGPD)",
+                helpButtonText: "Aide",
+                aboutButtonText: "Qui Sommes-Nous",
+
+                modalTitle_credits: "Crédits",
+                modalTitle_privacy: "Politique de Confidentialité (LGPD)",
+                modalTitle_help: "Aide et Contact",
+                modalTitle_about: "Qui Sommes-Nous",
+                
+                creditAuthorTitle: "Auteur:",
+                creditTechReviewTitle: "Revue Technique:",
+                creditTheologicalReviewTitle: "Revue Théologique:",
+                
+                modalContent_privacy: 'Cette section détaille notre politique de confidentialité, conformément à la loi générale sur la protection des données (LGPD).\n\nNous affirmons que ce site/application ne collecte pas de données personnelles des utilisateurs.\n\nAucune information n\'est stockée, à l\'exception de vos préférences locales de langue et de thème (Mode Sombre/Clair), qui sont enregistrées dans votre propre navigateur.',
+                modalContent_help: 'Pour des questions, suggestions ou support technique, veuillez nous contacter par email à [votre_email@exemple.com].\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersion Actuelle: v1.0.5 - 2025',
+                modalContent_about: 'Nous sommes une initiative dédiée à la promotion de l\'étude approfondie et de la dévotion chrétienne, unissant la Connaissance de la Parole de Dieu à la Foi pratique.\n\nNos matériaux sont élaborados à partir des Saintes Écritures pour vous aider dans votre parcours spirituel.'
             }
         };
 
@@ -453,6 +701,12 @@
         const themeToggle = document.getElementById('theme-toggle');
         const logo = document.getElementById('header-logo');
         
+        // NOVOS ELEMENTOS DO MODAL
+        const infoModal = document.getElementById('info-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const modalBodyElement = document.getElementById('modal-body-content');
+
+
         
         // ----------------------------------------------------
         // FUNÇÕES PARA MODO CLARO/ESCURO
@@ -514,7 +768,6 @@
         function setLanguage(lang) {
             document.documentElement.lang = lang;
 
-            // ***** AJUSTE CHAVE: SALVA A PREFERÊNCIA DE IDIOMA NO LOCAL STORAGE *****
             localStorage.setItem('language', lang); 
 
             activeLangButton.innerHTML = flagMap[lang].iconActive;
@@ -537,12 +790,68 @@
             
             container.classList.remove('open');
         }
+        
+        // ----------------------------------------------------
+        // NOVO: FUNÇÕES DO MODAL DINÂMICO
+        // ----------------------------------------------------
+        
+        // Conteúdo formatado para a seção "Créditos" (Replicando o formato da imagem)
+        function getCreditsHtml(currentTranslations) {
+            // Este formato usa divs para colocar o título (em negrito e azul) e o nome em linhas separadas,
+            // conforme as imagens que você enviou.
+            return `
+                <div class="credit-item">
+                    <span class="credit-title">${currentTranslations.creditAuthorTitle}</span>
+                    <span class="credit-name">Alex S Lima Silva</span>
+                </div>
+                <div class="credit-item">
+                    <span class="credit-title">${currentTranslations.creditTechReviewTitle}</span>
+                    <span class="credit-name">Carlos Carvalho</span>
+                </div>
+                <div class="credit-item">
+                    <span class="credit-title">${currentTranslations.creditTheologicalReviewTitle}</span>
+                    <span class="credit-name">Daniel Riccetto</span>
+                </div>
+            `;
+        }
+
+        // Conteúdo genérico para outras seções (Privacidade, Ajuda, Quem Somos)
+        function getPlaceholderHtml(key, currentTranslations) {
+            // Obtém o texto do objeto de traduções e quebra em parágrafos onde há '\n'
+            const content = currentTranslations[`modalContent_${key}`];
+            const paragraphs = content.split('\n').map(p => `<p>${p.trim()}</p>`).join('');
+            return `<div class="modal-body-text">${paragraphs}</div>`;
+        }
+
+        function openModal(type) {
+            const lang = document.documentElement.lang;
+            const currentTranslations = translations[lang];
+            const modalTitleElement = document.getElementById('modal-title');
+            
+            // 1. Define o título
+            modalTitleElement.innerText = currentTranslations[`modalTitle_${type}`];
+            
+            // 2. Define o conteúdo
+            if (type === 'credits') {
+                modalBodyElement.innerHTML = getCreditsHtml(currentTranslations);
+            } else {
+                // Carrega o conteúdo genérico (LGPD, Ajuda, Quem Somos)
+                modalBodyElement.innerHTML = getPlaceholderHtml(type, currentTranslations);
+            }
+            
+            // 3. Abre o modal
+            infoModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            infoModal.style.display = 'none';
+        }
 
         // ----------------------------------------------------
         // EXECUÇÃO PRINCIPAL
         // ----------------------------------------------------
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Carrega o tema (sempre feito para dar o estilo inicial)
+            // 1. Carrega o tema
             loadThemePreference();
             themeToggle.addEventListener('click', toggleDarkMode);
             
@@ -566,6 +875,30 @@
             // Tenta carregar o idioma salvo. Se não houver, usa o padrão.
             const savedLang = localStorage.getItem('language') || DEFAULT_LANGUAGE;
             setLanguage(savedLang); 
+            
+            // 3. Configura os botões de Modal (Abrir)
+            document.querySelectorAll('.info-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const type = event.currentTarget.getAttribute('data-modal-type');
+                    openModal(type);
+                });
+            });
+            
+            // 4. Configura o fechamento do Modal
+            closeModalBtn.addEventListener('click', closeModal);
+            // Fecha ao clicar fora do conteúdo
+            infoModal.addEventListener('click', (event) => {
+                if (event.target === infoModal) {
+                    closeModal();
+                }
+            });
+            
+            // Fecha o modal com a tecla ESC
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
         });
 
     </script>
