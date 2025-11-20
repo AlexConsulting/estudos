@@ -14,7 +14,7 @@
             margin: 0;
             display: flex;
             flex-direction: column; 
-            align-items: center; 
+            align-items: center; /* GARANTE QUE OS BLOCOS PRINCIPAIS ESTEJAM CENTRALIZADOS */
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
@@ -214,20 +214,21 @@
             display: flex;
             flex-wrap: wrap; 
             gap: 10px; 
-            justify-content: center;
+            justify-content: center; /* Garante que os botões fiquem centralizados */
             max-width: 900px;
             width: 100%;
             padding: 0 10px;
         }
 
         .info-button {
-            padding: 10px 15px;
+            /* AJUSTE PARA DIMINUIR O TAMANHO DOS BOTÕES */
+            padding: 8px 14px; 
             background-color: #e5e7eb;
             color: #374151;
             border: 1px solid #d1d5db;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.85em; 
             font-weight: 600;
             transition: background-color 0.2s, box-shadow 0.2s, color 0.2s, border-color 0.2s;
             flex-grow: 1; 
@@ -250,20 +251,20 @@
             border-color: #6b7280;
         }
         
-        /* Ajuste responsivo para os botões */
+        /* Ajuste responsivo para os botões - Empilhamento e Centralização no Mobile */
         @media (max-width: 480px) {
             .info-buttons-container {
                 flex-direction: column;
                 gap: 5px;
             }
             .info-button {
-                max-width: 100%;
+                max-width: 100%; /* Faz com que o botão preencha o contêiner centralizado */
             }
         }
 
 
         /* ------------------------------------------- */
-        /* NOVO: ESTILOS DO MODAL/POP-UP */
+        /* ESTILOS DO MODAL/POP-UP */
         /* ------------------------------------------- */
         .modal-overlay {
             display: none; 
@@ -334,18 +335,18 @@
             color: #a0aec0;
         }
 
-        /* ESTILO CONTEÚDO CRÉDITOS (Para replicar a estrutura da imagem) */
+        /* ESTILO CONTEÚDO CRÉDITOS */
         .credit-item {
-            margin-bottom: 10px; /* Adiciona um pequeno espaço entre os itens */
+            margin-bottom: 10px; 
             display: block; 
             line-height: 1.2;
         }
         
         .credit-title {
-            display: block; /* Título em uma linha */
+            display: block; 
             font-weight: bold;
             color: #2563eb; 
-            margin-top: 15px; /* Espaçamento entre as seções */
+            margin-top: 15px; 
         }
         
         /* Remove o margin-top do primeiro item de crédito */
@@ -354,7 +355,7 @@
         }
 
         .credit-name {
-            display: block; /* Nome em outra linha */
+            display: block; 
             font-style: normal; 
             color: inherit;
         }
@@ -591,7 +592,6 @@
                 creditTheologicalReviewTitle: "Revisão Teológica:",
                 
                 // Conteúdo Genérico para o Modal (LGPD, Ajuda, Quem Somos)
-                // NOVO: Versão Adicionada
                 modalContent_privacy: 'Esta seção detalha nossa Política de Privacidade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\nAfirmamos que este site/aplicativo não coleta dados pessoais dos usuários.\n\nNenhuma informação é armazenada, exceto suas preferências locais de idioma e tema (Modo Escuro/Claro), que são salvas no seu próprio navegador.',
                 modalContent_help: 'Para dúvidas, sugestões ou suporte técnico, por favor, entre em contato através do email [seu_email@exemplo.com].\n\nNosso objetivo é fornecer a melhor experiência de estudo bíblico possível. Por favor, inclua capturas de tela se reportar um problema técnico.\n\nVersão Atual: v1.0.5 - 2025',
                 modalContent_about: 'Somos uma iniciativa dedicada a promover o estudo aprofundado e a devoção cristã, unindo o Conhecimento da Palavra de Deus com a Fé prática.\n\nNossos materiais são elaborados com base nas Escrituras Sagradas para auxiliar você em sua jornada espiritual.'
