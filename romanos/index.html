@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Dias: A Justiça de Deus (Devocional)</title>
+    <style>
+        /* CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            background-color: #e6e0d3; /* Papel envelhecido */
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column; /* Necessário para empilhar o container e o footer */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .book-container {
+            max-width: 650px;
+            width: 90%;
+            background: #fdfdfd;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+            position: relative;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        h1 {
+            color: #4b0082;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            border-bottom: 2px solid #4b0082;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 0.95em;
+        }
+        h2 {
+            color: #007bff;
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .versiculos {
+            font-style: italic;
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-left: 5px solid #28a745;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        .section {
+            margin-top: 20px;
+            padding: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .section strong {
+            display: block;
+            color: #dc3545;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .oracao-final {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fffae0;
+            border-left: 5px solid #ffc107;
+            font-weight: bold;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        /* 2. NAVEGAÇÃO E UTILS (Ajustado para Mobile) */
+        .top-utils {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+        
+        /* REMOVENDO ESTILOS ANTIGOS DO language-selector DE BOTÕES SIMPLES */
+        
+        #themeToggle {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #333;
+            transition: all 0.2s;
+            margin-left: auto; 
+            white-space: nowrap; 
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+        /* CLASSE progress-check REMOVIDA DA ESTRUTURA, USANDO completion-status */
+        
+        .nav-button {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: opacity 0.2s, background 0.2s;
+        }
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* 3. DARK THEME CSS */
+        .dark-theme {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        .dark-theme .book-container {
+            background: #1e1e1e;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border-color: #333;
+        }
+        .dark-theme h1 {
+            color: #bb86fc;
+            border-bottom-color: #bb86fc;
+        }
+        .dark-theme .subtitle {
+            color: #aaa;
+        }
+        .dark-theme h2 {
+            color: #03dac6;
+        }
+        .dark-theme .versiculos {
+            background-color: #2c2c2c;
+            border-left-color: #03dac6;
+        }
+        .dark-theme .section {
+            border-bottom-color: #444;
+        }
+        .dark-theme .section strong {
+            color: #cf6679;
+        }
+        .dark-theme .oracao-final {
+            background-color: #33331c;
+            border-left-color: #ffd600;
+        }
+        .dark-theme #themeToggle {
+            color: #f4f4f4;
+            border-color: #555;
+            background: #1e1e1e;
+        }
+        
+        /* DARK THEME PARA BOTÕES DE IDIOMA (APLICADO AO NOVO DROPDOWN) */
+        .dark-theme #langSelectButton {
+            background-color: #bb86fc;
+            color: #1e1e1e;
+        }
+        .dark-theme #langSelectButton:hover {
+            background-color: #a26ffc;
+        }
+        .dark-theme .lang-dropdown-content {
+            background-color: #1e1e1e;
+        }
+        .dark-theme .lang-dropdown-content a {
+            color: #f4f4f4;
+        }
+        .dark-theme .lang-dropdown-content a:hover {
+            background-color: #333;
+        }
+        
+        .dark-theme .nav-button {
+            background-color: #03dac6;
+            border-color: #03dac6;
+            color: #1e1e1e;
+        }
+
+        /* 4. ANIMAÇÕES DE VIRADA DE PÁGINA */
+        #devotionalContent {
+            min-height: 400px; 
+        }
+        .page-out-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+        }
+        .page-out-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+        }
+        .page-in-right {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .page-in-left {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        /* 5. ESTILO DO RODAPÉ COM ITÁLICO */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px 0;
+            font-size: 0.8em;
+            color: #777;
+            width: 100%;
+            font-style: italic; /* Aplica o itálico */
+        }
+        .dark-theme footer {
+            color: #888;
+        }
+
+        /* 6. MEDIA QUERIES (Ajustes para Celular) */
+        @media (max-width: 600px) {
+            .book-container {
+                padding: 20px 25px; 
+                width: 95%; 
+            }
+            .top-utils {
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 10px; 
+            }
+            #themeToggle {
+                margin-left: 0; 
+            }
+            .navigation {
+                flex-direction: column; 
+                gap: 10px; 
+            }
+            .nav-button {
+                width: 100%; 
+            }
+            .completion-status { /* Usando a nova classe */
+                order: -1; 
+                width: 100%;
+            }
+        }
+        
+        /* NOVO: 7. ESTILOS DA BARRA DE PROGRESSO */
+        .progress-bar-wrapper {
+            background-color: #ddd;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%; 
+            background-color: #28a745; /* Cor da barra de progresso */
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* Dark Theme para Progresso */
+        .dark-theme #progressLabel {
+            color: #03dac6;
+        }
+
+        .dark-theme .progress-bar-wrapper {
+            background-color: #333;
+        }
+
+        .dark-theme .progress-bar {
+            background-color: #03dac6;
+        }
+        
+        /* NOVO: 8. CHECKBOX DE CONCLUÍDO (Estilo Aprimorado) */
+        .completion-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0; /* Ajustado para caber na navegação */
+            padding: 5px 10px;
+            background-color: #e6f7ff; /* Cor clara de fundo */
+            border: 1px solid #b3e0ff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .completion-status label {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #1e8449; /* Cor do texto */
+            cursor: pointer;
+        }
+        .completion-status input[type="checkbox"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+        
+        .dark-theme .completion-status {
+            background-color: #2c2c2c;
+            border-color: #444;
+        }
+        .dark-theme .completion-status label {
+            color: #03dac6;
+        }
+
+        /* NOVO: 9. ESTILO PARA BANDEIRAS E DROPDOWN */
+        .language-selector-wrapper { /* Novo wrapper para o dropdown */
+            position: relative;
+            display: inline-block;
+        }
+
+        #langSelectButton { /* Novo botão de seleção principal */
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+            line-height: 1; /* Garante que o texto/bandeira fiquem bem alinhados */
+        }
+
+        #langSelectButton:hover {
+            background-color: #0056b3;
+        }
+
+        .lang-dropdown-content { /* Conteúdo do dropdown */
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10; /* Garante que fique sobre outros elementos */
+            border-radius: 5px;
+            padding: 5px 0;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+        }
+
+        .lang-dropdown-content a {
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .lang-dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .lang-flag { /* Estilo da bandeira */
+            width: 20px; 
+            height: auto;
+            margin-right: 8px;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+        }
+        /* FIM DOS NOVOS ESTILOS */
+
+    </style>
+</head>
+<body class="light-theme">
+
+    <div class="book-container">
+        <div class="top-utils">
+            
+            <div class="language-selector-wrapper">
+                <button id="langSelectButton" title="Selecione o Idioma"></button>
+                <div id="langDropdown" class="lang-dropdown-content">
+                    </div>
+            </div>
+            <button id="themeToggle" title="Alternar Tema">☀️ Escuro/Claro 🌙</button>
+        </div>
+        
+        <h1 id="mainTitle">30 Dias: A Justiça de Deus (Livro de Romanos)</h1>
+        <p class="subtitle" id="subTitle">Da Condenação à Glória: A Jornada da Justificação pela Fé e a Soberania na Vida do Crente.</p>
+        
+        <div id="progressContainer" style="margin-bottom: 15px;">
+            <p id="progressLabel" style="text-align: center; font-size: 0.9em; margin-bottom: 5px; color: #4b0082; font-weight: bold;"></p>
+            <div class="progress-bar-wrapper">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+        </div>
+        <p id="pageCounter" style="text-align: right;"></p>
+        
+        <div id="devotionalContent">
+            </div>
+
+        <div class="navigation">
+            <button id="prevButton" class="nav-button" disabled>← Anterior</button>
+            
+            <div class="completion-status"> 
+                <input type="checkbox" id="completedCheck">
+                <label for="completedCheck" id="completedLabel">Marcar como Concluído</label>
+            </div>
+            <button id="nextButton" class="nav-button">Próximo →</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Devocional adaptado e criado por Alex Silva | <span id="footerText"></span></p>
+    </footer>
+    <script>
+        const totalDays = 30;
+        let currentDay = 1;
+        let currentLang = localStorage.getItem('devotionalLang') || 'pt';
+        let currentTheme = localStorage.getItem('devotionalTheme') || 'light-theme';
+        const devotionalContentDiv = document.getElementById('devotionalContent');
+
+        // --- DADOS MULTI-IDIOMA ---
+        
+        // NOVO: Dicionário de Textos atualizado com 'controls' e 'progress'
+        const langData = {
+            'pt': {
+                title: "30 Dias: A Justiça de Deus (Livro de Romanos)",
+                subtitle: "Da Condenação à Glória: A Jornada da Justificação pela Fé e a Soberania na Vida do Crente.",
+                page: "Dia",
+                of: "de",
+                controls: { 
+                    prev: "← Anterior",
+                    next: "Próximo →",
+                    check: "Marcar como Concluído", 
+                    themeToggle: "☀️ Escuro/Claro 🌙"
+                },
+                progress: { 
+                    total: "Progresso Total:",
+                    days: "Dias",
+                    of: "de" 
+                },
+                sections: {
+                    resumo: "Breve Resumo:",
+                    aplicacao: "Aplicação Prática:",
+                    oracao: "Ore para que Deus te fortaleça e te ajude a colocar esses ensinamentos em prática."
+                }
+            },
+            'en': {
+                title: "30 Days: The Justice of God (Book of Romans)",
+                subtitle: "From Condemnation to Glory: The Journey of Justification by Faith and Sovereignty in the Believer's Life.",
+                page: "Day",
+                of: "of",
+                controls: {
+                    prev: "« Previous",
+                    next: "Next »",
+                    check: "Devotional Completed",
+                    themeToggle: "☀️ Dark/Light 🌙"
+                },
+                progress: {
+                    total: "Total Progress:",
+                    days: "Days",
+                    of: "of"
+                },
+                sections: {
+                    resumo: "Brief Summary:",
+                    aplicacao: "Practical Application:",
+                    oracao: "Pray that God will strengthen you and help you put these teachings into practice."
+                }
+            },
+            'es': {
+                title: "30 días: La justicia de Dios (Libro de Romanos)",
+                subtitle: "De la condenación a la gloria: El camino de la justificación por la fe y la soberanía en la vida del creyente.",
+                page: "Día",
+                of: "de",
+                controls: {
+                    prev: "« Anterior",
+                    next: "Próximo »",
+                    check: "Devocional Realizado",
+                    themeToggle: "☀️ Oscuro/Claro 🌙"
+                },
+                progress: {
+                    total: "Progreso Total:",
+                    days: "Días",
+                    of: "de"
+                },
+                sections: {
+                    resumo: "Resumen Breve:",
+                    aplicacion: "Aplicación Práctica:",
+                    oracao: "Ora para que Dios te fortalezca y te ayude a poner estas enseñanzas en práctica."
+                }
+            },
+            'fr': {
+                title: "30 jours : La justice de Dieu (Livre des Romains)",
+                subtitle: "De la condamnation à la gloire : le chemin de la justification par la foi et la souveraineté dans la vie du croyant.",
+                page: "Jour",
+                of: "sur",
+                controls: {
+                    prev: "« Précédent",
+                    next: "Suivant »",
+                    check: "Dévotion Accomplie",
+                    themeToggle: "☀️ Sombre/Clair 🌙"
+                },
+                progress: {
+                    total: "Progression Totale:",
+                    days: "Jours",
+                    of: "sur"
+                },
+                sections: {
+                    resumo: "Bref Résumé:",
+                    aplicacao: "Application Pratique:",
+                    oracao: "Priez pour que Dieu vous fortifie et vous aide à mettre ces enseignements en pratique."
+                }
+            }
+        };
+
+        // NOVO: Mapeamento de Bandeiras (USANDO IMAGENS/SVG DE UM CDN)
+        const flagMap = {
+            'pt': {
+                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag" alt="Português">',
+                text: 'Português'
+            },
+            'en': {
+                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag" alt="English">',
+                text: 'English'
+            },
+            'es': {
+                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag" alt="Español">',
+                text: 'Español'
+            },
+            'fr': {
+                icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag" alt="Français">',
+                text: 'Français'
+            }
+        };
+
+
+        // --- CONTEÚDO DEVOCIONAL (OMITIDO POR SER LONGO) ---
+        
+      const devotionalContent = {
+    1: {
+        pt: {
+            h2: "Dia 1: O Evangelho – Poder de Deus",
+            versiculos: "<strong>Romanos 1:16 (NVI):</strong> Não me envergonho do evangelho, porque é o **poder de Deus** para a salvação de todo aquele que crê: primeiro do judeu, depois do grego.",
+            resumo: "O Evangelho é a revelação da justiça de Deus e o único meio para a salvação (Justificação). Ele não é apenas uma mensagem, mas a **própria potência divina** (Poder de Deus) que opera a regeneração e nos move da ira para a Graça. É o fundamento de toda a fé cristã.",
+            aplicacao: "Em que áreas da sua vida você tem se envergonhado da mensagem de Cristo? Lembre-se: o Evangelho não precisa de sua defesa, mas de sua **proclamação corajosa**. Confie no poder transformador de Deus, não na sua eloquência.",
+            oracao: "Ore a Deus pedindo ousadia e convicção inabalável para viver e declarar o Evangelho como a única esperança para o mundo."
+        },
+        en: {
+            h2: "Day 1: The Gospel – God's Power",
+            versiculos: "<strong>Romans 1:16 (NIV):</strong> For I am not ashamed of the gospel, because it is the **power of God** for salvation to everyone who believes: first to the Jew, then to the Gentile.",
+            resumo: "The Gospel is the revelation of God's righteousness and the only means for salvation (Justification). It is not merely a message, but the **very divine potency** (God's Power) that effects regeneration and moves us from wrath to Grace. It is the foundation of all Christian faith.",
+            aplicacao: "In what areas of your life have you been ashamed of the message of Christ? Remember: the Gospel doesn't need your defense, but your **courageous proclamation**. Trust in God's transforming power, not your eloquence.",
+            oracao: "Pray to God asking for boldness and unshakeable conviction to live and declare the Gospel as the only hope for the world."
+        },
+        es: {
+            h2: "Día 1: El Evangelio – Poder de Dios",
+            versiculos: "<strong>Romanos 1:16 (NVI):</strong> A la verdad, no me avergüenzo del evangelio, pues es **poder de Dios** para la salvación de todos los que creen: de los judíos, en primer lugar, y también de los gentiles.",
+            resumo: "El Evangelio es la revelación de la justicia de Dios y el único medio para la salvación (Justificación). No es solo un mensaje, sino la **propia potencia divina** (Poder de Dios) que obra la regeneración y nos mueve de la ira a la Gracia. Es el fundamento de toda la fe cristiana.",
+            aplicacion: "¿En qué áreas de tu vida te has avergonzado del mensaje de Cristo? Recuerda: el Evangelio no necesita tu defensa, sino tu **proclamación valiente**. Confía en el poder transformador de Dios, no en tu elocuencia.",
+            oracao: "Ora a Dios pidiendo audacia y convicción inquebrantable para vivir y declarar el Evangelio como la única esperanza para el mundo."
+        },
+        fr: {
+            h2: "Jour 1: L'Évangile – Puissance de Dieu",
+            versiculos: "<strong>Romains 1:16 (Louis Segond):</strong> Car je n'ai point honte de l'Évangile: c'est une **puissance de Dieu** pour le salut de quiconque croit, du Juif premièrement, puis du Grec.",
+            resumo: "L'Évangile est la révélation de la justice de Dieu et le seul moyen de salut (Justification). Ce n'est pas seulement un message, mais la **puissance divine même** (Puissance de Dieu) qui opère la régénération et nous fait passer de la colère à la Grâce. C'est le fondement de toute foi chrétienne.",
+            aplicacao: "Dans quels domaines de votre vie avez-vous eu honte du message du Christ? Rappelez-vous: l'Évangile n'a pas besoin de votre défense, mais de votre **proclamation courageuse**. Faites confiance à la puissance transformatrice de Dieu, pas à votre éloquence.",
+            oracao: "Priez Dieu demandant audace et conviction inébranlable pour vivre et déclarer l'Évangile comme le seul espoir pour le monde."
+        }
+    },
+    2: {
+        pt: {
+            h2: "Dia 2: A Condenação Universal",
+            versiculos: "<strong>Romanos 3:23 (NVI):</strong> pois todos pecaram e estão destituídos da glória de Deus.",
+            resumo: "O 'tijolo' inicial da doutrina de Romanos é a **Depravação Total** (ou universalidade do pecado). Sem exceção, toda a humanidade está sob a justa ira de Deus (Condenação), necessitando desesperadamente de um Salvador. A lei revela o pecado, mas não o remove. Este é o palco para a Justificação.",
+            aplicacao: "Reconhecer a profundidade da sua própria Queda e pecado não leva ao desespero, mas à **admiração pela Graça** (Sola Gratia). A humildade de saber que você é um pecador salva é a chave para o verdadeiro arrependimento e gratidão.",
+            oracao: "Ore a Deus confessando sua falha e pedindo que a visão de Sua santidade aumente a cada dia a sua gratidão pela Graça de Cristo."
+        },
+        en: {
+            h2: "Day 2: The Universal Condemnation",
+            versiculos: "<strong>Romans 3:23 (NIV):</strong> for all have sinned and fall short of the glory of God.",
+            resumo: "The initial 'brick' of the doctrine in Romans is **Total Depravity** (or the universality of sin). Without exception, all humanity is under God's righteous wrath (Condemnation), desperately needing a Savior. The law reveals sin but does not remove it. This sets the stage for Justification.",
+            aplicacao: "Recognizing the depth of your own Fall and sin doesn't lead to despair, but to **awe at Grace** (Sola Gratia). The humility of knowing you are a saved sinner is the key to true repentance and gratitude.",
+            oracao: "Pray to God confessing your failure and asking that the vision of His holiness increases your gratitude for Christ's Grace daily."
+        },
+        es: {
+            h2: "Día 2: La Condenación Universal",
+            versiculos: "<strong>Romanos 3:23 (NVI):</strong> pues todos han pecado y están privados de la gloria de Dios.",
+            resumo: "El 'ladrillo' inicial de la doctrina de Romanos es la **Depravación Total** (o universalidad del pecado). Sin excepción, toda la humanidad está bajo la justa ira de Dios (Condenación), necesitando desesperadamente un Salvador. La ley revela el pecado, pero no lo quita. Este es el escenario para la Justificación.",
+            aplicacion: "Reconocer la profundidad de tu propia Caída y pecado no lleva a la desesperación, sino a la **admiración por la Gracia** (Sola Gratia). La humildad de saber que eres un pecador salvado es la clave para el verdadero arrepentimiento y gratitud.",
+            oracao: "Ora a Dios confesando tu fracaso y pidiendo que la visión de Su santidad aumente cada día tu gratitud por la Gracia de Cristo."
+        },
+        fr: {
+            h2: "Jour 2: La Condamnation Universelle",
+            versiculos: "<strong>Romains 3:23 (Louis Segond):</strong> Car tous ont péché et sont privés de la gloire de Dieu.",
+            resumo: "La 'brique' initiale de la doctrine de Romains est la **Dépravation Totale** (ou l'universalité du péché). Sans exception, toute l'humanité est sous la juste colère de Dieu (Condamnation), ayant désespérément besoin d'un Sauveur. La loi révèle le péché mais ne l'enlève pas. Cela prépare le terrain pour la Justification.",
+            aplicacao: "Reconnaître la profondeur de votre propre Chute et de votre péché ne mène pas au désespoir, mais à **l'émerveillement devant la Grâce** (Sola Gratia). L'humilité de savoir que vous êtes un pécheur sauvé est la clé de la véritable repentance et de la gratitude.",
+            oracao: "Priez Dieu confessant votre échec et demandant que la vision de Sa sainteté augmente chaque jour votre gratitude pour la Grâce du Christ."
+        }
+    },
+    3: {
+        pt: {
+            h2: "Dia 3: A Justificação Exclusiva pela Fé",
+            versiculos: "<strong>Romanos 3:28 (NVI):</strong> Concluímos que o homem é justificado **pela fé, independentemente das obras da Lei**.",
+            resumo: "O cerne da Reforma (Sola Fide) e de Romanos é a doutrina da Justificação: somos declarados justos por Deus não por mérito (obras), mas unicamente pela **fé em Jesus Cristo**. A justiça de Cristo é **imputada** a nós, cobrindo o nosso pecado e garantindo nossa aceitação.",
+            aplicacao: "Relaxe na certeza de que sua salvação não depende do seu desempenho ou de rituais religiosos. Seu esforço deve ser em **crescer na santificação** por gratidão, não para ganhar mérito. Descanse na suficiência de Cristo (Solus Christus).",
+            oracao: "Ore a Deus agradecendo pela Justificação pela fé, pedindo que a verdade de que a justiça de Cristo lhe foi imputada o livre da culpa e da autojustificação."
+        },
+        en: {
+            h2: "Day 3: Justification Exclusively by Faith",
+            versiculos: "<strong>Romans 3:28 (NIV):</strong> For we maintain that a person is justified **by faith apart from the works of the law**.",
+            resumo: "The core of the Reformation (Sola Fide) and Romans is the doctrine of Justification: we are declared righteous by God not by merit (works), but solely **through faith in Jesus Christ**. Christ's righteousness is **imputed** to us, covering our sin and ensuring our acceptance.",
+            aplicacao: "Rest in the certainty that your salvation does not depend on your performance or religious rituals. Your effort should be to **grow in sanctification** out of gratitude, not to earn merit. Rest in the sufficiency of Christ (Solus Christus).",
+            oracao: "Pray to God giving thanks for Justification by faith, asking that the truth of Christ's righteousness being imputed to you frees you from guilt and self-righteousness."
+        },
+        es: {
+            h2: "Día 3: La Justificación Exclusiva por la Fe",
+            versiculos: "<strong>Romanos 3:28 (NVI):</strong> Concluimos que el hombre es justificado **por la fe, sin las obras de la ley**.",
+            resumo: "El núcleo de la Reforma (Sola Fide) y de Romanos es la doctrina de la Justificación: somos declarados justos por Dios no por mérito (obras), sino únicamente por la **fe en Jesucristo**. La justicia de Cristo nos es **imputada**, cubriendo nuestro pecado y asegurando nuestra aceptación.",
+            aplicacion: "Descansa en la certeza de que tu salvación no depende de tu desempeño o de rituales religiosos. Tu esfuerzo debe ser en **crecer en santificación** por gratitud, no para ganar mérito. Descansa en la suficiencia de Cristo (Solus Christus).",
+            oracao: "Ora a Dios agradeciendo por la Justificación por la fe, pidiendo que la verdad de que la justicia de Cristo te fue imputada te libere de la culpa y de la autojustificación."
+        },
+        fr: {
+            h2: "Jour 3: La Justification Exclusivement par la Foi",
+            versiculos: "<strong>Romains 3:28 (Louis Segond):</strong> Car nous pensons que l'homme est justifié **par la foi, sans les oeuvres de la loi**.",
+            resumo: "Le cœur de la Réforme (Sola Fide) et de Romains est la doctrine de la Justification: nous sommes déclarés justes par Dieu non par le mérite (œuvres), mais uniquement par la **foi en Jésus-Christ**. La justice du Christ nous est **imputée**, couvrant notre péché et assurant notre acceptation.",
+            aplicacao: "Reposez-vous dans la certitude que votre salut ne dépend pas de vos performances ou de rituels religieux. Votre effort doit être de **croître dans la sanctification** par gratitude, non pour gagner du mérite. Reposez-vous dans la suffisance du Christ (Solus Christus).",
+            oracao: "Priez Dieu remerciant pour la Justification par la foi, demandant que la vérité de la justice du Christ vous étant imputée vous libère de la culpabilité et de l'auto-justification."
+        }
+    },
+    4: {
+        pt: {
+            h2: "Dia 4: Paz com Deus",
+            versiculos: "<strong>Romanos 5:1 (NVI):</strong> Tendo sido, pois, justificados pela fé, temos **paz com Deus**, por meio de nosso Senhor Jesus Cristo.",
+            resumo: "A consequência imediata da Justificação é a **Paz com Deus**. Deixamos de ser inimigos sob Sua ira e passamos a ser **filhos reconciliados** por meio do sacrifício de Cristo (Propiciação). Esta paz é um estado permanente e não uma emoção temporária.",
+            aplicacao: "Aproxime-se de Deus com **confiança** e não com medo. Sua relação com Ele não se baseia no quão 'bom' você foi hoje, mas no **sacrifício perfeito de Cristo**. Desfrute dessa paz em meio às tribulações, sabendo que a guerra espiritual mais importante já foi vencida.",
+            oracao: "Ore a Deus agradecendo pela Paz inabalável que Ele lhe concedeu por meio de Cristo e peça que essa paz governe seu coração e mente em todas as circunstâncias."
+        },
+        en: {
+            h2: "Day 4: Peace with God",
+            versiculos: "<strong>Romans 5:1 (NIV):</strong> Therefore, since we have been justified through faith, we have **peace with God** through our Lord Jesus Christ.",
+            resumo: "The immediate consequence of Justification is **Peace with God**. We cease to be enemies under His wrath and become **reconciled children** through Christ's sacrifice (Propitiation). This peace is a permanent state and not a temporary emotion.",
+            aplicacao: "Approach God with **confidence** and not fear. Your relationship with Him is not based on how 'good' you were today, but on **Christ's perfect sacrifice**. Enjoy this peace amidst tribulations, knowing that the most important spiritual war has already been won.",
+            oracao: "Pray to God giving thanks for the unshakeable Peace He granted you through Christ and ask that this peace governs your heart and mind in all circumstances."
+        },
+        es: {
+            h2: "Día 4: Paz con Dios",
+            versiculos: "<strong>Romanos 5:1 (NVI):</strong> En consecuencia, ya que hemos sido justificados mediante la fe, tenemos **paz con Dios** por medio de nuestro Señor Jesucristo.",
+            resumo: "La consecuencia inmediata de la Justificación es la **Paz con Dios**. Dejamos de ser enemigos bajo Su ira y pasamos a ser **hijos reconciliados** por medio del sacrificio de Cristo (Propiciación). Esta paz es un estado permanente y no una emoción temporal.",
+            aplicacion: "Acércate a Dios con **confianza** y no con miedo. Tu relación con Él no se basa en lo 'bueno' que fuiste hoy, sino en el **sacrificio perfecto de Cristo**. Disfruta de esta paz en medio de las tribulaciones, sabiendo que la guerra espiritual más importante ya ha sido ganada.",
+            oracao: "Ora a Dios agradeciendo por la Paz inquebrantable que Él te concedió por medio de Cristo y pide que esta paz gobierne tu corazón y mente en todas las circunstancias."
+        },
+        fr: {
+            h2: "Jour 4: La Paix avec Dieu",
+            versiculos: "<strong>Romains 5:1 (Louis Segond):</strong> Étant donc justifiés par la foi, nous avons la **paix avec Dieu** par notre Seigneur Jésus-Christ.",
+            resumo: "La conséquence immédiate de la Justification est la **Paix avec Dieu**. Nous cessons d'être des ennemis sous Sa colère et devenons des **enfants réconciliés** par le sacrifice du Christ (Propitiation). Cette paix est un état permanent et non une émotion temporaire.",
+            aplicacao: "Approchez-vous de Dieu avec **confiance** et non avec peur. Votre relation avec Lui n'est pas basée sur votre 'bonne' performance d'aujourd'hui, mais sur le **sacrifice parfait du Christ**. Jouissez de cette paix au milieu des tribulations, sachant que la guerre spirituelle la plus importante a déjà été gagnée.",
+            oracao: "Priez Dieu rendant grâce pour la Paix inébranlable qu'Il vous a accordée par le Christ et demandez que cette paix gouverne votre cœur et votre esprit en toutes circonstances."
+        }
+    },
+    5: {
+        pt: {
+            h2: "Dia 5: A Certeza da Esperança",
+            versiculos: "<strong>Romanos 5:5 (NVI):</strong> E a esperança não nos decepciona, porque Deus derramou seu amor em nossos corações, por meio do Espírito Santo que ele nos deu.",
+            resumo: "Nossa esperança na glória futura (Escatologia) não é uma incerteza, mas uma **convicção** fundamentada no **Amor de Deus** e selada pela presença do **Espírito Santo** (Garantia da Herança). O sofrimento (tribulação) na verdade, aprofunda essa esperança e nos prepara para a eternidade.",
+            aplicacao: "Quando a dúvida vier, ancore-se na Pessoa do Espírito Santo que habita em você. Ele é a **prova viva** do amor de Deus e a certeza de que a promessa da salvação será completada (Santificação). Use as dificuldades para fortalecer sua fé, e não para enfraquecê-la.",
+            oracao: "Ore ao Espírito Santo pedindo que Ele renove em seu coração a certeza da esperança e o amor de Deus, para que você possa perseverar na fé."
+        },
+        en: {
+            h2: "Day 5: The Certainty of Hope",
+            versiculos: "<strong>Romans 5:5 (NIV):</strong> And hope does not put us to shame, because God’s love has been poured out into our hearts through the Holy Spirit, who has been given to us.",
+            resumo: "Our hope in future glory (Eschatology) is not an uncertainty, but a **conviction** founded on **God's Love** and sealed by the presence of the **Holy Spirit** (Guarantee of the Inheritance). Suffering (tribulation) actually deepens this hope and prepares us for eternity.",
+            aplicacao: "When doubt comes, anchor yourself in the Person of the Holy Spirit who dwells within you. He is the **living proof** of God's love and the certainty that the promise of salvation will be completed (Sanctification). Use difficulties to strengthen your faith, not to weaken it.",
+            oracao: "Pray to the Holy Spirit asking Him to renew the certainty of hope and God's love in your heart, so that you may persevere in faith."
+        },
+        es: {
+            h2: "Día 5: La Certeza de la Esperanza",
+            versiculos: "<strong>Romanos 5:5 (NVI):</strong> Y esta esperanza no nos defrauda, porque Dios ha derramado su amor en nuestro corazón por el Espíritu Santo que nos ha dado.",
+            resumo: "Nuestra esperanza en la gloria futura (Escatología) no es una incertidumbre, sino una **convicción** fundamentada en el **Amor de Dios** y sellada por la presencia del **Espíritu Santo** (Garantía de la Herencia). El sufrimiento (tribulación) en realidad profundiza esta esperanza y nos prepara para la eternidad.",
+            aplicacion: "Cuando llegue la duda, ánclate en la Persona del Espíritu Santo que habita en ti. Él es la **prueba viva** del amor de Dios y la certeza de que la promesa de la salvación se completará (Santificación). Utiliza las dificultades para fortalecer tu fe, no para debilitarla.",
+            oracao: "Ora al Espíritu Santo pidiendo que Él renueve en tu corazón la certeza de la esperanza y el amor de Dios, para que puedas perseverar en la fe."
+        },
+        fr: {
+            h2: "Jour 5: La Certitude de l'Espérance",
+            versiculos: "<strong>Romains 5:5 (Louis Segond):</strong> Or, l'espérance ne trompe point, parce que l'amour de Dieu est répandu dans nos coeurs par le Saint-Esprit qui nous a été donné.",
+            resumo: "Notre espérance dans la gloire future (Eschatologie) n'est pas une incertitude, mais une **conviction** fondée sur l'**Amour de Dieu** et scellée par la présence du **Saint-Esprit** (Garantie de l'Héritage). La souffrance (tribulation) approfondit en fait cette espérance et nous prépare pour l'éternité.",
+            aplicacao: "Quand le doute vient, ancrez-vous dans la Personne du Saint-Esprit qui habite en vous. Il est la **preuve vivante** de l'amour de Dieu et la certitude que la promesse du salut sera achevée (Sanctification). Utilisez les difficultés pour renforcer votre foi, et non pour l'affaiblir.",
+            oracao: "Priez le Saint-Esprit Lui demandant de renouveler dans votre cœur la certitude de l'espérance et l'amour de Dieu, afin que vous puissiez persévérer dans la foi."
+        }
+    },
+    6: {
+        pt: {
+            h2: "Dia 6: Morte para o Pecado",
+            versiculos: "<strong>Romanos 6:11 (NVI):</strong> Da mesma forma, considerem-se mortos para o pecado, mas vivos para Deus em Cristo Jesus.",
+            resumo: "Pelo batismo (união com Cristo), fomos **identificados** com Sua morte e ressurreição (Justificação). Nossa velha natureza foi crucificada, e não somos mais escravos do pecado (Sanctificação). Isso não significa perfeição imediata, mas a **quebra da tirania** do pecado em nossa vida.",
+            aplicacao: "A cada tentação, lembre-se da sua **nova identidade**. Você é 'morto para o pecado'. Recuse-se a obedecer aos desejos da carne, não por força de vontade, mas pela **autoridade** de quem já foi liberto. Viva em novidade de vida, como ressuscitado em Cristo.",
+            oracao: "Ore a Deus pedindo que o Senhor reforce em sua mente a sua união com Cristo, para que você possa viver na vitória da Sua morte e ressurreição sobre o pecado."
+        },
+        en: {
+            h2: "Day 6: Dead to Sin",
+            versiculos: "<strong>Romans 6:11 (NIV):</strong> In the same way, count yourselves dead to sin but alive to God in Christ Jesus.",
+            resumo: "Through baptism (union with Christ), we have been **identified** with His death and resurrection (Justification). Our old nature has been crucified, and we are no longer slaves to sin (Sanctification). This does not mean immediate perfection, but the **breaking of sin's tyranny** in our lives.",
+            aplicacao: "With every temptation, remember your **new identity**. You are 'dead to sin'. Refuse to obey the desires of the flesh, not by willpower, but by the **authority** of one who has already been set free. Live in newness of life, as resurrected in Christ.",
+            oracao: "Pray to God asking the Lord to reinforce your union with Christ in your mind, so that you may live in the victory of His death and resurrection over sin."
+        },
+        es: {
+            h2: "Día 6: Muertos al Pecado",
+            versiculos: "<strong>Romanos 6:11 (NVI):</strong> De la misma manera, consideren-se muertos al pecado, pero vivos para Dios en Cristo Jesús.",
+            resumo: "Por el bautismo (unión con Cristo), hemos sido **identificados** con Su muerte y resurrección (Justificación). Nuestra vieja naturaleza ha sido crucificada, y ya no somos esclavos del pecado (Santificación). Esto no significa perfección inmediata, sino la **ruptura de la tiranía** del pecado en nuestra vida.",
+            aplicacion: "Con cada tentación, recuerda tu **nueva identidad**. Estás 'muerto al pecado'. Niégate a obedecer los deseos de la carne, no por fuerza de voluntad, sino por la **autoridad** de quien ya ha sido liberado. Vive en novedad de vida, como resucitado en Cristo.",
+            oracao: "Ora a Dios pidiendo que el Señor refuerce en tu mente tu unión con Cristo, para que puedas vivir en la victoria de Su muerte y resurrección sobre el pecado."
+        },
+        fr: {
+            h2: "Jour 6: Morts au Péché",
+            versiculos: "<strong>Romains 6:11 (Louis Segond):</strong> De même vous-mêmes, regardez-vous comme morts au péché, et comme vivants pour Dieu en Jésus-Christ.",
+            resumo: "Par le baptême (union avec Christ), nous avons été **identifiés** à Sa mort et à Sa résurrection (Justification). Notre vieille nature a été crucifiée, et nous ne sommes plus esclaves du péché (Sanctification). Cela ne signifie pas la perfection immédiate, mais la **rupture de la tyrannie** du péché dans notre vie.",
+            aplicacao: "À chaque tentation, rappelez-vous votre **nouvelle identité**. Vous êtes 'mort au péché'. Refusez d'obéir aux désirs de la chair, non par la force de la volonté, mais par l'**autorité** de celui qui a déjà été libéré. Vivez dans une vie nouvelle, comme ressuscité en Christ.",
+            oracao: "Priez Dieu demandant que le Seigneur renforce dans votre esprit votre union avec le Christ, afin que vous puissiez vivre dans la victoire de Sa mort et de Sa résurrection sur le péché."
+        }
+    },
+    7: {
+        pt: {
+            h2: "Dia 7: A Luta da Santificação",
+            versiculos: "<strong>Romanos 7:19 (NVI):</strong> Pois o que quero fazer eu não faço, mas o mal que não quero, este eu continuo a fazer.",
+            resumo: "Este capítulo descreve a **tensão dramática da vida cristã** (Santificação Imperfeita). O crente regenerado possui uma nova natureza que deseja agradar a Deus, mas ainda luta contra a 'lei do pecado' que reside na carne. É um lembrete de que a santificação é uma **batalha contínua** e que a libertação plena está em Cristo.",
+            aplicacao: "Não se desespere com suas lutas internas. A dor de pecar é, na verdade, uma **prova da nova vida** operada pelo Espírito (Regeneração). Leve sua luta a Cristo, pedindo perdão e poder para obedecer. A **confissão** é a arma do justo.",
+            oracao: "Ore a Deus pedindo que o Espírito Santo lhe dê a força para resistir ao mal e que sua vida seja cada vez mais marcada pela vitória de Cristo sobre a carne."
+        },
+        en: {
+            h2: "Day 7: The Struggle of Sanctification",
+            versiculos: "<strong>Romans 7:19 (NIV):</strong> For I do not do the good I want to do, but the evil I do not want to do—this I keep on doing.",
+            resumo: "This chapter describes the **dramatic tension of the Christian life** (Imperfect Sanctification). The regenerate believer possesses a new nature that desires to please God, but still struggles against the 'law of sin' residing in the flesh. It is a reminder that sanctification is a **continuous battle** and that full deliverance is in Christ.",
+            aplicacao: "Don't despair over your internal struggles. The pain of sinning is actually a **proof of the new life** wrought by the Spirit (Regeneration). Bring your struggle to Christ, asking for forgiveness and power to obey. **Confession** is the weapon of the righteous.",
+            oracao: "Pray to God asking the Holy Spirit to give you the strength to resist evil and that your life may be increasingly marked by Christ's victory over the flesh."
+        },
+        es: {
+            h2: "Día 7: La Lucha de la Santificación",
+            versiculos: "<strong>Romanos 7:19 (NVI):</strong> Pues no hago el bien que quiero, sino el mal que no quiero seguir haciendo.",
+            resumo: "Este capítulo describe la **tensión dramática de la vida cristiana** (Santificación Imperfecta). El creyente regenerado posee una nueva naturaleza que desea agradar a Dios, pero aún lucha contra la 'ley del pecado' que reside en la carne. Es un recordatorio de que la santificación es una **batalla continua** y que la liberación plena está en Cristo.",
+            aplicacion: "No te desesperes por tus luchas internas. El dolor de pecar es, en realidad, una **prueba de la nueva vida** obrada por el Espíritu (Regeneración). Lleva tu lucha a Cristo, pidiendo perdón y poder para obedecer. La **confesión** es el arma del justo.",
+            oracao: "Ora a Dios pidiendo que el Espíritu Santo te dé la fuerza para resistir el mal y que tu vida esté cada vez más marcada por la victoria de Cristo sobre la carne."
+        },
+        fr: {
+            h2: "Jour 7: La Lutte de la Sanctification",
+            versiculos: "<strong>Romains 7:19 (Louis Segond):</strong> Car je ne fais pas le bien que je veux, et je fais le mal que je ne veux pas.",
+            resumo: "Ce chapitre décrit la **tension dramatique de la vie chrétienne** (Sanctification Imparfaite). Le croyant régénéré possède une nouvelle nature qui désire plaire à Dieu, mais lutte toujours contre la 'loi du péché' qui réside dans la chair. C'est un rappel que la sanctification est une **bataille continue** et que la pleine délivrance est en Christ.",
+            aplicacao: "Ne désespérez pas de vos luttes internes. La douleur de pécher est, en réalité, une **preuve de la nouvelle vie** opérée par l'Esprit (Régénération). Apportez votre lutte à Christ, demandant pardon et pouvoir d'obéir. La **confession** est l'arme du juste.",
+            oracao: "Priez Dieu demandant que le Saint-Esprit vous donne la force de résister au mal et que votre vie soit de plus en plus marquée par la victoire du Christ sur la chair."
+        }
+    },
+    8: {
+        pt: {
+            h2: "Dia 8: A Vida no Espírito",
+            versiculos: "<strong>Romanos 8:1 (NVI):</strong> Portanto, agora já não há **condenação** para os que estão em Cristo Jesus.",
+            resumo: "A ausência de condenação é a **afirmação da Justificação** em Cristo (Sola Gratia). O Espírito Santo não é apenas o selo da salvação, mas o **Agente da Santificação**, que nos liberta da 'lei do pecado e da morte' e nos guia à obediência, nos dando vitória sobre a carne.",
+            aplicacao: "Viva hoje com a **plena liberdade** da Graça. Você não é definido pelos seus erros passados ou pela sua luta atual, mas pela **obra consumada de Cristo**. Foque a mente nas coisas do Espírito, pois é Ele quem produz a vida e a paz em você.",
+            oracao: "Ore a Deus agradecendo por não haver mais condenação e pedindo que o Espírito Santo o encha de vida e paz para que você possa andar em Seus caminhos."
+        },
+        en: {
+            h2: "Day 8: Life in the Spirit",
+            versiculos: "<strong>Romans 8:1 (NIV):</strong> Therefore, there is now no **condemnation** for those who are in Christ Jesus.",
+            resumo: "The absence of condemnation is the **affirmation of Justification** in Christ (Sola Gratia). The Holy Spirit is not only the seal of salvation, but the **Agent of Sanctification**, who frees us from the 'law of sin and death' and guides us to obedience, giving us victory over the flesh.",
+            aplicacao: "Live today with the **full freedom** of Grace. You are not defined by your past mistakes or your current struggle, but by the **finished work of Christ**. Focus your mind on the things of the Spirit, for He is the one who produces life and peace in you.",
+            oracao: "Pray to God giving thanks that there is no more condemnation and asking the Holy Spirit to fill you with life and peace so that you may walk in His ways."
+        },
+        es: {
+            h2: "Día 8: La Vida en el Espíritu",
+            versiculos: "<strong>Romanos 8:1 (NVI):</strong> Por lo tanto, ahora ya no hay **ninguna condenación** para los que están unidos a Cristo Jesús.",
+            resumo: "La ausencia de condenación es la **afirmación de la Justificación** en Cristo (Sola Gratia). El Espíritu Santo no es solo el sello de la salvación, sino el **Agente de la Santificación**, que nos libera de la 'ley del pecado y de la muerte' y nos guía a la obediencia, dándonos victoria sobre la carne.",
+            aplicacion: "Vive hoy con la **plena libertad** de la Gracia. No eres definido por tus errores pasados o tu lucha actual, sino por la **obra consumada de Cristo**. Enfoca la mente en las cosas del Espíritu, pues es Él quien produce la vida y la paz en ti.",
+            oracao: "Ora a Dios agradeciendo que ya no hay condenación y pidiendo que el Espíritu Santo te llene de vida y paz para que puedas andar en Sus caminos."
+        },
+        fr: {
+            h2: "Jour 8: La Vie dans l'Esprit",
+            versiculos: "<strong>Romains 8:1 (Louis Segond):</strong> Il n'y a donc maintenant **aucune condamnation** pour ceux qui sont en Jésus-Christ.",
+            resumo: "L'absence de condamnation est l'**affirmation de la Justification** en Christ (Sola Gratia). Le Saint-Esprit n'est pas seulement le sceau du salut, mais l'**Agent de la Sanctification**, qui nous libère de la 'loi du péché et de la mort' et nous guide à l'obéissance, nous donnant la victoire sur la chair.",
+            aplicacao: "Vivez aujourd'hui avec la **pleine liberté** de la Grâce. Vous n'êtes pas défini par vos erreurs passées ou votre lutte actuelle, mais par l'**œuvre achevée du Christ**. Concentrez votre esprit sur les choses de l'Esprit, car c'est Lui qui produit la vie et la paix en vous.",
+            oracao: "Priez Dieu rendant grâce qu'il n'y a plus de condamnation et demandant que le Saint-Esprit vous remplisse de vie et de paix afin que vous puissiez marcher dans Ses voies."
+        }
+    },
+    9: {
+        pt: {
+            h2: "Dia 9: A Filiação Adotiva",
+            versiculos: "<strong>Romanos 8:15 (NVI):</strong> Pois vocês não receberam um espírito que os escravize para novamente temerem, mas receberam o Espírito que os adota como filhos, por meio do qual clamamos: 'Aba, Pai'.",
+            resumo: "Pela obra do Espírito Santo, fomos transformados de escravos do medo em **filhos adotivos** (Adoção) de Deus (Soberania). Essa nova relação nos dá intimidade (`Aba`) e a certeza de que somos **coerdeiros** com Cristo. O medo da condenação é substituído pela confiança filial.",
+            aplicacao: "Passe tempo em oração hoje, não como um servo que teme o castigo, mas como um **filho amado** que anseia pela presença do Pai. Permita que o Espírito Santo o mova a uma intimidade maior com Deus, sabendo que Ele se deleita em você.",
+            oracao: "Clame a Deus dizendo: 'Aba, Pai'. Peça que a certeza da Sua adoção o liberte de todo medo e o faça viver em intimidade e alegria na Sua presença."
+        },
+        en: {
+            h2: "Day 9: Adoptive Sonship",
+            versiculos: "<strong>Romans 8:15 (NIV):</strong> The Spirit you received does not make you slaves, so that you live in fear again; rather, the Spirit you received brought about your adoption to sonship. And by him we cry, 'Abba, Father.'",
+            resumo: "Through the work of the Holy Spirit, we were transformed from slaves of fear into **adopted children** (Adoption) of God (Sovereignty). This new relationship gives us intimacy (`Abba`) and the certainty that we are **co-heirs** with Christ. The fear of condemnation is replaced by filial trust.",
+            aplicacao: "Spend time in prayer today, not as a servant who fears punishment, but as a **beloved child** who longs for the Father's presence. Allow the Holy Spirit to move you into greater intimacy with God, knowing that He delights in you.",
+            oracao: "Cry out to God saying: 'Abba, Father.' Ask that the certainty of your adoption frees you from all fear and leads you to live in intimacy and joy in His presence."
+        },
+        es: {
+            h2: "Día 9: La Filiación Adoptiva",
+            versiculos: "<strong>Romanos 8:15 (NVI):</strong> Pues ustedes no recibieron un espíritu que de nuevo los esclavice y les infunda miedo, sino el Espíritu que los hace hijos por adopción, mediante el cual clamamos: «Abba, Padre».",
+            resumo: "Por la obra del Espíritu Santo, fuimos transformados de esclavos del miedo en **hijos adoptivos** (Adopción) de Dios (Soberanía). Esta nueva relación nos da intimidad (`Abba`) y la certeza de que somos **coherederos** con Cristo. El miedo a la condenación es reemplazado por la confianza filial.",
+            aplicacion: "Pasa tiempo en oración hoy, no como un siervo que teme el castigo, sino como un **hijo amado** que anhela la presencia del Padre. Permite que el Espíritu Santo te mueva a una mayor intimidad con Dios, sabiendo que Él se deleita en ti.",
+            oracao: "Clama a Dios diciendo: 'Abba, Padre'. Pide que la certeza de Tu adopción te libere de todo miedo y te haga vivir en intimidad y alegría en Su presencia."
+        },
+        fr: {
+            h2: "Jour 9: La Filiation Adoptive",
+            versiculos: "<strong>Romains 8:15 (Louis Segond):</strong> Et vous n'avez point reçu un esprit de servitude, pour être encore dans la crainte; mais vous avez reçu un Esprit d'adoption, par lequel nous crions: Abba! Père!",
+            resumo: "Par l'œuvre du Saint-Esprit, nous avons été transformés d'esclaves de la peur en **enfants adoptifs** (Adoption) de Dieu (Souveraineté). Cette nouvelle relation nous donne l'intimité (`Abba`) et la certitude que nous sommes **co-héritiers** avec Christ. La peur de la condamnation est remplacée par la confiance filiale.",
+            aplicacao: "Passez du temps dans la prière aujourd'hui, non pas comme un serviteur qui craint la punition, mais comme un **enfant bien-aimé** qui aspire à la présence du Père. Permettez au Saint-Esprit de vous mouvoir vers une plus grande intimité avec Dieu, sachant qu'Il se délecte en vous.",
+            oracao: "Criez à Dieu en disant: 'Abba, Père'. Demandez que la certitude de Votre adoption vous libère de toute peur et vous fasse vivre dans l'intimité et la joie en Sa présence."
+        }
+    },
+    10: {
+        pt: {
+            h2: "Dia 10: O Propósito Soberano",
+            versiculos: "<strong>Romanos 8:28 (NVI):</strong> Sabemos que Deus age em todas as coisas para o **bem daqueles que o amam**, dos que foram chamados de acordo com o seu propósito.",
+            resumo: "Este é um dos pilares da **Soberania de Deus** (Doutrinas da Graça). A promessa não é que todas as coisas são boas, mas que em **todas as coisas** (dores e alegrias), Deus opera para o bem final do crente (Santificação e Glorificação), segundo o Seu plano eterno e imutável (Propósito).",
+            aplicacao: "Pare de tentar entender o 'porquê' de cada evento doloroso. Em vez disso, **confie no 'Quem'**. O seu propósito hoje é amar a Deus, e o d'Ele é usar **tudo** para formar o caráter de Cristo em você. Descanse na certeza do Seu cuidado soberano.",
+            oracao: "Ore a Deus entregando a Ele suas dificuldades e incertezas, pedindo a fé para crer que Ele está orquestrando tudo para o seu bem e a Sua glória."
+        },
+        en: {
+            h2: "Day 10: The Sovereign Purpose",
+            versiculos: "<strong>Romans 8:28 (NIV):</strong> And we know that in all things God works for the **good of those who love him**, who have been called according to his purpose.",
+            resumo: "This is one of the pillars of **God's Sovereignty** (Doctrines of Grace). The promise is not that all things are good, but that in **all things** (pains and joys), God works for the ultimate good of the believer (Sanctification and Glorification), according to His eternal and immutable plan (Purpose).",
+            aplicacao: "Stop trying to understand the 'why' of every painful event. Instead, **trust the 'Who'**. Your purpose today is to love God, and His is to use **everything** to form the character of Christ in you. Rest in the certainty of His sovereign care.",
+            oracao: "Pray to God surrendering your difficulties and uncertainties to Him, asking for the faith to believe that He is orchestrating everything for your good and His glory."
+        },
+        es: {
+            h2: "Día 10: El Propósito Soberano",
+            versiculos: "<strong>Romanos 8:28 (NVI):</strong> Ahora bien, sabemos que Dios dispone todas las cosas para el **bien de quienes lo aman**, los que han sido llamados de acuerdo con su propósito.",
+            resumo: "Este es uno de los pilares de la **Soberanía de Dios** (Doctrinas de la Gracia). La promesa no es que todas las cosas son buenas, sino que en **todas las cosas** (dolores y alegrías), Dios obra para el bien final del creyente (Santificación y Glorificación), según Su plan eterno e inmutable (Propósito).",
+            aplicacion: "Deja de intentar entender el 'porqué' de cada evento doloroso. En su lugar, **confía en el 'Quién'**. Tu propósito hoy es amar a Dios, y el Suyo es usar **todo** para formar el carácter de Cristo en ti. Descansa en la certeza de Su cuidado soberano.",
+            oracao: "Ora a Dios entregándole Tus dificultades e incertidumbres, pidiendo la fe para creer que Él está orquestando todo para tu bien y Su gloria."
+        },
+        fr: {
+            h2: "Jour 10: Le But Souverain",
+            versiculos: "<strong>Romains 8:28 (Louis Segond):</strong> Nous savons, du reste, que toutes choses concourent au **bien de ceux qui aiment Dieu**, de ceux qui sont appelés selon son dessein.",
+            resumo: "Ceci est l'un des piliers de la **Souveraineté de Dieu** (Doctrines de la Grâce). La promesse n'est pas que toutes les choses sont bonnes, mais que dans **toutes les choses** (douleurs et joies), Dieu œuvre pour le bien ultime du croyant (Sanctification et Glorification), selon Son plan éternel et immuable (Dessein).",
+            aplicacao: "Arrêtez d'essayer de comprendre le 'pourquoi' de chaque événement douloureux. Au lieu de cela, **faites confiance au 'Qui'**. Votre but aujourd'hui est d'aimer Dieu, et le Sien est d'utiliser **tout** pour former le caractère du Christ en vous. Reposez-vous dans la certitude de Son soin souverain.",
+            oracao: "Priez Dieu Lui confiant Vos difficultés et incertitudes, demandant la foi de croire qu'Il orchestre tout pour votre bien et Sa gloire."
+        }
+    },
+    11: {
+        pt: {
+            h2: "Dia 11: A Cadeia de Ouro da Salvação",
+            versiculos: "<strong>Romanos 8:30 (NVI):</strong> E aos que predestinou, também chamou; aos que chamou, também justificou; aos que justificou, também glorificou.",
+            resumo: "Este versículo revela a **Cadeia de Ouro da Salvação** (Ordo Salutis), evidenciando a **Soberania de Deus** desde a eternidade (Predestinação) até a consumação final (Glorificação). Cada elo — Chamado, Justificação e Glorificação — é inquebrável, garantido pelo controle de Deus sobre toda a obra de redenção. Nossa segurança é absoluta.",
+            aplicacao: "Mantenha seus olhos fixos no **fim da jornada**: a Glorificação. Se Deus o escolheu antes da fundação do mundo e o justificou por Cristo, Ele certamente o guardará até o fim. Isso deve gerar **confiança radical** e perseverança (Perseverança dos Santos).",
+            oracao: "Ore a Deus agradecendo pela segurança eterna em Cristo e pedindo que essa certeza o inspire a viver uma vida santa e dedicada a Ele."
+        },
+        en: {
+            h2: "Day 11: The Golden Chain of Salvation",
+            versiculos: "<strong>Romans 8:30 (NIV):</strong> And those he predestined, he also called; those he called, he also justified; those he justified, he also glorified.",
+            resumo: "This verse reveals the **Golden Chain of Salvation** (Ordo Salutis), evidencing **God's Sovereignty** from eternity (Predestination) to the final consummation (Glorification). Each link — Calling, Justification, and Glorification — is unbreakable, guaranteed by God's control over the entire work of redemption. Our security is absolute.",
+            aplicacao: "Keep your eyes fixed on the **end of the journey**: Glorification. If God chose you before the foundation of the world and justified you through Christ, He will surely keep you until the end. This should generate **radical confidence** and perseverance (Perseverance of the Saints).",
+            oracao: "Pray to God giving thanks for eternal security in Christ and asking that this certainty inspires you to live a holy life dedicated to Him."
+        },
+        es: {
+            h2: "Día 11: La Cadena de Oro de la Salvación",
+            versiculos: "<strong>Romanos 8:30 (NVI):</strong> Y a los que predestinó, también llamó; a los que llamó, también justificó; y a los que justificó, también glorificó.",
+            resumo: "Este versículo revela la **Cadena de Oro de la Salvación** (Ordo Salutis), evidenciando la **Soberanía de Dios** desde la eternidad (Predestinación) hasta la consumación final (Glorificación). Cada eslabón — Llamamiento, Justificación y Glorificación — es inquebrantable, garantizado por el control de Dios sobre toda la obra de redención. Nuestra seguridad es absoluta.",
+            aplicacion: "Mantén tus ojos fijos en el **final del viaje**: la Glorificación. Si Dios te escogió antes de la fundación del mundo y te justificó por Cristo, Él ciertamente te guardará hasta el final. Esto debe generar **confianza radical** y perseverancia (Perseverancia de los Santos).",
+            oracao: "Ora a Dios agradeciendo por la seguridad eterna en Cristo y pidiendo que esta certeza te inspire a vivir una vida santa y dedicada a Él."
+        },
+        fr: {
+            h2: "Jour 11: La Chaîne d'Or du Salut",
+            versiculos: "<strong>Romains 8:30 (Louis Segond):</strong> Et ceux qu'il a prédestinés, il les a aussi appelés; et ceux qu'il a appelés, il les a aussi justifiés; et ceux qu'il a justifiés, il les a aussi glorifiés.",
+            resumo: "Ce verset révèle la **Chaîne d'Or du Salut** (Ordo Salutis), mettant en évidence la **Souveraineté de Dieu** depuis l'éternité (Prédestination) jusqu'à la consommation finale (Glorification). Chaque maillon — Appel, Justification et Glorification — est incassable, garanti par le contrôle de Dieu sur toute l'œuvre de rédemption. Notre sécurité est absolue.",
+            aplicacao: "Gardez les yeux fixés sur la **fin du voyage**: la Glorification. Si Dieu vous a choisi avant la fondation du monde et vous a justifié par Christ, Il vous gardera certainement jusqu'à la fin. Cela doit générer une **confiance radicale** et une persévérance (Persévérance des Saints).",
+            oracao: "Priez Dieu rendant grâce pour la sécurité éternelle en Christ et demandant que cette certitude vous inspire à vivre une vie sainte et Lui étant dédiée."
+        }
+    },
+    12: {
+        pt: {
+            h2: "Dia 12: Quem Pode Nos Separar?",
+            versiculos: "<strong>Romanos 8:38-39 (NVI):</strong> Pois estou convencido de que nem a morte nem a vida, nem os anjos nem os demônios, nem o presente nem o futuro, nem quaisquer poderes, nem altura nem profundidade, nem qualquer outra coisa na criação será capaz de nos **separar do amor de Deus** que está em Cristo Jesus, nosso Senhor.",
+            resumo: "Este é o clímax da certeza do crente. A inseparabilidade do amor de Deus é a base da **Segurança Eterna** e da **Perseverança dos Santos**. Nossa união com Cristo, estabelecida pela Justificação, é invulnerável a qualquer poder ou circunstância (Soberania).",
+            aplicacao: "Abrace esta verdade em momentos de crise, dúvida ou tentação. Sua segurança não está na sua força, mas na **fidelidade e amor inabaláveis de Deus**. Nada no universo criado, visível ou invisível, pode anular a obra de Cristo em você.",
+            oracao: "Ore a Deus louvando-O por Seu amor inseparável e peça que Ele grave em seu coração a certeza de que você está seguro Nele para sempre."
+        },
+        en: {
+            h2: "Day 12: Who Can Separate Us?",
+            versiculos: "<strong>Romans 8:38-39 (NIV):</strong> For I am convinced that neither death nor life, neither angels nor demons, neither the present nor the future, nor any powers, neither height nor depth, nor anything else in all creation, will be able to **separate us from the love of God** that is in Christ Jesus our Lord.",
+            resumo: "This is the climax of the believer's certainty. The inseparability of God's love is the basis of **Eternal Security** and the **Perseverance of the Saints**. Our union with Christ, established by Justification, is invulnerable to any power or circumstance (Sovereignty).",
+            aplicacao: "Embrace this truth in moments of crisis, doubt, or temptation. Your security is not in your strength, but in **God's unshakeable faithfulness and love**. Nothing in the created universe, visible or invisible, can nullify Christ's work in you.",
+            oracao: "Pray to God praising Him for His inseparable love and ask Him to engrave in your heart the certainty that you are safe in Him forever."
+        },
+        es: {
+            h2: "Día 12: ¿Quién Puede Separarnos?",
+            versiculos: "<strong>Romanos 8:38-39 (NVI):</strong> Pues estoy convencido de que ni la muerte ni la vida, ni los ángeles ni los demonios, ni lo presente ni lo por venir, ni los poderes, ni lo alto ni lo profundo, ni ninguna otra cosa en toda la creación, podrá **separarnos del amor de Dios** que está en Cristo Jesús, nuestro Señor.",
+            resumo: "Este es el clímax de la certeza del creyente. La inseparabilidad del amor de Dios es la base de la **Seguridad Eterna** y la **Perseverancia de los Santos**. Nuestra unión con Cristo, establecida por la Justificación, es invulnerable a cualquier poder o circunstancia (Soberanía).",
+            aplicacion: "Abraza esta verdad en momentos de crisis, duda o tentación. Tu seguridad no está en tu fuerza, sino en la **fidelidad y amor inquebrantables de Dios**. Nada en el universo creado, visible o invisible, puede anular la obra de Cristo en ti.",
+            oracao: "Ora a Dios alabándolo por Su amor inseparable y pide que Él grabe en tu corazón la certeza de que estás seguro en Él para siempre."
+        },
+        fr: {
+            h2: "Jour 12: Qui Peut Nous Séparer?",
+            versiculos: "<strong>Romains 8:38-39 (Louis Segond):</strong> Car j'ai l'assurance que ni la mort ni la vie, ni les anges ni les dominations, ni les choses présentes ni les choses à venir, ni les puissances, ni la hauteur, ni la profondeur, ni aucune autre créature ne pourra nous **séparer de l'amour de Dieu** manifesté en Jésus-Christ notre Seigneur.",
+            resumo: "Ceci est le climax de la certitude du croyant. L'inséparabilité de l'amour de Dieu est la base de la **Sécurité Éternelle** et de la **Persévérance des Saints**. Notre union avec Christ, établie par la Justification, est invulnérable à tout pouvoir ou circonstance (Souveraineté).",
+            aplicacao: "Embrassez cette vérité dans les moments de crise, de doute ou de tentation. Votre sécurité n'est pas dans votre force, mais dans la **fidélité et l'amour inébranlables de Dieu**. Rien dans l'univers créé, visible ou invisible, ne peut annuler l'œuvre du Christ en vous.",
+            oracao: "Priez Dieu Le louant pour Son amour inséparable et demandez-Lui de graver dans votre cœur la certitude que vous êtes en sécurité en Lui pour toujours."
+        }
+    },
+    13: {
+        pt: {
+            h2: "Dia 13: A Eleição Soberana",
+            versiculos: "<strong>Romanos 9:16 (NVI):</strong> Portanto, isso não depende do desejo ou do esforço humano, mas da **misericórdia de Deus**.",
+            resumo: "Os capítulos 9-11 abordam a **Soberania Incondicional de Deus** (Eleição). A salvação, incluindo a escolha de Israel e dos gentios, não se baseia na vontade ou no mérito humano (Antítese do Arminianismo), mas exclusivamente na **misericórdia e na vontade de Deus**. Este princípio garante que Ele é o Autor, Sustentador e Consumador da salvação (Soli Deo Gloria).",
+            aplicacao: "A humildade é a única resposta à Eleição Soberana. Sua salvação é um **presente imerecido**. Evite a soberba espiritual e trate todos (salvos ou não) com a graça que você mesmo recebeu. Lembre-se: Deus escolhe a quem Ele quer.",
+            oracao: "Ore a Deus reconhecendo Sua soberania sobre sua vida e a salvação. Peça humildade para descansar em Sua Misericórdia e Graça incondicionais."
+        },
+        en: {
+            h2: "Day 13: The Sovereign Election",
+            versiculos: "<strong>Romans 9:16 (NIV):</strong> It does not, therefore, depend on human desire or effort, but on **God’s mercy**.",
+            resumo: "Chapters 9-11 address the **Unconditional Sovereignty of God** (Election). Salvation, including the choice of Israel and the Gentiles, is not based on human will or merit (Antithesis of Arminianism), but solely on **God's mercy and will**. This principle ensures that He is the Author, Sustainer, and Finisher of salvation (Soli Deo Gloria).",
+            aplicacao: "Humility is the only response to Sovereign Election. Your salvation is an **undeserved gift**. Avoid spiritual pride and treat everyone (saved or not) with the grace you yourself received. Remember: God chooses whom He wants.",
+            oracao: "Pray to God acknowledging His sovereignty over your life and salvation. Ask for humility to rest in His unconditional Mercy and Grace."
+        },
+        es: {
+            h2: "Día 13: La Elección Soberana",
+            versiculos: "<strong>Romanos 9:16 (NVI):</strong> Por lo tanto, la elección no depende del deseo ni del esfuerzo humano, sino de la **misericordia de Dios**.",
+            resumo: "Los capítulos 9-11 abordan la **Soberanía Incondicional de Dios** (Elección). La salvación, incluida la elección de Israel y de los gentiles, no se basa en la voluntad o el mérito humano (Antítesis del Arminianismo), sino exclusivamente en la **misericordia y la voluntad de Dios**. Este principio asegura que Él es el Autor, Sustentador y Consumador de la salvación (Soli Deo Gloria).",
+            aplicacion: "La humildad es la única respuesta a la Elección Soberana. Tu salvación es un **regalo inmerecido**. Evita la soberbia espiritual y trata a todos (salvos o no) con la gracia que tú mismo recibiste. Recuerda: Dios elige a quien Él quiere.",
+            oracao: "Ora a Dios reconociendo Su soberanía sobre tu vida y la salvación. Pide humildad para descansar en Su Misericordia y Gracia incondicionales."
+        },
+        fr: {
+            h2: "Jour 13: L'Élection Souveraine",
+            versiculos: "<strong>Romains 9:16 (Louis Segond):</strong> Ainsi donc, cela ne dépend ni de la volonté ni de la course de l'homme, mais de **la miséricorde de Dieu**.",
+            resumo: "Les chapitres 9-11 abordent la **Souveraineté Inconditionnelle de Dieu** (Élection). Le salut, y compris le choix d'Israël et des Gentils, ne repose pas sur la volonté ou le mérite humain (Antithèse de l'Arminianisme), mais exclusivement sur la **miséricorde et la volonté de Dieu**. Ce principe assure qu'Il est l'Auteur, le Soutien et le Consommateur du salut (Soli Deo Gloria).",
+            aplicacao: "L'humilité est la seule réponse à l'Élection Souveraine. Votre salut est un **don immérité**. Évitez l'orgueil spirituel et traitez tout le monde (sauvé ou non) avec la grâce que vous avez vous-même reçue. Rappelez-vous: Dieu choisit qui Il veut.",
+            oracao: "Priez Dieu reconnaissant Sa souveraineté sur votre vie et le salut. Demandez l'humilité de vous reposer dans Sa Miséricorde et Sa Grâce inconditionnelles."
+        }
+    },
+    14: {
+    pt: {
+        h2: "Dia 14: A Confissão Pública da Salvação",
+        versiculos: "<strong>Romanos 10:9 (NVI):</strong> Se você confessar com a sua boca que Jesus é Senhor e crer em seu coração que Deus o ressuscitou dentre os mortos, será salvo.",
+        resumo: "Este versículo sintetiza a resposta humana à obra soberana de Deus (Eleição/Justificação). A salvação vem pela **fé** (crença no coração) e é **publicamente testemunhada** pela confissão (proclamação). Ambas as ações são o fruto do Chamado Eficaz, não a causa da Justificação.",
+        aplicacao: "Sua fé é um assunto de **coração e boca**. O que você diz publicamente sobre Jesus? Viva de tal forma que sua vida seja uma **confissão diária** de que Ele é o **Senhor Soberano** sobre tudo. Use sua voz para a glória dEle.",
+        oracao: "Ore a Deus pedindo que Ele lhe dê a coragem de confessar Jesus como Senhor, e que seu coração seja sempre firme na crença da Sua ressurreição."
+    },
+    en: {
+        h2: "Day 14: The Public Confession of Salvation",
+        versiculos: "<strong>Romans 10:9 (NIV):</strong> If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised him from the dead, you will be saved.",
+        resumo: "This verse summarizes the human response to God's sovereign work (Election/Justification). Salvation comes through **faith** (belief in the heart) and is **publicly witnessed** by confession (proclamation). Both actions are the fruit of the Effective Calling, not the cause of Justification.",
+        aplicacao: "Your faith is a matter of **heart and mouth**. What do you publicly say about Jesus? Live in such a way that your life is a **daily confession** that He is the **Sovereign Lord** over everything. Use your voice for His glory.",
+        oracao: "Pray to God asking Him to give you the courage to confess Jesus as Lord, and that your heart may always be firm in the belief of His resurrection."
+    },
+    es: {
+        h2: "Día 14: La Confesión Pública de la Salvación",
+        versiculos: "<strong>Romanos 10:9 (NVI):</strong> que si confiesas con tu boca que Jesús es el Señor y crees en tu corazón que Dios lo levantó de entre los muertos, serás salvo.",
+        resumo: "Este versículo sintetiza la respuesta humana a la obra soberana de Dios (Elección/Justificación). La salvación viene por la **fe** (creencia en el corazón) y es **testificada públicamente** por la confesión (proclamación). Ambas acciones son el fruto del Llamamiento Eficaz, no la causa de la Justificación.",
+        aplicacion: "Tu fe es un asunto de **corazón y boca**. ¿Qué dices públicamente sobre Jesús? Vive de tal manera que tu vida sea una **confesión diaria** de que Él es el **Señor Soberano** sobre todo. Usa tu voz para Su gloria.",
+        oracao: "Ora a Dios pidiendo que Él te dé el coraje de confesar a Jesús como Señor, y que tu corazón esté siempre firme en la creencia de Su resurrección."
+    },
+    fr: {
+        h2: "Jour 14: La Confession Publique du Salut",
+        versiculos: "<strong>Romains 10:9 (Louis Segond):</strong> Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton coeur que Dieu l'a ressuscité des morts, tu seras sauvé.",
+        resumo: "Ce verset résume la réponse humaine à l'œuvre souveraine de Dieu (Élection/Justification). Le salut vient par la **foi** (croyance dans le cœur) et est **publiquement témoigné** par la confession (proclamation). Les deux actions sont le fruit de l'Appel Efficace, non la cause de la Justification.",
+        aplicacao: "Votre foi est une question de **cœur et de bouche**. Que dites-vous publiquement de Jésus? Vivez de telle manière que votre vie soit une **confession quotidienne** qu'Il est le **Seigneur Souverain** sur tout. Utilisez votre voix pour Sa gloire.",
+        oracao: "Priez Dieu Lui demandant de vous donner le courage de confesser Jésus comme Seigneur, et que votre cœur soit toujours ferme dans la croyance de Sa résurrection."
+        }
+    },
+    15: {
+        pt: {
+            h2: "Dia 15: O Mistério da Inclusão",
+            versiculos: "<strong>Romanos 11:33 (NVI):</strong> Ó profundidade da riqueza, da sabedoria e do conhecimento de Deus! Quão insondáveis são os seus juízos e **inescrutáveis os seus caminhos**!",
+            resumo: "Após discorrer sobre a rejeição temporária de Israel e a inclusão dos gentios (História da Redenção), Paulo explode em louvor à **Soberania Inescrutável de Deus**. Os planos de Deus são mais profundos do que podemos entender, e Sua sabedoria é perfeita. Devemos adorar, em vez de questionar.",
+            aplicacao: "Quando você se deparar com mistérios na vida ou na teologia que não consegue resolver (como o sofrimento), **humilhe-se em adoração**. Confie que Aquele que orquestrou a salvação de judeus e gentios também orquestra sua vida com sabedoria perfeita.",
+            oracao: "Ore a Deus louvando a profundidade da Sua sabedoria e conhecimento. Peça para que Ele lhe conceda a fé para adorar o mistério e a humildade para aceitar o que não pode ser compreendido."
+        },
+        en: {
+            h2: "Day 15: The Mystery of Inclusion",
+            versiculos: "<strong>Romans 11:33 (NIV):</strong> Oh, the depth of the riches of the wisdom and knowledge of God! How unsearchable his judgments, and his **paths beyond tracing out**!",
+            resumo: "After discussing the temporary rejection of Israel and the inclusion of the Gentiles (Redemptive History), Paul bursts into praise for the **Unsearchable Sovereignty of God**. God's plans are deeper than we can understand, and His wisdom is perfect. We must worship, rather than question.",
+            aplicacao: "When you encounter mysteries in life or theology that you cannot resolve (like suffering), **humble yourself in worship**. Trust that the One who orchestrated the salvation of Jews and Gentiles also orchestrates your life with perfect wisdom.",
+            oracao: "Pray to God praising the depth of His wisdom and knowledge. Ask Him to grant you the faith to worship the mystery and the humility to accept what cannot be understood."
+        },
+        es: {
+            h2: "Día 15: El Misterio de la Inclusión",
+            versiculos: "<strong>Romanos 11:33 (NVI):</strong> ¡Qué profundas son las riquezas de la inteligencia y del conocimiento de Dios! ¡Qué indescifrables sus juicios e **insondables sus caminos**!",
+            resumo: "Después de discurrir sobre el rechazo temporal de Israel y la inclusión de los gentiles (Historia de la Redención), Pablo explota en alabanza a la **Soberanía Inescrutable de Dios**. Los planes de Dios son más profundos de lo que podemos entender, y Su sabiduría es perfecta. Debemos adorar, en lugar de cuestionar.",
+            aplicacion: "Cuando te encuentres con misterios en la vida o en la teología que no puedes resolver (como el sufrimiento), **humíllate en adoración**. Confía en que Aquel que orquestó la salvación de judíos y gentiles también orquesta tu vida con sabiduría perfecta.",
+            oracao: "Ora a Dios alabando la profundidad de Su sabiduría y conocimiento. Pide que Él te conceda la fe para adorar el misterio y la humildad para aceptar lo que no puede ser comprendido."
+        },
+        fr: {
+            h2: "Jour 15: Le Mystère de l'Inclusion",
+            versiculos: "<strong>Romains 11:33 (Louis Segond):</strong> Ô profondeur de la richesse, de la sagesse et de la science de Dieu! Que ses jugements sont insondables, et ses **voies incompréhensibles**!",
+            resumo: "Après avoir discouru sur le rejet temporaire d'Israël et l'inclusion des Gentils (Histoire de la Rédemption), Paul éclate en louange à la **Souveraineté Impénétrable de Dieu**. Les plans de Dieu sont plus profonds que nous ne pouvons le comprendre, et Sa sagesse est parfaite. Nous devons adorer, plutôt que de questionner.",
+            aplicacao: "Lorsque vous rencontrez des mystères dans la vie ou la théologie que vous ne pouvez pas résoudre (comme la souffrance), **humiliez-vous dans l'adoration**. Faites confiance à Celui qui a orchestré le salut des Juifs et des Gentils pour orchestrer également votre vie avec une sagesse parfaite.",
+            oracao: "Priez Dieu louant la profondeur de Sa sagesse et de Sa connaissance. Demandez-Lui de vous accorder la foi d'adorer le mystère et l'humilité d'accepter ce qui ne peut être compris."
+        }
+    },
+    16: {
+        pt: {
+            h2: "Dia 16: O Culto Racional",
+            versiculos: "<strong>Romanos 12:1 (NVI):</strong> Portanto, irmãos, rogo-lhes pelas misericórdias de Deus que ofereçam seus corpos em sacrifício vivo, santo e agradável a Deus; este é o **culto racional** de vocês.",
+            resumo: "Os capítulos 12-16 mudam o foco da Doutrina (Justificação/Soberania) para a Prática (Santificação). Nossa resposta à misericórdia de Deus é a **entrega total da vida** (Corpo). O verdadeiro 'culto' não é um ritual religioso, mas uma **transformação contínua** da mente e do corpo (Santificação) para a glória de Deus.",
+            aplicacao: "Pergunte a si mesmo: Como eu posso oferecer meu corpo (meu tempo, talentos, finanças) hoje como um sacrifício? Abandone a conformidade com o mundo e busque a **renovação da mente** para discernir a vontade de Deus. Sua vida inteira é seu altar.",
+            oracao: "Ore a Deus pedindo que Ele lhe mostre as áreas da sua vida que precisam ser oferecidas como 'sacrifício vivo' e que Ele o ajude a viver um culto de vida agradável a Ele."
+        },
+        en: {
+            h2: "Day 16: The Rational Worship",
+            versiculos: "<strong>Romans 12:1 (NIV):</strong> Therefore, I urge you, brothers and sisters, in view of God’s mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your **true and proper worship**.",
+            resumo: "Chapters 12-16 shift the focus from Doctrine (Justification/Sovereignty) to Practice (Sanctification). Our response to God's mercy is the **total surrender of life** (Body). True 'worship' is not a religious ritual, but a **continuous transformation** of the mind and body (Sanctification) for God's glory.",
+            aplicacao: "Ask yourself: How can I offer my body (my time, talents, finances) today as a sacrifice? Abandon conformity to the world and seek the **renewal of the mind** to discern God's will. Your entire life is your altar.",
+            oracao: "Pray to God asking Him to show you the areas of your life that need to be offered as a 'living sacrifice' and that He helps you live a life of worship pleasing to Him."
+        },
+        es: {
+            h2: "Día 16: El Culto Racional",
+            versiculos: "<strong>Romanos 12:1 (NVI):</strong> Por lo tanto, hermanos, tomando en cuenta la misericordia de Dios, les ruego que cada uno de ustedes, en adoración espiritual, ofrezca su cuerpo como sacrificio vivo, santo y agradable a Dios.",
+            resumo: "Los capítulos 12-16 cambian el enfoque de la Doctrina (Justificación/Soberanía) a la Práctica (Santificación). Nuestra respuesta a la misericordia de Dios es la **entrega total de la vida** (Cuerpo). El verdadero 'culto' no es un ritual religioso, sino una **transformación continua** de la mente y el cuerpo (Santificación) para la gloria de Dios.",
+            aplicacion: "Pregúntate a ti mismo: ¿Cómo puedo ofrecer mi cuerpo (mi tiempo, talentos, finanzas) hoy como un sacrificio? Abandona la conformidad con el mundo y busca la **renovación de la mente** para discernir la voluntad de Dios. Tu vida entera es tu altar.",
+            oracao: "Ora a Dios pidiendo que Él te muestre las áreas de tu vida que necesitan ser ofrecidas como 'sacrificio vivo' y que Él te ayude a vivir un culto de vida agradable a Él."
+        },
+        fr: {
+            h2: "Jour 16: Le Culte Raisonnable",
+            versiculos: "<strong>Romains 12:1 (Louis Segond):</strong> Je vous exhorte donc, frères, par les compassions de Dieu, à offrir vos corps comme un sacrifice vivant, saint, agréable à Dieu, ce qui sera de votre part un **culte raisonnable**.",
+            resumo: "Les chapitres 12-16 déplacent l'accent de la Doctrine (Justification/Souveraineté) à la Pratique (Sanctification). Notre réponse à la miséricorde de Dieu est l'**abandon total de la vie** (Corps). Le véritable 'culte' n'est pas un rituel religieux, mais une **transformation continue** de l'esprit et du corps (Sanctification) pour la gloire de Dieu.",
+            aplicacao: "Demandez-vous: Comment puis-je offrir mon corps (mon temps, talents, finances) aujourd'hui comme un sacrifice? Abandonnez la conformité au monde et cherchez le **renouvellement de l'esprit** pour discerner la volonté de Dieu. Votre vie entière est votre autel.",
+            oracao: "Priez Dieu Lui demandant de vous montrer les domaines de votre vie qui doivent être offerts comme 'sacrifice vivant' et qu'Il vous aide à vivre un culte de vie Lui étant agréable."
+        }
+    },
+    17: {
+        pt: {
+            h2: "Dia 17: A Unidade do Corpo",
+            versiculos: "<strong>Romanos 12:4-5 (NVI):</strong> Assim como cada um de nós tem um corpo com muitos membros e esses membros não exercem todos a mesma função, assim também em Cristo nós, que somos muitos, formamos um só corpo, e cada membro está ligado a todos os outros.",
+            resumo: "A Santificação individual leva à **comunhão prática** (Eclesiologia). A diversidade de dons é uma expressão da sabedoria de Deus para a **unidade do Corpo de Cristo**. Ninguém é completo sozinho, e cada membro (regenerado) tem um papel essencial e divinamente ordenado.",
+            aplicacao: "Identifique e use o seu dom com **diligência** e **humildade**, servindo à comunidade. Recuse o orgulho que superestima seu dom e o desprezo que subestima o dom do outro. Valorize a **interdependência** no Corpo.",
+            oracao: "Ore a Deus pedindo que Ele lhe mostre o seu lugar e função no Corpo de Cristo, e a graça de servir com amor e humildade aos outros membros."
+        },
+        en: {
+            h2: "Day 17: The Unity of the Body",
+            versiculos: "<strong>Romans 12:4-5 (NIV):</strong> For just as each of us has one body with many members, and these members do not all have the same function, so in Christ we, though many, form one body, and each member belongs to all the others.",
+            resumo: "Individual Sanctification leads to **practical fellowship** (Ecclesiology). The diversity of gifts is an expression of God's wisdom for the **unity of the Body of Christ**. No one is complete alone, and every member (regenerate) has an essential and divinely ordained role.",
+            aplicacao: "Identify and use your gift with **diligence** and **humility**, serving the community. Refuse the pride that overestimates your gift and the contempt that underestimates the gift of another. Value **interdependence** in the Body.",
+            oracao: "Pray to God asking Him to show you your place and function in the Body of Christ, and the grace to serve the other members with love and humility."
+        },
+        es: {
+            h2: "Día 17: La Unidad del Cuerpo",
+            versiculos: "<strong>Romanos 12:4-5 (NVI):</strong> Pues así como cada uno de nosotros tiene un solo cuerpo con muchos miembros, y no todos estos miembros desempeñan la misma función, también nosotros, siendo muchos, formamos un solo cuerpo en Cristo, y cada miembro está unido a todos los demás.",
+            resumo: "La Santificación individual conduce a la **comunión práctica** (Eclesiología). La diversidad de dones es una expresión de la sabiduría de Dios para la **unidad del Cuerpo de Cristo**. Nadie está completo solo, y cada miembro (regenerado) tiene un papel esencial y divinamente ordenado.",
+            aplicacion: "Identifica y usa tu don con **diligencia** y **humildad**, sirviendo a la comunidad. Rechaza el orgullo que sobreestima tu don y el desprecio que subestima el don del otro. Valora la **interdependencia** en el Cuerpo.",
+            oracao: "Ora a Dios pidiendo que Él te muestre tu lugar y función en el Cuerpo de Cristo, y la gracia de servir con amor y humildad a los demás miembros."
+        },
+        fr: {
+            h2: "Jour 17: L'Unité du Corps",
+            versiculos: "<strong>Romains 12:4-5 (Louis Segond):</strong> Car, comme nous avons plusieurs membres dans un seul corps, et que tous les membres n'ont pas la même fonction, ainsi, nous qui sommes plusieurs, nous sommes un seul corps en Christ, et nous sommes tous membres les uns des autres.",
+            resumo: "La Sanctification individuelle conduit à la **communion pratique** (Ecclésiologie). La diversité des dons est une expression de la sagesse de Dieu pour l'**unité du Corps du Christ**. Personne n'est complet seul, et chaque membre (régénéré) a un rôle essentiel et divinement ordonné.",
+            aplicacao: "Identifiez et utilisez votre don avec **diligence** et **humilité**, servant la communauté. Refusez l'orgueil qui surestime votre don et le mépris qui sous-estime le don de l'autre. Valorisez l'**interdépendance** dans le Corps.",
+            oracao: "Priez Dieu demandant qu'Il vous montre votre place et fonction dans le Corps du Christ, et la grâce de servir les autres membres avec amour et humilité."
+        }
+    },
+    18: {
+        pt: {
+            h2: "Dia 18: O Amor em Ação",
+            versiculos: "<strong>Romanos 12:9 (NVI):</strong> O amor deve ser **sincero**. Odeiem o que é mau; apeguem-se ao que é bom.",
+            resumo: "O amor cristão (Ágape) é a **prova prática** da nossa Santificação. Ele não é um sentimento, mas uma **ação sincera** que se manifesta na aversão ao pecado e na adesão à justiça (Antítese Moral). O amor verdadeiro (Fruto do Espírito) busca o bem do próximo e honra a Deus.",
+            aplicacao: "Seu amor é **sincero** ou apenas superficial/interesseiro? Odiar o mal não é ódio às pessoas, mas ódio ao pecado que as destrói. Procure hoje uma oportunidade de servir alguém sem esperar nada em troca, refletindo o **amor incondicional** de Cristo.",
+            oracao: "Ore a Deus pedindo que Ele purifique seu coração para que seu amor seja genuíno e que suas ações sejam sempre motivadas pela justiça e bondade de Cristo."
+        },
+        en: {
+            h2: "Day 18: Love in Action",
+            versiculos: "<strong>Romans 12:9 (NIV):</strong> Love must be **sincere**. Hate what is evil; cling to what is good.",
+            resumo: "Christian love (Agape) is the **practical proof** of our Sanctification. It is not a feeling, but a **sincere action** that manifests in aversion to sin and adherence to righteousness (Moral Antithesis). True love (Fruit of the Spirit) seeks the good of others and honors God.",
+            aplicacao: "Is your love **sincere** or merely superficial/self-serving? Hating evil is not hating people, but hating the sin that destroys them. Seek an opportunity today to serve someone without expecting anything in return, reflecting the **unconditional love** of Christ.",
+            oracao: "Pray to God asking Him to purify your heart so that your love may be genuine and that your actions may always be motivated by Christ's righteousness and goodness."
+        },
+        es: {
+            h2: "Día 18: El Amor en Acción",
+            versiculos: "<strong>Romanos 12:9 (NVI):</strong> El amor debe ser **sincero**. Aborrezcan lo malo; aférrense a lo bueno.",
+            resumo: "El amor cristiano (Ágape) es la **prueba práctica** de nuestra Santificación. No es un sentimiento, sino una **acción sincera** que se manifiesta en la aversión al pecado y la adhesión a la justicia (Antítesis Moral). El amor verdadero (Fruto del Espíritu) busca el bien del prójimo y honra a Dios.",
+            aplicacion: "¿Es tu amor **sincero** o meramente superficial/interesado? Odiar el mal no es odiar a las personas, sino odiar el pecado que las destruye. Busca hoy una oportunidad para servir a alguien sin esperar nada a cambio, reflejando el **amor incondicional** de Cristo.",
+            oracao: "Ora a Dios pidiendo que Él purifique tu corazón para que tu amor sea genuino y que tus acciones estén siempre motivadas por la justicia y bondad de Cristo."
+        },
+        fr: {
+            h2: "Jour 18: L'Amour en Action",
+            versiculos: "<strong>Romains 12:9 (Louis Segond):</strong> Que votre amour soit **sincère**. Ayez le mal en horreur; attachez-vous fortement au bien.",
+            resumo: "L'amour chrétien (Agapé) est la **preuve pratique** de notre Sanctification. Ce n'est pas un sentiment, mais une **action sincère** qui se manifeste par l'aversion du péché et l'adhésion à la justice (Antithèse Morale). Le véritable amour (Fruit de l'Esprit) cherche le bien du prochain et honore Dieu.",
+            aplicacao: "Votre amour est-il **sincère** ou simplement superficiel/égoïste? Haïr le mal n'est pas haïr les gens, mais haïr le péché qui les détruit. Cherchez aujourd'hui une opportunité de servir quelqu'un sans rien attendre en retour, reflétant l'**amour inconditionnel** du Christ.",
+            oracao: "Priez Dieu Lui demandant de purifier votre cœur afin que votre amour soit sincère et que vos actions soient toujours motivées par la justice et la bonté du Christ."
+        }
+    },
+    19: {
+        pt: {
+            h2: "Dia 19: A Reação à Injustiça",
+            versiculos: "<strong>Romanos 12:17-19 (NVI):</strong> Não retribuam a ninguém mal por mal. (...) Amados, nunca procurem vingar-se, mas deixem com Deus a **vingança**, pois está escrito: 'Minha é a vingança; eu retribuirei', diz o Senhor.",
+            resumo: "A Santificação exige que o crente abdique do seu direito à vingança. A paciência em face da injustiça é um ato de **confiança radical na Soberania de Deus**. Vingar-se é usurpar o papel d'Ele. Nossa tarefa é viver em paz e amar os inimigos, deixando a Justiça nas mãos do Juiz Soberano.",
+            aplicacao: "Alguém o magoou ou o tratou injustamente? Entregue essa dor e o desejo de retaliação a Deus. Escolha ativamente a **paz e a bênção** em vez da maldição (Santificação). Sua reação reflete a fé na Justiça de Deus.",
+            oracao: "Ore a Deus pedindo-Lhe a graça de perdoar aqueles que o ofenderam e a paciência para deixar toda a justiça e retribuição nas mãos dEle."
+        },
+        en: {
+            h2: "Day 19: The Reaction to Injustice",
+            versiculos: "<strong>Romans 12:17-19 (NIV):</strong> Do not repay anyone evil for evil. (...) Do not take revenge, my dear friends, but leave room for God’s wrath, for it is written: 'It is mine to avenge; I will repay,' says the Lord.",
+            resumo: "Sanctification requires the believer to give up their right to revenge. Patience in the face of injustice is an act of **radical trust in God's Sovereignty**. Taking revenge is usurping His role. Our task is to live in peace and love our enemies, leaving Justice in the hands of the Sovereign Judge.",
+            aplicacao: "Has someone hurt you or treated you unjustly? Surrender that pain and the desire for retaliation to God. Actively choose **peace and blessing** instead of cursing (Sanctification). Your reaction reflects faith in God's Justice.",
+            oracao: "Pray to God asking Him for the grace to forgive those who have wronged you and the patience to leave all justice and recompense in His hands."
+        },
+        es: {
+            h2: "Día 19: La Reacción a la Injusticia",
+            versiculos: "<strong>Romanos 12:17-19 (NVI):</strong> No paguen a nadie mal por mal. (...) No tomen venganza, hermanos míos, sino dejen el castigo en las manos de Dios, ya que está escrito: «Mía es la **venganza**; yo pagaré», dice el Señor.",
+            resumo: "La Santificación exige que el creyente abdique de su derecho a la venganza. La paciencia ante la injusticia es un acto de **confianza radical en la Soberanía de Dios**. Vengarse es usurpar Su papel. Nuestra tarea es vivir en paz y amar a los enemigos, dejando la Justicia en manos del Juez Soberano.",
+            aplicacion: "¿Alguien te hirió o te trató injustamente? Entrega ese dolor y el deseo de represalia a Dios. Elige activamente la **paz y la bendición** en lugar de la maldición (Santificación). Tu reacción refleja la fe en la Justicia de Dios.",
+            oracao: "Ora a Dios pidiéndole la gracia de perdonar a aquellos que te ofendieron y la paciencia para dejar toda justicia y retribución en Sus manos."
+        },
+        fr: {
+            h2: "Jour 19: La Réaction à l'Injustice",
+            versiculos: "<strong>Romains 12:17-19 (Louis Segond):</strong> Ne rendez à personne le mal pour le mal. (...) Ne vous vengez point vous-mêmes, bien-aimés, mais laissez agir la colère; car il est écrit: À moi la **vengeance**, à moi la rétribution, dit le Seigneur.",
+            resumo: "La Sanctification exige que le croyant renonce à son droit de vengeance. La patience face à l'injustice est un acte de **confiance radicale dans la Souveraineté de Dieu**. Se venger, c'est usurper Son rôle. Notre tâche est de vivre en paix et d'aimer nos ennemis, laissant la Justice entre les mains du Juge Souverain.",
+            aplicacao: "Quelqu'un vous a-t-il blessé ou traité injustement? Abandonnez cette douleur et le désir de représailles à Dieu. Choisissez activement la **paix et la bénédiction** au lieu de la malédiction (Sanctification). Votre réaction reflète la foi dans la Justice de Dieu.",
+            oracao: "Priez Dieu Lui demandant la grâce de pardonner à ceux qui vous ont offensé et la patience de laisser toute justice et rétribution entre Ses mains."
+        }
+    },
+    20: {
+        pt: {
+            h2: "Dia 20: Submissão às Autoridades",
+            versiculos: "<strong>Romanos 13:1 (NVI):</strong> Todos devem sujeitar-se às autoridades governamentais, pois não há autoridade que não venha de Deus; as autoridades que existem foram por ele **estabelecidas**.",
+            resumo: "Este princípio de **Soberania** aplica-se à esfera cívica (Doutrina do Governo Civil). Deus estabelece todas as autoridades, mesmo as imperfeitas. Nossa submissão (exceto quando o governo exige desobediência a Deus) é um ato de obediência ao próprio Deus. O propósito é manter a ordem e punir o mal.",
+            aplicacao: "Ore pelas suas autoridades, em vez de apenas criticá-las. Cumpra seus deveres cívicos (impostos, leis) como um ato de **adoração a Deus**. Sua postura reflete o reconhecimento de que **Deus está no controle** do governo e da história.",
+            oracao: "Ore a Deus pelas autoridades do seu país, pedindo que elas ajam com justiça e que Deus lhe dê um espírito de submissão e respeito."
+        },
+        en: {
+            h2: "Day 20: Submission to Authorities",
+            versiculos: "<strong>Romans 13:1 (NIV):</strong> Let everyone be subject to the governing authorities, for there is no authority except that which comes from God, and the authorities that exist have been **established** by God.",
+            resumo: "This principle of **Sovereignty** applies to the civic sphere (Doctrine of Civil Government). God establishes all authorities, even the imperfect ones. Our submission (except when the government requires disobedience to God) is an act of obedience to God Himself. The purpose is to maintain order and punish evil.",
+            aplicacao: "Pray for your authorities, instead of merely criticizing them. Fulfill your civic duties (taxes, laws) as an act of **worship to God**. Your posture reflects the recognition that **God is in control** of government and history.",
+            oracao: "Pray to God for the authorities of your country, asking them to act justly and that God gives you a spirit of submission and respect."
+        },
+        es: {
+            h2: "Día 20: Sumisión a las Autoridades",
+            versiculos: "<strong>Romanos 13:1 (NVI):</strong> Sométase toda persona a las autoridades superiores, porque no hay autoridad que no provenga de Dios, y las que existen han sido **establecidas** por él.",
+            resumo: "Este principio de **Soberanía** se aplica a la esfera cívica (Doctrina del Gobierno Civil). Dios establece todas las autoridades, incluso las imperfectas. Nuestra sumisión (excepto cuando el gobierno exige desobediencia a Dios) es un acto de obediencia a Dios mismo. El propósito es mantener el orden y castigar el mal.",
+            aplicacion: "Ora por tus autoridades, en lugar de solo criticarlas. Cumple con tus deberes cívicos (impuestos, leyes) como un acto de **adoración a Dios**. Tu postura refleja el reconocimiento de que **Dios está en control** del gobierno y la historia.",
+            oracao: "Ora a Dios por las autoridades de tu país, pidiendo que actúen con justicia y que Dios te dé un espíritu de sumisión y respeto."
+        },
+        fr: {
+            h2: "Jour 20: Soumission aux Autorités",
+            versiculos: "<strong>Romains 13:1 (Louis Segond):</strong> Que toute personne soit soumise aux autorités supérieures; car il n'y a point d'autorité qui ne vienne de Dieu, et les autorités qui existent ont été **instituées** de Dieu.",
+            resumo: "Ce principe de **Souveraineté** s'applique à la sphère civique (Doctrine du Gouvernement Civil). Dieu établit toutes les autorités, même les imparfaites. Notre soumission (sauf lorsque le gouvernement exige la désobéissance à Dieu) est un acte d'obéissance à Dieu Lui-même. Le but est de maintenir l'ordre et de punir le mal.",
+            aplicacao: "Priez pour vos autorités, au lieu de simplement les critiquer. Remplissez vos devoirs civiques (impôts, lois) comme un acte d'**adoration envers Dieu**. Votre posture reflète la reconnaissance que **Dieu est en contrôle** du gouvernement et de l'histoire.",
+            oracao: "Priez Dieu pour les autorités de votre pays, demandant qu'elles agissent avec justice et que Dieu vous donne un esprit de soumission et de respect."
+        }
+    },
+    21: {
+        pt: {
+            h2: "Dia 21: A Lei do Amor",
+            versiculos: "<strong>Romanos 13:10 (NVI):</strong> O amor não pratica o mal contra o próximo. Portanto, o amor é o **cumprimento da Lei**.",
+            resumo: "O amor (Ágape), derramado em nossos corações pelo Espírito (Santificação), é o resumo e a **essência de toda a Lei Moral de Deus**. Aquele que ama verdadeiramente seu próximo não precisa de uma lista de regras para evitar o mal, pois o amor o conduz naturalmente à obediência.",
+            aplicacao: "Em qualquer dilema ético ou moral, pergunte: **'O que o amor faria?'** O amor, motivado pela gratidão a Cristo, simplifica a vida cristã. Concentre-se em amar a Deus e ao próximo (o segundo grande mandamento), e o restante da Lei será cumprido.",
+            oracao: "Ore a Deus pedindo que o Seu amor encha seu coração de tal forma que o cumprimento da Lei seja uma alegria e não um fardo em sua vida."
+        },
+        en: {
+            h2: "Day 21: The Law of Love",
+            versiculos: "<strong>Romans 13:10 (NIV):</strong> Love does no harm to a neighbor. Therefore, love is the **fulfillment of the law**.",
+            resumo: "Love (Agape), poured into our hearts by the Spirit (Sanctification), is the summary and the **essence of God's entire Moral Law**. One who truly loves their neighbor does not need a list of rules to avoid evil, for love naturally leads them to obedience.",
+            aplicacao: "In any ethical or moral dilemma, ask: **'What would love do?'** Love, motivated by gratitude to Christ, simplifies the Christian life. Focus on loving God and your neighbor (the second great commandment), and the rest of the Law will be fulfilled.",
+            oracao: "Pray to God asking that His love fills your heart in such a way that the fulfillment of the Law is a joy and not a burden in your life."
+        },
+        es: {
+            h2: "Día 21: La Ley del Amor",
+            versiculos: "<strong>Romanos 13:10 (NVI):</strong> El amor no perjudica al prójimo. Así que el amor es el **cumplimiento de la ley**.",
+            resumo: "El amor (Ágape), derramado en nuestros corazones por el Espíritu (Santificación), es el resumen y la **esencia de toda la Ley Moral de Dios**. Aquel que ama verdaderamente a su prójimo no necesita una lista de reglas para evitar el mal, pues el amor lo conduce naturalmente a la obediencia.",
+            aplicacion: "En cualquier dilema ético o moral, pregunta: **'¿Qué haría el amor?'** El amor, motivado por la gratitud a Cristo, simplifica la vida cristiana. Concéntrate en amar a Dios y a tu prójimo (el segundo gran mandamiento), y el resto de la Ley será cumplido.",
+            oracao: "Ora a Dios pidiendo que Su amor llene tu corazón de tal forma que el cumplimiento de la Ley sea una alegría y no una carga en tu vida."
+        },
+        fr: {
+            h2: "Jour 21: La Loi de l'Amour",
+            versiculos: "<strong>Romains 13:10 (Louis Segond):</strong> L'amour ne fait point de mal au prochain; l'amour est donc **l'accomplissement de la loi**.",
+            resumo: "L'amour (Agapé), répandu dans nos cœurs par l'Esprit (Sanctification), est le résumé et l'**essence de toute la Loi Morale de Dieu**. Celui qui aime véritablement son prochain n'a pas besoin d'une liste de règles pour éviter le mal, car l'amour le conduit naturellement à l'obéissance.",
+            aplicacao: "Dans tout dilemme éthique ou moral, demandez: **'Que ferait l'amour?'** L'amour, motivé par la gratitude envers Christ, simplifie la vie chrétienne. Concentrez-vous sur l'amour de Dieu et de votre prochain (le second grand commandement), et le reste de la Loi sera accompli.",
+            oracao: "Priez Dieu demandant que Son amour remplisse votre cœur de telle sorte que l'accomplissement de la Loi soit une joie et non un fardeau dans votre vie."
+        }
+    },
+    22: {
+        pt: {
+            h2: "Dia 22: Julgamentos Não Essenciais",
+            versiculos: "<strong>Romanos 14:1 (NVI):</strong> Aceitem o que é fraco na fé, sem discutir sobre **assuntos controvertidos**.",
+            resumo: "Os capítulos 14 e 15 tratam de questões adiafóricas (não essenciais) e da **consciência**. O crente forte deve aceitar o fraco, sem desprezo, e o fraco não deve julgar o forte. O princípio central é não usar a sua liberdade (Justificação) para fazer o irmão tropeçar (Santificação e Amor).",
+            aplicacao: "Examine suas atitudes. Você está sendo arrogante com sua 'liberdade' ou está julgando a fé do seu irmão por questões secundárias (comida, bebidas, datas)? O **Amor ao próximo** e a **Glória de Deus** devem ser sempre as prioridades, e não o seu 'direito' de estar certo.",
+            oracao: "Ore a Deus pedindo discernimento para distinguir o essencial do não essencial e a graça de amar seu irmão, não causando tropeço com sua conduta."
+        },
+        en: {
+            h2: "Day 22: Non-Essential Judgments",
+            versiculos: "<strong>Romans 14:1 (NIV):</strong> Accept the one whose faith is weak, without quarreling over **disputable matters**.",
+            resumo: "Chapters 14 and 15 deal with adiaphora (non-essential issues) and **conscience**. The strong believer should accept the weak without contempt, and the weak should not judge the strong. The central principle is not to use your freedom (Justification) to cause your brother to stumble (Sanctification and Love).",
+            aplicacao: "Examine your attitudes. Are you being arrogant with your 'freedom' or are you judging your brother's faith over secondary matters (food, drinks, dates)? **Love for your neighbor** and **God's Glory** must always be the priorities, not your 'right' to be correct.",
+            oracao: "Pray to God asking for discernment to distinguish the essential from the non-essential and the grace to love your brother, without causing him to stumble with your conduct."
+        },
+        es: {
+            h2: "Día 22: Juicios No Esenciales",
+            versiculos: "<strong>Romanos 14:1 (NVI):</strong> Acepten al que es débil en la fe, sin entrar en **discusiones controversiales**.",
+            resumo: "Los capítulos 14 y 15 tratan de cuestiones adiafóricas (no esenciales) y de la **conciencia**. El creyente fuerte debe aceptar al débil sin menosprecio, y el débil no debe juzgar al fuerte. El principio central es no usar tu libertad (Justificación) para hacer tropezar al hermano (Santificación y Amor).",
+            aplicacion: "Examina tus actitudes. ¿Estás siendo arrogante con tu 'libertad' o estás juzgando la fe de tu hermano por cuestiones secundarias (comida, bebidas, fechas)? El **Amor al prójimo** y la **Gloria de Dios** deben ser siempre las prioridades, y no tu 'derecho' a tener razón.",
+            oracao: "Ora a Dios pidiendo discernimiento para distinguir lo esencial de lo no esencial y la gracia de amar a tu hermano, sin causar tropiezo con tu conducta."
+        },
+        fr: {
+            h2: "Jour 22: Jugements Non Essentiels",
+            versiculos: "<strong>Romains 14:1 (Louis Segond):</strong> Accueillez celui qui est faible dans la foi, et ne discutez pas sur des **opinions**.",
+            resumo: "Les chapitres 14 et 15 traitent des questions adiaphora (non essentielles) et de la **conscience**. Le croyant fort doit accepter le faible sans mépris, et le faible ne doit pas juger le fort. Le principe central est de ne pas utiliser votre liberté (Justification) pour faire trébucher votre frère (Sanctification et Amour).",
+            aplicacao: "Examinez vos attitudes. Êtes-vous arrogant avec votre 'liberté' ou jugez-vous la foi de votre frère sur des questions secondaires (nourriture, boissons, dates)? L'**Amour du prochain** et la **Gloire de Dieu** doivent toujours être les priorités, et non votre 'droit' d'avoir raison.",
+            oracao: "Priez Dieu demandant le discernement pour distinguer l'essentiel du non-essentiel et la grâce d'aimer votre frère, sans le faire trébucher par votre conduite."
+        }
+    },
+    23: {
+        pt: {
+            h2: "Dia 23: O Reino de Deus",
+            versiculos: "<strong>Romanos 14:17 (NVI):</strong> Pois o Reino de Deus não é comida nem bebida, mas **justiça, paz e alegria no Espírito Santo**.",
+            resumo: "Paulo redefine a prioridade do Reino de Deus em contraste com as questões externas e triviais. O Reino é uma **realidade espiritual** presente na vida do crente (Escatologia Realizada), que se manifesta em virtudes éticas e na comunhão com o Espírito Santo. A preocupação deve ser com o caráter (Santificação), e não com a aparência.",
+            aplicacao: "Não deixe que as trivialidades da vida ou da igreja consumam sua energia. Concentre-se no que é eterno e essencial: a **Justiça** de Cristo que lhe foi imputada, a **Paz** que você tem com Deus e a **Alegria** que só o Espírito pode dar. Invista no seu caráter.",
+            oracao: "Ore a Deus pedindo que o Senhor reoriente seu foco para o que é essencial, cultivando a justiça, a paz e a alegria que só se encontram no Seu Espírito."
+        },
+        en: {
+            h2: "Day 23: The Kingdom of God",
+            versiculos: "<strong>Romans 14:17 (NIV):</strong> For the kingdom of God is not a matter of eating and drinking, but of **righteousness, peace and joy in the Holy Spirit**.",
+            resumo: "Paul redefines the priority of the Kingdom of God in contrast to external and trivial matters. The Kingdom is a **spiritual reality** present in the believer's life (Realized Eschatology), which manifests in ethical virtues and fellowship with the Holy Spirit. The concern should be with character (Sanctification), and not with appearance.",
+            aplicacao: "Don't let the trivialities of life or the church consume your energy. Focus on what is eternal and essential: Christ's **Righteousness** that was imputed to you, the **Peace** you have with God, and the **Joy** that only the Spirit can give. Invest in your character.",
+            oracao: "Pray to God asking the Lord to reorient your focus to what is essential, cultivating the righteousness, peace, and joy found only in His Spirit."
+        },
+        es: {
+            h2: "Día 23: El Reino de Dios",
+            versiculos: "<strong>Romanos 14:17 (NVI):</strong> Porque el reino de Dios no es cuestión de comidas o bebidas, sino de **justicia, paz y alegría en el Espíritu Santo**.",
+            resumo: "Pablo redefine la prioridad del Reino de Dios en contraste con las cuestiones externas y triviales. El Reino es una **realidad espiritual** presente en la vida del creyente (Escatología Realizada), que se manifiesta en virtudes éticas y en la comunión con el Espíritu Santo. La preocupación debe ser el carácter (Santificación), y no la apariencia.",
+            aplicacion: "No permitas que las trivialidades de la vida o de la iglesia consuman tu energía. Concéntrate en lo que es eterno y esencial: la **Justicia** de Cristo que te fue imputada, la **Paz** que tienes con Dios y la **Alegría** que solo el Espíritu puede dar. Invierte en tu carácter.",
+            oracao: "Ora a Dios pidiendo que el Señor reoriente tu enfoque a lo esencial, cultivando la justicia, la paz y la alegría que solo se encuentran en Su Espíritu."
+        },
+        fr: {
+            h2: "Jour 23: Le Royaume de Dieu",
+            versiculos: "<strong>Romains 14:17 (Louis Segond):</strong> Car le royaume de Dieu, ce n'est pas le manger et le boire, mais la **justice, la paix et la joie, par le Saint-Esprit**.",
+            resumo: "Paul redéfinit la priorité du Royaume de Dieu par opposition aux questions externes et triviales. Le Royaume est une **réalité spirituelle** présente dans la vie du croyant (Eschatologie Réalisée), qui se manifeste par des vertus éthiques et la communion avec le Saint-Esprit. La préoccupation doit être le caractère (Sanctification), et non l'apparence.",
+            aplicacao: "Ne laissez pas les trivialités de la vie ou de l'église consumer votre énergie. Concentrez-vous sur ce qui est éternel et essentiel: la **Justice** du Christ qui vous a été imputée, la **Paix** que vous avez avec Dieu, et la **Joie** que seul l'Esprit peut donner. Investissez dans votre caractère.",
+            oracao: "Priez Dieu demandant que le Seigneur réoriente votre attention vers l'essentiel, cultivant la justice, la paix et la joie qui ne se trouvent que dans Son Esprit."
+        }
+    },
+    24: {
+        pt: {
+            h2: "Dia 24: Glorificar a Deus Unidamente",
+            versiculos: "<strong>Romanos 15:6 (NVI):</strong> para que, com um só coração e uma só voz, vocês **glorifiquem ao Deus e Pai** de nosso Senhor Jesus Cristo.",
+            resumo: "O objetivo final da unidade e aceitação mútua (Santificação) entre os crentes (judeus e gentios) é a **Glória de Deus** (Soli Deo Gloria). A diversidade aceita não é um fim em si mesma, mas um meio para que a igreja, com total harmonia, exalte o Deus Triúno.",
+            aplicacao: "O que o seu coração e sua voz estão louvando hoje? Use sua vida e seus relacionamentos para criar harmonia na igreja. Toda a sua vida, incluindo seu louvor e sua atitude para com os outros, deve convergir para a **Glória de Deus**.",
+            oracao: "Ore a Deus pedindo que Ele unifique o coração da Sua igreja para que, em toda a sua diversidade, todos possam glorificá-Lo com uma só voz."
+        },
+        en: {
+            h2: "Day 24: Glorifying God Unitedly",
+            versiculos: "<strong>Romans 15:6 (NIV):</strong> so that with one heart and mouth you may **glorify the God and Father** of our Lord Jesus Christ.",
+            resumo: "The ultimate goal of unity and mutual acceptance (Sanctification) among believers (Jews and Gentiles) is the **Glory of God** (Soli Deo Gloria). Accepted diversity is not an end in itself, but a means for the church, in complete harmony, to exalt the Triune God.",
+            aplicacao: "What are your heart and voice praising today? Use your life and relationships to create harmony in the church. Your entire life, including your praise and your attitude toward others, should converge to the **Glory of God**.",
+            oracao: "Pray to God asking Him to unify the heart of His church so that, in all its diversity, everyone may glorify Him with one voice."
+        },
+        es: {
+            h2: "Día 24: Glorificar a Dios Unidos",
+            versiculos: "<strong>Romanos 15:6 (NVI):</strong> para que con un solo corazón y a una sola voz **glorifiquen al Dios y Padre** de nuestro Señor Jesucristo.",
+            resumo: "El objetivo final de la unidad y aceptación mutua (Santificación) entre los creyentes (judíos y gentiles) es la **Gloria de Dios** (Soli Deo Gloria). La diversidad aceptada no es un fin en sí misma, sino un medio para que la iglesia, con total armonía, exalte al Dios Trino.",
+            aplicacion: "¿Qué están alabando hoy tu corazón y tu voz? Usa tu vida y tus relaciones para crear armonía en la iglesia. Toda tu vida, incluyendo tu alabanza y tu actitud hacia los demás, debe converger hacia la **Gloria de Dios**.",
+            oracao: "Ora a Dios pidiendo que Él unifique el corazón de Su iglesia para que, en toda su diversidad, todos puedan glorificarle a una sola voz."
+        },
+        fr: {
+            h2: "Jour 24: Glorifier Dieu Unis",
+            versiculos: "<strong>Romains 15:6 (Louis Segond):</strong> Afin que d'un même coeur et d'une même bouche vous **glorifiiez Dieu, le Père** de notre Seigneur Jésus-Christ.",
+            resumo: "Le but ultime de l'unité et de l'acceptation mutuelle (Sanctification) parmi les croyants (Juifs et Gentils) est la **Gloire de Dieu** (Soli Deo Gloria). La diversité acceptée n'est pas une fin en soi, mais un moyen pour l'église, en parfaite harmonie, d'exalter le Dieu Trinitaire.",
+            aplicacao: "Que louent votre cœur et votre voix aujourd'hui? Utilisez votre vie et vos relations pour créer l'harmonie dans l'église. Toute votre vie, y compris votre louange et votre attitude envers les autres, doit converger vers la **Gloire de Dieu**.",
+            oracao: "Priez Dieu Lui demandant d'unifier le cœur de Son église afin que, dans toute sa diversité, chacun puisse Le glorifier d'une seule voix."
+        }
+    },
+    25: {
+        pt: {
+            h2: "Dia 25: A Fonte de Toda Esperança",
+            versiculos: "<strong>Romanos 15:13 (NVI):</strong> Que o Deus da esperança os encha de toda alegria e paz, por sua confiança nele, para que vocês transbordem de esperança, pelo **poder do Espírito Santo**.",
+            resumo: "A oração de Paulo resume a vida prática do crente. Deus é a **Fonte (Deus da esperança)**, a **Fé (confiança nele)** é o canal, e o **Espírito Santo (poder do Espírito Santo)** é o agente que produz a alegria, a paz e o transbordamento da esperança. Este é um lembrete do nosso total amparo na Trindade.",
+            aplicacao: "Você está ansioso ou desanimado? Busque a **Fonte**. A alegria e a paz não são acidentais, mas o resultado direto de **confiar em Deus** e do enchimento do Espírito. Peça hoje que o Espírito Santo ative essa esperança em você, fazendo-a transbordar.",
+            oracao: "Ore a Deus, o Deus da Esperança, pedindo-Lhe que Ele o encha de alegria e paz, e que o poder do Espírito Santo faça sua esperança transbordar, apesar das circunstâncias."
+        },
+        en: {
+            h2: "Day 25: The Source of All Hope",
+            versiculos: "<strong>Romans 15:13 (NIV):</strong> May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the **power of the Holy Spirit**.",
+            resumo: "Paul's prayer summarizes the practical life of the believer. God is the **Source (God of hope)**, **Faith (trust in him)** is the channel, and the **Holy Spirit (power of the Holy Spirit)** is the agent that produces joy, peace, and overflowing hope. This is a reminder of our total reliance on the Trinity.",
+            aplicacao: "Are you anxious or discouraged? Seek the **Source**. Joy and peace are not accidental, but the direct result of **trusting in God** and the filling of the Spirit. Ask the Holy Spirit today to activate this hope in you, making it overflow.",
+            oracao: "Pray to God, the God of Hope, asking Him to fill you with joy and peace, and that the power of the Holy Spirit makes your hope overflow, despite the circumstances."
+        },
+        es: {
+            h2: "Día 25: La Fuente de Toda Esperanza",
+            versiculos: "<strong>Romanos 15:13 (NVI):</strong> Que el Dios de la esperanza los llene de toda alegría y paz a ustedes que creen en él, para que rebosen de esperanza por el **poder del Espíritu Santo**.",
+            resumo: "La oración de Pablo resume la vida práctica del creyente. Dios es la **Fuente (Dios de la esperanza)**, la **Fe (confianza en él)** es el canal, y el **Espíritu Santo (poder del Espíritu Santo)** es el agente que produce la alegría, la paz y el desbordamiento de la esperanza. Este es un recordatorio de nuestro total amparo en la Trinidad.",
+            aplicacion: "¿Estás ansioso o desanimado? Busca la **Fuente**. La alegría y la paz no son accidentales, sino el resultado directo de **confiar en Dios** y del llenado del Espíritu. Pide hoy que el Espíritu Santo active esa esperanza en ti, haciéndola desbordar.",
+            oracao: "Ora a Dios, el Dios de la Esperanza, pidiéndole que Él te llene de alegría y paz, y que el poder del Espíritu Santo haga que tu esperanza se desborde, a pesar de las circunstancias."
+        },
+        fr: {
+            h2: "Jour 25: La Source de Toute Espérance",
+            versiculos: "<strong>Romains 15:13 (Louis Segond):</strong> Que le Dieu de l'espérance vous remplisse de toute joie et de toute paix dans la foi, pour que vous abondiez en espérance, par la **puissance du Saint-Esprit**!",
+            resumo: "La prière de Paul résume la vie pratique du croyant. Dieu est la **Source (Dieu de l'espérance)**, la **Foi (confiance en lui)** est le canal, et le **Saint-Esprit (puissance du Saint-Esprit)** est l'agent qui produit la joie, la paix et le débordement de l'espérance. Ceci est un rappel de notre entière dépendance envers la Trinité.",
+            aplicacao: "Êtes-vous anxieux ou découragé? Cherchez la **Source**. La joie et la paix ne sont pas accidentelles, mais le résultat direct de **faire confiance à Dieu** et du remplissage de l'Esprit. Demandez au Saint-Esprit aujourd'hui d'activer cette espérance en vous, la faisant déborder.",
+            oracao: "Priez Dieu, le Dieu de l'Espérance, Lui demandant de vous remplir de joie et de paix, et que la puissance du Saint-Esprit fasse déborder votre espérance, malgré les circonstances."
+        }
+    },
+    26: {
+        pt: {
+            h2: "Dia 26: A Oração de Intercessão",
+            versiculos: "<strong>Romanos 15:30 (NVI):</strong> Rogo-lhes, irmãos, por nosso Senhor Jesus Cristo e pelo amor do Espírito, que se **esforcem juntamente comigo** em suas orações a Deus em meu favor.",
+            resumo: "Paulo, o gigante da fé, não hesita em pedir a **intercessão** dos seus irmãos (Comunhão/Eclesiologia). A oração não é um ato solitário, mas um trabalho mútuo ('esforcem juntamente') que conecta os crentes. A intercessão sincera é uma das formas mais elevadas de expressar o **amor cristão** e a dependência de Deus (Soberania).",
+            aplicacao: "Quem você prometeu orar e esqueceu? Faça uma lista e **ore com diligência** e fervor. Não negligencie a oração uns pelos outros. Lembre-se que, ao interceder, você está participando ativamente na obra de Deus na vida de outra pessoa.",
+            oracao: "Ore a Deus pedindo que Ele lhe dê um coração de intercessor e que você se lembre diariamente de orar pelos seus líderes, família e irmãos em Cristo, em amor."
+        },
+        en: {
+            h2: "Day 26: The Prayer of Intercession",
+            versiculos: "<strong>Romans 15:30 (NIV):</strong> I urge you, brothers and sisters, by our Lord Jesus Christ and by the love of the Spirit, to **join me in my struggle** by praying to God for me.",
+            resumo: "Paul, the giant of faith, does not hesitate to ask for the **intercession** of his brothers and sisters (Fellowship/Ecclesiology). Prayer is not a solitary act, but a mutual labor ('join me in my struggle') that connects believers. Sincere intercession is one of the highest forms of expressing **Christian love** and dependence on God (Sovereignty).",
+            aplicacao: "Who did you promise to pray for and forgot? Make a list and **pray diligently** and fervently. Do not neglect prayer for one another. Remember that, by interceding, you are actively participating in God's work in another person's life.",
+            oracao: "Pray to God asking Him to give you a heart of intercessor and that you daily remember to pray for your leaders, family, and brothers and sisters in Christ, in love."
+        },
+        es: {
+            h2: "Día 26: La Oración de Intercesión",
+            versiculos: "<strong>Romanos 15:30 (NVI):</strong> Hermanos, por nuestro Señor Jesucristo y por el amor del Espíritu, les ruego que se **unan a mí en esta lucha** y que oren a Dios por mí.",
+            resumo: "Pablo, el gigante de la fe, no duda en pedir la **intercesión** de sus hermanos (Comunión/Eclesiología). La oración no es un acto solitario, sino un trabajo mutuo ('únanse a mí en esta lucha') que conecta a los creyentes. La intercesión sincera es una de las formas más elevadas de expresar el **amor cristiano** y la dependencia de Dios (Soberanía).",
+            aplicacion: "¿Por quién prometiste orar y olvidaste? Haz una lista y **ora con diligencia** y fervor. No descuides la oración unos por otros. Recuerda que, al interceder, estás participando activamente en la obra de Dios en la vida de otra persona.",
+            oracao: "Ora a Dios pidiendo que Él te dé un corazón de intercesor y que recuerdes diariamente orar por tus líderes, familia y hermanos en Cristo, con amor."
+        },
+        fr: {
+            h2: "Jour 26: La Prière d'Intercession",
+            versiculos: "<strong>Romains 15:30 (Louis Segond):</strong> Je vous exhorte, frères, par notre Seigneur Jésus-Christ et par l'amour de l'Esprit, à **combattre avec moi** en adressant à Dieu des prières en ma faveur.",
+            resumo: "Paul, le géant de la foi, n'hésite pas à demander l'**intercession** de ses frères et sœurs (Communion/Ecclésiologie). La prière n'est pas un acte solitaire, mais un travail mutuel ('combattre avec moi') qui connecte les croyants. L'intercession sincère est l'une des formes les plus élevées d'exprimer l'**amour chrétien** et la dépendance envers Dieu (Souveraineté).",
+            aplicacao: "Pour qui avez-vous promis de prier et avez-vous oublié? Faites une liste et **priez avec diligence** et ferveur. Ne négligez pas la prière les uns pour les autres. Rappelez-vous qu'en intercédant, vous participez activement à l'œuvre de Dieu dans la vie d'une autre personne.",
+            oracao: "Priez Dieu Lui demandant de vous donner un cœur d'intercesseur et que vous vous souveniez quotidiennement de prier pour vos dirigeants, votre famille et vos frères et sœurs en Christ, avec amour."
+        }
+    },
+    27: {
+        pt: {
+            h2: "Dia 27: A Obra Missionária",
+            versiculos: "<strong>Romanos 15:20-21 (NVI):</strong> Sempre fiz questão de pregar o evangelho onde Cristo não era conhecido, de forma que não estivesse edificando sobre alicerce de outro. (...) 'Aqueles a quem não foi anunciado o verão, e os que não ouviram entenderão.'",
+            resumo: "O objetivo de Paulo era alcançar os **não alcançados** (Missiologia). Isso demonstra que o Evangelho, que justifica o pecador, é uma mensagem universal que deve ser levada a toda a terra, completando o plano de salvação soberanamente orquestrado por Deus (Soberania/Chamado Eficaz).",
+            aplicacao: "Qual é o seu campo missionário? Pode ser sua casa, seu trabalho ou outra nação. Tenha o **zelo e o foco** de Paulo: levar a mensagem de Cristo onde ela não é conhecida. Seja um **agente da Justificação** em sua esfera de influência.",
+            oracao: "Ore a Deus pedindo que Ele lhe dê uma visão missionária e a coragem de compartilhar a mensagem de Cristo com aqueles que nunca a ouviram."
+        },
+        en: {
+            h2: "Day 27: The Missionary Work",
+            versiculos: "<strong>Romans 15:20-21 (NIV):</strong> It has always been my ambition to preach the gospel where Christ was not known, so that I would not be building on someone else’s foundation. (...) 'Those who have no report of him will see, and those who have not heard will understand.'",
+            resumo: "Paul's goal was to reach the **unreached** (Missiology). This demonstrates that the Gospel, which justifies the sinner, is a universal message that must be taken to the whole earth, completing God's sovereignly orchestrated plan of salvation (Sovereignty/Effective Calling).",
+            aplicacao: "What is your mission field? It may be your home, your workplace, or another nation. Have Paul's **zeal and focus**: to take the message of Christ where it is not known. Be an **agent of Justification** in your sphere of influence.",
+            oracao: "Pray to God asking Him to give you a missionary vision and the courage to share the message of Christ with those who have never heard it."
+        },
+        es: {
+            h2: "Día 27: La Obra Misionera",
+            versiculos: "<strong>Romanos 15:20-21 (NVI):</strong> En efecto, mi propósito ha sido predicar el evangelio donde Cristo no sea conocido, para no edificar sobre cimientos puestos por otros. (...) «Lo verán quienes jamás han tenido noticia de él; lo entenderán quienes nunca han oído hablar de él.»",
+            resumo: "El objetivo de Pablo era alcanzar a los **no alcanzados** (Misiología). Esto demuestra que el Evangelio, que justifica al pecador, es un mensaje universal que debe ser llevado a toda la tierra, completando el plan de salvación soberanamente orquestado por Dios (Soberanía/Llamamiento Eficaz).",
+            aplicacao: "¿Cuál es tu campo misionero? Puede ser tu casa, tu trabajo o otra nación. Ten el **celo y el enfoque** de Pablo: llevar el mensaje de Cristo donde no es conocido. Sé un **agente de la Justificación** en tu esfera de influencia.",
+            oracao: "Ora a Dios pidiendo que Él te dé una visión misionera y el coraje de compartir el mensaje de Cristo con aquellos que nunca lo han escuchado."
+        },
+        fr: {
+            h2: "Jour 27: L'Œuvre Missionnaire",
+            versiculos: "<strong>Romains 15:20-21 (Louis Segond):</strong> Et je me suis fait honneur d'annoncer l'Évangile là où Christ n'avait point été nommé, afin de ne pas bâtir sur le fondement d'autrui. (...) Ceux à qui il n'avait point été annoncé verront, Et ceux qui n'en avaient point entendu parler comprendront.",
+            resumo: "Le but de Paul était d'atteindre les **non atteints** (Missiologie). Cela démontre que l'Évangile, qui justifie le pécheur, est un message universel qui doit être porté sur toute la terre, complétant le plan de salut souverainement orchestré par Dieu (Souveraineté/Appel Efficace).",
+            aplicacao: "Quel est votre champ de mission? Ce peut être votre maison, votre lieu de travail ou une autre nation. Ayez le **zèle et l'objectif** de Paul: porter le message du Christ là où il n'est pas connu. Soyez un **agent de la Justification** dans votre sphère d'influence.",
+            oracao: "Priez Dieu Lui demandant de vous donner une vision missionnaire et le courage de partager le message du Christ avec ceux qui ne l'ont jamais entendu."
+        }
+    },
+    28: {
+        pt: {
+            h2: "Dia 28: Saudação e Unidade (Parte I)",
+            versiculos: "<strong>Romanos 16:1-2 (NVI):</strong> Recomendo-lhes a nossa irmã Febe, que é serva da igreja em Cencréia. Peço que a recebam no Senhor, de maneira digna dos santos, e lhe prestem a ajuda que necessitar, pois tem sido **protetora** de muita gente, inclusive de mim.",
+            resumo: "O capítulo final é uma galeria de santos, enfatizando a **importância das relações pessoais** e do serviço mútuo (Comunhão). Febe é um exemplo de diaconisa (serva) e protetora, mostrando que a Justificação leva a uma **Santificação Prática** onde as mulheres têm papéis cruciais na igreja (Eclesiologia).",
+            aplicacao: "Olhe ao seu redor. Você é um 'protetor' (auxiliador) na vida de quem? Use seus recursos e sua influência para **apoiar o ministério** dos outros. O serviço humilde e fiel (Diaconia) é a marca da Graça operando em você.",
+            oracao: "Ore a Deus pedindo que Ele lhe mostre oportunidades de servir e proteger os irmãos na fé, seguindo o exemplo de Febe, com humildade e diligência."
+        },
+        en: {
+            h2: "Day 28: Greeting and Unity (Part I)",
+            versiculos: "<strong>Romans 16:1-2 (NIV):</strong> I commend to you our sister Phoebe, a deaconess of the church in Cenchreae. I ask you to receive her in the Lord in a way worthy of his people and to give her any help she may need, for she has been the **benefactor** of many people, including me.",
+            resumo: "The final chapter is a gallery of saints, emphasizing the **importance of personal relationships** and mutual service (Fellowship). Phoebe is an example of a deaconess (servant) and benefactor, showing that Justification leads to **Practical Sanctification** where women have crucial roles in the church (Ecclesiology).",
+            aplicacao: "Look around you. Are you a 'benefactor' (helper) in whose life? Use your resources and influence to **support the ministry** of others. Humble and faithful service (Diaconia) is the mark of Grace working in you.",
+            oracao: "Pray to God asking Him to show you opportunities to serve and support fellow believers, following Phoebe's example, with humility and diligence."
+        },
+        es: {
+            h2: "Día 28: Saludo y Unidad (Parte I)",
+            versiculos: "<strong>Romanos 16:1-2 (NVI):</strong> Les recomiendo a nuestra hermana Febe, diaconisa de la iglesia de Cencreas. Les ruego que la reciban en el Señor de una manera digna de los santos, y que le presten toda la ayuda que necesite, pues ella ha sido **protectora** de mucha gente, incluso de mí.",
+            resumo: "El capítulo final es una galería de santos, enfatizando la **importancia de las relaciones personales** y el servicio mutuo (Comunión). Febe es un ejemplo de diaconisa (sierva) y protectora, mostrando que la Justificación conduce a una **Santificación Práctica** donde las mujeres tienen roles cruciales en la iglesia (Eclesiología).",
+            aplicacion: "Mira a tu alrededor. ¿Eres un 'protector' (auxiliador) en la vida de quién? Usa tus recursos e influencia para **apoyar el ministerio** de otros. El servicio humilde y fiel (Diaconía) es la marca de la Gracia obrando en ti.",
+            oracao: "Ora a Dios pidiendo que Él te muestre oportunidades para servir y proteger a los hermanos en la fe, siguiendo el ejemplo de Febe, con humildad y diligencia."
+        },
+        fr: {
+            h2: "Jour 28: Salutation et Unité (Partie I)",
+            versiculos: "<strong>Romains 16:1-2 (Louis Segond):</strong> Je vous recommande Phœbé, notre soeur, qui est diaconesse de l'Église de Cenchrées, afin que vous la receviez en notre Seigneur d d'une manière digne des saints, et que vous l'assistiez dans toutes les occasions où elle aura besoin de vous; car elle a été la **protectrice** de plusieurs et de moi-même.",
+            resumo: "Le dernier chapitre est une galerie de saints, soulignant l'**importance des relations personnelles** et du service mutuel (Communion). Phœbé est un exemple de diaconesse (servante) et de protectrice, montrant que la Justification conduit à une **Sanctification Pratique** où les femmes ont des rôles cruciaux dans l'église (Ecclésiologie).",
+            aplicacao: "Regardez autour de vous. Êtes-vous un 'protecteur' (assistant) dans la vie de qui? Utilisez vos ressources et votre influence pour **soutenir le ministère** des autres. Le service humble et fidèle (Diaconie) est la marque de la Grâce agissant en vous.",
+            oracao: "Priez Dieu Lui demandant de vous montrer des opportunités de servir et de soutenir les frères dans la foi, suivant l'exemple de Phœbé, avec humilité et diligence."
+        }
+    },
+    29: {
+        pt: {
+            h2: "Dia 29: O Alerta Contra a Divisão",
+            versiculos: "<strong>Romanos 16:17 (NVI):</strong> Rogo-lhes, irmãos, que tomem cuidado com aqueles que causam divisões e colocam obstáculos ao ensino que vocês têm recebido. **Afastem-se** deles.",
+            resumo: "O Evangelho da Justificação pela Fé produz união (Cap. 15), mas exige vigilância contra a **heresia e a divisão** (Santificação). Os que distorcem a sã doutrina ou promovem discórdia (Obstáculos ao ensino) ameaçam a glória de Deus. O amor ao corpo exige a **separação dos perturbadores**.",
+            aplicacao: "Seja um **guardião da verdade** e da paz. Evite fofocas, debates inúteis e ensinamentos que contradizem o Evangelho fundamental (Justificação). Sua fidelidade à sã doutrina é um ato de adoração e amor à igreja.",
+            oracao: "Ore a Deus pedindo que Ele lhe dê discernimento para identificar aqueles que causam divisão e a coragem de se afastar deles, mantendo-se firme na verdade do Evangelho."
+        },
+        en: {
+            h2: "Day 29: The Warning Against Division",
+            versiculos: "<strong>Romans 16:17 (NIV):</strong> I urge you, brothers and sisters, to watch out for those who cause divisions and put obstacles in your way that are contrary to the teaching you have learned. **Keep away** from them.",
+            resumo: "The Gospel of Justification by Faith produces unity (Ch. 15), but requires vigilance against **heresy and division** (Sanctification). Those who distort sound doctrine or promote discord (Obstacles to teaching) threaten God's glory. Love for the body demands **separation from troublemakers**.",
+            aplicacao: "Be a **guardian of truth** and peace. Avoid gossip, useless debates, and teachings that contradict the fundamental Gospel (Justification). Your faithfulness to sound doctrine is an act of worship and love for the church.",
+            oracao: "Pray to God asking Him to give you discernment to identify those who cause division and the courage to keep away from them, remaining firm in the truth of the Gospel."
+        },
+        es: {
+            h2: "Día 29: La Advertencia Contra la División",
+            versiculos: "<strong>Romanos 16:17 (NVI):</strong> Les ruego, hermanos, que se cuiden de los que causan divisiones y ponen tropiezos, yendo en contra de la enseñanza que ustedes han recibido. **Apártense** de ellos.",
+            resumo: "El Evangelio de la Justificación por la Fe produce unión (Cap. 15), pero exige vigilancia contra la **herejía y la división** (Santificación). Los que distorsionan la sana doctrina o promueven la discordia (Tropiezos a la enseñanza) amenazan la gloria de Dios. El amor al cuerpo exige la **separación de los perturbadores**.",
+            aplicacion: "Sé un **guardián de la verdad** y de la paz. Evita los chismes, los debates inútiles y las enseñanzas que contradicen el Evangelio fundamental (Justificación). Tu fidelidad a la sana doctrina es un acto de adoración y amor a la iglesia.",
+            oracao: "Ora a Dios pidiendo que Él te dé discernimiento para identificar a aquellos que causan división y el coraje de apartarte de ellos, manteniéndote firme en la verdad del Evangelio."
+        },
+        fr: {
+            h2: "Jour 29: L'Avertissement Contre la Division",
+            versiculos: "<strong>Romains 16:17 (Louis Segond):</strong> Je vous exhorte, frères, à prendre garde à ceux qui causent des divisions et des scandales, au préjudice de l'enseignement que vous avez reçu. **Éloignez-vous** d'eux.",
+            resumo: "L'Évangile de la Justification par la Foi produit l'unité (Chap. 15), mais exige une vigilance contre l'**hérésie et la division** (Sanctification). Ceux qui déforment la saine doctrine ou promeuvent la discorde (Scandales à l'enseignement) menacent la gloire de Dieu. L'amour pour le corps exige la **séparation des trouble-fêtes**.",
+            aplicacao: "Soyez un **gardien de la vérité** et de la paix. Évitez les commérages, les débats inutiles et les enseignements qui contredisent l'Évangile fondamental (Justification). Votre fidélité à la saine doctrine est un acte d'adoration et d'amour pour l'église.",
+            oracao: "Priez Dieu Lui demandant de vous donner le discernement pour identifier ceux qui causent la division et le courage de vous en éloigner, restant ferme dans la vérité de l'Évangile."
+        }
+    },
+    30: {
+        pt: {
+            h2: "Dia 30: A Glória do Deus Sábio",
+            versiculos: "<strong>Romanos 16:27 (NVI):</strong> ao único Deus sábio seja dada **glória** por meio de Jesus Cristo para todo o sempre. Amém.",
+            resumo: "A conclusão da carta é uma doxologia (hino de louvor), que retorna ao tema central: a **Glória de Deus** (Soli Deo Gloria). Toda a obra da redenção – desde a Justificação até a Santificação e a Missão – é executada pelo **Deus Sábio** e deve resultar em louvor eterno a Ele, por meio de Cristo (Solus Christus).",
+            aplicacao: "Reveja tudo o que você aprendeu em Romanos. Deixe que a doutrina da Justificação o leve à adoração. Sua vida é um ciclo de Graça recebida e **Glória devolvida**. Viva hoje, e sempre, para a glória do Deus Trino.",
+            oracao: "Faça uma oração de louvor a Deus, Pai, Filho e Espírito Santo, por revelar a Sua justiça e sabedoria em Cristo, e dedique sua vida a glorificá-Lo para todo o sempre."
+        },
+        en: {
+            h2: "Day 30: The Glory of the Wise God",
+            versiculos: "<strong>Romans 16:27 (NIV):</strong> to the only wise God be **glory** forever through Jesus Christ! Amen.",
+            resumo: "The conclusion of the letter is a doxology (hymn of praise), which returns to the central theme: the **Glory of God** (Soli Deo Gloria). The entire work of redemption – from Justification to Sanctification and Mission – is executed by the **Wise God** and must result in eternal praise to Him, through Christ (Solus Christus).",
+            aplicacao: "Review everything you have learned in Romans. Let the doctrine of Justification lead you to worship. Your life is a cycle of Grace received and **Glory returned**. Live today, and always, for the glory of the Triune God.",
+            oracao: "Offer a prayer of praise to God, Father, Son, and Holy Spirit, for revealing His righteousness and wisdom in Christ, and dedicate your life to glorifying Him forever."
+        },
+        es: {
+            h2: "Día 30: La Gloria del Dios Sabio",
+            versiculos: "<strong>Romanos 16:27 (NVI):</strong> al único Dios sabio, sea **gloria** mediante Jesucristo para siempre. Amén.",
+            resumo: "La conclusión de la carta es una doxología (himno de alabanza), que vuelve al tema central: la **Gloria de Dios** (Soli Deo Gloria). Toda la obra de la redención – desde la Justificación hasta la Santificación y la Misión – es ejecutada por el **Dios Sabio** y debe resultar en alabanza eterna a Él, por medio de Cristo (Solus Christus).",
+            aplicacao: "Revisa todo lo que has aprendido en Romanos. Deja que la doctrina de la Justificación te lleve a la adoración. Tu vida es un ciclo de Gracia recibida y **Gloria devuelta**. Vive hoy, y siempre, para la gloria del Dios Trino.",
+            oracao: "Ofrece una oración de alabanza a Dios, Padre, Hijo y Espíritu Santo, por revelar Su justicia y sabiduría en Cristo, y dedica tu vida a glorificarle para siempre."
+        },
+        fr: {
+            h2: "Jour 30: La Gloire du Dieu Sage",
+            versiculos: "<strong>Romains 16:27 (Louis Segond):</strong> à Dieu, seul sage, soit la **gloire** par Jésus-Christ, aux siècles des siècles! Amen!",
+            resumo: "La conclusion de la lettre est une doxologie (cantique de louange), qui revient au thème central: la **Gloire de Dieu** (Soli Deo Gloria). Toute l'œuvre de la rédemption – de la Justification à la Sanctification et à la Mission – est exécutée par le **Dieu Sage** et doit aboutir à une louange éternelle à Lui, par le Christ (Solus Christus).",
+            aplicacao: "Passez en revue tout ce que vous avez appris dans Romains. Laissez la doctrine de la Justification vous conduire à l'adoration. Votre vie est un cycle de Grâce reçue et de **Gloire rendue**. Vivez aujourd'hui, et toujours, pour la gloire du Dieu Trinitaire.",
+            oracao: "Offrez une prière de louange à Dieu, Père, Fils et Saint-Esprit, pour avoir révélé Sa justice et Sa sagesse en Christ, et consacrez votre vie à Le glorifier pour toujours."
+        }
+    }
+};
+   // FIM DO CONTEÚDO DEVOCIONAL
+
+        // --- FUNÇÕES DE ARMAZENAMENTO E STATUS (NOVO/ATUALIZADO) ---
+        
+        function getSavedProgress() { 
+            const savedDay = localStorage.getItem('devotionalCurrentDay'); 
+            return savedDay ? parseInt(savedDay) : 1; 
+        } 
+        
+        function saveProgress(day) { 
+            localStorage.setItem('devotionalCurrentDay', day); 
+        } 
+        
+        // NOVO: Funções para status de conclusão (Marcar como Concluído)
+        function getDayStatus(day) { 
+            // Usa 'dayComplete_' para evitar conflito com 'devotionalDay_' do arquivo original se existisse.
+            return localStorage.getItem(`dayComplete_${day}`) === 'true'; 
+        } 
+        
+        function saveDayStatus(day, isComplete) { 
+            localStorage.setItem(`dayComplete_${day}`, isComplete ? 'true' : 'false'); 
+        }
+
+        // NOVO: Função para atualizar a barra de progresso
+        function updateOverallProgress() { 
+            let completedDaysCount = 0; 
+            for (let i = 1; i <= totalDays; i++) { 
+                if (getDayStatus(i)) { 
+                    completedDaysCount++; 
+                } 
+            } 
+            const percentage = Math.round((completedDaysCount / totalDays) * 100); 
+            const progressBar = document.getElementById('progressBar'); 
+            const progressLabel = document.getElementById('progressLabel'); 
+            const progressTexts = langData[currentLang].progress;
+            
+            // Atualiza a barra de progresso visual 
+            if(progressBar) progressBar.style.width = percentage + '%'; 
+            
+            // Atualiza o texto de progresso 
+            if(progressLabel) progressLabel.textContent = `${progressTexts.total} ${completedDaysCount} ${progressTexts.of} ${totalDays} ${progressTexts.days} (${percentage}%)`; 
+        }
+        
+        // --- FUNÇÕES DE INTERFACE (ATUALIZADO) ---
+        
+        // NOVO: Função para atualizar o seletor de idioma (Dropdown)
+        function updateLanguageSelector() {
+            const button = document.getElementById('langSelectButton');
+            const dropdown = document.getElementById('langDropdown');
+            const currentFlag = flagMap[currentLang];
+            
+            if (button) button.innerHTML = currentFlag.icon + currentFlag.text;
+            
+            dropdown.innerHTML = '';
+            
+            Object.keys(flagMap).forEach(lang => {
+                if (lang !== currentLang) {
+                    const flag = flagMap[lang];
+                    const link = document.createElement('a');
+                    link.innerHTML = flag.icon + flag.text;
+                    link.setAttribute('data-lang', lang);
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        changeLanguage(lang);
+                        dropdown.style.display = 'none'; // Fecha após a seleção
+                    };
+                    dropdown.appendChild(link);
+                }
+            });
+        }
+        
+        // ATUALIZADO: Função para atualizar todos os textos da UI
+        function updateTexts() { 
+            const data = langData[currentLang]; 
+            const controls = data.controls; // NOVO: Usa o novo objeto controls
+            
+            document.getElementById('mainTitle').textContent = data.title; 
+            document.getElementById('subTitle').textContent = data.subtitle; 
+            document.getElementById('prevButton').textContent = controls.prev; 
+            document.getElementById('nextButton').textContent = controls.next; 
+            
+            // NOVO ID: De checkLabel para completedLabel
+            const completedLabel = document.getElementById('completedLabel');
+            if (completedLabel) completedLabel.textContent = controls.check; 
+            
+            document.getElementById('themeToggle').textContent = controls.themeToggle; 
+
+            // NOVO: Atualiza o texto do footer
+            const year = new Date().getFullYear(); 
+            const footerText = document.getElementById('footerText');
+            if (footerText) footerText.innerHTML = `Copyright &copy; ${year}`; 
+            
+            updateLanguageSelector(); // NOVO: Chama o atualizador do seletor de idioma
+            updateOverallProgress(); // NOVO: Atualiza a barra de progresso após a mudança de idioma/texto
+
+            renderDayContent(currentDay); 
+        }
+
+        // ATUALIZADO: Função para renderizar o conteúdo do dia
+        function renderDayContent(day) {
+            const content = devotionalContent[day];
+            const langContent = content ? (content[currentLang] || content['pt']) : devotionalContent[1]['pt'];
+            const labels = langData[currentLang].sections; 
+            
+            const resumoKey = 'resumo'; 
+            const aplicacaoKey = currentLang === 'es' ? 'aplicacion' : 'aplicacao'; // Mantém a correção para ES
+            const oracaoKey = 'oracao'; 
+
+            const aplicacaoText = langContent[aplicacaoKey] || langContent['aplicacao'];
+            const resumoText = langContent[resumoKey] || langContent['resumo'];
+            const oracaoText = langContent[oracaoKey] || langContent['oracao']; 
+            
+            let html = `
+                <h2>${langContent.h2}</h2>
+                <p class="versiculos">${langContent.versiculos}</p>
+                
+                <div class="section">
+                    <strong>${labels.resumo}</strong>
+                    <p>${resumoText}</p>
+                </div>
+                
+                <div class="section">
+                    <strong>${labels.aplicacao}</strong>
+                    <p>${aplicacaoText}</p>
+                </div>
+                
+                <p class="oracao-final">${oracaoText}</p>
+            `;
+
+            devotionalContentDiv.innerHTML = html;
+            
+            document.getElementById('pageCounter').textContent = `${langData[currentLang].page} ${day} ${langData[currentLang].of} ${totalDays}`;
+
+            updateDayView(day);
+        }
+
+        // ATUALIZADO: Lógica de controle de botões e checkbox
+        function updateDayView(day) {
+            document.getElementById('prevButton').disabled = day === 1;
+            document.getElementById('nextButton').disabled = day === totalDays;
+            
+            // NOVO: Lógica do checkbox de conclusão
+            const check = document.getElementById('completedCheck'); 
+            check.onchange = null; // Remove o listener anterior para evitar duplicidade
+            check.checked = getDayStatus(day); 
+            
+            check.onchange = () => { 
+                saveDayStatus(currentDay, check.checked); 
+                updateOverallProgress(); // Atualiza a barra de progresso
+                
+                // Navegação automática para o próximo dia se for concluído
+                if (check.checked && currentDay < totalDays) { 
+                    setTimeout(() => { 
+                        handleNavigation(1); 
+                    }, 300); // Pequeno atraso para feedback visual
+                } 
+            };
+        }
+
+        // --- FUNÇÃO CENTRAL DE NAVEGAÇÃO COM ANIMAÇÃO ---
+        function handleNavigation(direction) {
+            // direction: 1 para Próximo, -1 para Anterior
+            const newDay = currentDay + direction;
+            if (newDay < 1 || newDay > totalDays) return;
+
+            const outClass = direction === 1 ? 'page-out-left' : 'page-out-right';
+            const inClass = direction === 1 ? 'page-in-right' : 'page-in-left';
+
+            devotionalContentDiv.classList.add(outClass);
+
+            setTimeout(() => {
+                // Atualiza o dia e o conteúdo
+                currentDay = newDay;
+                saveProgress(currentDay);
+                renderDayContent(currentDay);
+
+                // Prepara a animação de entrada
+                devotionalContentDiv.classList.remove(outClass, 'page-in-right', 'page-in-left');
+                devotionalContentDiv.classList.add(inClass);
+
+                // Remove a classe de entrada após a animação
+                setTimeout(() => {
+                    devotionalContentDiv.classList.remove(inClass);
+                }, 400); 
+
+            }, 300); 
+        }
+
+        // --- FUNÇÕES DE TEMA E IDIOMA ---
+
+        function toggleTheme() {
+            if (document.body.classList.contains('light-theme')) {
+                document.body.classList.replace('light-theme', 'dark-theme');
+                currentTheme = 'dark-theme';
+            } else {
+                document.body.classList.replace('dark-theme', 'light-theme');
+                currentTheme = 'light-theme';
+            }
+            localStorage.setItem('devotionalTheme', currentTheme);
+            updateTexts();
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('devotionalLang', lang);
+            updateTexts();
+        }
+
+        // --- MANUSEIO DE EVENTOS E INICIALIZAÇÃO (ATUALIZADO) ---
+        document.getElementById('prevButton').addEventListener('click', () => handleNavigation(-1));
+        document.getElementById('nextButton').addEventListener('click', () => handleNavigation(1));
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        
+        // NOVO: Event Listener para abrir/fechar o Dropdown de Idiomas
+        const langSelectButton = document.getElementById('langSelectButton');
+        if (langSelectButton) {
+            langSelectButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const dropdown = document.getElementById('langDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // NOVO: Fecha o dropdown se o usuário clicar fora
+        document.addEventListener('click', (event) => {
+            const dropdown = document.getElementById('langDropdown');
+            const wrapper = document.querySelector('.language-selector-wrapper');
+            if (dropdown && dropdown.style.display === 'block' && !wrapper.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+
+        window.onload = () => {
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(currentTheme);
+            
+            currentDay = getSavedProgress();
+            
+            updateTexts();
+            // updateLanguageSelector() é chamado dentro de updateTexts()
+            // updateOverallProgress() é chamado dentro de updateTexts()
+            
+            devotionalContentDiv.classList.add('page-in-right');
+        };
+
+    </script>
+
+</body>
+</html>
