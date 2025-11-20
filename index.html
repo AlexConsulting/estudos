@@ -9,8 +9,8 @@
         /* Definições básicas e fonte */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff; /* Fundo Branco */
-            color: #333;
+            background-color: #ffffff; /* Fundo Padrão (Claro) */
+            color: #333; /* Texto Padrão (Claro) */
             margin: 0;
             display: flex;
             flex-direction: column; 
@@ -18,36 +18,224 @@
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s; /* Transição suave */
         }
 
-        /* Estilo do cabeçalho */
+        /* ------------------------------------------- */
+        /* ESTILO MODO ESCURO (DARK MODE) - FUNDO PRETO PURO */
+        /* ------------------------------------------- */
+        body.dark-mode {
+            background-color: #000000; /* Fundo Preto Puro */
+            color: #e2e8f0; /* Texto Claro */
+        }
+        
+        body.dark-mode .main-header h1 {
+            color: #90cdf4; /* Título principal mais claro */
+        }
+
+        body.dark-mode .main-header p {
+            color: #a0aec0;
+        }
+
+        body.dark-mode .menu-button {
+            background-color: #1c1c1c; /* Fundo dos cards escuro */
+            border-color: #333333;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
+        }
+        
+        body.dark-mode .menu-button span {
+            color: #e2e8f0; 
+        }
+        
+        body.dark-mode .menu-button small {
+            color: #cbd5e0; 
+        }
+        
+        body.dark-mode .menu-button:hover {
+            background-color: #333333; 
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            border-color: #63b3ed;
+        }
+        
+        body.dark-mode .simple-footer {
+            border-top: 1px solid #333333;
+            color: #718096;
+        }
+
+        body.dark-mode #language-dropdown {
+            background-color: #1c1c1c; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        body.dark-mode .dropdown-item {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .dropdown-item:hover {
+            background-color: #333333;
+        }
+
+        /* ------------------------------------------- */
+        /* LAYOUT GERAL DO CABEÇALHO E SELETORES */
+        /* ------------------------------------------- */
+
         .main-header {
             text-align: center;
             margin-bottom: 50px;
             color: #1a202c; 
             padding-top: 20px;
+            position: relative; 
         }
         
-        /* ESTILO DO LOGO - AUMENTADO */
-        .header-logo {
-            max-width: 230px; /* Novo Tamanho */
-            height: auto;
-            margin-bottom: 10px; 
+        .header-controls {
+            position: absolute;
+            top: 20px; 
+            right: 0; 
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+            z-index: 100;
         }
 
-        /* TÍTULO H1 - DIMINUÍDO */
+        /* ------------------------------------------- */
+        /* ESTILO SELETOR DE MODO (SOL/LUA) COMO TOKEN */
+        /* ------------------------------------------- */
+        
+        #theme-toggle {
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            width: 45px; 
+            height: 32px; 
+            background-color: transparent; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 20px; 
+        }
+        
+        /* Estilo do token do tema no MODO CLARO (Fundo Branco) */
+        body:not(.dark-mode) #theme-toggle.light-active { 
+            background-color: #ffffff; /* Fundo Branco */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* Estilo do token do tema no MODO ESCURO (Fundo Preto Puro) */
+        body.dark-mode #theme-toggle.dark-active {
+            background-color: #000000; /* Fundo Preto Puro */
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
+        }
+
+        #theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Hover leve */
+        }
+        body.dark-mode #theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Hover no dark mode */
+        }
+        
+        /* Oculta o sol no modo escuro */
+        body.dark-mode #theme-toggle .sun-icon {
+            display: none;
+        }
+        
+        /* Oculta a lua no modo claro */
+        body:not(.dark-mode) #theme-toggle .moon-icon {
+            display: none;
+        }
+
+
+        /* ------------------------------------------- */
+        /* ESTILO DROP-DOWN DE BANDEIRAS (TOKEN DE IDIOMA) */
+        /* ------------------------------------------- */
+        
+        #language-selector-container {
+            position: relative;
+        }
+
+        #active-language-button {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* CENTRALIZA A BANDEIRA */
+            width: 45px;
+            height: 32px;
+            background-color: #ffffff; /* Fundo Branco */
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+            border: none;
+            padding: 0; 
+        }
+        
+        /* Estilo do token de bandeira no MODO ESCURO (Fundo Preto Puro) */
+        body.dark-mode #active-language-button {
+            background-color: #000000; /* Fundo Preto Puro */
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2); 
+        }
+
+
+        #active-language-button:hover {
+            background-color: #e5e7eb;
+        }
+
+        #language-dropdown {
+            display: none; 
+            position: absolute;
+            top: 40px; 
+            right: 0;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 5px 0;
+            min-width: 150px; 
+        }
+        
+        #language-selector-container.open #language-dropdown {
+            display: block;
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            cursor: pointer;
+            color: #333;
+            font-size: 0.9em;
+            transition: background-color 0.15s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .lang-flag-dropdown, .lang-flag-active {
+            width: 25px; 
+            height: auto;
+            margin-right: 0; /* Centralização garantida */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        /* --- O restante do CSS do conteúdo principal (Mantido) --- */
+        
+        .header-logo {
+            max-width: 230px; 
+            height: auto;
+            margin-bottom: 10px; 
+            transition: filter 0.3s;
+        }
         .main-header h1 {
             font-size: 2.2em; 
             margin-bottom: 5px;
             color: #2563eb; 
+            transition: color 0.3s;
         }
-
         .main-header p {
             font-size: 1.2em;
             color: #6b7280;
+            transition: color 0.3s;
         }
-
-        /* Container do menu (usa Grid) */
         .menu-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -57,29 +245,20 @@
             margin: auto;
             padding: 0 10px;
         }
-
-        /* Estilo dos Botões/Cards */
         .menu-button {
             display: flex;
             align-items: center;
             justify-content: flex-start;
             text-align: left;
-            
-            /* Visual de Cartão Moderno */
             background-color: #ffffff; 
             border: 1px solid #e2e8f0;
             color: #1e3a8a; 
             text-decoration: none;
-            
             padding: 20px 25px;
             border-radius: 16px; 
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
-            
-            /* Transição para todos os efeitos */
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
-        /* Ícone (Emoji) dentro do botão/card */
         .menu-button .emoji-icon {
             font-size: 2.5em; 
             min-width: 50px;
@@ -87,63 +266,29 @@
             line-height: 1; 
             transition: transform 0.3s ease; 
         }
-
-        /* Texto dentro do botão/card */
         .menu-content {
             display: flex;
             flex-direction: column;
         }
-
         .menu-button span {
             font-size: 1.1em;
             font-weight: 600;
             color: #1a202c; 
+            transition: color 0.3s;
         }
-
         .menu-button small {
             font-size: 0.9em;
             color: #6b7280;
             margin-top: 2px;
             line-height: 1.2;
+            transition: color 0.3s;
         }
-
-        /* Efeito Hover (passar o mouse) */
         .menu-button:hover {
             background-color: #f7f9fd;
             transform: translateY(-7px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
             border-color: #93c5fd;
         }
-
-        /* Animação do Ícone (Emoji) no Hover */
-        .menu-button:hover .emoji-icon {
-            transform: scale(1.1);
-        }
-
-        /* Responsividade (Para telas menores/smartphones) */
-        @media (max-width: 768px) {
-            .main-header h1 {
-                font-size: 2em; /* Reduzido o H1 para mobile também */
-            }
-            .menu-container {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .menu-button {
-                padding: 18px;
-            }
-            .menu-button .emoji-icon {
-                font-size: 2em;
-                min-width: 40px;
-                margin-right: 15px;
-            }
-            /* AJUSTE MOBILE DO LOGO */
-            .header-logo {
-                max-width: 180px; 
-            }
-        }
-
-        /* Estilo para o Footer */
         .simple-footer {
             width: 100%;
             text-align: center;
@@ -152,17 +297,34 @@
             border-top: 1px solid #e2e8f0; 
             color: #94a3b8;
             font-size: 0.875rem; 
+            transition: color 0.3s, border-color 0.3s;
         }
     </style>
 </head>
 <body>
 
     <header class="main-header">
-        <img src="img/logo.png" alt="Conhecer & Crer Logo" class="header-logo">
         
-        <h1>Devocionais e Planos de Leitura Bíblica</h1>
+        <div class="header-controls">
+            
+            <div id="language-selector-container">
+                <button id="active-language-button" title="Selecione o idioma"></button>
+                <div id="language-dropdown">
+                    </div>
+            </div>
+            
+            <div id="theme-toggle" title="Alternar Modo Claro/Escuro">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </div>
+            
+        </div>
+
+        <img src="img/logo_light.png" alt="Conhecer & Crer Logo" class="header-logo" id="header-logo">
         
-        <p>Seu ponto central para unir Conhecimento e Fé.</p>
+        <h1 data-i18n="headerTitle">Devocionais e Planos de Leitura Bíblica</h1>
+        
+        <p data-i18n="headerSubtitle">Seu ponto central para unir Conhecimento e Fé.</p>
     </header>
 
     <div class="menu-container">
@@ -170,32 +332,32 @@
         <a href="leitura/index.html" class="menu-button">
             <span class="emoji-icon">🗓️</span>
             <div class="menu-content">
-                <span>Plano de Leitura Anual da Bíblia</span>
-                <small>Vários planos de leitura bíblica.</small>
+                <span data-i18n="menu1Title">Plano de Leitura Anual da Bíblia</span>
+                <small data-i18n="menu1Subtitle">Vários planos de leitura bíblica.</small>
             </div>
         </a>
 
         <a href="joao/index.html" class="menu-button">
             <span class="emoji-icon">✨</span>
             <div class="menu-content">
-                <span>Devocional Livro de João</span>
-                <small>Conheça Jesus como o Verbo e a Luz do mundo.</small>
+                <span data-i18n="menu2Title">Devocional Livro de João</span>
+                <small data-i18n="menu2Subtitle">Conheça Jesus como o Verbo e a Luz do mundo.</small>
             </div>
         </a>
 
         <a href="romanos/index.html" class="menu-button">
             <span class="emoji-icon">⚖️</span>
             <div class="menu-content">
-                <span>Devocional Livro de Romanos</span>
-                <small>Estudo aprofundado sobre a Justificação pela Fé.</small>
+                <span data-i18n="menu3Title">Devocional Livro de Romanos</span>
+                <small data-i18n="menu3Subtitle">Estudo aprofundado sobre a Justificação pela Fé.</small>
             </div>
         </a>
 
         <a href="proverbios/index.html" class="menu-button">
             <span class="emoji-icon">💡</span>
             <div class="menu-content">
-                <span>Devocional Livro de Provérbios</span>
-                <small>Lições diárias de Sabedoria e Conduta.</small>
+                <span data-i18n="menu4Title">Devocional Livro de Provérbios</span>
+                <small data-i18n="menu4Subtitle">Lições diárias de Sabedoria e Conduta.</small>
             </div>
         </a>
 
@@ -205,5 +367,192 @@
         © 2025 Alex Silva — <em>Uso livre com atribuição</em>
     </footer>
 
+    <script>
+        // Configurações do modo Escuro/Claro
+        const LOGO_LIGHT = 'img/logo_light.png';
+        const LOGO_DARK = 'img/logo_dark.png';
+        
+        // Configurações do Idioma (Mantido)
+        const DEFAULT_LANGUAGE = 'pt-BR';
+        const flagMap = {
+            'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
+            'en-US': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-dropdown" alt="English">', text: 'English', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-active" alt="English">' },
+            'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
+            'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
+        };
+        const translations = {
+             'pt-BR': {
+                headerTitle: "Devocionais e Planos de Leitura Bíblica",
+                headerSubtitle: "Seu ponto central para unir Conhecimento e Fé.",
+                menu1Title: "Plano de Leitura Anual da Bíblia",
+                menu1Subtitle: "Vários planos de leitura bíblica.",
+                menu2Title: "Devocional Livro de João",
+                menu2Subtitle: "Conheça Jesus como o Verbo e a Luz do mundo.",
+                menu3Title: "Devocional Livro de Romanos",
+                menu3Subtitle: "Estudo aprofundado sobre a Justificação pela Fé.",
+                menu4Title: "Devocional Livro de Provérbios",
+                menu4Subtitle: "Lições diárias de Sabedoria e Conduta."
+            },
+            'en-US': {
+                headerTitle: "Devotionals and Bible Reading Plans",
+                headerSubtitle: "Your central point to unite Knowledge and Faith.",
+                menu1Title: "Annual Bible Reading Plan",
+                menu1Subtitle: "Various Bible reading plans.",
+                menu2Title: "Devotional Book of John",
+                menu2Subtitle: "Know Jesus as the Word and the Light of the world.",
+                menu3Title: "Devotional Book of Romans",
+                menu3Subtitle: "In-depth study on Justification by Faith.",
+                menu4Title: "Devotional Book of Proverbs",
+                menu4Subtitle: "Daily lessons of Wisdom and Conduct."
+            },
+            'es-ES': {
+                headerTitle: "Devocionales y Planes de Lectura Bíblica",
+                headerSubtitle: "Su punto central para unir Conocimiento y Fe.",
+                menu1Title: "Plan de Lectura Anual de la Biblia",
+                menu1Subtitle: "Varios planes de lectura bíblica.",
+                menu2Title: "Devocional Libro de Juan",
+                menu2Subtitle: "Conozca a Jesús como el Verbo y la Luz del mundo.",
+                menu3Title: "Devocional Libro de Romanos",
+                menu3Subtitle: "Estudio profundo sobre la Justificación por la Fe.",
+                menu4Title: "Devocional Libro de Provérbios",
+                menu4Subtitle: "Lições diárias de Sabedoria e Conduta."
+            },
+            'fr-FR': {
+                headerTitle: "Dévotionnels et Plans de Lecture de la Bible",
+                headerSubtitle: "Votre point central pour unir Connaissance et Foi.",
+                menu1Title: "Plan Annuel de Lecture de la Bible",
+                menu1Subtitle: "Divers plans de lecture biblique.",
+                menu2Title: "Dévotionnel Livre de Jean",
+                menu2Subtitle: "Connaissez Jésus comme la Parole et la Lumière du monde.",
+                menu3Title: "Dévotionnel Livre des Romains",
+                menu3Subtitle: "Étude approfondie sur la Justification par la Foi.",
+                menu4Title: "Dévotionnel Livre des Proverbes",
+                menu4Subtitle: "Leçons quotidiennes de Sagesse et de Conduite."
+            }
+        };
+
+
+        const container = document.getElementById('language-selector-container');
+        const activeLangButton = document.getElementById('active-language-button');
+        const dropdown = document.getElementById('language-dropdown');
+        const themeToggle = document.getElementById('theme-toggle');
+        const logo = document.getElementById('header-logo');
+        
+        
+        // ----------------------------------------------------
+        // FUNÇÕES PARA MODO CLARO/ESCURO
+        // ----------------------------------------------------
+        function applyTheme(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                logo.src = LOGO_DARK;
+                themeToggle.classList.add('dark-active');
+                themeToggle.classList.remove('light-active');
+            } else {
+                document.body.classList.remove('dark-mode');
+                logo.src = LOGO_LIGHT;
+                themeToggle.classList.add('light-active');
+                themeToggle.classList.remove('dark-active');
+            }
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.contains('dark-mode');
+            const newIsDark = !isDark;
+            applyTheme(newIsDark);
+            localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
+        }
+
+        function loadThemePreference() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (savedTheme === null && prefersDark)) {
+                applyTheme(true);
+            } else {
+                applyTheme(false);
+            }
+        }
+        
+        
+        // ----------------------------------------------------
+        // FUNÇÕES PARA SELETOR DE IDIOMAS 
+        // ----------------------------------------------------
+
+        function toggleDropdown() {
+            container.classList.toggle('open');
+        }
+
+        function buildDropdown() {
+            let html = '';
+            for (const lang in flagMap) {
+                const data = flagMap[lang];
+                html += `
+                    <div class="dropdown-item" data-lang="${lang}" title="${data.text}">
+                        ${data.icon} ${data.text}
+                    </div>
+                `;
+            }
+            dropdown.innerHTML = html;
+        }
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+
+            // ***** AJUSTE CHAVE: SALVA A PREFERÊNCIA DE IDIOMA NO LOCAL STORAGE *****
+            localStorage.setItem('language', lang); 
+
+            activeLangButton.innerHTML = flagMap[lang].iconActive;
+            
+            const currentTranslations = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (currentTranslations[key]) {
+                    element.innerText = currentTranslations[key];
+                }
+            });
+
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                if (item.getAttribute('data-lang') === lang) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            container.classList.remove('open');
+        }
+
+        // ----------------------------------------------------
+        // EXECUÇÃO PRINCIPAL
+        // ----------------------------------------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Carrega o tema (sempre feito para dar o estilo inicial)
+            loadThemePreference();
+            themeToggle.addEventListener('click', toggleDarkMode);
+            
+            // 2. Inicializa o seletor de idiomas
+            buildDropdown();
+            activeLangButton.addEventListener('click', toggleDropdown);
+
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', (event) => {
+                    const lang = event.currentTarget.getAttribute('data-lang');
+                    setLanguage(lang);
+                });
+            });
+            
+            document.addEventListener('click', (event) => {
+                if (!container.contains(event.target) && container.classList.contains('open')) {
+                    container.classList.remove('open');
+                }
+            });
+
+            // Tenta carregar o idioma salvo. Se não houver, usa o padrão.
+            const savedLang = localStorage.getItem('language') || DEFAULT_LANGUAGE;
+            setLanguage(savedLang); 
+        });
+
+    </script>
 </body>
 </html>
