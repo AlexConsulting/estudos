@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hub Devocional | Estudos Bíblicos</title>
+    <title>Conhecer & Crer | Estudos Bíblicos</title>
     
     <style>
         /* Definições básicas e fonte */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f4f8; 
+            background-color: #ffffff; /* Fundo Branco */
             color: #333;
             margin: 0;
             display: flex;
@@ -27,9 +27,17 @@
             color: #1a202c; 
             padding-top: 20px;
         }
+        
+        /* ESTILO DO LOGO - AUMENTADO */
+        .header-logo {
+            max-width: 230px; /* Novo Tamanho */
+            height: auto;
+            margin-bottom: 10px; 
+        }
 
+        /* TÍTULO H1 - DIMINUÍDO */
         .main-header h1 {
-            font-size: 2.8em;
+            font-size: 2.2em; 
             margin-bottom: 5px;
             color: #2563eb; 
         }
@@ -71,7 +79,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Ícone (agora Emoji) dentro do botão/card */
+        /* Ícone (Emoji) dentro do botão/card */
         .menu-button .emoji-icon {
             font-size: 2.5em; 
             min-width: 50px;
@@ -115,7 +123,7 @@
         /* Responsividade (Para telas menores/smartphones) */
         @media (max-width: 768px) {
             .main-header h1 {
-                font-size: 2.2em;
+                font-size: 2em; /* Reduzido o H1 para mobile também */
             }
             .menu-container {
                 grid-template-columns: 1fr;
@@ -128,6 +136,10 @@
                 font-size: 2em;
                 min-width: 40px;
                 margin-right: 15px;
+            }
+            /* AJUSTE MOBILE DO LOGO */
+            .header-logo {
+                max-width: 180px; 
             }
         }
 
@@ -146,8 +158,11 @@
 <body>
 
     <header class="main-header">
-        <h1>Central de Estudos Bíblicos</h1>
-        <p>Escolha e inicie seu próximo devocional ou plano de leitura bíblica.</p>
+        <img src="img/logo.png" alt="Conhecer & Crer Logo" class="header-logo">
+        
+        <h1>Devocionais e Planos de Leitura Bíblica</h1>
+        
+        <p>Seu ponto central para unir Conhecimento e Fé.</p>
     </header>
 
     <div class="menu-container">
@@ -156,7 +171,7 @@
             <span class="emoji-icon">🗓️</span>
             <div class="menu-content">
                 <span>Plano de Leitura Anual da Bíblia</span>
-                <small>Um capítulo por dia, a Bíblia completa em um ano.</small>
+                <small>Vários planos de leitura bíblica.</small>
             </div>
         </a>
 
