@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub Devocional | Estudos Bíblicos</title>
+    
+    <style>
+        /* Definições básicas e fonte */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f4f8; 
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Estilo do cabeçalho */
+        .main-header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #1a202c; 
+            padding-top: 20px;
+        }
+
+        .main-header h1 {
+            font-size: 2.8em;
+            margin-bottom: 5px;
+            color: #2563eb; 
+        }
+
+        .main-header p {
+            font-size: 1.2em;
+            color: #6b7280;
+        }
+
+        /* Container do menu (usa Grid) */
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px; 
+            max-width: 900px;
+            width: 100%;
+            margin: auto;
+            padding: 0 10px;
+        }
+
+        /* Estilo dos Botões/Cards */
+        .menu-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            
+            /* Visual de Cartão Moderno */
+            background-color: #ffffff; 
+            border: 1px solid #e2e8f0;
+            color: #1e3a8a; 
+            text-decoration: none;
+            
+            padding: 20px 25px;
+            border-radius: 16px; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
+            
+            /* Transição para todos os efeitos */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Ícone (agora Emoji) dentro do botão/card */
+        .menu-button .emoji-icon {
+            font-size: 2.5em; 
+            min-width: 50px;
+            margin-right: 20px;
+            line-height: 1; 
+            transition: transform 0.3s ease; 
+        }
+
+        /* Texto dentro do botão/card */
+        .menu-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-button span {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #1a202c; 
+        }
+
+        .menu-button small {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-top: 2px;
+            line-height: 1.2;
+        }
+
+        /* Efeito Hover (passar o mouse) */
+        .menu-button:hover {
+            background-color: #f7f9fd;
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: #93c5fd;
+        }
+
+        /* Animação do Ícone (Emoji) no Hover */
+        .menu-button:hover .emoji-icon {
+            transform: scale(1.1);
+        }
+
+        /* Responsividade (Para telas menores/smartphones) */
+        @media (max-width: 768px) {
+            .main-header h1 {
+                font-size: 2.2em;
+            }
+            .menu-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .menu-button {
+                padding: 18px;
+            }
+            .menu-button .emoji-icon {
+                font-size: 2em;
+                min-width: 40px;
+                margin-right: 15px;
+            }
+        }
+
+        /* Estilo para o Footer */
+        .simple-footer {
+            width: 100%;
+            text-align: center;
+            padding-top: 1.5rem; 
+            margin-top: 3rem; 
+            border-top: 1px solid #e2e8f0; 
+            color: #94a3b8;
+            font-size: 0.875rem; 
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Seu Ponto Central de Estudos</h1>
+        <p>Escolha e inicie seu próximo devocional ou plano de leitura bíblica.</p>
+    </header>
+
+    <div class="menu-container">
+        
+        <a href="leitura/index.html" class="menu-button">
+            <span class="emoji-icon">🗓️</span>
+            <div class="menu-content">
+                <span>Plano de Leitura Anual da Bíblia</span>
+                <small>Um capítulo por dia, a Bíblia completa em um ano.</small>
+            </div>
+        </a>
+
+        <a href="joao/index.html" class="menu-button">
+            <span class="emoji-icon">✨</span>
+            <div class="menu-content">
+                <span>Devocional Livro de João</span>
+                <small>Conheça Jesus como o Verbo e a Luz do mundo.</small>
+            </div>
+        </a>
+
+        <a href="romanos/index.html" class="menu-button">
+            <span class="emoji-icon">⚖️</span>
+            <div class="menu-content">
+                <span>Devocional Livro de Romanos</span>
+                <small>Estudo aprofundado sobre a Justificação pela Fé.</small>
+            </div>
+        </a>
+
+        <a href="proverbios/index.html" class="menu-button">
+            <span class="emoji-icon">💡</span>
+            <div class="menu-content">
+                <span>Devocional Livro de Provérbios</span>
+                <small>Lições diárias de Sabedoria e Conduta.</small>
+            </div>
+        </a>
+
+    </div>
+
+    <footer class="simple-footer">
+        © 2025 Alex Silva — <em>Uso livre com atribuição</em>
+    </footer>
+
+</body>
+</html>
