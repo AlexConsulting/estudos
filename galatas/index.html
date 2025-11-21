@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>7 Dias: A Suficiência de Cristo (Devocional)</title>
-    <style>
+  <style>
         /* 0. NOVO: Variável CSS para controle de Zoom/Fonte */
         :root {
             --base-font-scale: 1.0; /* Valor padrão para 100% */
@@ -276,17 +276,22 @@
         
         /* 5. MEDIA QUERIES (Ajustes para Celular) */
         @media (max-width: 600px) {
+            
+            /* Ajuste MAIS IMPORTANTE: Adiciona margem no topo do container principal para compensar o floater */
             .book-container {
                 padding: 20px 25px; 
                 width: 95%; 
-                margin-top: 60px; /* Ajuste para dar espaço ao floater fixo no topo */
+                margin-top: 60px; /* GARANTE ESPAÇO ABAIXO DO MENU A+/A- FIXO */
             }
+            
+            /* Acomoda os botões de utilidade no topo */
             .top-utils {
                 flex-direction: column; 
                 align-items: flex-start; 
                 gap: 10px; 
             }
 
+            /* Força a barra de navegação para layout de coluna, usando 100% da largura */
             .navigation {
                 flex-direction: column; 
                 gap: 10px; 
@@ -295,12 +300,13 @@
                 width: 100%; 
             }
              
+            /* Garante que o checkbox de progresso fique no topo da seção de navegação */
             .progress-check { 
                 order: -1; 
                 width: 100%; 
             }
             
-            /* Reposicionamento do Floater de Acessibilidade (A+/A-) */
+            /* Reposicionamento do Floater de Acessibilidade (A+/A-) - Fica fixo no topo direito */
             #accessibilityFloater {
                 top: 10px; 
                 right: 10px; 
@@ -309,6 +315,7 @@
                 padding: 5px;
                 background: rgba(255, 255, 255, 0.9);
                 border: 1px solid #ccc;
+                border-radius: 8px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             }
             
@@ -324,7 +331,7 @@
                 border: 1px solid #444;
             }
 
-            /* NOVO: CORREÇÃO DE POSICIONAMENTO DO VLIBRAS EM MOBILE */
+            /* CORREÇÃO DE POSICIONAMENTO DO VLIBRAS EM MOBILE */
             /* Move o botão VLibras (mãozinha) para o canto INFERIOR ESQUERDO */
             .vw-access-button {
                 /* Sobrescreve a posição padrão do VLibras */
