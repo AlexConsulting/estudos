@@ -86,7 +86,6 @@
         }
         #listenToggle[disabled] { opacity: 0.6; cursor: wait; }
         #langSelectButton:hover, #themeToggle:hover, #listenToggle:hover:not([disabled]) { background-color: #e0e0e0; }
-        /* (Estilos de Dropdown e Dark Theme para utilitários mantidos) */
         .lang-flag-active { width: 24px; height: 18px; margin-right: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
         #langDropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 150px; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid #ddd; border-radius: 5px; margin-top: 5px; overflow: hidden; }
         #langDropdown a { color: #333; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; font-size: 0.9em; }
@@ -152,10 +151,10 @@
             /* FIX: Centraliza o conteúdo no mobile */
             main { width: 100%; display: flex; justify-content: center; }
 
-            /* FIX: ESPAÇAMENTO SUPERIOR REDUZIDO. Apenas 20px (antes 35px) */
+            /* FIX: ESPAÇAMENTO SUPERIOR ZERADO */
             .book-container {
                 padding: 20px 25px; width: 95%; 
-                margin-top: 20px; /* Reduzido para melhor experiência visual */
+                margin-top: 0 !important; /* ZERA O ESPAÇAMENTO ACIMA DO CONTEÚDO */
                 margin-bottom: 20px;
             }
             
@@ -168,23 +167,23 @@
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
-            /* FIX VLIBRAS: ZERA o posicionamento do contêiner principal para que o botão apareça 
-               e posiciona o botão no canto inferior esquerdo. */
+            /* FIX VLIBRAS FINAL: Anula qualquer posicionamento do contêiner VLibras no mobile 
+               e força o botão para o canto inferior esquerdo. */
             div[vw] {
-                position: absolute !important; /* Volta para absolute para não bugar com o fixed */
-                right: auto !important;
-                left: auto !important;
-                bottom: auto !important; 
-                top: auto !important;
+                position: unset !important; /* Remove o position:fixed forçado no desktop */
+                bottom: unset !important;
+                right: unset !important;
             }
             
             .vw-access-button {
-                position: fixed !important; /* Garante que o botão fique na tela */
+                position: fixed !important; /* Força o botão a ser fixo na tela */
                 bottom: 15px !important; 
-                left: 15px !important;    
+                left: 15px !important;    /* POSICIONA NO CANTO INFERIOR ESQUERDO */
                 right: auto !important;   
                 top: auto !important;
                 z-index: 1001 !important; 
+                width: 50px !important; /* Força um tamanho para garantir visibilidade */
+                height: 50px !important;
             }
             
             /* Outros ajustes de mobile */
