@@ -19,23 +19,23 @@
 
         body {
             font-family: 'Georgia', serif; 
-            margin: 0; /* Garante que não há margem no body */
+            margin: 0; 
             background-color: #e6e0d3; color: #333; line-height: 1.6;
-            /* Revertido para o layout centralizado original para desktop */
+            /* **FIX DESKTOP:** Mantém o layout centralizado original para desktop */
             display: flex; 
             flex-direction: column; 
-            justify-content: center; 
+            justify-content: center; /* Centraliza verticalmente no desktop */
             align-items: center;
             min-height: 100vh; 
-            padding: 20px 0; /* Padding vertical no desktop */
+            padding: 20px 0; 
             transition: background-color 0.3s, color 0.3s;
         }
         main {
-            width: auto; /* Deixa o main se adaptar ao container */
+            width: auto; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 0; /* Zera padding superior */
+            padding-top: 0; 
             padding-bottom: 0;
         }
 
@@ -44,7 +44,7 @@
             border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid #ccc;
             position: relative; transition: background 0.3s, box-shadow 0.3s;
             font-size: calc(var(--base-font-scale) * 1em); 
-            margin-top: 0; /* Garante margin top zero */
+            margin-top: 0; 
             margin-bottom: 0;
             box-sizing: border-box; 
         }
@@ -173,14 +173,22 @@
         @media (max-width: 600px) {
             
             /* 💥 FIX PRINCIPAL: ZERA O ESPAÇAMENTO SUPERIOR DO CONTEÚDO NO MOBILE */
-            body, html, main {
+            body, html {
                 margin: 0 !important;
                 padding-top: 0 !important;
                 padding-bottom: 0 !important;
                 overflow-x: hidden; 
+                /* 💥 FIX: Força o conteúdo a iniciar no topo, ignorando o justify-content: center global */
+                justify-content: flex-start !important; 
+                align-items: flex-start !important;
+            }
+            main {
+                width: 100%;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
             }
             .book-container {
-                /* AQUI ESTÁ O ZERO ESPAÇAMENTO, FLUTUANDO ABAIXO DOS BOTÕES FIXOS */
+                /* ESPAÇAMENTO ZERO */
                 margin-top: 0 !important; 
                 margin-bottom: 20px; 
                 
@@ -197,7 +205,7 @@
             .top-utils { display: none !important; }
             .language-selector-wrapper, #themeToggle { display: none !important; }
 
-            /* 💥 1. OUÇA AQUI (FIXO: Topo Central) - VISIBILIDADE FORÇADA */
+            /* 💥 1. OUÇA AQUI (FIXO: Topo Central) - VISIBILIDADE MÁXIMA FORÇADA */
             #listenToggle {
                 position: fixed;
                 top: 5px; 
@@ -207,6 +215,7 @@
                 
                 /* VISIBILIDADE FORÇADA */
                 display: flex !important; 
+                visibility: visible !important; 
                 
                 /* Dimensões e estilos */
                 padding: 5px 15px; 
@@ -244,13 +253,13 @@
                 font-size: 0.9em; 
             }
             
-            /* 💥 3. VLIBRAS (FIXO: Topo Direito, ABAIXO do Ouça Aqui) */
+            /* 💥 3. VLIBRAS (FIXO: Topo Direito, POSICIONAMENTO NA LINHA DO TÍTULO) */
             div[vw] {
                 position: fixed !important;
                 bottom: auto !important; 
                 right: 5px !important;
                 left: auto !important; 
-                top: 50px !important; /* Mantido em 50px para não colidir com o Ouça Aqui */
+                top: 80px !important; /* Mantido em 80px para colocá-lo na linha do Título H1 */
                 z-index: 1010 !important; 
                 
                 /* Tamanho ajustado para visibilidade */
@@ -278,7 +287,7 @@
         @media (max-width: 400px) {
             #accessibilityFloater button { font-size: 0.8em; padding: 2px 4px; }
             #listenToggle { font-size: 0.75em; padding: 3px 10px; }
-            div[vw] { width: 35px !important; height: 35px !important; top: 45px !important; } 
+            div[vw] { width: 35px !important; height: 35px !important; top: 75px !important; } 
             .vw-access-button { width: 35px !important; height: 35px !important; }
         }
     </style>
