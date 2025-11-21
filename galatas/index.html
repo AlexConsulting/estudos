@@ -14,7 +14,8 @@
         body {
             font-family: 'Georgia', serif; margin: 0; background-color: #e6e0d3; color: #333; line-height: 1.6;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            min-height: 100vh; padding: 20px 0; transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh; padding: 20px 0; /* padding aqui é vertical, removido no mobile */
+            transition: background-color 0.3s, color 0.3s;
         }
         .book-container {
             max-width: 650px; width: 90%; background: #fdfdfd; padding: 30px 40px;
@@ -146,24 +147,23 @@
         /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
         @media (max-width: 600px) {
             
-            /* 💥 FIX: Remove o padding que causava o espaçamento superior excessivo no main. */
-            main { 
-                width: 100%; 
-                display: flex; 
-                justify-content: center; 
+            /* 💥 FIX PRINCIPAL: ZERA O ESPAÇAMENTO SUPERIOR NO BODY E MAIN */
+            body, main { 
+                margin-top: 0 !important;
                 padding-top: 0 !important; 
+                padding-bottom: 0 !important; 
             }
-
-            /* 💥 FIX: O conteúdo do livro deve começar logo abaixo da barra fixa do Ouça Aqui (altura ~40px) */
+            
+            /* 💥 NOVO ESPAÇAMENTO: O padding-top no book-container empurra o conteúdo visível */
             .book-container {
                 padding: 20px 25px; 
                 width: 95%; 
-                /* NOVO: Margem para dar espaço ao botão Ouça Aqui (que estará na posição top: 40px) */
-                margin-top: 80px !important; 
+                /* O conteúdo começa 95px abaixo do topo da tela, dando espaço aos fixos */
+                margin-top: 95px !important; 
                 margin-bottom: 20px;
             }
 
-            /* NOVO LAYOUT: Ocultamos a barra .top-utils e usamos 3 elementos FIXOS independentes */
+            /* Oculta o container .top-utils original */
             .top-utils { display: none; }
             .language-selector-wrapper, #themeToggle { display: none !important; }
 
@@ -176,13 +176,13 @@
                 bottom: auto !important; 
                 z-index: 1010 !important; 
                 
-                /* Ajuste de tamanho para não ser cortado (35px + 5px de margem) */
-                width: 35px !important; 
-                height: 35px !important;
+                /* Aumenta o tamanho para garantir que não seja cortado */
+                width: 40px !important; 
+                height: 40px !important;
             }
             .vw-access-button {
-                width: 35px !important;
-                height: 35px !important;
+                width: 40px !important;
+                height: 40px !important;
             }
 
             /* 💥 2. A+/A- (FIXO: Canto Superior Direito) */
@@ -212,18 +212,20 @@
             /* 💥 3. OUÇA AQUI (FIXO: Abaixo dos botões VLibras/A+A-) */
             #listenToggle {
                 position: fixed;
-                top: 50px; /* POSICIONAMENTO CRÍTICO: 5px (top) + 35px (altura botões) + 10px (espaço) = 50px */
+                /* 40px (altura dos botões) + 5px (top) + 10px (espaço) = 55px */
+                top: 55px; 
                 left: 50%; 
                 transform: translateX(-50%); 
-                z-index: 1009; /* Abaixo dos botões da linha de cima */
+                z-index: 1009; 
                 
                 /* Dimensões mínimas */
                 padding: 5px 15px; 
                 font-size: 0.9em; 
                 
-                /* Fundo para dar contraste */
+                /* Adiciona fundo para que fique alinhado e visível */
                 background-color: #f0f0f0; 
                 border: 1px solid #ccc;
+                border-radius: 5px;
             }
             .dark-theme #listenToggle {
                 background-color: #2c2c2c; 
