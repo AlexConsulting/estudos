@@ -160,15 +160,15 @@
             color: #1e1e1e;
         }
         
-        /* 4. SELETOR DE IDIOMA E TEMA (FUNDO NEUTRO UNIFICADO) */
+        /* 4. SELETOR DE IDIOMA, LEITURA E TEMA (FUNDO NEUTRO UNIFICADO) */
         .language-selector-wrapper {
             position: relative;
             display: inline-block;
             z-index: 10;
         }
 
-        /* Aplicando o estilo de fundo neutro para o seletor de idiomas E o botão de tema */
-        #langSelectButton, #themeToggle { 
+        /* Aplicando o estilo de fundo neutro para o seletor de idiomas, botão de tema E botão de escuta */
+        #langSelectButton, #themeToggle, #listenToggle { 
             /* ESTILO NEUTRO UNIFICADO: Cinza Claro */
             background-color: #f0f0f0;
             border: 1px solid #ccc;
@@ -183,7 +183,7 @@
             transition: background-color 0.2s, border-color 0.2s, color 0.2s;
         }
 
-        #langSelectButton:hover, #themeToggle:hover {
+        #langSelectButton:hover, #themeToggle:hover, #listenToggle:hover {
             background-color: #e0e0e0;
         }
 
@@ -229,14 +229,14 @@
             border: 1px solid #eee;
         }
 
-        /* Ajustes de Tema Escuro para Seletor de Idioma e Botão de Tema (UNIFICADOS) */
-        .dark-theme #langSelectButton, .dark-theme #themeToggle {
+        /* Ajustes de Tema Escuro para Botões de Utilidade (UNIFICADOS) */
+        .dark-theme #langSelectButton, .dark-theme #themeToggle, .dark-theme #listenToggle {
             background-color: #2c2c2c;
             border-color: #444;
             color: #f4f4f4;
         }
         
-        .dark-theme #langSelectButton:hover, .dark-theme #themeToggle:hover {
+        .dark-theme #langSelectButton:hover, .dark-theme #themeToggle:hover, .dark-theme #listenToggle:hover {
             background-color: #333;
         }
 
@@ -347,22 +347,19 @@
 <body class="light-theme">
 
     <div class="book-container">
-        <!-- Estruturas de Utilidade: Tema e Idioma -->
         <div class="top-utils">
-            <!-- Seletor de Idioma -->
             <div class="language-selector-wrapper">
                 <button id="langSelectButton" aria-haspopup="true" aria-expanded="false" title="Selecionar Idioma">
-                    <!-- Conteúdo será preenchido pelo JS (bandeira ativa e nome) -->
-                </button>
+                    </button>
                 <div id="langDropdown">
-                    <!-- Links dos idiomas serão preenchidos pelo JS -->
-                </div>
+                    </div>
             </div>
             
-            <!-- Toggle de Tema: Agora terá o mesmo estilo do seletor de idiomas -->
+            <button id="listenToggle" class="nav-button" title="Ouvir Conteúdo">
+                </button>
+            
             <button id="themeToggle" class="nav-button" title="Mudar Tema">
-                <!-- Conteúdo será preenchido pelo JS (Ícone + Texto) -->
-            </button>
+                </button>
         </div>
         
         <h1 id="mainTitle">7 Dias: A Suficiência de Cristo (Livro de Gálatas) </h1>
@@ -419,6 +416,10 @@
         let currentDay = 1;
         let currentLang = SAVED_LANG; 
         
+        // NOVO TTS: Objetos da Web Speech API
+        const synth = window.speechSynthesis; 
+        let utterance = null; 
+        
         // NOVO: CHAVE ÚNICA DO DEVOCIONAL. Esta é a chave para a persistência individual.
         // Para os outros devocionais (Romanos, Provérbios, Eclesiastes), você deve
         // mudar esta chave, por exemplo, para 'romanos', 'proverbios', etc.
@@ -436,7 +437,12 @@
                 navNext: "Próximo →",
                 footerText: "Direitos Reservados 2024",
                 themeLight: "🌙 Modo Escuro", 
-                themeDark: "☀️ Modo Claro" 
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Ouça Aqui", 
+                listenStop: "🛑 Parar Leitura",
+                listenPause: "⏸️ Pausar Áudio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Conteúdo para leitura não encontrado.",
             },
             'en-US': {
                 mainTitle: "7 Days: The Sufficiency of Christ (Book of Galatians)",
@@ -448,7 +454,12 @@
                 navNext: "Next →",
                 footerText: "All Rights Reserved 2024",
                 themeLight: "🌙 Dark Mode",
-                themeDark: "☀️ Light Mode"
+                themeDark: "☀️ Light Mode",
+                listenStart: "🔊 Listen Here", 
+                listenStop: "🛑 Stop Reading",
+                listenPause: "⏸️ Pause Audio",
+                listenResume: "▶️ Resume",
+                noContentAlert: "Content for reading not found.",
             },
             'es-ES': {
                 mainTitle: "7 Días: La Suficiencia de Cristo (Libro de Gálatas)",
@@ -460,7 +471,12 @@
                 navNext: "Siguiente →",
                 footerText: "Todos los derechos reservados 2024",
                 themeLight: "🌙 Modo Oscuro",
-                themeDark: "☀️ Modo Claro"
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Escuchar Aquí", 
+                listenStop: "🛑 Detener Lectura",
+                listenPause: "⏸️ Pausar Audio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Contenido para escuchar no encontrado.",
             },
             'fr-FR': {
                 mainTitle: "7 Jours : La Suffisance du Christ (Livre des Galates)",
@@ -472,7 +488,12 @@
                 navNext: "Suivant →",
                 footerText: "Tous droits réservés 2024",
                 themeLight: "🌙 Mode Sombre",
-                themeDark: "☀️ Mode Clair"
+                themeDark: "☀️ Mode Clair",
+                listenStart: "🔊 Écoutez Ici", 
+                listenStop: "🛑 Arrêter Lecture",
+                listenPause: "⏸️ Pause Audio",
+                listenResume: "▶️ Reprendre",
+                noContentAlert: "Contenu à lire introuvable.",
             }
         };
 
@@ -493,6 +514,7 @@
         const langDropdown = document.getElementById('langDropdown');
         const themeToggle = document.getElementById('themeToggle');
         const langSelectorWrapper = document.querySelector('.language-selector-wrapper');
+        const listenToggle = document.getElementById('listenToggle'); // NOVO ELEMENTO
 
   // *************** FUNÇÕES DE UTILIDADE ***************
     
@@ -589,6 +611,12 @@
             loadDevotionalContent(currentDay, langKey, direction);
             
             updateOverallProgress();
+
+            // NOVO TTS: Garante que a leitura pare e o botão seja atualizado ao trocar de página/idioma
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            updateListenToggle('start'); 
         }
         
         // --- FUNÇÕES DE NAVEGAÇÃO (mantidas) ---
@@ -658,35 +686,83 @@
             }
         }
 
-        // *************** EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) ***************
-        window.onload = () => {
+        // --- FUNÇÕES DE LEITURA (TEXT-TO-SPEECH) ---
+        function speakContent() {
+            const langKey = currentLang;
+            const t = translations[langKey] || translations['pt-BR']; 
+            const contentElement = document.getElementById('devotionalContent');
             
-            // 1. Carrega o tema e idioma
-            applyTheme(SAVED_THEME);
-            updateLanguageSelector();
-            
-            // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
-            currentDay = getSavedProgress();
-            updateTexts(0); 
-            
-            // 3. Configura os Listeners de Eventos
-            themeToggle.addEventListener('click', toggleDarkMode);
-            langSelectButton.addEventListener('click', (event) => {
-                event.stopPropagation();
-                langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
-            });
-            document.addEventListener('click', (event) => {
-                const wrapper = document.querySelector('.language-selector-wrapper');
-                if (langDropdown.style.display === 'block' && !wrapper.contains(event.target)) {
-                    langDropdown.style.display = 'none';
-                }
-            });
+            // 1. Limpa qualquer leitura anterior
+            if (synth.speaking) {
+                synth.cancel();
+            }
 
-            prevButton.addEventListener('click', prevDay);
-            nextButton.addEventListener('click', nextDay);
-            completedCheck.addEventListener('change', handleCompletedCheck);
-        };
-        
+            // 2. Seleciona TODO o texto a ser lido:
+            // O texto principal está dentro da div devotionalContentDiv
+            const textToSpeak = contentElement.innerText || contentElement.textContent;
+
+            if (!textToSpeak) {
+                alert(t.noContentAlert || "Conteúdo para leitura não encontrado.");
+                return;
+            }
+
+            utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+            // 3. Configura o idioma (CRÍTICO para voz e pronúncia)
+            // Usa o código do idioma, ex: 'pt-BR'
+            utterance.lang = langKey;
+            
+            // 4. Define o que acontece ao terminar
+            utterance.onend = () => {
+                updateListenToggle('start');
+            };
+            
+            // 5. Inicia a leitura
+            synth.speak(utterance);
+            updateListenToggle('stop');
+        }
+
+        function stopSpeaking() {
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            updateListenToggle('start');
+        }
+
+        function pauseResumeSpeaking() {
+            // Se estiver falando e pausado, continua.
+            if (synth.paused) {
+                synth.resume();
+                updateListenToggle('stop'); 
+            // Se estiver falando e não estiver pausado, pausa.
+            } else if (synth.speaking) {
+                synth.pause();
+                updateListenToggle('resume');
+            }
+        }
+
+        // 6. Funções de Atualização do Botão de Leitura
+        function updateListenToggle(state = 'start') {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            if (!listenToggle) return;
+
+            listenToggle.onclick = null; // Limpa o handler anterior
+
+            // Define o conteúdo e a ação de clique único
+            if (state === 'stop') {
+                // Lendo ou prestes a ler
+                listenToggle.innerHTML = t.listenStop || '🛑 Parar Leitura';
+                listenToggle.onclick = stopSpeaking;
+            } else if (state === 'resume') {
+                // Pausado
+                listenToggle.innerHTML = t.listenResume || '▶️ Continuar';
+                listenToggle.onclick = pauseResumeSpeaking;
+            } else {
+                // Parado (pronto para iniciar)
+                listenToggle.innerHTML = t.listenStart || '🔊 Ouça Aqui';
+                listenToggle.onclick = speakContent;
+            }
+        }
 
        // --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
         
@@ -864,8 +940,8 @@ const devotionalContent = {
             h2: "The Battle: Flesh Against Spirit",
             versiculos: "<strong>Galatians 5:16-17 (NIV):</strong> So I say, **walk by the Spirit**, and you will not gratify the desires of the flesh. For the flesh desires what is contrary to the Spirit, and the Spirit what is contrary to the flesh.",
             resumo: "The Christian life is a daily **Spiritual Warfare**. The believer (now justified) has two conflicting natures: the flesh (the sinful remnant) and the Spirit (the new nature given in Regeneration). The secret to progressive Sanctification is not willpower, but **Walking by the Spirit**, actively submitting to His control.",
-            aplicacao: "What does it mean to 'walk by the Spirit' in your routine today? It is cultivating spiritual disciplines (Bible reading, prayer, fellowship) not out of obligation, but to gain the 'power' you need to resist the desires of the flesh. What works of the flesh do you need to identify and confront?",
-            oracao: "Pray to God confessing your dependence. Ask the Holy Spirit to discipline your heart and give you the daily power to deny yourself and live a life of radical obedience."
+            aplicacao: "What does your life reveal today: the 'old self' trying to justify itself or the 'new life' trusting in Christ's sufficiency? Proclaim this truth over yourself: 'I no longer live.'",
+            oracao: "Pray to God asking that the truth of your crucifixion and resurrection with Christ becomes the basis of all your decisions and the source of your power for sanctification."
         },
         es: {
             h2: "La Batalla: Carne Contra Espíritu",
@@ -1086,6 +1162,12 @@ function updateOverallProgress() {
 
             // 6. Atualiza o texto do toggle de tema
             themeToggle.textContent = currentTheme === 'dark' ? t.themeDark : t.themeLight;
+            
+            // NOVO TTS: Garante que a leitura pare e o botão seja atualizado ao trocar de página/idioma
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+            updateListenToggle('start'); 
         }
         
         // --- FUNÇÕES DE NAVEGAÇÃO ---
@@ -1129,27 +1211,36 @@ function updateOverallProgress() {
     loadThemePreference();
     updateLanguageSelector();
                
-            // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
-            currentDay = getSavedProgress();
-            updateTexts(0); 
-            
-            // 3. Configura os Listeners de Eventos
-            themeToggle.addEventListener('click', toggleDarkMode);
-            langSelectButton.addEventListener('click', (event) => {
-                event.stopPropagation();
-                langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
-            });
-            document.addEventListener('click', (event) => {
-                const wrapper = document.querySelector('.language-selector-wrapper');
-                if (langDropdown.style.display === 'block' && !wrapper.contains(event.target)) {
-                    langDropdown.style.display = 'none';
-                }
-            });
+    // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
+    currentDay = getSavedProgress();
+    updateTexts(0); 
+    
+    // 3. Configura os Listeners de Eventos
+    themeToggle.addEventListener('click', toggleDarkMode);
+    
+    // NOVO TTS: Inicialização do botão de escuta
+    if (listenToggle) {
+        // Inicializa o botão para o estado "Ouça Aqui" e define o onclick
+        updateListenToggle('start'); 
+        // Adiciona um evento de duplo clique para pausar/continuar a leitura
+        listenToggle.addEventListener('dblclick', pauseResumeSpeaking); 
+    }
+    
+    langSelectButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
+    });
+    document.addEventListener('click', (event) => {
+        const wrapper = document.querySelector('.language-selector-wrapper');
+        if (langDropdown.style.display === 'block' && !wrapper.contains(event.target)) {
+            langDropdown.style.display = 'none';
+        }
+    });
 
-            prevButton.addEventListener('click', prevDay);
-            nextButton.addEventListener('click', nextDay);
-            completedCheck.addEventListener('change', handleCompletedCheck);
-        };
+    prevButton.addEventListener('click', prevDay);
+    nextButton.addEventListener('click', nextDay);
+    completedCheck.addEventListener('change', handleCompletedCheck);
+};
         
     </script>
 </body>
