@@ -114,7 +114,6 @@
         .dark-theme #accessibilityFloater button:hover { background-color: #383838; }
 
         /* 6. AJUSTES VLIBRAS (Desktop - CORREÇÃO DE SOBREPOSIÇÃO) */
-        /* MANTIDO: Move o contêiner principal VLibras para o canto inferior direito e garante z-index baixo */
         div[vw] {
             position: fixed !important;
             bottom: 25px !important; 
@@ -147,16 +146,15 @@
         /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
         @media (max-width: 600px) {
             
-            /* FIX: Adiciona padding-top ao MAIN para dar espaço à barra fixa. */
+            /* 💥 FIX: Remove o padding que causava o espaçamento superior excessivo. */
             main { 
                 width: 100%; 
                 display: flex; 
                 justify-content: center; 
-                /* NOVO: Padding para dar espaço ao topo fixo (aprox. 50px de altura) */
-                padding-top: 50px; 
+                padding-top: 0 !important; /* ZERA O PADDING TOP DO MAIN */
             }
 
-            /* FIX: ESPAÇAMENTO SUPERIOR ZERADO */
+            /* FIX: O conteúdo deve começar imediatamente. */
             .book-container {
                 padding: 20px 25px; 
                 width: 95%; 
@@ -164,77 +162,68 @@
                 margin-bottom: 20px;
             }
 
-            /* NOVO LAYOUT DE CABEÇALHO FIXO NO MOBILE */
-            .top-utils {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between; 
-                align-items: center; /* ALINHAMENTO VERTICAL FINAL */
-                height: 40px; /* Altura fixa da barra para cálculo do padding-top */
-                background-color: #fdfdfd; 
-                padding: 5px 10px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                z-index: 990; 
-                gap: 5px;
-            }
-            .dark-theme .top-utils { background-color: #1e1e1e; }
-            
-            /* Oculta os botões não essenciais no mobile */
-            .language-selector-wrapper, #themeToggle {
-                display: none !important;
-            }
+            /* 💥 NOVO LAYOUT: Ocultamos o .top-utils original e usamos 3 elementos FIXOS independentes */
+            .top-utils { display: none; }
+            .language-selector-wrapper, #themeToggle { display: none !important; }
 
-            /* FIX: Ajusta o tamanho do Ouça Aqui para ser discreto e central */
-            #listenToggle {
-                flex-grow: 0; 
-                text-align: center; 
-                justify-content: center;
-                margin: 0 5px; 
-                padding: 3px 8px; /* Padding reduzido para botão menor */
-                font-size: 0.85em; /* Fonte ainda menor */
-            }
-
-            /* FIX: Garante que o A+/A- esteja alinhado dentro da barra */
-            #accessibilityFloater {
-                position: static; 
-                top: auto; left: auto; right: auto; transform: translateY(0); 
-                flex-direction: row; padding: 0; 
-                background: none; border: none; box-shadow: none;
-                z-index: auto; 
-                /* Garante alinhamento vertical */
-                align-self: center; 
-            }
-            #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
-
-
-            /* 💥 FIX VLIBRAS (CORTADO E POSIÇÃO): Alinhado com a barra superior */
+            /* 💥 1. VLIBRAS (FIXO: Canto Superior Esquerdo) */
             div[vw] {
-                /* REVERTEMOS A POSIÇÃO FIXA do VLibras, permitindo que ele se mova com o .top-utils */
-                position: static !important;
-                left: unset !important;    
-                top: unset !important; 
-                right: unset !important;
-                bottom: unset !important; 
-                z-index: auto !important; 
-                
-                /* Reduz o tamanho do contêiner para caber na barra e não ser cortado */
-                width: 30px !important; 
-                height: 30px !important;
-                /* Adiciona uma margem lateral para separação */
-                margin-right: 5px; 
+                position: fixed !important;
+                left: 5px !important;    
+                top: 5px !important; 
+                right: auto !important;
+                bottom: auto !important; 
+                z-index: 1010 !important; 
+                width: 35px !important; 
+                height: 35px !important;
             }
-            
             .vw-access-button {
-                /* Garante que o botão interno se ajuste ao novo tamanho do contêiner */
-                left: unset !important; right: unset !important; top: unset !important; bottom: unset !important; 
-                width: 30px !important;
-                height: 30px !important;
-                /* Alinha o boneco no centro do novo contêiner */
-                margin: 0 auto !important;
+                width: 35px !important;
+                height: 35px !important;
+            }
+
+            /* 💥 2. A+/A- (FIXO: Canto Superior Direito) */
+            #accessibilityFloater {
+                position: fixed; 
+                top: 5px; 
+                right: 5px; 
+                transform: translateY(0); 
+                flex-direction: row; 
+                padding: 5px;
+                background: rgba(255, 255, 255, 0.9); 
+                border: 1px solid #ccc;
+                border-radius: 8px; 
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                z-index: 1010;
+            }
+            #accessibilityFloater button { 
+                margin: 0 2px; 
+                padding: 3px 6px; 
+                font-size: 0.9em; 
+            }
+            .dark-theme #accessibilityFloater { 
+                background: rgba(30, 30, 30, 0.9); 
+                border-color: #444; 
+            }
+
+            /* 💥 3. OUÇA AQUI (FIXO: Centro Superior) */
+            #listenToggle {
+                position: fixed;
+                top: 5px;
+                left: 50%; /* Centraliza horizontalmente */
+                transform: translateX(-50%); /* Ajusta o centro exato */
+                z-index: 1010;
+                /* Dimensões mínimas para ser discreto */
+                padding: 5px 10px; 
+                font-size: 0.85em; 
+                
+                /* Adiciona fundo para que fique alinhado aos outros botões fixos */
+                background-color: #f0f0f0; 
+                border: 1px solid #ccc;
+            }
+            .dark-theme #listenToggle {
+                background-color: #2c2c2c; 
+                border-color: #444;
             }
             
             /* Outros ajustes de mobile */
@@ -245,9 +234,8 @@
 
         /* MEDIA QUERY: Ajuste para telas muito pequenas, se necessário */
         @media (max-width: 400px) {
-            #accessibilityFloater { right: 5px; padding: 5px; }
-            #accessibilityFloater button { font-size: 0.9em; padding: 2px 5px; }
-            #listenToggle { font-size: 0.8em; }
+            #accessibilityFloater button { font-size: 0.85em; padding: 2px 5px; }
+            #listenToggle { font-size: 0.8em; padding: 4px 8px; }
         }
     </style>
 </head>
