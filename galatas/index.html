@@ -152,10 +152,10 @@
             /* FIX: Centraliza o conteúdo no mobile */
             main { width: 100%; display: flex; justify-content: center; }
 
-            /* FIX: ESPAÇAMENTO SUPERIOR. Garante espaço para o floater no topo */
+            /* FIX: ESPAÇAMENTO SUPERIOR REDUZIDO. Apenas 20px (antes 35px) */
             .book-container {
                 padding: 20px 25px; width: 95%; 
-                margin-top: 35px; /* Adiciona margem para não ficar debaixo do floater */
+                margin-top: 20px; /* Reduzido para melhor experiência visual */
                 margin-bottom: 20px;
             }
             
@@ -168,13 +168,18 @@
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
-            /* VLIBRAS (Mobile) - Fica no canto inferior esquerdo */
+            /* FIX VLIBRAS: ZERA o posicionamento do contêiner principal para que o botão apareça 
+               e posiciona o botão no canto inferior esquerdo. */
             div[vw] {
-                /* Remove a regra de desktop para evitar conflito. A regra abaixo já move o botão. */
+                position: absolute !important; /* Volta para absolute para não bugar com o fixed */
                 right: auto !important;
+                left: auto !important;
                 bottom: auto !important; 
+                top: auto !important;
             }
+            
             .vw-access-button {
+                position: fixed !important; /* Garante que o botão fique na tela */
                 bottom: 15px !important; 
                 left: 15px !important;    
                 right: auto !important;   
