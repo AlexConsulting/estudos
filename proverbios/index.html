@@ -526,10 +526,18 @@
              // Atualiza o estado do checkbox
              completedCheck.checked = getCompletionStatus(currentDay);
         }
-        
-        function handleCompletedCheck() {
-            saveCompletion(currentDay, completedCheck.checked);
-        }
+            // ******************************************************
+// ESTA DEVE SER A ÚNICA FUNÇÃO handleCompletedCheck NO CÓDIGO!
+// ******************************************************
+		function handleCompletedCheck() {
+    // 1. Salva a persistência (se marcado ou desmarcado)
+				saveCompletion(currentDay, completedCheck.checked);
+
+    // 2. Se o dia foi MARCADO como concluído E não for o último dia, avança.
+			if (completedCheck.checked && currentDay < totalDays) {
+				nextDay();
+    }
+}
         
         // --- FUNÇÕES DE TEMA ---
         function applyTheme(theme) {
@@ -715,28 +723,28 @@
         const devotionalContent = {
     1: {
         pt: {
-            h2: "Dia 1: O Princípio de Tudo",
+            h2: "O Princípio de Tudo",
             versiculos: "<strong>Provérbios 1:7 (NVI):</strong> O temor do Senhor é o princípio do conhecimento, mas os insensatos desprezam a sabedoria e a disciplina.",
             resumo: "A sabedoria bíblica não começa com o intelecto, mas com o **temor e a reverência a Deus**. O conhecimento verdadeiro (epistemologia reformada) é impossível onde há desprezo pelo Autor Soberano de toda a verdade. É um chamado à **submissão** antes da compreensão.",
             aplicacao: "Comece o dia e toda tarefa reconhecendo a **supremacia de Deus**. A cada decisão, pergunte: 'O que isso revela sobre o meu temor ao Senhor?' Não confie apenas em sua inteligência; confie no Deus que dá a sabedoria.",
             oracao: "Ore a Deus pedindo humildade para temer o Seu nome e sabedoria para aplicar os Seus mandamentos em sua vida."
         },
         en: {
-            h2: "Day 1: The Beginning of Everything",
+            h2: "The Beginning of Everything",
             versiculos: "<strong>Proverbs 1:7 (NIV):</strong> The fear of the Lord is the beginning of knowledge, but fools despise wisdom and instruction.",
             resumo: "Biblical wisdom doesn't start with intellect but with the **fear and reverence of God**. True knowledge (Reformed epistemology) is impossible where there is contempt for the Sovereign Author of all truth. It is a call to **submission** before comprehension.",
             aplicacao: "Start the day and every task by recognizing **God's supremacy**. With every decision, ask: 'What does this reveal about my fear of the Lord?' Do not rely solely on your intelligence; trust the God who gives wisdom.",
             oracao: "Pray to God asking for humility to fear His name and wisdom to apply His commands in your life."
         },
         es: {
-            h2: "Día 1: El Principio de Todo",
+            h2: "El Principio de Todo",
             versiculos: "<strong>Proverbios 1:7 (NVI):</strong> El temor del Señor es el principio del conocimiento; los necios desprecian la sabiduría y la disciplina.",
             resumo: "La sabiduría bíblica no comienza con el intelecto, sino con el **temor y la reverencia a Dios**. El verdadero conocimiento (epistemología reformada) es imposible donde hay desprecio por el Autor Soberano de toda verdad. Es un llamado a la **sumisión** antes de la comprensión.",
             aplicacion: "Comienza el día y cada tarea reconociendo la **supremacía de Dios**. En cada decisión, pregúntate: '¿Qué revela esto sobre mi temor al Señor?' No confíes solo en tu inteligencia; confía en el Dios que da la sabiduría.",
             oracao: "Ora a Dios pidiendo humildad para temer Su nombre y sabiduría para aplicar Sus mandamientos en tu vida."
         },
         fr: {
-            h2: "Jour 1: Le Commencement de Tout",
+            h2: "Le Commencement de Tout",
             versiculos: "<strong>Proverbes 1:7 (Louis Segond):</strong> La crainte de l'Éternel est le commencement de la science; Les insensés méprisent la sagesse et l'instruction.",
             resumo: "La sagesse biblique ne commence pas par l'intellect, mais par la **crainte et la révérence de Dieu**. La vraie connaissance (épistémologie réformée) est impossible là où il y a mépris pour l'Auteur Souverain de toute vérité. C'est un appel à la **soumission** avant la compréhension.",
             aplicacao: "Commencez la journée et chaque tâche en reconnaissant la **suprématie de Dieu**. À chaque décision, demandez: 'Qu'est-ce que cela révèle sur ma crainte de l'Éternel?' Ne vous fiez pas uniquement à votre intelligence; faites confiance au Dieu qui donne la sagesse.",
@@ -745,14 +753,14 @@
     },
     2: {
         pt: {
-            h2: "Dia 2: A Escolha Entre Caminhos",
+            h2: "A Escolha Entre Caminhos",
             versiculos: "<strong>Provérbios 4:18-19 (NVI):</strong> A vereda do justo é como a luz da aurora, que vai brilhando mais e mais até ser dia perfeito. Mas o caminho dos ímpios é como densas trevas; nem sequer sabem em que tropeçam.",
             resumo: "A vida é uma jornada de escolhas (antítese moral). O caminho do justo, regenerado pela Graça, é de santificação progressiva (**luz crescente**). O caminho do ímpio é de condenação certa, evidenciando a **Soberania de Deus** sobre o destino de cada um.",
             aplicacao: "Avalie seus hábitos e influências. Eles levam você à **luz crescente** ou às **trevas**? Escolha o caminho da justiça, que é pavimentado pela Palavra de Deus e iluminado pela presença do Espírito Santo.",
             oracao: "Ore a Deus pedindo discernimento para rejeitar o caminho da insensatez e para perseverar na vereda da justiça."
         },
         en: {
-            h2: "Day 2: The Choice Between Paths",
+            h2: "The Choice Between Paths",
             versiculos: "<strong>Proverbs 4:18-19 (NIV):</strong> The path of the righteous is like the morning sun, shining ever brighter till the full light of day. But the way of the wicked is like deep darkness; they do not know what makes them stumble.",
             resumo: "Life is a journey of choices (moral antithesis). The path of the righteous, regenerated by Grace, is one of progressive sanctification (**increasing light**). The path of the wicked is one of certain condemnation, evidencing **God's Sovereignty** over everyone's destiny.",
             aplicacao: "Evaluate your habits and influences. Do they lead you to **increasing light** or **darkness**? Choose the path of righteousness, paved by God's Word and illuminated by the Holy Spirit's presence.",
@@ -760,14 +768,14 @@
         }
         ,
         es: {
-            h2: "Día 2: La Elección Entre Caminos",
+            h2: "La Elección Entre Caminos",
             versiculos: "<strong>Proverbios 4:18-19 (NVI):</strong> La senda de los justos se asemeja a los primeros albores de la aurora: su brillo va en aumento hasta que el día alcanza su esplendor. El camino de los malvados, en cambio, es como la densa oscuridad; ni siquiera saben contra qué tropiezan.",
             resumo: "La vida es un viaje de elecciones (antítesis moral). El camino del justo, regenerado por la Gracia, es de santificación progresiva (**luz creciente**). El camino del impío es de condenación segura, evidenciando la **Soberanía de Dios** sobre el destino de cada uno.",
             aplicacion: "Evalúa tus hábitos e influencias. ¿Te llevan a la **luz creciente** o a las **tinieblas**? Elige el camino de la justicia, pavimentado por la Palabra de Dios e iluminado por la presencia del Espíritu Santo.",
             oracao: "Ora a Dios pidiendo discernimiento para rechazar el camino de la insensatez y para perseverar en la senda de la justicia."
         },
         fr: {
-            h2: "Jour 2: Le Choix Entre les Chemins",
+            h2: "Le Choix Entre les Chemins",
             versiculos: "<strong>Proverbes 4:18-19 (Louis Segond):</strong> Le sentier des justes est comme la lumière resplendissante, dont l'éclat va croissant jusqu'au milieu du jour. La voie des méchants est comme les ténèbres; Ils n'aperçoivent point ce qui les fera tomber.",
             resumo: "La vie est un voyage de choix (antithèse morale). Le chemin du juste, régénéré par la Grâce, est celui de la sanctification progressive (**lumière croissante**). Le chemin des impies est celui de la condamnation certaine, prouvant la **Souveraineté de Dieu** sur la destinée de chacun.",
             aplicacao: "Évaluez vos habitudes et influences. Vous mènent-elles vers la **lumière croissante** ou les **ténèbres**? Choisissez le chemin de la justice, pavé par la Parole de Dieu et illuminé par la présence du Saint-Esprit.",
@@ -776,28 +784,28 @@
     },
     3: {
         pt: {
-            h2: "Dia 3: Confiança Total na Soberania",
+            h2: "Confiança Total na Soberania",
             versiculos: "<strong>Provérbios 3:5-6 (NVI):</strong> Confie no Senhor de todo o seu coração e não se apoie em seu próprio entendimento; reconheça o Senhor em todos os seus caminhos, e ele endireitará as suas veredas.",
             resumo: "A sabedoria prática exige a **confiança absoluta na Soberania de Deus**, em contraste com a arrogância do raciocínio humano caído. Reconhecer a Deus (**Soli Deo Gloria**) em tudo é o segredo para ter um caminho dirigido e seguro.",
             aplicacao: "Em vez de se **preocupar e planejar** exaustivamente, confie primeiramente a Deus seus planos. Entregue-Lhe suas preocupações, sabendo que Sua sabedoria e Seu controle são infinitamente superiores ao seu entendimento limitado. Busque a direção dEle antes de agir.",
             oracao: "Ore a Deus pedindo-Lhe para firmar seu coração Nele e submeter sua mente e planos à Sua perfeita vontade."
         },
         en: {
-            h2: "Day 3: Total Trust in Sovereignty",
+            h2: "Total Trust in Sovereignty",
             versiculos: "<strong>Proverbs 3:5-6 (NIV):</strong> Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
             resumo: "Practical wisdom demands **absolute trust in God's Sovereignty**, contrasting with the arrogance of fallen human reasoning. Recognizing God (**Soli Deo Gloria**) in everything is the secret to having a guided and secure path.",
             aplicacao: "Instead of **worrying and planning** exhaustively, first entrust your plans to God. Surrender your concerns to Him, knowing that His wisdom and control are infinitely superior to your limited understanding. Seek His direction before acting.",
             oracao: "Pray to God asking Him to firm your heart in Him and submit your mind and plans to His perfect will."
         },
         es: {
-            h2: "Día 3: Confianza Total en la Soberanía",
+            h2: "Confianza Total en la Soberanía",
             versiculos: "<strong>Proverbios 3:5-6 (NVI):</strong> Confía en el Señor de todo corazón, y no en tu propia inteligencia. Reconócelo en todos tus caminos, y él allanará tus sendas.",
             resumo: "La sabiduría práctica exige la **confianza absoluta en la Soberanía de Dios**, en contraste con la arrogancia del razonamiento humano caído. Reconocer a Dios (**Soli Deo Gloria**) en todo es el secreto para tener un camino dirigido y seguro.",
             aplicacion: "En lugar de **preocuparte y planificar** exhaustivamente, confía primero tus planes a Dios. Entrégale tus preocupaciones, sabiendo que Su sabiduría y Su control son infinitamente superiores a tu entendimiento limitado. Busca Su dirección antes de actuar.",
             oracao: "Ora a Dios pidiéndole que afirme tu corazón en Él y someta tu mente y planes a Su perfecta voluntad."
         },
         fr: {
-            h2: "Jour 3: Confiance Totale dans la Souveraineté",
+            h2: "Confiance Totale dans la Souveraineté",
             versiculos: "<strong>Proverbes 3:5-6 (Louis Segond):</strong> Confie-toi en l'Éternel de tout ton coeur, et ne t'appuie pas sur ta sagesse; Reconnais-le dans toutes tes voies, et il aplanira tes sentiers.",
             resumo: "La sagesse pratique exige la **confiance absolue dans la Souveraineté de Dieu**, contrastant avec l'arrogance du raisonnement humain déchu. Reconnaître Dieu (**Soli Deo Gloria**) en tout est le secret pour avoir un chemin guidé et sûr.",
             aplicacao: "Au lieu de vous **inquiéter et de planifier** exhaustivement, confiez d'abord vos plans à Dieu. Abandonnez-Lui vos préoccupations, sachant que Sa sagesse et Son contrôle sont infiniment supérieurs à votre compréhension limitée. Cherchez Sa direction avant d'agir.",
@@ -806,28 +814,28 @@
     },
     4: {
         pt: {
-            h2: "Dia 4: O Valor da Integridade",
+            h2: "O Valor da Integridade",
             versiculos: "<strong>Provérbios 10:9 (NVI):</strong> Quem anda com integridade anda com segurança, mas quem segue veredas tortuosas será descoberto.",
             resumo: "A **Integridade** (viver em conformidade com o padrão moral de Deus) é o único fundamento para uma vida segura e pacífica. O Evangelho nos chama à justificação pela fé, que deve ser seguida pela **santificação** (viver com integridade) como evidência da nossa salvação.",
             aplicacao: "Busque a honestidade radical em todas as áreas: finanças, relacionamentos e pensamento. Lembre-se que Deus, o Soberano Juiz, vê tudo. A segurança verdadeira não está em esconder, mas em **viver de forma transparente** sob a verdade da Sua Palavra.",
             oracao: "Ore a Deus pedindo graça para viver com integridade, sabendo que só em Cristo nossa vida é totalmente segura."
         },
         en: {
-            h2: "Day 4: The Value of Integrity",
+            h2: "The Value of Integrity",
             versiculos: "<strong>Proverbs 10:9 (NIV):</strong> Whoever walks in integrity walks securely, but whoever takes crooked paths will be found out.",
             resumo: "**Integrity** (living in conformity with God's moral standard) is the only foundation for a secure and peaceful life. The Gospel calls us to justification by faith, which must be followed by **sanctification** (living with integrity) as evidence of our salvation.",
             aplicacao: "Seek radical honesty in all areas: finances, relationships, and thought. Remember that God, the Sovereign Judge, sees everything. True security is not in hiding, but in **living transparently** under the truth of His Word.",
             oracao: "Pray to God asking for grace to live with integrity, knowing that only in Christ is our life fully secure."
         },
         es: {
-            h2: "Día 4: El Valor de la Integridad",
+            h2: "El Valor de la Integridad",
             versiculos: "<strong>Proverbios 10:9 (NVI):</strong> El que camina en integridad anda seguro, pero el que pervierte sus caminos será descubierto.",
             resumo: "La **Integridad** (vivir en conformidad con el estándar moral de Dios) es el único fundamento para una vida segura y pacífica. El Evangelio nos llama a la justificación por la fe, que debe ser seguida por la **santificación** (vivir con integridad) como evidencia de nuestra salvación.",
             aplicacion: "Busca la honestidad radical en todas las áreas: finanzas, relaciones y pensamiento. Recuerda que Dios, el Juez Soberano, ve todo. La seguridad verdadera no está en esconder, sino en **vivir de forma transparente** bajo la verdad de Su Palabra.",
             oracao: "Ora a Dios pidiendo gracia para vivir con integridad, sabiendo que solo en Cristo nuestra vida es totalmente segura."
         },
         fr: {
-            h2: "Jour 4: La Valeur de l'Intégrité",
+            h2: "La Valeur de l'Intégrité",
             versiculos: "<strong>Proverbes 10:9 (Louis Segond):</strong> Celui qui marche dans l'intégrité marche avec assurance, Mais celui qui prend des voies tortueuses sera découvert.",
             resumo: "L'**Intégrité** (vivre en conformité avec la norme morale de Dieu) est le seul fondement d'une vie sûre et paisible. L'Évangile nous appelle à la justification par la foi, qui doit être suivie de la **sanctification** (vivre avec intégrité) comme preuve de notre salut.",
             aplicacao: "Recherchez l'honnêteté radicale dans tous les domaines: finances, relations et pensée. Rappelez-vous que Dieu, le Juge Souverain, voit tout. La véritable sécurité n'est pas de se cacher, mais de **vivre de manière transparente** sous la vérité de Sa Parole.",
@@ -836,28 +844,28 @@
     },
     5: {
         pt: {
-            h2: "Dia 5: A Linguagem da Sabedoria",
+            h2: "A Linguagem da Sabedoria",
             versiculos: "<strong>Provérbios 10:19 (NVI):</strong> No muito falar não falta transgressão, mas quem controla a língua é sensato.",
             resumo: "A sabedoria é manifestada no **autocontrole e na discrição** (moderação). A natureza caída do homem o leva ao excesso de palavras (pecado), mas a santificação nos chama a usar a língua para a **edificação**, entendendo que Deus é Soberano sobre cada palavra proferida.",
             aplicacao: "Antes de falar, pratique o filtro das três peneiras (Santo Agostinho): É **verdade**? É **necessário**? É **gentil**? Lembre-se de que a moderação no falar honra a Deus e preserva a paz nos relacionamentos. Peça a Deus para que o Espírito Santo o ajude a controlar sua língua.",
             oracao: "Ore a Deus pedindo auxílio para ser mais lento para falar e mais rápido para ouvir, honrando-O com suas palavras."
         },
         en: {
-            h2: "Day 5: The Language of Wisdom",
+            h2: "The Language of Wisdom",
             versiculos: "<strong>Proverbs 10:19 (NIV):</strong> When words are many, sin is not absent, but he who holds his tongue is wise.",
             resumo: "Wisdom is manifested in **self-control and discretion** (moderation). Man's fallen nature leads to excessive words (sin), but sanctification calls us to use the tongue for **edification**, understanding that God is Sovereign over every word spoken.",
             aplicacao: "Before speaking, practice the filter of the three sieves (St. Augustine): Is it **true**? Is it **necessary**? Is it **kind**? Remember that moderation in speech honors God and preserves peace in relationships. Ask God for the Holy Spirit's help in controlling your tongue.",
             oracao: "Pray to God asking for help to be slower to speak and quicker to listen, honoring Him with your words."
         },
         es: {
-            h2: "Día 5: El Lenguaje de la Sabiduría",
+            h2: "El Lenguaje de la Sabiduría",
             versiculos: "<strong>Proverbios 10:19 (NVI):</strong> El que mucho habla, mucho peca; el que guarda la boca es prudente.",
             resumo: "La sabiduría se manifiesta en el **autocontrol y la discreción** (moderación). La naturaleza caída del hombre lo lleva al exceso de palabras (pecado), pero la santificación nos llama a usar la lengua para la **edificación**, entendiendo que Dios es Soberano sobre cada palabra pronunciada.",
             aplicacion: "Antes de hablar, practica el filtro de los tres tamices (San Agustín): ¿Es **verdad**? ¿Es **necesario**? ¿Es **amable**? Recuerda que la moderación al hablar honra a Dios y preserva la paz en las relaciones. Pide a Dios que el Espíritu Santo te ayude a controlar tu lengua.",
             oracao: "Ora a Dios pidiendo ayuda para ser más lento para hablar y más rápido para escuchar, honrándole con tus palabras."
         },
         fr: {
-            h2: "Jour 5: Le Langage de la Sagesse",
+            h2: " Le Langage de la Sagesse",
             versiculos: "<strong>Proverbes 10:19 (Louis Segond):</strong> Celui qui parle beaucoup ne manque pas de pécher, Mais celui qui retient ses lèvres est un homme prudent.",
             resumo: "La sagesse se manifeste par la **maîtrise de soi et la discrétion** (modération). La nature déchue de l'homme conduit à l'excès de paroles (péché), mais la sanctification nous appelle à utiliser la langue pour **l'édification**, comprenant que Dieu est Souverain sur chaque parole prononcée.",
             aplicacao: "Avant de parler, pratiquez le filtre des trois tamis (Saint Augustin): Est-ce **vrai**? Est-ce **nécessaire**? Est-ce **gentil**? Rappelez-vous que la modération dans la parole honore Dieu et préserve la paix dans les relations. Demandez à Dieu que le Saint-Esprit vous aide à contrôler votre langue.",
@@ -866,28 +874,28 @@
     },
     6: {
         pt: {
-            h2: "Dia 6: A Resposta Gentil",
+            h2: "A Resposta Gentil",
             versiculos: "<strong>Provérbios 15:1 (NVI):</strong> A resposta calma desvia a fúria, mas a palavra ríspida a incita.",
             resumo: "A sabedoria exige o **autocontrole das emoções** e das palavras. A **ira do homem não produz a justiça de Deus** (Tiago 1:20). Nossa resposta deve ser guiada pelo Espírito Santo (Santificação), que nos permite reagir com calma e temperança, preservando a paz.",
             aplicacao: "Quando for confrontado ou estiver com raiva, **pare e ore** antes de responder. Lembre-se que sua resposta tem o poder de acalmar ou inflamar o conflito. A **brandura** em meio à discórdia é uma marca poderosa do discípulo em Cristo.",
             oracao: "Ore a Deus pedindo a graça da Sua paz para acalmar seu espírito e para que suas palavras sejam sempre gentis, mesmo sob pressão."
         },
         en: {
-            h2: "Day 6: The Gentle Answer",
+            h2: "The Gentle Answer",
             versiculos: "<strong>Proverbs 15:1 (NIV):</strong> A gentle answer turns away wrath, but a harsh word stirs up anger.",
             resumo: "Wisdom requires **self-control of emotions** and words. **Man's anger does not produce God's righteousness** (James 1:20). Our response must be guided by the Holy Spirit (Sanctification), which allows us to react with calm and temperance, preserving peace.",
             aplicacao: "When confronted or angry, **pause and pray** before responding. Remember that your answer has the power to calm or inflame the conflict. **Gentleness** in the midst of discord is a powerful mark of the disciple in Christ.",
             oracao: "Pray to God asking for the grace of His peace to calm your spirit and for your words to always be gentle, even under pressure."
         },
         es: {
-            h2: "Día 6: La Respuesta Apacible",
+            h2: "La Respuesta Apacible",
             versiculos: "<strong>Proverbios 15:1 (NVI):</strong> La respuesta amable calma el enojo, pero la palabra áspera lo enciende.",
             resumo: "La sabiduría exige el **autocontrol de las emociones** y de las palabras. La **ira del hombre no produce la justicia de Dios** (Santiago 1:20). Nuestra respuesta debe ser guiada por el Espíritu Santo (Santificación), que nos permite reaccionar con calma y templanza, preservando la paz.",
             aplicacion: "Cuando seas confrontado o estés enojado, **haz una pausa y ora** antes de responder. Recuerda que tu respuesta tiene el poder de calmar o encender el conflicto. La **mansedumbre** en medio de la discordia es una marca poderosa del discípulo en Cristo.",
             oracao: "Ora a Dios pidiendo la gracia de Su paz para calmar tu espíritu y para que Tus palabras sean siempre amables, incluso bajo presión."
         },
         fr: {
-            h2: "Jour 6: La Réponse Douce",
+            h2: "La Réponse Douce",
             versiculos: "<strong>Proverbes 15:1 (Louis Segond):</strong> Une réponse douce calme la fureur, Mais une parole dure excite la colère.",
             resumo: "La sagesse exige la **maîtrise de soi des émotions** et des paroles. La **colère de l'homme n'accomplit pas la justice de Dieu** (Jacques 1:20). Notre réponse doit être guidée par le Saint-Esprit (Sanctification), ce qui nous permet de réagir avec calme et tempérance, préservant la paix.",
             aplicacao: "Lorsque vous êtes confronté ou en colère, **faites une pause et priez** avant de répondre. Rappelez-vous que votre réponse a le pouvoir de calmer ou d'enflammer le conflit. La **douceur** au milieu de la discorde est une marque puissante du disciple en Christ.",
@@ -896,28 +904,28 @@
     },
     7: {
         pt: {
-            h2: "Dia 7: O Propósito do Coração",
+            h2: "O Propósito do Coração",
             versiculos: "<strong>Provérbios 16:1, 9 (NVI):</strong> O coração do homem planeja o seu caminho, mas o Senhor determina os seus passos. (...) Em seu coração o homem planeja o seu caminho, mas o Senhor dirige os seus passos.",
             resumo: "Este é um princípio central da **Soberania de Deus**: a tensão entre a responsabilidade humana (planejar) e o controle divino (dirigir). O crente deve se esforçar para planejar com diligência, mas deve descansar na certeza de que **o resultado final é soberanamente orquestrado por Deus**.",
             aplicacao: "Planeje com **sabedoria e responsabilidade**, mas não se desespere com os imprevistos. Entregue seu trabalho e seus sonhos ao Senhor, sabendo que, mesmo que seus planos mudem, o **propósito dEle prevalecerá** (Soberania).",
             oracao: "Ore a Deus para que Seus planos prevaleçam em sua vida e para que Ele dirija seus passos segundo a Sua perfeita vontade."
         },
         en: {
-            h2: "Day 7: The Purpose of the Heart",
+            h2: "The Purpose of the Heart",
             versiculos: "<strong>Proverbs 16:1, 9 (NIV):</strong> To humans belong the plans of the heart, but the tongue's answer belongs to the Lord. (...) In their hearts humans plan their course, but the Lord establishes their steps.",
             resumo: "This is a central principle of **God's Sovereignty**: the tension between human responsibility (planning) and divine control (directing). The believer must strive to plan diligently, but must rest in the certainty that **the final outcome is sovereignly orchestrated by God**.",
             aplicacao: "Plan with **wisdom and responsibility**, but do not despair over unforeseen events. Surrender your work and dreams to the Lord, knowing that even if your plans change, **His purpose will prevail** (Sovereignty).",
             oracao: "Pray to God for His plans to prevail in your life and for Him to direct your steps according to His perfect will."
         },
         es: {
-            h2: "Día 7: El Propósito del Corazón",
+            h2: "El Propósito del Corazón",
             versiculos: "<strong>Proverbios 16:1, 9 (NVI):</strong> La persona hace planes en el corazón, pero el Señor dirige sus pasos. (...) El corazón del hombre traza su camino, pero el Señor le dirige los pasos.",
             resumo: "Este es un principio central de la **Soberanía de Dios**: la tensión entre la responsabilidad humana (planificar) y el control divino (dirigir). El creyente debe esforzarse por planificar con diligencia, pero debe descansar en la certeza de que **el resultado final es soberanamente orquestado por Dios**.",
             aplicacion: "Planifica con **sabiduría y responsabilidad**, pero no te desesperes por los imprevistos. Entrega tu trabajo y tus sueños al Señor, sabiendo que, incluso si tus planes cambian, **Su propósito prevalecerá** (Soberanía).",
             oracao: "Ora a Dios para que Sus planes prevalezcan en tu vida y para que Él dirija Tus pasos de acuerdo con Su perfecta voluntad."
         },
         fr: {
-            h2: "Jour 7: Le But du Cœur",
+            h2: "Le But du Cœur",
             versiculos: "<strong>Proverbes 16:1, 9 (Louis Segond):</strong> Les projets que l'homme forme dans son coeur sont à lui, Mais la réponse de la langue est un don de l'Éternel. (...) Le coeur de l'homme médite sa voie, Mais c'est l'Éternel qui dirige ses pas.",
             resumo: "Ceci est un principe central de la **Souveraineté de Dieu**: la tension entre la responsabilité humaine (planifier) et le contrôle divin (diriger). Le croyant doit s'efforcer de planifier avec diligence, mais doit se reposer dans la certitude que **le résultat final est souverainement orchestré par Dieu**.",
             aplicacao: "Planifiez avec **sagesse et responsabilité**, mais ne désespérez pas face aux imprévus. Confiez votre travail et vos rêves à l'Éternel, sachant que même si vos plans changent, **Son dessein prévaudra** (Souveraineté).",
@@ -926,14 +934,14 @@
     },
     8: {
         pt: {
-            h2: "Dia 8: A Humildade Precede a Honra",
+            h2: "A Humildade Precede a Honra",
             versiculos: "<strong>Provérbios 15:33 (NVI):</strong> O temor do Senhor ensina a sabedoria, e a humildade precede a honra.",
             resumo: "A humildade é a **virtude teológica** que reconhece a total dependência de Deus. A honra não é buscada, mas **concedida soberanamente** por Deus àqueles que se humilham sob Sua poderosa mão. A humildade é o fruto do Evangelho na vida do regenerado.",
             aplicacao: "Pratique a **humildade radical** hoje. Reconheça seus erros, peça desculpas prontamente e evite o desejo de auto-exaltação. Lembre-se que sua posição e seus talentos são **dons da Graça de Deus** (Soberania).",
             oracao: "Ore a Deus pedindo um espírito humilde e grato, submetendo-se à Sua vontade e buscando a honra que vem dEle, e não dos homens."
         },
         en: {
-            h2: "Day 8: Humility Precedes Honor",
+            h2: "Humility Precedes Honor",
             versiculos: "<strong>Proverbs 15:33 (NIV):</strong> The fear of the Lord teaches a man wisdom, and humility comes before honor.",
             resumo: "Humility is the **theological virtue** that recognizes total dependence on God. Honor is not sought but **sovereignly granted** by God to those who humble themselves under His mighty hand. Humility is the fruit of the Gospel in the life of the regenerate.",
             aplicacao: "Practice **radical humility** today. Recognize your mistakes, apologize promptly, and avoid the desire for self-exaltation. Remember that your position and talents are **gifts of God's Grace** (Sovereignty).",
@@ -941,14 +949,14 @@
         }
         ,
         es: {
-            h2: "Día 8: La Humildad Precede a la Honra",
+            h2: "La Humildad Precede a la Honra",
             versiculos: "<strong>Proverbios 15:33 (NVI):</strong> El temor del Señor es enseñanza de sabiduría; a la humildad precede la honra.",
             resumo: "La humildad es la **virtud teológica** que reconoce la total dependencia de Dios. La honra no es buscada, sino **concedida soberanamente** por Dios a aquellos que se humillan bajo Su poderosa mano. La humildad es el fruto del Evangelio en la vida del regenerado.",
             aplicacion: "Practica la **humildad radical** hoy. Reconoce tus errores, pide disculpas rápidamente y evita el deseo de autoexaltación. Recuerda que tu posición y tus talentos son **dones de la Gracia de Dios** (Soberanía).",
             oracao: "Ora a Dios pidiendo un espíritu humilde y agradecido, sometiéndote a Su voluntad y buscando la honra que viene de Él, y no de los hombres."
         },
         fr: {
-            h2: "Jour 8: L'Humilité Précède l'Honneur",
+            h2: "L'Humilité Précède l'Honneur",
             versiculos: "<strong>Proverbes 15:33 (Louis Segond):</strong> La crainte de l'Éternel enseigne la sagesse, Et l'humilité précède la gloire.",
             resumo: "L'humilité est la **vertu théologique** qui reconnaît la dépendance totale envers Dieu. L'honneur n'est pas recherché, mais **accordé souverainement** par Dieu à ceux qui s'humilient sous Sa puissante main. L'humilité est le fruit de l'Évangile dans la vie du régénéré.",
             aplicacao: "Pratiquez **l'humilité radicale** aujourd'hui. Reconnaissez vos erreurs, excusez-vous rapidement et évitez le désir d'auto-exaltation. Rappelez-vous que votre position et vos talents sont des **dons de la Grâce de Dieu** (Souveraineté).",
@@ -957,28 +965,28 @@
     },
     9: {
         pt: {
-            h2: "Dia 9: Justiça na Riqueza e na Pobreza",
+            h2: "Justiça na Riqueza e na Pobreza",
             versiculos: "<strong>Provérbios 11:4 (NVI):</strong> De nada vale a riqueza no dia da ira, mas a retidão livra da morte.",
             resumo: "Este provérbio expõe a **futilidade da riqueza material** diante do juízo de Deus e exalta a **justificação (retidão)** como o único refúgio seguro. A teologia reformada ensina que a retidão que salva é a de Cristo (imputada), não a nossa (Santificação).",
             aplicacao: "Não deposite sua **segurança em bens materiais** ou investimentos. A verdadeira segurança está em Cristo (Justificação). Busque viver em **retidão** (Santificação) como a evidência da sua fé, pois isso é o único tesouro que permanece no Dia do Juízo.",
             oracao: "Ore a Deus pedindo para valorizar mais a retidão e a Sua presença do que qualquer riqueza terrena."
         },
         en: {
-            h2: "Day 9: Righteousness in Wealth and Poverty",
+            h2: "Righteousness in Wealth and Poverty",
             versiculos: "<strong>Proverbs 11:4 (NIV):</strong> Riches do not profit in the day of wrath, but righteousness delivers from death.",
             resumo: "This proverb exposes the **futility of material wealth** before God's judgment and exalts **righteousness (justification)** as the only safe refuge. Reformed theology teaches that the righteousness that saves is Christ's (imputed), not ours (Sanctification).",
             aplicacao: "Do not place your **security in material goods** or investments. True security is in Christ (Justification). Seek to live in **righteousness** (Sanctification) as evidence of your faith, for this is the only treasure that remains on the Day of Judgment.",
             oracao: "Pray to God asking to value righteousness and His presence more than any earthly wealth."
         },
         es: {
-            h2: "Día 9: Justicia en la Riqueza y en la Pobreza",
+            h2: "Justicia en la Riqueza y en la Pobreza",
             versiculos: "<strong>Proverbios 11:4 (NVI):</strong> De nada sirven las riquezas el día de la ira, pero la justicia libra de la muerte.",
             resumo: "Este proverbio expone la **futilidad de la riqueza material** ante el juicio de Dios y exalta la **justificación (justicia)** como el único refugio seguro. La teología reformada enseña que la justicia que salva es la de Cristo (imputada), no la nuestra (Santificación).",
             aplicacion: "No deposites tu **seguridad en bienes materiales** o inversiones. La verdadera seguridad está en Cristo (Justificación). Busca vivir en **justicia** (Santificación) como evidencia de tu fe, ya que este es el único tesoro que permanece en el Día del Juicio.",
             oracao: "Ora a Dios pidiendo valorar más la justicia y Su presencia que cualquier riqueza terrenal."
         },
         fr: {
-            h2: "Jour 9: Justice dans la Richesse et la Pauvreté",
+            h2: "Justice dans la Richesse et la Pauvreté",
             versiculos: "<strong>Proverbes 11:4 (Louis Segond):</strong> Au jour de la colère, la richesse ne sert de rien, Mais la justice délivre de la mort.",
             resumo: "Ce proverbe expose la **futilité de la richesse matérielle** face au jugement de Dieu et exalte la **justification (justice)** comme seul refuge sûr. La théologie réformée enseigne que la justice qui sauve est celle de Christ (imputée), pas la nôtre (Sanctification).",
             aplicacao: "Ne placez pas votre **sécurité dans les biens matériels** ou les investissements. La vraie sécurité est en Christ (Justification). Cherchez à vivre dans la **justice** (Sanctification) comme preuve de votre foi, car c'est le seul trésor qui subsiste au Jour du Jugement.",
@@ -987,28 +995,28 @@
     },
     10: {
         pt: {
-            h2: "Dia 10: O Poder do Planejamento",
+            h2: "O Poder do Planejamento",
             versiculos: "<strong>Provérbios 21:5 (NVI):</strong> Os planos do diligente levam à fartura, mas a pressa excessiva o leva à pobreza.",
             resumo: "A sabedoria bíblica valoriza a **diligência** e o **planejamento cuidadoso** (meios de graça). A preguiça e a pressa imprudente (fruto da falta de confiança na Soberania) levam à escassez. O crente deve trabalhar diligentemente, confiando que Deus abençoa o trabalho das suas mãos.",
             aplicacao: "Analise seus **métodos de trabalho e planejamento**. Você está agindo com diligência ou com preguiça (procrastinação) e pressa? Dedique tempo para planejar suas tarefas, em casa e no trabalho, e execute-as com o máximo de excelência, para a Glória de Deus.",
             oracao: "Ore a Deus pedindo disciplina e diligência em suas tarefas diárias, e que o Senhor abençoe o fruto do seu trabalho."
         },
         en: {
-            h2: "Day 10: The Power of Planning",
+            h2: "The Power of Planning",
             versiculos: "<strong>Proverbs 21:5 (NIV):</strong> The plans of the diligent lead to profit as surely as haste leads to poverty.",
             resumo: "Biblical wisdom values **diligence** and **careful planning** (means of grace). Laziness and reckless haste (a result of lack of trust in Sovereignty) lead to scarcity. The believer must work diligently, trusting that God blesses the work of their hands.",
             aplicacao: "Analyze your **work methods and planning**. Are you acting diligently or with laziness (procrastination) and haste? Dedicate time to plan your tasks, both at home and at work, and execute them with maximum excellence, for the Glory of God.",
             oracao: "Pray to God asking for discipline and diligence in your daily tasks, and that the Lord may bless the fruit of your labor."
         },
         es: {
-            h2: "Día 10: El Poder de la Planificación",
+            h2: "El Poder de la Planificación",
             versiculos: "<strong>Proverbios 21:5 (NVI):</strong> Los planes bien pensados conducen a la prosperidad; la precipitación al fracaso.",
             resumo: "La sabiduría bíblica valora la **diligencia** y la **planificación cuidadosa** (medios de gracia). La pereza y la prisa imprudente (fruto de la falta de confianza en la Soberanía) conducen a la escasez. El creyente debe trabajar diligentemente, confiando en que Dios bendice el trabajo de sus manos.",
             aplicacion: "Analiza tus **métodos de trabajo y planificación**. ¿Estás actuando con diligencia o con pereza (procrastinación) y prisa? Dedica tiempo a planificar tus tareas, tanto en casa como en el trabajo, y ejecútalas con la máxima excelencia, para la Gloria de Dios.",
             oracao: "Ora a Dios pidiendo disciplina y diligencia en Tus tareas diarias, y que el Señor bendiga el fruto de tu trabajo."
         },
         fr: {
-            h2: "Jour 10: Le Pouvoir de la Planification",
+            h2: "Le Pouvoir de la Planification",
             versiculos: "<strong>Proverbes 21:5 (Louis Segond):</strong> Les projets de l'homme diligent ne mènent qu'à l'abondance, Mais celui qui agit avec précipitation n'arrive qu'à la disette.",
             resumo: "La sagesse biblique valorise la **diligence** et la **planification minutieuse** (moyens de grâce). La paresse et la précipitation imprudente (fruit du manque de confiance dans la Souveraineté) conduisent à la pénurie. Le croyant doit travailler diligemment, confiant que Dieu bénit l'œuvre de ses mains.",
             aplicacao: "Analysez vos **méthodes de travail et de planification**. Agissez-vous avec diligence ou avec paresse (procrastination) et précipitation? Consacrez du temps à planifier vos tâches, à la maison et au travail, et exécutez-les avec le maximum d'excellence, pour la Gloire de Dieu.",
@@ -1017,28 +1025,28 @@
     },
     11: {
         pt: {
-            h2: "Dia 11: A Justiça e a Paz na Família",
+            h2: "A Justiça e a Paz na Família",
             versiculos: "<strong>Provérbios 14:26 (NVI):</strong> Aquele que teme o Senhor possui uma fortaleza segura, refúgio para os seus filhos.",
             resumo: "O **temor do Senhor** é a base da segurança e da paz familiar. Um lar fundado na adoração e na obediência a Deus (Santificação) é o maior legado que os pais podem deixar aos filhos, refletindo a proteção da **Aliança de Deus** com Seu povo.",
             aplicacao: "Avalie como o **temor do Senhor** é praticado em seu lar. Há momentos de oração, estudo da Palavra e arrependimento? Lembre-se que você é um **instrumento de graça** (Soberania) na vida de seus filhos. Busque a justiça de Deus em cada decisão familiar.",
             oracao: "Ore a Deus pedindo-Lhe para ser um pilar de temor e justiça em sua família, buscando a Sua proteção e direção para seus filhos."
         },
         en: {
-            h2: "Day 11: Righteousness and Peace in the Family",
+            h2: "Righteousness and Peace in the Family",
             versiculos: "<strong>Proverbs 14:26 (NIV):</strong> Whoever fears the Lord has a secure fortress, and for their children it will be a refuge.",
             resumo: "The **fear of the Lord** is the foundation of family security and peace. A home founded on worship and obedience to God (Sanctification) is the greatest legacy parents can leave their children, reflecting the protection of **God's Covenant** with His people.",
             aplicacao: "Evaluate how the **fear of the Lord** is practiced in your home. Are there times of prayer, study of the Word, and repentance? Remember that you are an **instrument of grace** (Sovereignty) in your children's lives. Seek God's righteousness in every family decision.",
             oracao: "Pray to God asking Him to be a pillar of fear and righteousness in your family, seeking His protection and direction for your children."
         },
         es: {
-            h2: "Día 11: La Justicia y la Paz en la Familia",
+            h2: "La Justicia y la Paz en la Familia",
             versiculos: "<strong>Proverbios 14:26 (NVI):</strong> El temor del Señor es un refugio seguro, y a los hijos se les da confianza.",
             resumo: "El **temor del Señor** es la base de la seguridad y la paz familiar. Un hogar fundado en la adoración y la obediencia a Dios (Santificación) es el mayor legado que los padres pueden dejar a sus hijos, reflejando la protección de la **Alianza de Dios** con Su pueblo.",
             aplicacion: "Evalúa cómo se practica el **temor del Señor** en tu hogar. ¿Hay momentos de oración, estudio de la Palabra y arrepentimiento? Recuerda que eres un **instrumento de gracia** (Soberanía) en la vida de tus hijos. Busca la justicia de Dios en cada decisión familiar.",
             oracao: "Ora a Dios pidiéndole ser un pilar de temor y justicia en tu familia, buscando Su protección y dirección para Tus hijos."
         },
         fr: {
-            h2: "Jour 11: La Justice et la Paix dans la Famille",
+            h2: "La Justice et la Paix dans la Famille",
             versiculos: "<strong>Proverbes 14:26 (Louis Segond):</strong> Celui qui craint l'Éternel possède un appui ferme, Et ses enfants ont un refuge auprès de lui.",
             resumo: "La **crainte de l'Éternel** est le fondement de la sécurité et de la paix familiale. Un foyer fondé sur l'adoration et l'obéissance à Dieu (Sanctification) est le plus grand héritage que les parents puissent laisser à leurs enfants, reflétant la protection de l'**Alliance de Dieu** avec Son peuple.",
             aplicacao: "Évaluez comment la **crainte de l'Éternel** est pratiquée dans votre foyer. Y a-t-il des moments de prière, d'étude de la Parole et de repentance? Rappelez-vous que vous êtes un **instrument de grâce** (Souveraineté) dans la vie de vos enfants. Cherchez la justice de Dieu dans chaque décision familiale.",
@@ -1047,28 +1055,28 @@
     },
     12: {
         pt: {
-            h2: "Dia 12: A Amizade na Aliança",
+            h2: "A Amizade na Aliança",
             versiculos: "<strong>Provérbios 17:17 (NVI):</strong> Em todo tempo ama o amigo, e na adversidade nasce um irmão.",
             resumo: "As relações são um **campo de prova para a santificação**. A verdadeira amizade se caracteriza pela **fidelidade constante**, refletindo a fidelidade da **Aliança de Deus** para conosco, mesmo em nossos fracassos. Busque amigos que te aproximem mais de Cristo.",
             aplicacao: "Seja um **amigo fiel** hoje, especialmente na adversidade de um irmão. Invista em relações de aliança que se baseiam na Palavra, e não apenas em interesses mútuos. Lembre-se que Deus é o maior exemplo de Amigo Fiel.",
             oracao: "Ore a Deus por seus amigos e para que o Senhor o capacite a ser um amigo que ama em todo tempo, refletindo o amor de Cristo."
         },
         en: {
-            h2: "Day 12: Friendship in the Covenant",
+            h2: "Friendship in the Covenant",
             versiculos: "<strong>Proverbs 17:17 (NIV):</strong> A friend loves at all times, and a brother is born for a time of adversity.",
             resumo: "Relationships are a **testing ground for sanctification**. True friendship is characterized by **constant faithfulness**, reflecting the faithfulness of **God's Covenant** to us, even in our failures. Seek friends who draw you closer to Christ.",
             aplicacao: "Be a **faithful friend** today, especially in a brother's adversity. Invest in covenant relationships based on the Word, not just mutual interests. Remember that God is the greatest example of a Faithful Friend.",
             oracao: "Pray to God for your friends and that the Lord may enable you to be a friend who loves at all times, reflecting Christ's love."
         },
         es: {
-            h2: "Día 12: La Amistad en la Alianza",
+            h2: "La Amistad en la Alianza",
             versiculos: "<strong>Provérbios 17:17 (NVI):</strong> En todo tiempo ama el amigo; para ayudar en la adversidad nació el hermano.",
             resumo: "Las relaciones son un **campo de prueba para la santificación**. La verdadera amistad se caracteriza por la **fidelidad constante**, reflejando la fidelidad de la Alianza de Dios hacia nosotros, incluso en nuestros fracasos. Busca amigos que te acerquen más a Cristo.",
             aplicacion: "Sé un **amigo fiel** hoy, especialmente en la adversidad de un hermano. Invierte en relaciones de alianza que se basen en la Palabra, y no solo en intereses mutuos. Recuerda que Dios es el mayor ejemplo de Amigo Fiel.",
             oracao: "Ora a Dios por tus amigos y para que el Señor te capacite para ser un amigo que ama en todo momento, reflejando el amor de Cristo."
         },
         fr: {
-            h2: "Jour 12: L'Amitié dans l'Alliance",
+            h2: "L'Amitié dans l'Alliance",
             versiculos: "<strong>Proverbes 17:17 (Louis Segond):</strong> L'ami aime en tout temps, Et dans le malheur il se montre un frère.",
             resumo: "Les relations sont un **terrain d'essai pour la sanctification**. La véritable amitié se caractérise par la **fidélité constante**, reflétant la fidélité de l'**Alliance de Dieu** envers nous, même dans nos échecs. Cherchez des amis qui vous rapprochent de Christ.",
             aplicacao: "Soyez un **ami fidèle** aujourd'hui, surtout dans l'adversité d'un frère. Investissez dans des relations d'alliance basées sur la Parole, et non seulement sur des intérêts mutuels. Rappelez-vous que Dieu est le plus grand exemple d'Ami Fidèle.",
@@ -1077,28 +1085,28 @@
     },
     13: {
         pt: {
-            h2: "Dia 13: O Perigo da Ira",
+            h2: "O Perigo da Ira",
             versiculos: "<strong>Provérbios 29:22 (NVI):</strong> O homem irado provoca brigas, e o de gênio violento comete muitos pecados.",
             resumo: "A ira é um **pecado perigoso** que destrói relacionamentos e manifesta a falta de **domínio próprio** (fruto do Espírito). O Evangelho exige que o crente seja **lento para se irar** (Santificação), reconhecendo que a ira humana é uma ofensa à Soberania de Deus.",
             aplicacao: "Identifique as **raízes da sua ira**. É orgulho ferido ou falta de controle? Busque o Espírito Santo para dominá-la, antes que ela o domine. Pratique a paciência, lembrando-se de como Deus é paciente com você.",
             oracao: "Ore a Deus pedindo que o Senhor lhe conceda o fruto do Espírito de longanimidade e domínio próprio para vencer a ira."
         },
         en: {
-            h2: "Day 13: The Danger of Anger",
+            h2: "The Danger of Anger",
             versiculos: "<strong>Proverbs 29:22 (NIV):</strong> An angry person stirs up conflict, and a hot-tempered person commits many sins.",
             resumo: "Anger is a **dangerous sin** that destroys relationships and manifests a lack of **self-control** (fruit of the Spirit). The Gospel requires the believer to be **slow to anger** (Sanctification), recognizing that human anger is an offense to God's Sovereignty.",
             aplicacao: "Identify the **roots of your anger**. Is it wounded pride or lack of control? Seek the Holy Spirit to subdue it before it subdues you. Practice patience, remembering how patient God is with you.",
             oracao: "Pray to God asking that the Lord grant you the Spirit's fruit of patience and self-control to overcome anger."
         },
         es: {
-            h2: "Día 13: El Peligro de la Ira",
+            h2: "El Peligro de la Ira",
             versiculos: "<strong>Provérbios 29:22 (NVI):</strong> El hombre irascible provoca contiendas, y el de genio violento comete muchas transgresiones.",
             resumo: "La ira es un **pecado peligroso** que destruye relaciones y manifiesta la falta de **dominio propio** (fruto del Espíritu). El Evangelio exige que el creyente sea **lento para airarse** (Santificación), reconociendo que la ira humana es una ofensa a la Soberanía de Dios.",
             aplicacion: "Identifica las **raíces de tu ira**. ¿Es orgullo herido o falta de control? Busca al Espíritu Santo para dominarla, antes de que ella te domine. Practica la paciencia, recordando cuán paciente es Dios contigo.",
             oracao: "Ora a Dios pidiendo que el Señor te conceda el fruto del Espíritu de paciencia y dominio propio para vencer la ira."
         },
         fr: {
-            h2: "Jour 13: Le Danger de la Colère",
+            h2: "Le Danger de la Colère",
             versiculos: "<strong>Proverbes 29:22 (Louis Segond):</strong> Un homme colère excite les querelles, Et celui qui est prompt à la fureur commet beaucoup de péchés.",
             resumo: "La colère est un **péché dangereux** qui détruit les relations et manifeste un manque de **maîtrise de soi** (fruit de l'Esprit). L'Évangile exige que le croyant soit **lent à la colère** (Sanctification), reconnaissant que la colère humaine est une offense à la Souveraineté de Dieu.",
             aplicacao: "Identifiez les **racines de votre colère**. Est-ce l'orgueil blessé ou un manque de contrôle? Cherchez le Saint-Esprit pour la maîtriser avant qu'elle ne vous maîtrise. Pratiquez la patience, vous souvenant de la patience de Dieu envers vous.",
@@ -1107,28 +1115,28 @@
     },
     14: {
         pt: {
-            h2: "Dia 14: O Domínio das Finanças",
+            h2: "O Domínio das Finanças",
             versiculos: "<strong>Provérbios 22:7 (NVI):</strong> O rico domina sobre o pobre, e quem toma emprestado é servo de quem empresta.",
             resumo: "Este provérbio é um **princípio econômico** que exalta a **liberdade e a responsabilidade fiscal**. A dívida é uma forma de servidão que compromete a capacidade do crente de servir a Deus livremente. A sabedoria exige o **planejamento financeiro** e a moderação nos gastos.",
             aplicacao: "Avalie suas **dívidas e hábitos de consumo**. Você está vivendo de forma responsável ou sob o domínio das finanças alheias? Busque a liberdade financeira por meio da diligência e evite o endividamento desnecessário, para que possa servir melhor a Deus.",
             oracao: "Ore a Deus pedindo sabedoria financeira e disciplina para gerenciar seus recursos de forma a honrar o Senhor."
         },
         en: {
-            h2: "Day 14: Mastery of Finances",
+            h2: "Mastery of Finances",
             versiculos: "<strong>Proverbs 22:7 (NIV):</strong> The rich rule over the poor, and the borrower is servant to the lender.",
             resumo: "This proverb is an **economic principle** that exalts **freedom and fiscal responsibility**. Debt is a form of servitude that compromises the believer's ability to serve God freely. Wisdom requires **financial planning** and moderation in spending.",
             aplicacao: "Evaluate your **debts and spending habits**. Are you living responsibly or under the mastery of others' finances? Seek financial freedom through diligence and avoid unnecessary debt, so you can better serve God.",
             oracao: "Pray to God asking for financial wisdom and discipline to manage your resources in a way that honors the Lord."
         },
         es: {
-            h2: "Día 14: El Dominio de las Finanzas",
+            h2: "El Dominio de las Finanzas",
             versiculos: "<strong>Proverbios 22:7 (NVI):</strong> El rico se enseñorea del pobre; el que toma prestado se convierte en siervo del que presta.",
             resumo: "Este proverbio es un **principio económico** que exalta la **libertad y la responsabilidad fiscal**. La deuda es una forma de servidumbre que compromete la capacidad del creyente de servir a Dios libremente. La sabiduría exige la **planificación financiera** y la moderación en los gastos.",
             aplicacion: "Evalúa tus **deudas y hábitos de consumo**. ¿Estás viviendo de forma responsable o bajo el dominio de las finanzas ajenas? Busca la libertad financiera a través de la diligencia y evita el endeudamiento innecesario, para que puedas servir mejor a Dios.",
             oracao: "Ora a Dios pidiendo sabiduría financiera y disciplina para administrar Tus recursos de forma que honres al Señor."
         },
         fr: {
-            h2: "Jour 14: La Maîtrise des Finances",
+            h2: "La Maîtrise des Finances",
             versiculos: "<strong>Proverbes 22:7 (Louis Segond):</strong> Le riche domine sur les pauvres, Et celui qui emprunte est l'esclave de celui qui prête.",
             resumo: "Ce proverbe est un **principe économique** qui exalte la **liberté et la responsabilité fiscale**. La dette est une forme de servitude qui compromet la capacité du croyant à servir Dieu librement. La sagesse exige la **planification financière** et la modération dans les dépenses.",
             aplicacao: "Évaluez vos **dettes et vos habitudes de consommation**. Vivez-vous de manière responsable ou sous la domination des finances d'autrui? Cherchez la liberté financière par la diligence et évitez l'endettement inutile, afin de pouvoir mieux servir Dieu.",
@@ -1137,28 +1145,28 @@
     },
     15: {
         pt: {
-            h2: "Dia 15: O Cuidado com o Pobre",
+            h2: "O Cuidado com o Pobre",
             versiculos: "<strong>Provérbios 14:31 (NVI):</strong> Oprimir o pobre é ofender a seu Criador, mas ser bondoso com o necessitado é honrar a Deus.",
             resumo: "A forma como tratamos o pobre é uma **prova teológica** direta da nossa relação com Deus (Soberania de Deus sobre a Criação). A bondade e a justiça social para com o necessitado são atos de **adoração** que glorificam o Deus que criou o pobre à Sua imagem e semelhança.",
             aplicacao: "Encontre uma maneira prática de demonstrar **bondade ativa** a alguém necessitado hoje. Lembre-se que o serviço ao próximo é inseparável do serviço a Deus. A verdadeira fé reformada gera responsabilidade social.",
             oracao: "Ore a Deus pedindo um coração compassivo pelos necessitados e para que o Senhor o use para honrá-lO por meio de atos de bondade e justiça."
         },
         en: {
-            h2: "Day 15: Care for the Poor",
+            h2: "Care for the Poor",
             versiculos: "<strong>Proverbs 14:31 (NIV):</strong> Whoever oppresses the poor shows contempt for their Maker, but whoever is kind to the needy honors God.",
             resumo: "The way we treat the poor is a direct **theological test** of our relationship with God (God's Sovereignty over Creation). Kindness and social justice towards the needy are acts of **worship** that glorify the God who created the poor in His image and likeness.",
             aplicacao: "Find a practical way to show **active kindness** to someone in need today. Remember that service to neighbor is inseparable from service to God. True Reformed faith generates social responsibility.",
             oracao: "Pray to God asking for a compassionate heart for the needy and that the Lord may use you to honor Him through acts of kindness and justice."
         },
         es: {
-            h2: "Día 15: El Cuidado de los Pobres",
+            h2: "El Cuidado de los Pobres",
             versiculos: "<strong>Provérbios 14:31 (NVI):</strong> Oprimir al pobre es ofender a su Creador, pero honrarlo es mostrarle compasión.",
             resumo: "La forma en que tratamos al pobre es una **prueba teológica** directa de nuestra relación con Dios (Soberanía de Dios sobre la Creación). La bondad y la justicia social hacia los necesitados son actos de **adoración** que glorifican al Dios que creó al pobre a Su imagen y semejanza.",
             aplicacion: "Encuentra una manera práctica de mostrar **bondad activa** a alguien necesitado hoy. Recuerda que el servicio al prójimo es inseparable del servicio a Dios. La verdadera fe reformada genera responsabilidad social.",
             oracao: "Ora a Dios pidiendo un corazón compasivo por los necesitados y para que el Señor te use para honrarle por medio de actos de bondad y justicia."
         },
         fr: {
-            h2: "Jour 15: Le Soin des Pauvres",
+            h2: "Le Soin des Pauvres",
             versiculos: "<strong>Proverbes 14:31 (Louis Segond):</strong> Celui qui opprime le pauvre outrage celui qui l'a fait, Mais celui qui a pitié de l'indigent l'honore.",
             resumo: "La manière dont nous traitons les pauvres est un **test théologique** direct de notre relation avec Dieu (Souveraineté de Dieu sur la Création). La bonté et la justice sociale envers les nécessiteux sont des actes d'**adoration** qui glorifient le Dieu qui a créé le pauvre à Son image et ressemblance.",
             aplicacao: "Trouvez un moyen pratique de manifester une **bonté active** envers quelqu'un dans le besoin aujourd'hui. Rappelez-vous que le service au prochain est inséparable du service à Dieu. La vraie foi réformée génère une responsabilité sociale.",
@@ -1167,28 +1175,28 @@
     },
     16: {
         pt: {
-            h2: "Dia 16: O Perigo da Preguiça",
+            h2: "O Perigo da Preguiça",
             versiculos: "<strong>Provérbios 6:11 (NVI):</strong> A pobreza o alcançará como um ladrão, e a necessidade o atingirá como um homem armado.",
             resumo: "Reiteração da condenação à preguiça, enfatizando a **consequência inevitável e destrutiva** da procrastinação. A sabedoria exige ação imediata e planejamento, entendendo que o tempo é um **recurso limitado e soberanamente dado por Deus** (Efésios 5:16).",
             aplicacao: "Identifique uma área onde você está **procrastinando** por preguiça ou medo. Tome medidas práticas e imediatas para resolver esse problema hoje. Lembre-se que atrasar a responsabilidade é um ato de insensatez que convida ao prejuízo.",
             oracao: "Ore a Deus pedindo disciplina e motivação para cumprir suas tarefas com diligência e para que o Senhor o livre da preguiça em seu coração."
         },
         en: {
-            h2: "Day 16: The Danger of Laziness",
+            h2: "The Danger of Laziness",
             versiculos: "<strong>Proverbs 6:11 (NIV):</strong> and poverty will come on you like a thief and scarcity like an armed man.",
             resumo: "Reiteration of the condemnation of laziness, emphasizing the **inevitable and destructive consequence** of procrastination. Wisdom demands immediate action and planning, understanding that time is a **limited resource sovereignly given by God** (Ephesians 5:16).",
             aplicacao: "Identify an area where you are **procrastinating** out of laziness or fear. Take practical and immediate steps to address this issue today. Remember that delaying responsibility is an act of folly that invites harm.",
             oracao: "Pray to God asking for discipline and motivation to fulfill your tasks with diligence and that the Lord may free you from laziness in your heart."
         },
         es: {
-            h2: "Día 16: El Peligro de la Pereza",
+            h2: "El Peligro de la Pereza",
             versiculos: "<strong>Provérbios 6:11 (NVI):</strong> Y te llegará la pobreza como un ladrón, y la escasez como un hombre armado.",
             resumo: "Reiteración de la condenación de la pereza, enfatizando la **consecuencia inevitable y destructiva** de la procrastinación. La sabiduría exige acción inmediata y planificación, entendiendo que el tiempo es un **recurso limitado y soberanamente dado por Dios** (Efesios 5:16).",
             aplicacion: "Identifica un área donde estás **procrastinando** por pereza o miedo. Toma medidas prácticas e inmediatas para resolver este problema hoy. Recuerda que retrasar la responsabilidad es un acto de insensatez que invita al perjuicio.",
             oracao: "Ora a Dios pidiendo disciplina y motivación para cumplir Tus tareas con diligencia y para que el Señor te libre de la pereza en tu corazón."
         },
         fr: {
-            h2: "Jour 16: Le Danger de la Paresse",
+            h2: "Le Danger de la Paresse",
             versiculos: "<strong>Proverbes 6:11 (Louis Segond):</strong> Et la pauvreté te surprendra comme un voleur, Et la disette comme un homme armé.",
             resumo: "Réitération de la condamnation de la paresse, soulignant la **conséquence inévitable et destructive** de la procrastination. La sagesse exige une action et une planification immédiates, comprenant que le temps est une **ressource limitée et souverainement donnée par Dieu** (Éphésiens 5:16).",
             aplicacao: "Identifiez un domaine où vous **procrastinez** par paresse ou par peur. Prenez des mesures pratiques et immédiates pour résoudre ce problème aujourd'hui. Rappelez-vous que retarder la responsabilité est un acte de folie qui invite au préjudice.",
@@ -1197,28 +1205,28 @@
     },
     17: {
         pt: {
-            h2: "Dia 17: O Coração e a Vida",
+            h2: "O Coração e a Vida",
             versiculos: "<strong>Provérbios 4:23 (NVI):</strong> Acima de tudo, guarde o seu coração, pois dele procedem as fontes da vida.",
             resumo: "O coração (centro da vontade e dos afetos) é o **campo de batalha espiritual**. A **Santificação** começa no coração. O crente é chamado a guardar o coração do pecado e da idolatria, reconhecendo que a vida é um reflexo do que está nele (TULIP: Depravação Total).",
             aplicacao: "Examine as **motivações** e os **desejos secretos** do seu coração. Você tem se alimentado de coisas que glorificam a Deus ou de ídolos? Peça a Deus para purificar seu coração e direcionar seus afetos para Cristo em todas as áreas.",
             oracao: "Ore a Deus pedindo que o Senhor purifique e guarde seu coração, para que ele seja a fonte de vida e adoração ao seu Criador."
         },
         en: {
-            h2: "Day 17: The Heart and Life",
+            h2: "The Heart and Life",
             versiculos: "<strong>Proverbs 4:23 (NIV):</strong> Above all else, guard your heart, for everything you do flows from it.",
             resumo: "The heart (center of will and affections) is the **spiritual battlefield**. **Sanctification** begins in the heart. The believer is called to guard the heart from sin and idolatry, recognizing that life is a reflection of what is in it (TULIP: Total Depravity).",
             aplicacao: "Examine the **motivations** and **secret desires** of your heart. Have you been feeding on things that glorify God or on idols? Ask God to purify your heart and direct your affections toward Christ in all areas.",
             oracao: "Pray to God asking that the Lord purify and guard your heart, so that it may be the source of life and worship to your Creator."
         },
         es: {
-            h2: "Día 17: El Corazón y la Vida",
+            h2: "El Corazón y la Vida",
             versiculos: "<strong>Provérbios 4:23 (NVI):</strong> Por sobre todas las cosas cuida tu corazón, porque de él mana la vida.",
             resumo: "El corazón (centro de la voluntad y los afectos) es el **campo de batalla espiritual**. La **Santificación** comienza en el corazón. El creyente es llamado a guardar el corazón del pecado y la idolatría, reconociendo que la vida es un reflejo de lo que hay en él (TULIP: Depravación Total).",
             aplicacion: "Examina las **motivaciones** y los **deseos secretos** de tu corazón. ¿Te has estado alimentando de cosas que glorifican a Dios o de ídolos? Pide a Dios que purifique tu corazón y dirija Tus afectos hacia Cristo en todas las áreas.",
             oracao: "Ora a Dios pidiendo que el Señor purifique y guarde tu corazón, para que sea la fuente de vida y adoración a tu Creador."
         },
         fr: {
-            h2: "Jour 17: Le Cœur et la Vie",
+            h2: "Le Cœur et la Vie",
             versiculos: "<strong>Proverbes 4:23 (Louis Segond):</strong> Garde ton cœur plus que toute autre chose, Car de lui procèdent les sources de la vie.",
             resumo: "Le cœur (centre de la volonté et des affections) est le **champ de bataille spirituel**. La **Sanctification** commence dans le cœur. Le croyant est appelé à garder son cœur du péché et de l'idolâtrie, reconnaissant que la vie est le reflet de ce qui s'y trouve (TULIP: Dépravation Totale).",
             aplicacao: "Examinez les **motivations** et les **désirs secrets** de votre cœur. Vous êtes-vous nourri de choses qui glorifient Dieu ou d'idoles? Demandez à Dieu de purifier votre cœur et de diriger vos affections vers Christ dans tous les domaines.",
@@ -1227,28 +1235,28 @@
     },
     18: {
         pt: {
-            h2: "Dia 18: A Disciplina da Repreensão",
+            h2: "A Disciplina da Repreensão",
             versiculos: "<strong>Provérbios 9:8-9 (NVI):</strong> Não repreenda o zombador, caso contrário ele o odiará; repreenda o sábio, e ele o amará. Instrua o homem sábio, e ele será ainda mais sábio; ensine o homem justo, e ele aumentará o seu saber.",
             resumo: "A sabedoria distingue entre o **zombador** (aquele que rejeita a Deus) e o **sábio** (aquele que aceita a correção). A reprovação é um ato de misericórdia, mas só o regenerado, pela Graça, aceita a correção. A Soberania de Deus opera na disciplina para o crescimento do Seu povo.",
             aplicacao: "Esteja **aberto à crítica e à correção** de líderes e irmãos maduros na fé. A prontidão para aprender e ser corrigido é uma marca de sabedoria e humildade. Não se ofenda; acolha a reprovação como uma oportunidade de crescimento em santidade.",
             oracao: "Ore a Deus pedindo-Lhe um coração receptivo à correção e para que o Senhor o livre da insensatez do orgulho e da zombaria."
         },
         en: {
-            h2: "Day 18: The Discipline of Rebuke",
+            h2: "The Discipline of Rebuke",
             versiculos: "<strong>Proverbs 9:8-9 (NIV):</strong> Do not rebuke mockers or they will hate you; rebuke the wise and they will love you. Instruct a wise man and he will be wiser still; teach a righteous man and he will add to his learning.",
             resumo: "Wisdom distinguishes between the **mocker** (one who rejects God) and the **wise** (one who accepts correction). Reproof is an act of mercy, but only the regenerate, by Grace, accepts correction. God's Sovereignty operates in discipline for the growth of His people.",
             aplicacao: "Be **open to criticism and correction** from leaders and mature brothers and sisters in faith. The readiness to learn and be corrected is a mark of wisdom and humility. Do not take offense; welcome reproof as an opportunity for growth in holiness.",
             oracao: "Pray to God asking for a heart receptive to correction and that the Lord may free you from the folly of pride and mockery."
         },
         es: {
-            h2: "Día 18: La Disciplina de la Reprensión",
+            h2: "La Disciplina de la Reprensión",
             versiculos: "<strong>Provérbios 9:8-9 (NVI):</strong> No reprendas al insolente, o acabará por odiarte; reprende al sabio, y te amará. Instruye al sabio, y se hará más sabio; enseña al justo, y aumentará su saber.",
             resumo: "La sabiduría distingue entre el **insolente** (aquel que rechaza a Dios) y el **sabio** (aquel que acepta la corrección). La reprensión es un acto de misericordia, pero solo el regenerado, por la Gracia, acepta la corrección. La Soberanía de Dios opera en la disciplina para el crecimiento de Su pueblo.",
             aplicacion: "Mantente **abierto a la crítica y a la corrección** de líderes y hermanos maduros en la fe. La prontitud para aprender y ser corregido es una marca de sabiduría y humildad. No te ofendas; acoge la reprensión como una oportunidad de crecimiento en santidad.",
             oracao: "Ora a Dios pidiendo un corazón receptivo a la corrección y para que el Señor te libre de la insensatez del orgullo y la burla."
         },
         fr: {
-            h2: "Jour 18: La Discipline de la Réprimande",
+            h2: "La Discipline de la Réprimande",
             versiculos: "<strong>Proverbes 9:8-9 (Louis Segond):</strong> Ne reprends pas le moqueur, de peur qu'il ne te haïsse; Reprends le sage, et il t'aimera. Donne des instructions au sage, et il deviendra plus sage; Enseigne le juste, et il augmentera son savoir.",
             resumo: "La sagesse distingue entre le **moqueur** (celui qui rejette Dieu) et le **sage** (celui qui accepte la correction). La réprimande est un acte de miséricorde, mais seul le régénéré, par la Grâce, accepte la correction. La Souveraineté de Dieu opère dans la discipline pour la croissance de Son peuple.",
             aplicacao: "Soyez **ouvert à la critique et à la correction** des leaders et des frères et sœurs matures dans la foi. La promptitude à apprendre et à être corrigé est une marque de sagesse et d'humilité. Ne vous offensez pas; accueillez la réprimande comme une opportunité de croissance en sainteté.",
@@ -1257,28 +1265,28 @@
     },
     19: {
         pt: {
-            h2: "Dia 19: O Poder da Bênção e da Maldição",
+            h2: "O Poder da Bênção e da Maldição",
             versiculos: "<strong>Provérbios 10:6 (NVI):</strong> Na cabeça do justo há bênçãos, mas a boca dos ímpios esconde a violência.",
             resumo: "A boca do justo (regenerado) é uma **fonte de bênçãos e vida** para os outros, enquanto a boca do ímpio (depravado) é uma fonte de violência e morte. A **Santificação** muda a forma como o crente fala, guiando-o a usar a língua para glorificar a Deus.",
             aplicacao: "Seja um instrumento de **bênção** em suas conversas hoje. Suas palavras promovem a vida, a esperança e o amor? Evite a fofoca, a calúnia e a crítica destrutiva, e use sua língua para **edificar** os outros, conforme a Graça de Deus.",
             oracao: "Ore a Deus pedindo que o Senhor use sua boca para abençoar, encorajar e falar a verdade em amor a todos ao seu redor."
         },
         en: {
-            h2: "Day 19: The Power of Blessing and Curse",
+            h2: "The Power of Blessing and Curse",
             versiculos: "<strong>Proverbs 10:6 (NIV):</strong> Blessings crown the head of the righteous, but violence overwhelms the mouth of the wicked.",
             resumo: "The mouth of the righteous (regenerate) is a **source of blessings and life** to others, while the mouth of the wicked (depraved) is a source of violence and death. **Sanctification** changes how the believer speaks, guiding them to use the tongue to glorify God.",
             aplicacao: "Be an instrument of **blessing** in your conversations today. Do your words promote life, hope, and love? Avoid gossip, slander, and destructive criticism, and use your tongue to **build up** others, according to God's Grace.",
             oracao: "Pray to God asking that the Lord use your mouth to bless, encourage, and speak the truth in love to everyone around you."
         },
         es: {
-            h2: "Día 19: El Poder de la Bendición y de la Maldición",
+            h2: "El Poder de la Bendición y de la Maldición",
             versiculos: "<strong>Provérbios 10:6 (NVI):</strong> La cabeza del justo es bendecida, pero la boca del impío encubre la violencia.",
             resumo: "La boca del justo (regenerado) es una **fuente de bendiciones y vida** para los demás, mientras que la boca del impío (depravado) es una fuente de violencia y muerte. La **Santificación** cambia la forma en que el creyente habla, guiándolo a usar la lengua para glorificar a Dios.",
             aplicacion: "Sé un instrumento de **bendición** en Tus conversaciones hoy. ¿Tus palabras promueven la vida, la esperanza y el amor? Evita el chisme, la calumnia y la crítica destructiva, y usa tu lengua para **edificar** a los demás, conforme a la Gracia de Dios.",
             oracao: "Ora a Dios pidiendo que el Señor use tu boca para bendecir, alentar y hablar la verdad en amor a todos a tu alrededor."
         },
         fr: {
-            h2: "Jour 19: Le Pouvoir de la Bénédiction et de la Malédiction",
+            h2: "Le Pouvoir de la Bénédiction et de la Malédiction",
             versiculos: "<strong>Proverbes 10:6 (Louis Segond):</strong> Les bénédictions sont sur la tête du juste, Mais la violence couvre la bouche des méchants.",
             resumo: "La bouche du juste (régénéré) est une **source de bénédictions et de vie** pour les autres, tandis que la bouche de l'impie (dépravé) est une source de violence et de mort. La **Sanctification** change la façon dont le croyant parle, le guidant à utiliser la langue pour glorifier Dieu.",
             aplicacao: "Soyez un instrument de **bénédiction** dans vos conversations aujourd'hui. Vos paroles promeuvent-elles la vie, l'espoir et l'amour? Évitez les commérages, la calomnie et la critique destructive, et utilisez votre langue pour **édifier** les autres, selon la Grâce de Dieu.",
@@ -1287,28 +1295,28 @@
     },
     20: {
         pt: {
-            h2: "Dia 20: A Segurança no Justo",
+            h2: "A Segurança no Justo",
             versiculos: "<strong>Provérbios 29:25 (NVI):</strong> O medo do homem será uma armadilha, mas quem confia no Senhor está seguro.",
             resumo: "O **medo do homem** (idolatria da opinião alheia) é uma forma de incredulidade que nos leva a comprometer a verdade e a retidão. A segurança verdadeira está apenas na **confiança inabalável na Soberania de Deus**. O Evangelho nos liberta da escravidão ao medo.",
             aplicacao: "Você tem tomado decisões para **agradar a Deus** ou para **agradar aos homens**? Resista à tentação de comprometer seus valores para buscar aprovação. Confie no controle soberano de Deus sobre sua vida e viva em liberdade.",
             oracao: "Ore a Deus pedindo que o Senhor o liberte do medo e da busca pela aprovação humana, para que você viva seguro na Sua confiança."
         },
         en: {
-            h2: "Day 20: Security in the Righteous",
+            h2: "Security in the Righteous",
             versiculos: "<strong>Proverbs 29:25 (NIV):</strong> Fear of man will prove to be a snare, but whoever trusts in the Lord is kept safe.",
             resumo: "The **fear of man** (idolatry of others' opinions) is a form of unbelief that leads us to compromise truth and righteousness. True security is only in **unwavering trust in God's Sovereignty**. The Gospel frees us from the slavery to fear.",
             aplicacao: "Have you been making decisions to **please God** or to **please men**? Resist the temptation to compromise your values to seek approval. Trust in God's sovereign control over your life and live in freedom.",
             oracao: "Pray to God asking that the Lord free you from fear and the pursuit of human approval, so that you may live secure in His trust."
         },
         es: {
-            h2: "Día 20: La Seguridad en el Justo",
+            h2: "La Seguridad en el Justo",
             versiculos: "<strong>Provérbios 29:25 (NVI):</strong> El temor al hombre es una trampa, pero el que confía en el Señor estará a salvo.",
             resumo: "El **temor al hombre** (idolatría de la opinión ajena) es una forma de incredulidad que nos lleva a comprometer la verdad y la justicia. La seguridad verdadera está solo en la **confianza inquebrantable en la Soberanía de Dios**. El Evangelio nos libera de la esclavitud al miedo.",
             aplicacion: "¿Has estado tomando decisiones para **agradar a Dios** o para **agradar a los hombres**? Resiste la tentación de comprometer Tus valores para buscar aprobación. Confía en el control soberano de Dios sobre tu vida y vive en libertad.",
             oracao: "Ora a Dios pidiendo que el Señor te libere del miedo y de la búsqueda de la aprobación humana, para que vivas seguro en Su confianza."
         },
         fr: {
-            h2: "Jour 20: La Sécurité dans le Juste",
+            h2: "La Sécurité dans le Juste",
             versiculos: "<strong>Proverbes 29:25 (Louis Segond):</strong> La crainte des hommes tend un piège, Mais celui qui se confie en l'Éternel est en sûreté.",
             resumo: "La **crainte de l'homme** (idolâtrie de l'opinion d'autrui) est une forme d'incrédulité qui nous conduit à compromettre la vérité et la justice. La vraie sécurité ne réside que dans la **confiance inébranlable en la Souveraineté de Dieu**. L'Évangile nous libère de l'esclavage de la peur.",
             aplicacao: "Avez-vous pris des décisions pour **plaire à Dieu** ou pour **plaire aux hommes**? Résistez à la tentation de compromettre vos valeurs pour chercher l'approbation. Confiez-vous dans le contrôle souverain de Dieu sur votre vie et vivez en liberté.",
@@ -1317,28 +1325,28 @@
     },
     21: {
         pt: {
-            h2: "Dia 21: A Justiça e a Paz na Comunidade",
+            h2: "A Justiça e a Paz na Comunidade",
             versiculos: "<strong>Provérbios 11:14 (NVI):</strong> Onde não há direção, o povo cai, mas na multidão de conselheiros há segurança.",
             resumo: "Este provérbio enfatiza o valor da **liderança sábia e do aconselhamento mútuo** (meios de graça) na Igreja e na sociedade. Ninguém deve viver em isolamento. A **humildade** é necessária para buscar e receber conselhos, reconhecendo a Soberania de Deus sobre a autoridade.",
             aplicacao: "Você está vivendo de forma isolada, confiando apenas em seu próprio entendimento? Busque ativamente o **conselho de pessoas sábias** e piedosas (seus pastores e líderes). A segurança e a paz não são encontradas na solidão, mas na submissão à sabedoria coletiva.",
             oracao: "Ore a Deus pedindo-Lhe sabedoria para buscar conselhos e humildade para recebê-los, a fim de tomar decisões que glorifiquem o Senhor."
         },
         en: {
-            h2: "Day 21: Righteousness and Peace in the Community",
+            h2: "Righteousness and Peace in the Community",
             versiculos: "<strong>Proverbs 11:14 (NIV):</strong> For lack of guidance a nation falls, but victory is won through many advisers.",
             resumo: "This proverb emphasizes the value of **wise leadership and mutual counseling** (means of grace) in the Church and society. No one should live in isolation. **Humility** is needed to seek and receive counsel, recognizing God's Sovereignty over authority.",
             aplicacao: "Are you living in isolation, trusting only in your own understanding? Actively seek the **counsel of wise and godly people** (your pastors and leaders). Security and peace are not found in solitude, but in submission to collective wisdom.",
             oracao: "Pray to God asking for wisdom to seek counsel and humility to receive it, so that you may make decisions that glorify the Lord."
         },
         es: {
-            h2: "Día 21: La Justicia y la Paz en la Comunidad",
+            h2: "La Justicia y la Paz en la Comunidad",
             versiculos: "<strong>Provérbios 11:14 (NVI):</strong> Sin dirección, la nación se hunde; la victoria está asegurada cuando abundan los consejeros.",
             resumo: "Este proverbio enfatiza el valor del **liderazgo sabio y el consejo mutuo** (medios de gracia) en la Iglesia y en la sociedad. Nadie debe vivir en aislamiento. La **humildad** es necesaria para buscar y recibir consejos, reconociendo la Soberanía de Dios sobre la autoridad.",
             aplicacion: "¿Estás viviendo de forma aislada, confiando solo en tu propia inteligencia? Busca activamente el **consejo de personas sabias** y piadosas (tus pastores y líderes). La seguridad y la paz no se encuentran en la soledad, sino en la sumisión a la sabiduría colectiva.",
             oracao: "Ora a Dios pidiendo sabiduría para buscar consejos y humildad para recibirlos, a fin de tomar decisiones que glorifiquen al Señor."
         },
         fr: {
-            h2: "Jour 21: La Justice et la Paix dans la Communauté",
+            h2: "La Justice et la Paix dans la Communauté",
             versiculos: "<strong>Proverbes 11:14 (Louis Segond):</strong> Quand la prudence manque, le peuple tombe; Et le salut est dans le grand nombre des conseillers.",
             resumo: "Ce proverbe souligne la valeur du **leadership sage et du conseil mutuel** (moyens de grâce) dans l'Église et la société. Personne ne devrait vivre dans l'isolement. L'**humilité** est nécessaire pour chercher et recevoir des conseils, reconnaissant la Souveraineté de Dieu sur l'autorité.",
             aplicacao: "Vivez-vous de manière isolée, ne vous fiant qu'à votre propre compréhension? Cherchez activement le **conseil de personnes sages** et pieuses (vos pasteurs et leaders). La sécurité et la paix ne se trouvent pas dans la solitude, mais dans la soumission à la sagesse collective.",
@@ -1347,28 +1355,28 @@
     },
     22: {
         pt: {
-            h2: "Dia 22: O Valor da Honestidade",
+            h2: "O Valor da Honestidade",
             versiculos: "<strong>Provérbios 16:11 (NVI):</strong> Balanças e pesos honestos vêm do Senhor; todos os pesos da bolsa são obra dele.",
             resumo: "A **honestidade nos negócios** e nas transações financeiras não é apenas uma boa prática, mas um **mandamento teológico**. Deus (Soberania) é o autor da justiça e de todos os pesos e medidas. A fraude e a desonestidade são ofensas diretas ao Seu caráter santo.",
             aplicacao: "Examine como você tem conduzido seus **negócios e finanças**. Há alguma área de desonestidade (mesmo que pequena) em sua vida profissional ou pessoal? Busque a **retidão radical**, lembrando-se que o seu trabalho, assim como suas balanças, deve ser uma adoração a Deus.",
             oracao: "Ore a Deus pedindo-Lhe que o Senhor o capacite a ser totalmente honesto em todas as suas transações e a glorificá-lO no seu trabalho."
         },
         en: {
-            h2: "Day 22: The Value of Honesty",
+            h2: "The Value of Honesty",
             versiculos: "<strong>Proverbs 16:11 (NIV):</strong> Honest scales and balances belong to the Lord; all the weights in the bag are his concern.",
             resumo: "**Honesty in business** and financial transactions is not just a good practice, but a **theological commandment**. God (Sovereignty) is the author of justice and all weights and measures. Fraud and dishonesty are direct offenses to His holy character.",
             aplicacao: "Examine how you have conducted your **business and finances**. Is there any area of dishonesty (even if small) in your professional or personal life? Seek **radical righteousness**, remembering that your work, like your scales, should be worship to God.",
             oracao: "Pray to God asking that the Lord enable you to be completely honest in all your transactions and to glorify Him in your work."
         },
         es: {
-            h2: "Día 22: El Valor de la Honestidad",
+            h2: "El Valor de la Honestidad",
             versiculos: "<strong>Provérbios 16:11 (NVI):</strong> Balanzas y pesas justas son del Señor; todas las pesas de la bolsa son obra suya.",
             resumo: "La **honestidad en los negocios** y en las transacciones financieras no es solo una buena práctica, sino un **mandamiento teológico**. Dios (Soberanía) es el autor de la justicia y de todas las pesas y medidas. El fraude y la deshonestidad son ofensas directas a Su carácter santo.",
             aplicacion: "Examina cómo has llevado a cabo Tus **negocios y finanzas**. ¿Hay alguna área de deshonestidad (aunque sea pequeña) en tu vida profesional o personal? Busca la **justicia radical**, recordando que tu trabajo, al igual que Tus balanzas, debe ser una adoración a Dios.",
             oracao: "Ora a Dios pidiendo que el Señor te capacite para ser totalmente honesto en todas Tus transacciones y para glorificarle en tu trabajo."
         },
         fr: {
-            h2: "Jour 22: La Valeur de l'Honnêteté",
+            h2: "La Valeur de l'Honnêteté",
             versiculos: "<strong>Proverbes 16:11 (Louis Segond):</strong> Le poids et la balance justes sont à l'Éternel; Tous les poids du sac sont son œuvre.",
             resumo: "L'**honnêteté dans les affaires** et les transactions financières n'est pas seulement une bonne pratique, mais un **commandement théologique**. Dieu (Souveraineté) est l'auteur de la justice et de tous les poids et mesures. La fraude et la malhonnêteté sont des offenses directes à Son caractère saint.",
             aplicacao: "Examinez comment vous avez mené vos **affaires et vos finances**. Y a-t-il une zone de malhonnêteté (même petite) dans votre vie professionnelle ou personnelle? Recherchez la **justice radicale**, vous souvenant que votre travail, tout comme vos balances, doit être une adoration à Dieu.",
@@ -1377,28 +1385,28 @@
     },
     23: {
         pt: {
-            h2: "Dia 23: O Controle da Língua",
+            h2: "O Controle da Língua",
             versiculos: "<strong>Provérbios 13:3 (NVI):</strong> Quem guarda a sua boca guarda a sua vida, mas quem fala demais acaba se arruinando.",
             resumo: "Reiteração da importância do **autocontrole verbal**. A língua é um instrumento poderoso para a vida ou para a morte (Tiago 3). A **Santificação** nos capacita a usar a língua com sabedoria, reconhecendo que Deus é o Juiz de toda palavra proferida.",
             aplicacao: "Comprometa-se a falar **menos e a ouvir mais** hoje. Pense antes de falar e evite a tentação de se intrometer em assuntos alheios ou de espalhar fofocas. A segurança da sua vida (reputação, relacionamentos) depende da sua disciplina verbal.",
             oracao: "Ore a Deus pedindo que o Senhor coloque uma guarda em sua boca e o ensine a falar apenas palavras que edificam e glorificam Seu nome."
         },
         en: {
-            h2: "Day 23: Control of the Tongue",
+            h2: "Control of the Tongue",
             versiculos: "<strong>Proverbs 13:3 (NIV):</strong> Those who guard their mouths preserve their lives, but those who open wide their lips come to ruin.",
             resumo: "Reiteration of the importance of **verbal self-control**. The tongue is a powerful instrument for life or death (James 3). **Sanctification** enables us to use the tongue wisely, recognizing that God is the Judge of every word spoken.",
             aplicacao: "Commit to **speaking less and listening more** today. Think before you speak and avoid the temptation to meddle in others' affairs or spread gossip. The security of your life (reputation, relationships) depends on your verbal discipline.",
             oracao: "Pray to God asking that the Lord put a guard over your mouth and teach you to speak only words that build up and glorify His name."
         },
         es: {
-            h2: "Día 23: El Control de la Lengua",
+            h2: "El Control de la Lengua",
             versiculos: "<strong>Provérbios 13:3 (NVI):</strong> El que refrena su lengua protege su vida, pero el que habla a tontas y a locas se arruina.",
             resumo: "Reiteración de la importancia del **autocontrol verbal**. La lengua es un instrumento poderoso para la vida o para la muerte (Santiago 3). La **Santificación** nos capacita para usar la lengua con sabiduría, reconociendo que Dios es el Juez de toda palabra pronunciada.",
             aplicacion: "Comprométete a hablar **menos y a escuchar más** hoy. Piensa antes de hablar y evita la tentación de entrometerte en asuntos ajenos o de esparcir chismes. La seguridad de tu vida (reputación, relaciones) depende de tu disciplina verbal.",
             oracao: "Ora a Dios pidiendo que el Señor ponga una guarda en tu boca y te enseñe a hablar solo palabras que edifiquen y glorifiquen Su nombre."
         },
         fr: {
-            h2: "Jour 23: La Maîtrise de la Langue",
+            h2: "La Maîtrise de la Langue",
             versiculos: "<strong>Proverbes 13:3 (Louis Segond):</strong> Celui qui garde sa bouche garde son âme; Celui qui ouvre de grandes lèvres court à sa perte.",
             resumo: "Réitération de l'importance de la **maîtrise de soi verbale**. La langue est un instrument puissant pour la vie ou pour la mort (Jacques 3). La **Sanctification** nous rend capables d'utiliser la langue avec sagesse, reconnaissant que Dieu est le Juge de toute parole prononcée.",
             aplicacao: "Engagez-vous à parler **moins et à écouter davantage** aujourd'hui. Réfléchissez avant de parler et évitez la tentation de vous immiscer dans les affaires d'autrui ou de répandre des commérages. La sécurité de votre vie (réputation, relations) dépend de votre discipline verbale.",
@@ -1407,28 +1415,28 @@
     },
     24: {
         pt: {
-            h2: "Dia 24: A Batalha Contra a Vaidade",
+            h2: "A Batalha Contra a Vaidade",
             versiculos: "<strong>Provérbios 27:2 (NVI):</strong> Que outros o louvem, não a sua própria boca; estranho, não os seus próprios lábios.",
             resumo: "Este provérbio é uma forte condenação ao **orgulho e à auto-exaltação**. O crente deve praticar a **humildade** (fruto da Graça) e deixar que suas obras falem por si mesmas. Buscar a glória própria é roubar a Glória que pertence somente a Deus (**Soli Deo Gloria**).",
             aplicacao: "Evite **se vangloriar** ou buscar reconhecimento hoje. Faça o bem em segredo. Ao invés de se autopromover, reconheça publicamente o trabalho e o mérito dos outros. A verdadeira honra virá de Deus, no tempo dEle.",
             oracao: "Ore a Deus pedindo-Lhe para lutar contra o orgulho e a vaidade, e para que o Senhor o ensine a buscar a glória que vem somente dEle."
         },
         en: {
-            h2: "Day 24: The Battle Against Vanity",
+            h2: "The Battle Against Vanity",
             versiculos: "<strong>Proverbs 27:2 (NIV):</strong> Let someone else praise you, and not your own mouth; an outsider, and not your own lips.",
             resumo: "This proverb is a strong condemnation of **pride and self-exaltation**. The believer should practice **humility** (fruit of Grace) and let their works speak for themselves. Seeking one's own glory is robbing the Glory that belongs solely to God (**Soli Deo Gloria**).",
             aplicacao: "Avoid **boasting** or seeking recognition today. Do good in secret. Instead of self-promotion, publicly recognize the work and merit of others. True honor will come from God, in His time.",
             oracao: "Pray to God asking Him to fight against pride and vanity, and that the Lord may teach you to seek the glory that comes only from Him."
         },
         es: {
-            h2: "Día 24: La Batalla Contra la Vanidad",
+            h2: "La Batalla Contra la Vanidad",
             versiculos: "<strong>Provérbios 27:2 (NVI):</strong> Que te alabe el extraño, y no tu propia boca; el extraño, y no tus propios labios.",
             resumo: "Este proverbio es una fuerte condena al **orgullo y la autoexaltación**. El creyente debe practicar la **humildad** (fruto de la Gracia) y dejar que sus obras hablen por sí mismas. Buscar la propia gloria es robar la Gloria que pertenece solo a Dios (**Soli Deo Gloria**).",
             aplicacion: "Evita **jactarte** o buscar reconocimiento hoy. Haz el bien en secreto. En lugar de autopromocionarte, reconoce públicamente el trabajo y el mérito de los demás. La verdadera honra vendrá de Dios, en Su tiempo.",
             oracao: "Ora a Dios pidiendo que Él luche contra el orgullo y la vanidad, y para que el Señor te enseñe a buscar la gloria que viene solo de Él."
         },
         fr: {
-            h2: "Jour 24: La Bataille Contre la Vanité",
+            h2: "La Bataille Contre la Vanité",
             versiculos: "<strong>Proverbes 27:2 (Louis Segond):</strong> Qu'un autre te loue, et non ta bouche, Un étranger, et non tes lèvres.",
             resumo: "Ce proverbe est une forte condamnation de l'**orgueil et de l'auto-exaltation**. Le croyant doit pratiquer l'**humilité** (fruit de la Grâce) et laisser ses œuvres parler d'elles-mêmes. Chercher sa propre gloire, c'est voler la Gloire qui appartient uniquement à Dieu (**Soli Deo Gloria**).",
             aplicacao: "Évitez de **vous vanter** ou de chercher la reconnaissance aujourd'hui. Faites le bien en secret. Au lieu de vous auto-promouvoir, reconnaissez publiquement le travail et le mérite des autres. Le véritable honneur viendra de Dieu, en Son temps.",
@@ -1437,28 +1445,28 @@
     },
     25: {
         pt: {
-            h2: "Dia 25: O Desafio da Dependência",
+            h2: "O Desafio da Dependência",
             versiculos: "<strong>Provérbios 30:8-9 (NVI):</strong> Mantém longe de mim a falsidade e a mentira; não me dês nem pobreza nem riqueza, mas apenas o pão de cada dia. Caso contrário, se eu tiver demais, eu te negarei e direi: ‘Quem é o Senhor?’ Se eu for pobre, poderei vir a roubar e, assim, profanar o nome do meu Deus.",
             resumo: "A oração de Agur é o resumo da **sabedoria aplicada**: não buscar a auto-suficiência (riqueza), mas a **provisão diária** (dependência). É a oração do crente que entende a Soberania de Deus sobre o sustento. A pobreza e a riqueza extremas são perigos que ameaçam a fé.",
             aplicacao: "Reflita sobre o que você tem pedido a Deus. Suas petições refletem o desejo de **dependência e equilíbrio** ou o desejo de auto-suficiência? Agradeça a Deus por Sua provisão diária e comprometa-se a viver de forma que nem a pobreza nem a riqueza o afastem dEle.",
             oracao: "Ore a Deus pedindo que Ele o ensine a ser grato por Sua provisão diária, que o Senhor o livre da idolatria do dinheiro e para que você viva em total dependência dEle."
         },
         en: {
-            h2: "Day 25: The Challenge of Dependence",
+            h2: "The Challenge of Dependence",
             versiculos: "<strong>Proverbs 30:8-9 (NIV):</strong> Keep falsehood and lies far from me; give me neither poverty nor riches, but give me only my daily bread. Otherwise, I may have too much and disown you and say, ‘Who is the Lord?’ Or I may become poor and steal, and so dishonor the name of my God.",
             resumo: "Agur's prayer is the summary of **applied wisdom**: not seeking self-sufficiency (riches), but **daily provision** (dependence). It is the prayer of the believer who understands God's Sovereignty over sustenance. Extreme poverty and wealth are dangers that threaten faith.",
             aplicacao: "Reflect on what you have asked God for. Do your petitions reflect the desire for **dependence and balance** or the desire for self-sufficiency? Thank God for His daily provision and commit to living in a way where neither poverty nor wealth turns you away from Him.",
             oracao: "Pray to God asking that He teach you to be grateful for His daily provision, that the Lord may free you from the idolatry of money, and that you may live in total dependence on Him."
         },
         es: {
-            h2: "Día 25: El Desafío de la Dependencia",
+            h2: "El Desafío de la Dependencia",
             versiculos: "<strong>Provérbios 30:8-9 (NVI):</strong> Aleja de mí la falsedad y la mentira; no me des pobreza ni riqueza, sino solo mi pan de cada día. No sea que una vez satisfecho te niegue, y diga: ‘¿Y quién es el Señor?’. O que, siendo pobre, me dé al robo y ofenda así el nombre de mi Dios.",
             resumo: "La oración de Agur es el resumen de la **sabiduría aplicada**: no buscar la autosuficiencia (riqueza), sino la **provisión diaria** (dependencia). Es la oración del creyente que entiende la Soberanía de Dios sobre el sustento. La pobreza y la riqueza extremas son peligros que amenazan la fe.",
             aplicacion: "Reflexiona sobre lo que le has pedido a Dios. ¿Tus peticiones reflejan el deseo de **dependencia y equilibrio** o el deseo de autosuficiencia? Agradece a Dios por Su provisión diaria y comprométete a vivir de una manera en la que ni la pobreza ni la riqueza te alejen de Él.",
             oracao: "Ora a Dios pidiendo que Él te enseñe a ser agradecido por Su provisión diaria, para que el Señor te libre de la idolatría del dinero y para que vivas en total dependencia de Él."
         },
         fr: {
-            h2: "Jour 25: Le Défi de la Dépendance",
+            h2: "Le Défi de la Dépendance",
             versiculos: "<strong>Proverbes 30:8-9 (Louis Segond):</strong> Éloigne de moi la fausseté et la parole mensongère; Ne me donne ni pauvreté, ni richesse, Accorde-moi le pain qui m'est nécessaire, De peur que, dans l'abondance, je ne te renie Et ne dise: Qui est l'Éternel? Ou que, dans la pauvreté, je ne dérobe, Et ne m'attaque au nom de mon Dieu.",
             resumo: "La prière d'Agur est le résumé de la **sagesse appliquée**: ne pas chercher l'autosuffisance (richesse), mais la **provision quotidienne** (dépendance). C'est la prière du croyant qui comprend la Souveraineté de Dieu sur le soutien. L'extrême pauvreté et la richesse sont des dangers qui menacent la foi.",
             aplicacao: "Réfléchissez à ce que vous avez demandé à Dieu. Vos requêtes reflètent-elles le désir de **dépendance et d'équilibre** ou le désir d'autosuffisance? Remerciez Dieu pour Sa provision quotidienne et engagez-vous à vivre d'une manière où ni la pauvreté ni la richesse ne vous éloignent de Lui.",
@@ -1467,28 +1475,28 @@
     },
     26: {
         pt: {
-            h2: "Dia 26: A Oração e a Obediência",
+            h2: "A Oração e a Obediência",
             versiculos: "<strong>Provérbios 28:9 (NVI):</strong> Quem se recusa a ouvir a lei, até a sua oração será detestável.",
             resumo: "Este provérbio sublinha a **conexão inseparável entre obediência e adoração**. A oração do ímpio, que rejeita a Lei (Palavra), é uma abominação para Deus. A fé reformada ensina que a oração eficaz flui de um coração **justificado e submisso** à Lei Moral de Deus (Santificação).",
             aplicacao: "Examine sua vida em busca de desobediência intencional (pecado conhecido). **Arrependa-se** e confesse antes de orar. Lembre-se que sua oração deve ser um reflexo da sua **submissão à autoridade da Palavra**, e não apenas uma petição egoísta.",
             oracao: "Ore a Deus pedindo que o Senhor o capacite a obedecer à Sua Palavra e para que suas orações sejam agradáveis a Ele, como um sacrifício de louvor e submissão."
         },
         en: {
-            h2: "Day 26: Prayer and Obedience",
+            h2: "Prayer and Obedience",
             versiculos: "<strong>Proverbs 28:9 (NIV):</strong> If anyone turns a deaf ear to the law, even their prayers are detestable.",
             resumo: "This proverb underscores the **inseparable connection between obedience and worship**. The prayer of the wicked, who rejects the Law (Word), is an abomination to God. Reformed faith teaches that effective prayer flows from a **justified and submissive heart** to God's Moral Law (Sanctification).",
             aplicacao: "Examine your life for intentional disobedience (known sin). **Repent** and confess before praying. Remember that your prayer should be a reflection of your **submission to the authority of the Word**, and not just a selfish petition.",
             oracao: "Pray to God asking that the Lord enable you to obey His Word and that your prayers may be pleasing to Him, as a sacrifice of praise and submission."
         },
         es: {
-            h2: "Día 26: La Oración y la Obediencia",
+            h2: "La Oración y la Obediencia",
             versiculos: "<strong>Provérbios 28:9 (NVI):</strong> Si alguien se niega a escuchar la ley, hasta su oración es detestable.",
             resumo: "Este proverbio subraya la **conexión inseparable entre obediencia y adoración**. La oración del impío, que rechaza la Ley (Palabra), es una abominación para Dios. La fe reformada enseña que la oración eficaz fluye de un corazón **justificado y sumiso** a la Ley Moral de Dios (Santificación).",
             aplicacion: "Examina tu vida en busca de desobediencia intencional (pecado conocido). **Arrepiéntete** y confiesa antes de orar. Recuerda que tu oración debe ser un reflejo de tu **sumisión a la autoridad de la Palabra**, y no solo una petición egoísta.",
             oracao: "Ora a Dios pidiendo que el Señor te capacite para obedecer Su Palabra y que Tus oraciones sean agradables a Él, como un sacrificio de alabanza y sumisión."
         },
         fr: {
-            h2: "Jour 26: La Prière et le Sacrifice",
+            h2: "La Prière et le Sacrifice",
             versiculos: "<strong>Proverbes 28:9 (Louis Segond):</strong> Si quelqu'un détourne l'oreille pour ne pas écouter la loi, Sa prière même est une abomination.",
             resumo: "Ce proverbe souligne le **lien inséparable entre l'obéissance et l'adoration**. La prière de l'impie, qui rejette la Loi (Parole), est une abomination pour Dieu. La foi réformée enseigne que la prière efficace découle d'un cœur **justifié et soumis** à la Loi Morale de Dieu (Sanctification).",
             aplicacao: "Examinez votre vie à la recherche de désobéissance intentionnelle (péché connu). **Repentez-vous** et confessez avant de prier. Rappelez-vous que votre prière doit être un reflet de votre **soumission à l'autorité de la Parole**, et non seulement une pétition égoïste.",
@@ -1497,28 +1505,28 @@
     },
     27: {
         pt: {
-            h2: "Dia 27: O Legado do Justo",
+            h2: "O Legado do Justo",
             versiculos: "<strong>Provérbios 20:7 (NVI):</strong> O justo leva uma vida íntegra; como são felizes os seus filhos!",
             resumo: "A **integridade moral e teológica** dos pais é a maior herança que pode ser deixada aos filhos. Viver em **retidão** (Santificação) é um testemunho da Graça de Deus que estende Sua bondade e Seu cuidado às gerações seguintes (Aliança de Deus).",
             aplicacao: "Comprometa-se a viver com **integridade** hoje, sabendo que isso impactará o futuro de seus filhos (espiritualmente e emocionalmente). Não busque atalhos ou compromissos morais. A felicidade deles está ligada à sua fidelidade a Cristo.",
             oracao: "Ore a Deus pedindo-Lhe graça para viver em total integridade e para que o Senhor abençoe seus filhos por meio do seu testemunho de fé."
         },
         en: {
-            h2: "Day 27: The Legacy of the Righteous",
+            h2: "The Legacy of the Righteous",
             versiculos: "<strong>Proverbs 20:7 (NIV):</strong> The righteous lead blameless lives; blessed are their children after them.",
             resumo: "The **moral and theological integrity** of parents is the greatest inheritance that can be left to children. Living in **righteousness** (Sanctification) is a testimony of God's Grace that extends His goodness and care to succeeding generations (God's Covenant).",
             aplicacao: "Commit to living with **integrity** today, knowing that this will impact your children's future (spiritually and emotionally). Do not seek shortcuts or moral compromises. Their happiness is linked to your faithfulness to Christ.",
             oracao: "Pray to God asking for grace to live in complete integrity and that the Lord may bless your children through your testimony of faith."
         },
         es: {
-            h2: "Día 27: El Legado del Justo",
+            h2: "El Legado del Justo",
             versiculos: "<strong>Provérbios 20:7 (NVI):</strong> El justo lleva una vida íntegra; ¡dichosos sus hijos después de él!",
             resumo: "La **integridad moral y teológica** de los padres es la mayor herencia que se puede dejar a los hijos. Vivir en **justicia** (Santificación) es un testimonio de la Gracia de Dios que extiende Su bondad y Su cuidado a las generaciones siguientes (Alianza de Dios).",
             aplicacion: "Comprométete a vivir con **integridad** hoy, sabiendo que esto impactará el futuro de Tus hijos (espiritual y emocionalmente). No busques atajos o compromisos morales. Su felicidad está ligada a tu fidelidad a Cristo.",
             oracao: "Ora a Dios pidiendo gracia para vivir en total integridad y para que el Señor bendiga a Tus hijos a través de tu testimonio de fe."
         },
         fr: {
-            h2: "Jour 27: L'Héritage du Juste",
+            h2: "L'Héritage du Juste",
             versiculos: "<strong>Proverbes 20:7 (Louis Segond):</strong> Le juste marche dans son intégrité; Heureux ses enfants après lui!",
             resumo: "L'**intégrité morale et théologique** des parents est le plus grand héritage qui puisse être laissé aux enfants. Vivre dans la **justice** (Sanctification) est un témoignage de la Grâce de Dieu qui étend Sa bonté et Son soin aux générations suivantes (Alliance de Dieu).",
             aplicacao: "Engagez-vous à vivre avec **intégrité** aujourd'hui, sachant que cela aura un impact sur l'avenir de vos enfants (spirituellement et émotionnellement). Ne cherchez pas de raccourcis ou de compromis moraux. Leur bonheur est lié à votre fidélité à Christ.",
@@ -1527,28 +1535,28 @@
     },
     28: {
         pt: {
-            h2: "Dia 28: A Beleza Duradoura",
+            h2: "A Beleza Duradoura",
             versiculos: "<strong>Provérbios 31:30 (NVI):</strong> A beleza é enganosa, e a formosura é passageira; mas a mulher que teme ao Senhor será elogiada.",
             resumo: "O provérbio contrasta a **vaidade da beleza física** (passageira) com o **valor eterno do temor do Senhor** (a verdadeira beleza). O Evangelho valoriza a **Santificação** e a Graça na vida da mulher. É um chamado à santidade e à prioridade dos valores eternos.",
             aplicacao: "Seja você homem ou mulher, avalie o que você **valoriza e busca** nas pessoas e em si mesmo. Priorize o temor do Senhor e a **piedade interior** acima da vaidade e das aparências externas, sabendo que isso agrada ao Deus Soberano.",
             oracao: "Ore a Deus pedindo que o Senhor desenvolva em você (ou em sua esposa/filha) o temor do Senhor, a verdadeira beleza que Lhe agrada e que dura para a eternidade."
         },
         en: {
-            h2: "Day 28: Enduring Beauty",
+            h2: "Enduring Beauty",
             versiculos: "<strong>Proverbs 31:30 (NIV):</strong> Charm is deceptive, and beauty is fleeting; but a woman who fears the Lord is to be praised.",
             resumo: "The proverb contrasts the **vanity of physical beauty** (fleeting) with the **eternal value of the fear of the Lord** (true beauty). The Gospel values **Sanctification** and Grace in a woman's life. It is a call to holiness and the priority of eternal values.",
             aplicacao: "Whether you are a man or a woman, evaluate what you **value and seek** in people and in yourself. Prioritize the fear of the Lord and **inner piety** above vanity and outward appearances, knowing that this pleases the Sovereign God.",
             oracao: "Pray to God asking that the Lord develop in you (or in your wife/daughter) the fear of the Lord, the true beauty that pleases Him and lasts for eternity."
         },
         es: {
-            h2: "Día 28: La Belleza Duradera",
+            h2: "La Belleza Duradera",
             versiculos: "<strong>Provérbios 31:30 (NVI):</strong> Engañoso es el encanto y pasajera la belleza; la mujer que teme al Señor es digna de alabanza.",
             resumo: "El proverbio contrasta la **vanidad de la belleza física** (pasajera) con el **valor eterno del temor del Señor** (la verdadera belleza). El Evangelio valora la **Santificación** y la Gracia en la vida de una mujer. Es un llamado a la santidad y a la prioridad de los valores eternos.",
             aplicacion: "Ya sea hombre o mujer, evalúa lo que **valoras y buscas** en las personas y en ti mismo. Prioriza el temor del Señor y la **piedad interior** por encima de la vanidad y las apariencias externas, sabiendo que esto agrada al Dios Soberano.",
             oracao: "Ora a Dios pidiendo que el Señor desarrolle en ti (o en tu esposa/hija) el temor del Señor, la verdadera belleza que Le agrada y que dura para la eternidad."
         },
         fr: {
-            h2: "Jour 28: La Beauté Durable",
+            h2: "La Beauté Durable",
             versiculos: "<strong>Proverbes 31:30 (Louis Segond):</strong> La grâce est trompeuse, et la beauté est vaine; La femme qui craint l'Éternel est celle qui sera louée.",
             resumo: "Le proverbe contraste la **vanité de la beauté physique** (éphémère) avec la **valeur éternelle de la crainte de l'Éternel** (la vraie beauté). L'Évangile valorise la **Sanctification** et la Grâce dans la vie d'une femme. C'est un appel à la sainteté et à la priorité des valeurs éternelles.",
             aplicacao: "Que vous soyez un homme ou une femme, évaluez ce que vous **valorisez et recherchez** chez les gens et en vous-même. Priorisez la crainte de l'Éternel et la **piété intérieure** au-dessus de la vanité et des apparences extérieures, sachant que cela plaît au Dieu Souverain.",
@@ -1557,28 +1565,28 @@
     },
     29: {
         pt: {
-            h2: "Dia 29: O Controle Soberano sobre os Reis",
+            h2: "O Controle Soberano sobre os Reis",
             versiculos: "<strong>Provérbios 21:1 (NVI):</strong> O coração do rei é como um ribeiro nas mãos do Senhor; ele o dirige para onde quer.",
             resumo: "Este é o clímax da doutrina da **Soberania Absoluta**: O controle de Deus não se limita a indivíduos, mas se estende aos líderes políticos e governantes. Deus **dirige os corações** até dos mais poderosos para cumprir os Seus propósitos. Isso nos chama à confiança e à oração.",
             aplicacao: "Não se desespere com a política ou a má liderança. Lembre-se que o **Soberano Deus está no controle**. Ore por seus líderes, pedindo a Deus que dirija seus corações para o que é justo, e descanse na certeza de que a vontade de Deus prevalecerá.",
             oracao: "Ore a Deus pedindo que o Senhor dirija o coração dos líderes em seu país para a justiça e a retidão, e para que o Seu Reino prevaleça sobre todo poder humano."
         },
         en: {
-            h2: "Day 29: Sovereign Control over Kings",
+            h2: "Sovereign Control over Kings",
             versiculos: "<strong>Proverbs 21:1 (NIV):</strong> The king’s heart is in the hand of the Lord, like the rivers of water; He turns it wherever He wishes.",
             resumo: "This is the climax of the doctrine of **Absolute Sovereignty**: God's control is not limited to individuals, but extends to political leaders and rulers. God **directs the hearts** even of the most powerful to fulfill His purposes. This calls us to trust and prayer.",
             aplicacao: "Do not despair over politics or bad leadership. Remember that **Sovereign God is in control**. Pray for your leaders, asking God to direct their hearts to what is right, and rest in the certainty that God's will will prevail.",
             oracao: "Pray to God asking for the Lord to direct the hearts of the leaders in your country toward justice and righteousness, and for His Kingdom to prevail over all human power."
         },
         es: {
-            h2: "Día 29: El Control Soberano sobre los Reyes",
+            h2: "El Control Soberano sobre los Reyes",
             versiculos: "<strong>Provérbios 21:1 (NVI):</strong> El corazón del rey es un arroyo controlado por el Señor; lo dirige a donde le place.",
             resumo: "Este es el clímax de la doctrina de la **Soberanía Absoluta**: El control de Dios no se limita a individuos, sino que se extiende a los líderes políticos y gobernantes. Dios **dirige los corazones** incluso de los más poderosos para cumplir Sus propósitos. Esto nos llama a la confianza y a la oración.",
             aplicacion: "No te desesperes con la política o el mal liderazgo. Recuerda que el **Dios Soberano está en control**. Ora por Tus líderes, pidiendo a Dios que dirija Sus corazones hacia lo que es justo, y descansa en la certeza de que la voluntad de Dios prevalecerá.",
             oracao: "Ora a Dios pidiendo que el Señor dirija el corazón de los líderes en tu país hacia la justicia y la rectitud, y para que Su Reino prevalezca sobre todo poder humano."
         },
         fr: {
-            h2: "Jour 29: Le Contrôle Souverain sur les Rois",
+            h2: "Le Contrôle Souverain sur les Rois",
             versiculos: "<strong>Proverbes 21:1 (Louis Segond):</strong> Le cœur du roi est un courant d'eau dans la main de l'Éternel; Il l'incline où il veut.",
             resumo: "Ceci est le climax de la doctrine de la **Souveraineté Absolue**: Le contrôle de Dieu ne se limite pas aux individus, mais s'étend aux leaders politiques et gouvernants. Dieu **dirige les cœurs** même des plus puissants pour accomplir Ses desseins. Cela nous appelle à la confiance et à la prière.",
             aplicacao: "Ne désespérez pas face à la politique ou à la mauvaise direction. Rappelez-vous que le **Dieu Souverain est en contrôle**. Priez pour vos leaders, demandant à Dieu de diriger leurs cœurs vers ce qui est juste, et reposez-vous dans la certitude que la volonté de Dieu prévaudra.",
@@ -1587,28 +1595,28 @@
     },
     30: {
         pt: {
-            h2: "Dia 30: A Fidelidade da Sabedoria",
+            h2: "A Fidelidade da Sabedoria",
             versiculos: "<strong>Provérbios 30:5 (NVI):</strong> Cada palavra de Deus é comprovadamente pura; ele é um escudo para quem nele se refugia.",
             resumo: "Este provérbio é a **declaração de fé** que encerra a jornada: a **inerrância e infalibilidade** da Palavra de Deus (Soberania). A única fonte de sabedoria é a Palavra, que é um escudo contra todas as mentiras e ataques do inimigo. A salvação é o refúgio seguro.",
             aplicacao: "Comprometa-se a fazer da **Palavra de Deus** a sua única regra de fé e prática. Use a Bíblia como seu **escudo e espada** na batalha espiritual. Viva e descanse na certeza de que a Palavra de Deus é perfeitamente pura, verdadeira e fiel.",
             oracao: "Ore a Deus agradecendo pela Sua Palavra pura e fiel, e pedindo que o Senhor o ajude a refugiar-se nela em todo tempo, confiando em Sua Soberania."
         },
         en: {
-            h2: "Day 30: The Faithfulness of Wisdom",
+            h2: "The Faithfulness of Wisdom",
             versiculos: "<strong>Proverbs 30:5 (NIV):</strong> Every word of God is flawless; he is a shield to those who take refuge in him.",
             resumo: "This proverb is the **declaration of faith** that concludes the journey: the **inerrancy and infallibility** of God's Word (Sovereignty). The only source of wisdom is the Word, which is a shield against all the enemy's lies and attacks. Salvation is the safe refuge.",
             aplicacao: "Commit to making **God's Word** your only rule of faith and practice. Use the Bible as your **shield and sword** in the spiritual battle. Live and rest in the certainty that God's Word is perfectly pure, true, and faithful.",
             oracao: "Pray to God thanking Him for His pure and faithful Word, and asking that the Lord help you take refuge in it at all times, trusting in His Sovereignty."
         },
         es: {
-            h2: "Día 30: La Fidelidad de la Sabiduría",
+            h2: "La Fidelidad de la Sabiduría",
             versiculos: "<strong>Provérbios 30:5 (NVI):</strong> Toda palabra de Dios es digna de crédito; Dios protege a los que en él buscan refugio.",
             resumo: "Este proverbio es la **declaración de fe** que concluye el viaje: la **inerrancia e infalibilidad** de la Palabra de Dios (Soberanía). La única fuente de sabiduría es la Palabra, que es un escudo contra todas las mentiras y ataques del enemigo. La salvación es el refugio seguro.",
             aplicacion: "Comprométete a hacer de la **Palabra de Dios** tu única regla de fe y práctica. Usa la Biblia como tu **escudo y espada** en la batalla espiritual. Vive y descansa en la certeza de que la Palabra de Dios es perfectamente pura, verdadera y fiel.",
             oracao: "Ora a Dios agradeciendo por Su Palabra pura y fiel, y pidiendo que el Señor te ayude a refugiarte en ella en todo tiempo, confiando en Su Soberanía."
         },
         fr: {
-            h2: "Jour 30: La Fidélité de la Sagesse",
+            h2: "La Fidélité de la Sagesse",
             versiculos: "<strong>Proverbes 30:5 (Louis Segond):</strong> Toute parole de Dieu est éprouvée. Il est un bouclier pour ceux qui cherchent en lui un refuge.",
             resumo: "Ce proverbe est la **déclaration de foi** qui conclut le voyage: l'**inerrance et l'infaillibilité** de la Parole de Dieu (Souveraineté). La seule source de sagesse est la Parole, qui est un bouclier contre tous les mensonges et attaques de l'ennemi. Le salut est le refuge sûr.",
             aplicacao: "Engagez-vous à faire de la **Parole de Dieu** votre seule règle de foi et de pratique. Utilisez la Bible comme votre **bouclier et épée** dans la bataille spirituelle. Vivez et reposez-vous dans la certitude que la Parole de Dieu est parfaitement pure, vraie et fidèle.",
@@ -1796,9 +1804,18 @@
             }
         }
 
-        function handleCompletedCheck() {
-            saveCompletion(currentDay, completedCheck.checked);
-        }
+               // ******************************************************
+// ESTA DEVE SER A ÚNICA FUNÇÃO handleCompletedCheck NO CÓDIGO!
+// ******************************************************
+		function handleCompletedCheck() {
+    // 1. Salva a persistência (se marcado ou desmarcado)
+				saveCompletion(currentDay, completedCheck.checked);
+
+    // 2. Se o dia foi MARCADO como concluído E não for o último dia, avança.
+			if (completedCheck.checked && currentDay < totalDays) {
+				nextDay();
+    }
+}
 
         // *************** EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) ***************
         window.onload = () => {
