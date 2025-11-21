@@ -20,17 +20,16 @@
 
         body {
             font-family: 'Georgia', serif; background-color: #e6e0d3; color: #333; line-height: 1.6;
-            display: flex; flex-direction: column; justify-content: flex-start; /* Alinha no topo */
+            display: flex; flex-direction: column; justify-content: flex-start; 
             align-items: center;
             min-height: 100vh; 
             transition: background-color 0.3s, color 0.3s;
         }
         main {
-            width: 100%; /* Garante que o main ocupe toda a largura */
+            width: 100%; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* O padding-top real será definido na media query para mobile */
             padding-top: 20px; /* Padding padrão para desktop */
         }
 
@@ -39,8 +38,8 @@
             border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid #ccc;
             position: relative; transition: background 0.3s, box-shadow 0.3s;
             font-size: calc(var(--base-font-scale) * 1em); 
-            margin-top: 0; /* Garante que não há margem superior aqui */
-            box-sizing: border-box; /* Inclui padding e borda na largura total */
+            margin-top: 0; 
+            box-sizing: border-box; 
         }
         h1 {
             color: #4b0082; text-align: center; font-family: 'Times New Roman', serif;
@@ -133,7 +132,7 @@
         .dark-theme #accessibilityFloater button { background-color: #2c2c2c; color: #f4f4f4; border-color: #03dac6; }
         .dark-theme #accessibilityFloater button:hover { background-color: #383838; }
 
-        /* 6. AJUSTES VLIBRAS (Desktop - CORREÇÃO DE SOBREPOSIÇÃO) */
+        /* 6. AJUSTES VLIBRAS (Desktop - PADRÃO) */
         div[vw] {
             position: fixed !important;
             bottom: 25px !important; 
@@ -169,89 +168,39 @@
             body, html {
                 margin: 0 !important;
                 padding: 0 !important;
-                overflow-x: hidden; /* Garante que não haja rolagem horizontal */
+                overflow-x: hidden; 
             }
+            /* A altura total dos botões no topo é ~45px. Adicionamos um pouco mais para garantir espaço. */
             main { 
                 width: 100%; 
-                /* NOVO CÁLCULO: (Altura VLibras/A+A- 45px) + (Altura Ouça Aqui 45px) + 5px (espaço entre eles) = 95px */
-                padding-top: 95px !important; 
-                padding-bottom: 20px !important; /* Mantém padding inferior se houver */
-                box-sizing: border-box; /* Inclui padding na altura total */
+                /* 5px (top) + 35px (altura do Ouça Aqui) + 5px (espaço) = 45px */
+                padding-top: 45px !important; 
+                padding-bottom: 20px !important; 
+                box-sizing: border-box; 
             }
 
-            /* 💥 FIX: O conteúdo do livro não precisa de margin-top agora */
+            /* 💥 FIX: O conteúdo do livro agora usa a margem superior ZERO */
             .book-container {
                 padding: 20px 25px; 
-                width: 100% !important; /* Garante largura total para evitar corte */
-                max-width: 100% !important; /* Garante largura total para evitar corte */
+                width: 100% !important; 
+                max-width: 100% !important; 
                 margin-top: 0 !important; /* ZERA A MARGEM SUPERIOR DO CONTEÚDO */
                 margin-bottom: 20px;
-                box-shadow: none; /* Remove sombra para parecer mais fluido com a tela */
-                border: none; /* Remove borda para parecer mais fluido com a tela */
+                box-shadow: none; 
+                border: none; 
             }
 
             /* Oculta o container .top-utils original */
             .top-utils { display: none !important; }
             .language-selector-wrapper, #themeToggle { display: none !important; }
 
-            /* 💥 1. VLIBRAS (FIXO: Canto Superior Esquerdo) */
-            div[vw] {
-                position: fixed !important;
-                left: 5px !important;    
-                top: 5px !important; 
-                right: auto !important;
-                bottom: auto !important; 
-                z-index: 1010 !important; 
-                
-                /* Tamanho ajustado para visibilidade e alinhamento */
-                width: 40px !important; 
-                height: 40px !important;
-                /* Fundo para contraste na barra superior */
-                background-color: #fdfdfd; 
-                border-radius: 5px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            }
-            .vw-access-button {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .dark-theme div[vw] {
-                background-color: #1e1e1e;
-            }
-
-
-            /* 💥 2. A+/A- (FIXO: Canto Superior Direito) */
-            #accessibilityFloater {
-                position: fixed; 
-                top: 5px; 
-                right: 5px; 
-                transform: translateY(0); 
-                flex-direction: row; 
-                padding: 5px; /* Ajuste para ter um pouco de padding interno */
-                background: rgba(255, 255, 255, 0.9); 
-                border: 1px solid #ccc;
-                border-radius: 8px; 
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                z-index: 1010;
-            }
-            #accessibilityFloater button { 
-                margin: 0 2px; 
-                padding: 3px 6px; 
-                font-size: 0.9em; 
-            }
-            .dark-theme #accessibilityFloater { 
-                background: rgba(30, 30, 30, 0.9); 
-                border-color: #444; 
-            }
-
-            /* 💥 3. OUÇA AQUI (FIXO: Abaixo da primeira linha de botões) */
+            /* 💥 1. OUÇA AQUI (FIXO: Topo Central) - Recriado */
             #listenToggle {
                 position: fixed;
-                /* NOVO CÁLCULO: (Altura do VLibras/A+A- 40px) + 5px (top) + 10px (espaço entre linhas) = 55px */
-                top: 55px; 
+                top: 5px; 
                 left: 50%; 
                 transform: translateX(-50%); 
-                z-index: 1009; /* Abaixo dos botões da linha de cima */
+                z-index: 1011; 
                 
                 /* Dimensões e estilos para visibilidade */
                 padding: 5px 15px; 
@@ -268,6 +217,57 @@
                 background-color: #2c2c2c; 
                 border-color: #444;
             }
+
+            /* 💥 2. A+/A- (FIXO: Topo Esquerdo, agora que o VLibras se move) */
+            #accessibilityFloater {
+                position: fixed; 
+                top: 5px; 
+                left: 5px; /* MUDANÇA: Mova para o canto esquerdo */
+                right: auto; /* MUDANÇA: Zera o right */
+                transform: translateY(0); 
+                flex-direction: row; 
+                padding: 5px; 
+                background: rgba(255, 255, 255, 0.9); 
+                border: 1px solid #ccc;
+                border-radius: 8px; 
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                z-index: 1010;
+            }
+            
+            /* 💥 3. VLIBRAS (POSICIONAMENTO: Após Título - MUDANÇA TOTAL) */
+            /* Não podemos usar `position: fixed` para colocá-lo "após o título" 
+               e garantir que ele não seja cortado. A melhor solução é usar 
+               `position: fixed` e calcular seu `top` com base na posição do título.
+               
+               Alternativa mais segura: Deixá-lo fixo, mas mais abaixo.
+               Se o título é o primeiro H1, ele está em torno de 50px-100px.
+               Vamos colocá-lo fixo no canto superior direito, mas com um TOP maior.
+            */
+
+            /* Desativamos o VLibras padrão para mobile */
+            div[vw] {
+                position: fixed !important;
+                bottom: auto !important; 
+                right: 5px !important;
+                left: auto !important; 
+                /* NOVO TOP: Abaixo do botão Ouça Aqui (40px) + espaço (10px) + Margem (10px) = 60px */
+                top: 60px !important; 
+                z-index: 1010 !important; 
+                
+                /* Tamanho ajustado para visibilidade e alinhamento */
+                width: 40px !important; 
+                height: 40px !important;
+                background-color: #fdfdfd; 
+                border-radius: 5px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            .vw-access-button {
+                width: 40px !important;
+                height: 40px !important;
+            }
+            .dark-theme div[vw] {
+                background-color: #1e1e1e;
+            }
             
             /* Outros ajustes de mobile */
             .navigation { flex-direction: column; gap: 10px; margin-top: 15px; } 
@@ -279,11 +279,9 @@
         @media (max-width: 400px) {
             #accessibilityFloater button { font-size: 0.8em; padding: 2px 4px; }
             #listenToggle { font-size: 0.75em; padding: 3px 10px; }
-            div[vw] { width: 35px !important; height: 35px !important; }
+            div[vw] { width: 35px !important; height: 35px !important; top: 55px !important; } /* Ajuste VLibras */
             .vw-access-button { width: 35px !important; height: 35px !important; }
-            main { padding-top: 85px !important; } /* Ajuste de padding para telas muito pequenas */
-            .book-container { margin-top: 0 !important; } /* Garante que não há margem extra */
-            #listenToggle { top: 48px; } /* Ajuste de top para o ouça aqui */
+            main { padding-top: 40px !important; } /* Ajuste de padding-top do main */
         }
     </style>
 </head>
