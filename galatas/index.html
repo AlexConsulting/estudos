@@ -143,17 +143,18 @@
         .dark-theme #audioProgressContainer { background-color: #333; }
         .dark-theme #audioProgressBar { background-color: #ffd600; }
 
-
-        /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
+/* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
         @media (max-width: 600px) {
             
             /* FIX: Centraliza o conteúdo no mobile */
             main { width: 100%; display: flex; justify-content: center; }
 
-            /* 💥 FIX: ESPAÇAMENTO SUPERIOR ZERADO */
+            /* 💥 FIX: ESPAÇAMENTO SUPERIOR DO CONTEÚDO (Permite que o cabeçalho fixo apareça) */
             .book-container {
-                padding: 20px 25px; width: 95%; 
-                margin-top: 0 !important; /* ZERA O ESPAÇAMENTO ACIMA DO CONTEÚDO */
+                padding: 20px 25px; 
+                width: 95%; 
+                /* NOVO: Adiciona margem superior para o conteúdo não ficar por baixo da barra fixa de utilidades */
+                margin-top: 50px !important; 
                 margin-bottom: 20px;
             }
 
@@ -165,56 +166,55 @@
                 width: 100%;
                 display: flex;
                 flex-direction: row;
-                justify-content: space-between; /* Distribui os itens */
+                justify-content: space-between; /* Distribui os itens: VLibras, Ouça Aqui, A+ A- */
                 align-items: center;
                 background-color: #fdfdfd; /* Fundo do container para cobrir o conteúdo */
                 padding: 5px 10px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                z-index: 990; /* Abaixo do Floater e do VLibras */
+                z-index: 990; 
                 gap: 5px;
             }
             .dark-theme .top-utils { background-color: #1e1e1e; }
             
-            /* 💥 Oculta os botões não essenciais no mobile */
+            /* Oculta os botões não essenciais no mobile */
             .language-selector-wrapper, #themeToggle {
                 display: none !important;
             }
 
-            /* Garante que o botão Ouça Aqui fique centralizado no Top Utils */
+            /* 💥 FIX: Ajusta o tamanho e posicionamento do Ouça Aqui */
             #listenToggle {
-                flex-grow: 1; 
+                flex-grow: 0; /* IMPEDIR QUE ELE SE EXPANDA MUITO */
                 text-align: center; 
                 justify-content: center;
-                margin: 0 5px; /* Pequena margem lateral para respiro */
+                margin: 0 5px; 
+                /* Reduz o padding para diminuir a largura */
+                padding: 5px 10px; 
+                font-size: 0.9em;
             }
 
             /* Reposicionamento do Floater de Acessibilidade (A+/A-) */
             #accessibilityFloater {
-                position: fixed; top: 5px; left: auto; right: 5px; 
-                transform: translateY(0); 
-                flex-direction: row; padding: 5px;
-                background: rgba(255, 255, 255, 0.9); border: 1px solid #ccc;
-                border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                z-index: 1010; /* Z-index alto para ficar acima de tudo */
+                position: static; /* Coloca o A+/A- dentro do Top Utils (flow normal) */
+                top: auto; left: auto; right: auto; transform: translateY(0); 
+                flex-direction: row; padding: 0; /* Remove padding externo para encaixar no top-utils */
+                background: none; border: none; box-shadow: none;
+                z-index: auto; 
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
 
-            /* 💥 FIX VLIBRAS FINAL: Mova o contêiner VLibras para o canto superior esquerdo (novo local) */
+            /* 💥 VLIBRAS NOVO LOCAL: Canto Superior Esquerdo (mantido) */
             div[vw] {
                 position: fixed !important;
                 left: 5px !important;    /* POSICIONA NO CANTO SUPERIOR ESQUERDO */
                 top: 5px !important; 
                 right: auto !important;
                 bottom: auto !important; 
-                z-index: 1010 !important; /* Z-index igual ao Floater */
-                
-                /* Garante que o botão seja pequeno e discreto no mobile */
+                z-index: 1010 !important; 
                 width: 40px !important; 
                 height: 40px !important;
             }
             
-            /* Remove a necessidade de posicionamento interno, confiando no contêiner */
             .vw-access-button {
                 left: unset !important; right: unset !important; top: unset !important; bottom: unset !important; 
                 width: 40px !important;
@@ -222,7 +222,7 @@
             }
             
             /* Outros ajustes de mobile */
-            .navigation { flex-direction: column; gap: 10px; margin-top: 15px; } /* Reduzindo margin-top após navegação */
+            .navigation { flex-direction: column; gap: 10px; margin-top: 15px; } 
             .nav-button { width: 100%; }
             .progress-check { order: -1; width: 100%; }
         }
