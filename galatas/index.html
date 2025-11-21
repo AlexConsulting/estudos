@@ -146,23 +146,24 @@
         /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
         @media (max-width: 600px) {
             
-            /* 💥 FIX: Remove o padding que causava o espaçamento superior excessivo. */
+            /* 💥 FIX: Remove o padding que causava o espaçamento superior excessivo no main. */
             main { 
                 width: 100%; 
                 display: flex; 
                 justify-content: center; 
-                padding-top: 0 !important; /* ZERA O PADDING TOP DO MAIN */
+                padding-top: 0 !important; 
             }
 
-            /* FIX: O conteúdo deve começar imediatamente. */
+            /* 💥 FIX: O conteúdo do livro deve começar logo abaixo da barra fixa do Ouça Aqui (altura ~40px) */
             .book-container {
                 padding: 20px 25px; 
                 width: 95%; 
-                margin-top: 0 !important; /* ZERA A MARGEM SUPERIOR DO CONTEÚDO */
+                /* NOVO: Margem para dar espaço ao botão Ouça Aqui (que estará na posição top: 40px) */
+                margin-top: 80px !important; 
                 margin-bottom: 20px;
             }
 
-            /* 💥 NOVO LAYOUT: Ocultamos o .top-utils original e usamos 3 elementos FIXOS independentes */
+            /* NOVO LAYOUT: Ocultamos a barra .top-utils e usamos 3 elementos FIXOS independentes */
             .top-utils { display: none; }
             .language-selector-wrapper, #themeToggle { display: none !important; }
 
@@ -174,6 +175,8 @@
                 right: auto !important;
                 bottom: auto !important; 
                 z-index: 1010 !important; 
+                
+                /* Ajuste de tamanho para não ser cortado (35px + 5px de margem) */
                 width: 35px !important; 
                 height: 35px !important;
             }
@@ -206,18 +209,19 @@
                 border-color: #444; 
             }
 
-            /* 💥 3. OUÇA AQUI (FIXO: Centro Superior) */
+            /* 💥 3. OUÇA AQUI (FIXO: Abaixo dos botões VLibras/A+A-) */
             #listenToggle {
                 position: fixed;
-                top: 5px;
-                left: 50%; /* Centraliza horizontalmente */
-                transform: translateX(-50%); /* Ajusta o centro exato */
-                z-index: 1010;
-                /* Dimensões mínimas para ser discreto */
-                padding: 5px 10px; 
-                font-size: 0.85em; 
+                top: 50px; /* POSICIONAMENTO CRÍTICO: 5px (top) + 35px (altura botões) + 10px (espaço) = 50px */
+                left: 50%; 
+                transform: translateX(-50%); 
+                z-index: 1009; /* Abaixo dos botões da linha de cima */
                 
-                /* Adiciona fundo para que fique alinhado aos outros botões fixos */
+                /* Dimensões mínimas */
+                padding: 5px 15px; 
+                font-size: 0.9em; 
+                
+                /* Fundo para dar contraste */
                 background-color: #f0f0f0; 
                 border: 1px solid #ccc;
             }
