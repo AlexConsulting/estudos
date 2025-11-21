@@ -418,11 +418,7 @@
         const totalDays = 30;
         let currentDay = 1;
         let currentLang = SAVED_LANG; 
-        
-        // NOVO: CHAVE ÚNICA DO DEVOCIONAL. Esta é a chave para a persistência individual.
-        // Para os outros devocionais (Romanos, Provérbios, Eclesiastes), você deve
-        // mudar esta chave, por exemplo, para 'romanos', 'proverbios', etc.
-        const DEVOTIONAL_KEY = 'joao'; 
+		const DEVOTIONAL_KEY = 'joao'; 
         
         // --- DADOS MULTI-IDIOMA (Traduções) ---
         const translations = {
@@ -495,51 +491,8 @@
         const langSelectorWrapper = document.querySelector('.language-selector-wrapper');
 
 
-        // *************** FUNÇÕES DE UTILIDADE (COM PERSISTÊNCIA INDIVIDUAL) ***************
+        // *************** FUNÇÕES DE UTILIDADE ***************
 
-        function getSavedProgress() {
-            // Ajustado para usar a chave individual
-            const savedProgress = localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`);
-            return savedProgress ? parseInt(savedProgress) : 1;
-        }
-        
-        function getCompletionStatus(day) {
-            // Ajustado para usar a chave individual
-            const completedDays = JSON.parse(localStorage.getItem(`completedDays_${DEVOTIONAL_KEY}`) || '[]');
-            return completedDays.includes(day);
-        }
-
-        function saveCompletion(day, isCompleted) {
-            // Ajustado para usar a chave individual
-            const key = `completedDays_${DEVOTIONAL_KEY}`;
-            let completedDays = JSON.parse(localStorage.getItem(key) || '[]');
-            if (isCompleted) {
-                if (!completedDays.includes(day)) {
-                    completedDays.push(day);
-                }
-            } else {
-                completedDays = completedDays.filter(d => d !== day);
-            }
-            localStorage.setItem(key, JSON.stringify(completedDays));
-            updateOverallProgress();
-        }
-
-
-        function updateOverallProgress() {
-             // Esta lógica ainda calcula a porcentagem com base no dia atual / total de dias.
-             // Se você quiser que a barra de progresso reflita a quantidade de dias *concluídos*,
-             // a lógica precisará ser ajustada, mas por agora, mantive como estava,
-             // apenas garantindo que o checkbox seja individual.
-             const percent = (currentDay / totalDays) * 100;
-             progressBar.style.width = `${percent}%`;
-             
-             prevButton.disabled = currentDay <= 1;
-             nextButton.disabled = currentDay >= totalDays;
-             
-             // Atualiza o estado do checkbox
-             completedCheck.checked = getCompletionStatus(currentDay);
-        }
-     
 		function handleCompletedCheck() {
     // 1. Salva a persistência (se marcado ou desmarcado)
 			saveCompletion(currentDay, completedCheck.checked);
@@ -687,8 +640,7 @@
         function nextDay() {
             if (currentDay < totalDays) {
                 currentDay++;
-                // Ajustado para salvar com a chave individual
-                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                localStorage.setItem('devotionalProgress', currentDay);
                 updateTexts(1);
             }
         }
@@ -696,8 +648,7 @@
         function prevDay() {
             if (currentDay > 1) {
                 currentDay--;
-                // Ajustado para salvar com a chave individual
-                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                localStorage.setItem('devotionalProgress', currentDay);
                 updateTexts(-1);
             }
         }
@@ -732,7 +683,7 @@
         };
         
        // --- CONTEÚDO DEVOCIONAL (30 DIAS) ---
-       
+        // Este objeto contém todo o conteúdo dinâmico do devocional, como você forneceu.
         const devotionalContent = {
             1: {
                 pt: {
@@ -1636,43 +1587,54 @@
             }
         };
 
-        // *************** FUNÇÕES DE PERSISTÊNCIA E ESTADO ***************
+  // *************** FUNÇÕES DE PERSISTÊNCIA E ESTADO (AGORA INDIVIDUALIZADAS) ***************
 
-        function getCompletedDays() {
-            const completed = localStorage.getItem('completedDays');
-            return completed ? JSON.parse(completed) : {};
-        }
+// A chave única do devocional DEVE estar definida no topo: const DEVOTIONAL_KEY = 'joao';
 
-        function saveCompletion(day, isChecked) {
-            const completedDays = getCompletedDays();
-            completedDays[day] = isChecked;
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
-            updateOverallProgress(); 
-        }
+function getCompletedDays() {
+    // CORREÇÃO: Usa chave individualizada para ler o status de conclusão
+    const completed = localStorage.getItem(`completedDays_${DEVOTIONAL_KEY}`);
+    return completed ? JSON.parse(completed) : {}; 
+}
 
-        function isCompleted(day) {
-            const completedDays = getCompletedDays();
-            return completedDays[day] === true;
-        }
+function saveCompletion(day, isChecked) {
+    // CORREÇÃO: Usa chave individualizada para salvar o status de conclusão
+    const key = `completedDays_${DEVOTIONAL_KEY}`;
+    const completedDays = getCompletedDays();
+    completedDays[day] = isChecked;
+    localStorage.setItem(key, JSON.stringify(completedDays)); 
+    updateOverallProgress();	
+}
 
-        function updateCompletedState() {
-            completedCheck.checked = isCompleted(currentDay);
-        }
+function isCompleted(day) {
+    const completedDays = getCompletedDays();
+    return completedDays[day] === true;
+}
 
-        function getSavedProgress() {
-            return parseInt(localStorage.getItem('devotionalProgress')) || 1; 
-        }
+function updateCompletedState() {
+    // CORREÇÃO: Define o estado do checkbox
+    completedCheck.checked = isCompleted(currentDay);
+}
 
-        function updateOverallProgress() {
-            const completedDaysMap = getCompletedDays();
-            const completedCount = Object.values(completedDaysMap).filter(v => v).length;
-            
-            const percent = (completedCount / totalDays) * 100;
-            progressBar.style.width = `${percent}%`;
-            
-            prevButton.disabled = currentDay <= 1;
-            nextButton.disabled = currentDay >= totalDays;
-        }
+function getSavedProgress() {
+    // CORREÇÃO: Usa chave individualizada para ler o progresso do dia
+    return parseInt(localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`)) || 1;	
+}
+
+function updateOverallProgress() {
+    // Esta função é essencial, pois calcula o progresso da barra com base nos dias concluídos
+    const completedDaysMap = getCompletedDays();
+    const completedCount = Object.values(completedDaysMap).filter(v => v).length;
+    
+    const percent = (completedCount / totalDays) * 100;
+    progressBar.style.width = `${percent}%`;
+    
+    prevButton.disabled = currentDay <= 1;
+    nextButton.disabled = currentDay >= totalDays;
+    
+    // Define o estado do checkbox
+    updateCompletedState(); 
+}
 
         // *************** FUNÇÕES DE TEMA E IDIOMA ***************
 
@@ -1796,26 +1758,24 @@
             themeToggle.textContent = currentTheme === 'dark' ? t.themeDark : t.themeLight;
         }
         
-        // --- FUNÇÕES DE NAVEGAÇÃO ---
-        function nextDay() {
-            if (currentDay < totalDays) {
-                currentDay++;
-                localStorage.setItem('devotionalProgress', currentDay);
-                updateTexts(1); // Direção 1 (Próximo)
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-        
-        function prevDay() {
-            if (currentDay > 1) {
-                currentDay--;
-                localStorage.setItem('devotionalProgress', currentDay);
-                updateTexts(-1); // Direção -1 (Anterior)
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
+          // --- FUNÇÕES DE NAVEGAÇÃO ---
+	function nextDay() {
+    if (currentDay < totalDays) {
+        currentDay++;
+        localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+        updateTexts(1);
+    }
+}
 
-       // ******************************************************
+	function prevDay() {
+    if (currentDay > 1) {
+        currentDay--;
+        localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+        updateTexts(-1);
+    }
+}
+
+// ******************************************************
 // ESTA DEVE SER A ÚNICA FUNÇÃO handleCompletedCheck NO CÓDIGO!
 // ******************************************************
 		function handleCompletedCheck() {
@@ -1829,11 +1789,15 @@
 }
 
         // *************** EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) ***************
-        window.onload = () => {
-            
-            // 1. Carrega o tema e idioma
-            loadThemePreference();
-            updateLanguageSelector();
+       window.onload = () => {
+    
+    // 🚨 PASSO CRÍTICO: LIMPEZA FORÇADA DAS CHAVES ANTIGAS
+    localStorage.removeItem('completedDays'); 
+    localStorage.removeItem('devotionalProgress');
+    
+    // 1. Carrega o tema e idioma
+    loadThemePreference();
+    updateLanguageSelector();
             
             // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
             currentDay = getSavedProgress();
