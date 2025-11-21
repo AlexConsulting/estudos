@@ -167,22 +167,23 @@
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
-            /* FIX VLIBRAS FINAL: Anula qualquer posicionamento do contêiner VLibras no mobile 
-               e força o botão para o canto inferior esquerdo. */
+            /* 💥 FIX VLIBRAS AGRESSIVO: Aplica o posicionamento fixo e z-index no contêiner principal */
             div[vw] {
-                position: unset !important; /* Remove o position:fixed forçado no desktop */
-                bottom: unset !important;
-                right: unset !important;
+                position: fixed !important;
+                left: 15px !important;    /* POSICIONA NO CANTO INFERIOR ESQUERDO */
+                bottom: 15px !important; 
+                right: auto !important;
+                top: auto !important;
+                z-index: 1001 !important; 
             }
             
             .vw-access-button {
-                position: fixed !important; /* Força o botão a ser fixo na tela */
-                bottom: 15px !important; 
-                left: 15px !important;    /* POSICIONA NO CANTO INFERIOR ESQUERDO */
-                right: auto !important;   
-                top: auto !important;
-                z-index: 1001 !important; 
-                width: 50px !important; /* Força um tamanho para garantir visibilidade */
+                /* Anula qualquer offset interno que o script possa aplicar ao botão */
+                left: unset !important; 
+                right: unset !important; 
+                top: unset !important; 
+                bottom: unset !important; 
+                width: 50px !important;
                 height: 50px !important;
             }
             
