@@ -10,27 +10,33 @@
             --base-font-scale: 1.0; /* Valor padrão para 100% */
         }
         
-        /* 1. CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
-        /* 💥 FIX: Reset global para evitar margens indesejadas */
+        /* 1. CSS PRINCIPAL (LIGHT THEME - PADRÃO) - VERSÃO SEGURA PARA DESKTOP */
         html, body {
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Evita rolagem horizontal indesejada */
+            overflow-x: hidden; 
         }
 
         body {
-            font-family: 'Georgia', serif; background-color: #e6e0d3; color: #333; line-height: 1.6;
-            display: flex; flex-direction: column; justify-content: flex-start; 
+            font-family: 'Georgia', serif; 
+            margin: 0; /* Garante que não há margem no body */
+            background-color: #e6e0d3; color: #333; line-height: 1.6;
+            /* Revertido para o layout centralizado original para desktop */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
             align-items: center;
             min-height: 100vh; 
+            padding: 20px 0; /* Padding vertical no desktop */
             transition: background-color 0.3s, color 0.3s;
         }
         main {
-            width: 100%; 
+            width: auto; /* Deixa o main se adaptar ao container */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 20px; /* Padding padrão para desktop */
+            padding-top: 0; /* Zera padding superior */
+            padding-bottom: 0;
         }
 
         .book-container {
@@ -38,7 +44,8 @@
             border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid #ccc;
             position: relative; transition: background 0.3s, box-shadow 0.3s;
             font-size: calc(var(--base-font-scale) * 1em); 
-            margin-top: 0; 
+            margin-top: 0; /* Garante margin top zero */
+            margin-bottom: 0;
             box-sizing: border-box; 
         }
         h1 {
@@ -66,7 +73,7 @@
             border-left: 5px solid #ffc107; font-weight: bold; text-align: center; font-style: italic;
         }
         
-        /* 2. NAVEGAÇÃO E UTILS */
+        /* 2. NAVEGAÇÃO E UTILS (Desktop Padrão) */
         .top-utils {
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px; 
         }
@@ -164,28 +171,24 @@
 
         /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
         @media (max-width: 600px) {
-            /* 💥 FIX PRINCIPAL: ZERA O ESPAÇAMENTO SUPERIOR DO BODY E MAIN, E ADICIONA O ESPAÇAMENTO NECESSÁRIO NO MAIN */
-            body, html {
+            
+            /* 💥 FIX PRINCIPAL: ZERA O ESPAÇAMENTO SUPERIOR DO CONTEÚDO NO MOBILE */
+            body, html, main {
                 margin: 0 !important;
-                padding: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
                 overflow-x: hidden; 
             }
-            /* A altura total dos botões no topo é ~45px. Adicionamos um pouco mais para garantir espaço. */
-            main { 
-                width: 100%; 
-                /* 5px (top) + 35px (altura do Ouça Aqui) + 5px (espaço) = 45px */
-                padding-top: 45px !important; 
-                padding-bottom: 20px !important; 
-                box-sizing: border-box; 
-            }
-
-            /* 💥 FIX: O conteúdo do livro agora usa a margem superior ZERO */
             .book-container {
-                padding: 20px 25px; 
+                /* AQUI ESTÁ O ZERO ESPAÇAMENTO, FLUTUANDO ABAIXO DOS BOTÕES FIXOS */
+                margin-top: 0 !important; 
+                margin-bottom: 20px; 
+                
+                /* Garantia de largura total sem overflow */
                 width: 100% !important; 
-                max-width: 100% !important; 
-                margin-top: 0 !important; /* ZERA A MARGEM SUPERIOR DO CONTEÚDO */
-                margin-bottom: 20px;
+                max-width: 100% !important;
+                padding: 20px 25px; 
+                
                 box-shadow: none; 
                 border: none; 
             }
@@ -194,22 +197,24 @@
             .top-utils { display: none !important; }
             .language-selector-wrapper, #themeToggle { display: none !important; }
 
-            /* 💥 1. OUÇA AQUI (FIXO: Topo Central) - Recriado */
+            /* 💥 1. OUÇA AQUI (FIXO: Topo Central) - VISIBILIDADE FORÇADA */
             #listenToggle {
                 position: fixed;
                 top: 5px; 
                 left: 50%; 
                 transform: translateX(-50%); 
-                z-index: 1011; 
+                z-index: 1011 !important; 
                 
-                /* Dimensões e estilos para visibilidade */
+                /* VISIBILIDADE FORÇADA */
+                display: flex !important; 
+                
+                /* Dimensões e estilos */
                 padding: 5px 15px; 
                 font-size: 0.9em; 
                 background-color: #f0f0f0; 
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-                display: flex !important; /* Garante que o botão seja sempre visível */
                 align-items: center;
                 justify-content: center;
             }
@@ -218,12 +223,12 @@
                 border-color: #444;
             }
 
-            /* 💥 2. A+/A- (FIXO: Topo Esquerdo, agora que o VLibras se move) */
+            /* 💥 2. A+/A- (FIXO: Topo Esquerdo) */
             #accessibilityFloater {
                 position: fixed; 
                 top: 5px; 
-                left: 5px; /* MUDANÇA: Mova para o canto esquerdo */
-                right: auto; /* MUDANÇA: Zera o right */
+                left: 5px; 
+                right: auto; 
                 transform: translateY(0); 
                 flex-direction: row; 
                 padding: 5px; 
@@ -233,28 +238,22 @@
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                 z-index: 1010;
             }
+            #accessibilityFloater button { 
+                margin: 0 2px; 
+                padding: 3px 6px; 
+                font-size: 0.9em; 
+            }
             
-            /* 💥 3. VLIBRAS (POSICIONAMENTO: Após Título - MUDANÇA TOTAL) */
-            /* Não podemos usar `position: fixed` para colocá-lo "após o título" 
-               e garantir que ele não seja cortado. A melhor solução é usar 
-               `position: fixed` e calcular seu `top` com base na posição do título.
-               
-               Alternativa mais segura: Deixá-lo fixo, mas mais abaixo.
-               Se o título é o primeiro H1, ele está em torno de 50px-100px.
-               Vamos colocá-lo fixo no canto superior direito, mas com um TOP maior.
-            */
-
-            /* Desativamos o VLibras padrão para mobile */
+            /* 💥 3. VLIBRAS (FIXO: Topo Direito, ABAIXO do Ouça Aqui) */
             div[vw] {
                 position: fixed !important;
                 bottom: auto !important; 
                 right: 5px !important;
                 left: auto !important; 
-                /* NOVO TOP: Abaixo do botão Ouça Aqui (40px) + espaço (10px) + Margem (10px) = 60px */
-                top: 60px !important; 
+                top: 50px !important; /* Mantido em 50px para não colidir com o Ouça Aqui */
                 z-index: 1010 !important; 
                 
-                /* Tamanho ajustado para visibilidade e alinhamento */
+                /* Tamanho ajustado para visibilidade */
                 width: 40px !important; 
                 height: 40px !important;
                 background-color: #fdfdfd; 
@@ -279,9 +278,8 @@
         @media (max-width: 400px) {
             #accessibilityFloater button { font-size: 0.8em; padding: 2px 4px; }
             #listenToggle { font-size: 0.75em; padding: 3px 10px; }
-            div[vw] { width: 35px !important; height: 35px !important; top: 55px !important; } /* Ajuste VLibras */
+            div[vw] { width: 35px !important; height: 35px !important; top: 45px !important; } 
             .vw-access-button { width: 35px !important; height: 35px !important; }
-            main { padding-top: 40px !important; } /* Ajuste de padding-top do main */
         }
     </style>
 </head>
