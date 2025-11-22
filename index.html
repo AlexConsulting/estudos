@@ -113,7 +113,7 @@
             border-radius: 8px;
             transition: background-color 0.2s;
             background-color: #f3f4f6;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         body.dark-mode #theme-toggle {
@@ -140,7 +140,7 @@
         }
 
         /* ------------------------------------------- */
-        /* LAYOUT GERAL DO CABEÇALHO E SELETORES */
+        /* LAYOUT GERAL DO CABEÇALHO E SELETORES (DESKTOP) */
         /* ------------------------------------------- */
 
         .main-header {
@@ -157,10 +157,74 @@
             position: absolute;
             top: 20px; 
             right: 10px; 
-            display: flex;
+            display: flex; /* Alinha group-left e group-right horizontalmente */
             align-items: center;
             gap: 15px; 
             z-index: 100;
+        }
+        
+        /* REFORÇO NO DESKTOP: Garante que os grupos internos se alinhem corretamente */
+        .header-controls-group-left, .header-controls-group-right {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espaçamento entre os botões dentro dos grupos */
+        }
+        /* FIM DO REFORÇO DESKTOP */
+
+
+        /* ------------------------------------------- */
+        /* MODO MOBILE (Ajustes solicitados) */
+        /* ------------------------------------------- */
+        @media (max-width: 768px) { /* Aplicações para telas de celular/tablet */
+            
+            /* Ajuste 01: Botão de Audiência no Canto Superior Esquerdo */
+            
+            /* 1. Reset e setup do container pai no mobile */
+            .header-controls {
+                /* Remove a posição absoluta global do desktop para que os grupos possam ser reposicionados */
+                position: static; 
+                display: flex;
+                /* Empurra o grupo da direita para a extremidade direita do container */
+                justify-content: flex-end; 
+                width: 100%;
+                max-width: 900px;
+                padding-right: 20px; 
+                gap: 0; /* Remove o gap entre os grupos para evitar empurrar demais */
+            }
+
+            /* 2. Posiciona o grupo da esquerda (Audiência) absolutamente no canto superior esquerdo */
+            .header-controls-group-left {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 101; 
+                display: flex; /* Mantém o ícone/texto alinhado se houver mais de um item */
+            }
+
+            /* 3. Garante que o conteúdo principal não fique por baixo dos controles */
+            .main-header {
+                 /* Aumentado para garantir espaço para os controles absolutos */
+                padding-top: 60px; 
+                margin-bottom: 30px; 
+            }
+            
+            /* Ajuste 02: Centralizar os Botões de Acesso (Menu) */
+            .menu-container {
+                /* Sobrescreve a definição de grid para desktop */
+                grid-template-columns: 1fr; /* Uma coluna única no mobile */
+                gap: 15px;
+                max-width: 450px; /* Limita a largura do container para que pareça centralizado */
+                margin-left: auto; /* Centraliza o container */
+                margin-right: auto; /* Centraliza o container */
+                padding: 0 20px; /* Garante que não encoste nas bordas da tela */
+            }
+            
+            .menu-button {
+                width: 100%;
+                /* Ajustes visuais para melhor preenchimento na coluna única */
+                padding: 15px 20px; 
+                border-radius: 12px;
+            }
         }
 
         /* --- Estilos Comuns para Dropdowns (Idioma e Audiência) --- */
@@ -208,6 +272,16 @@
             padding: 5px 0;
             min-width: 150px; 
         }
+        
+        /* Ajuste para o Dropdown de Audiência que está no canto esquerdo do mobile */
+        @media (max-width: 768px) {
+            #audience-dropdown {
+                /* Inverte o alinhamento para o left (abre para a direita) */
+                right: auto;
+                left: 0;
+            }
+        }
+
         
         #language-selector-container.open #language-dropdown,
         #audience-selector-container.open #audience-dropdown {
@@ -531,25 +605,28 @@
         
         <div class="header-controls">
             
-            <div id="audience-selector-container">
-                <button id="active-audience-button" title="Selecione a audiência"></button>
-                <div id="audience-dropdown">
-                    </div>
+            <div class="header-controls-group-left">
+                <div id="audience-selector-container">
+                    <button id="active-audience-button" title="Selecione a audiência"></button>
+                    <div id="audience-dropdown">
+                        </div>
+                </div>
             </div>
             
-            <div id="language-selector-container">
-                <button id="active-language-button" title="Selecione o idioma"></button>
-                <div id="language-dropdown">
-                    </div>
-            </div>
-            
-            <div id="theme-toggle" title="Alternar Modo Claro/Escuro">
-                <span class="sun-icon">☀️</span>
-                <span class="moon-icon">🌙</span>
+            <div class="header-controls-group-right">
+                <div id="language-selector-container">
+                    <button id="active-language-button" title="Selecione o idioma"></button>
+                    <div id="language-dropdown">
+                        </div>
+                </div>
+                
+                <div id="theme-toggle" title="Alternar Modo Claro/Escuro">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </div>
             </div>
             
         </div>
-
         <img src="img/logo_light.png" alt="Conhecer & Crer Logo" class="header-logo" id="header-logo">
         
         <h1 data-i18n="headerTitle">Devocionais e Planos de Leitura Bíblica</h1>
@@ -847,7 +924,8 @@
                 
                 // menu6: Galatians
                 menu6Title: "Devocional Libro de Gálatas", menu6Subtitle: "Una caminata de gracia, identidad y libertad.", menu6Icon: "✝️",
-                menu6Title_kids: "Gálatas: La Historia de la Gracia", menu6Subtitle_kids: "Cómo Jesús nos dio la verdadera libertad.", menu6Icon_kids: "🕊️",
+                menu6Title_kids: "Gálatas: La Historia de la Gracia",
+                menu6Subtitle_kids: "Cómo Jesús nos dio la verdadera libertad.", menu6Icon_kids: "🕊️",
                 menu6Title_teens: "Gálatas: Identidad y Libertad", menu6Subtitle_teens: "Cómo la gracia define quién eres.", menu6Icon_teens: "🔗",
                 
                 // menu7: Acts
@@ -899,7 +977,8 @@
                 
                 // menu6: Galatians
                 menu6Title: "Dévotionnel Livre des Galates", menu6Subtitle: "Un chemin de grâce, d'identité et de liberté.", menu6Icon: "✝️",
-                menu6Title_kids: "Galates : L’Histoire de la Grâce", menu6Subtitle_kids: "Comment Jésus nous a donné la vraie liberté.", menu6Icon_kids: "🕊️",
+                menu6Title_kids: "Galates : L’Histoire de la Grâce",
+                menu6Subtitle_kids: "Comment Jésus nous a donné la vraie liberté.", menu6Icon_kids: "🕊️",
                 menu6Title_teens: "Galates : Identité et Liberté", menu6Subtitle_teens: "Comment la grâce définit qui vous êtes.", menu6Icon_teens: "🔗",
                 
                 // menu7: Acts
