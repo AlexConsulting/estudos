@@ -16,7 +16,7 @@
             flex-direction: column; 
             align-items: center; 
             min-height: 100vh;
-            padding: 20px 0; /* Padding vertical para o corpo, horizontal gerenciado pelos containers */
+            /* CORREÇÃO 1: Removido padding 20px 0 do body para evitar corte */
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s; 
         }
@@ -142,7 +142,7 @@
         /* ------------------------------------------- */
         /* LAYOUT GERAL DO CABEÇALHO (MOBILE-FIRST) */
         /* ------------------------------------------- */
-        /* CORREÇÃO CHAVE 1: Configura o container principal e o padding para dar espaço aos controles */
+        /* CORREÇÃO 2: Ajuste no Padding Superior do Header no Mobile */
         .main-header {
             text-align: center;
             margin-bottom: 50px;
@@ -155,7 +155,7 @@
             box-sizing: border-box; 
         }
         
-        /* CORREÇÃO CHAVE 2: Posicionamento dos grupos de controle no MOBILE */
+        /* Posicionamento dos grupos de controle no MOBILE */
         .header-controls-group-left {
             position: absolute;
             top: 10px; 
@@ -180,7 +180,7 @@
         /* LAYOUT DESKTOP (MAIS DE 768px) */
         /* ------------------------------------------- */
         @media (min-width: 769px) { 
-            /* CORREÇÃO CHAVE 3: No Desktop, os controles ficam lado a lado e alinhados à direita */
+            /* No Desktop, os controles ficam lado a lado e alinhados à direita */
             
             /* Remove o posicionamento absoluto dos grupos individuais */
             .header-controls-group-left, 
@@ -204,7 +204,7 @@
                 z-index: 100;
             }
             
-            /* Remove padding extra do header (já que os controles não ocupam espaço da tela cheia) */
+            /* Remove padding lateral do header (já que os controles não ocupam espaço da tela cheia) */
             .main-header {
                 padding: 50px 0 0 0; /* Padding lateral é zero, usa max-width */
             }
@@ -225,7 +225,7 @@
             background-color: #ffffff;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: background-color 0.2s;
             border: none;
             padding: 0 8px; 
@@ -332,7 +332,7 @@
             max-width: 900px;
             width: 100%;
             margin: auto;
-            padding: 0 10px;
+            padding: 0 10px; /* Padding de 10px nas laterais para garantir margem no desktop/telas médias */
         }
         
         /* Ajuste do menu-container para mobile */
@@ -341,6 +341,7 @@
                 grid-template-columns: 1fr; /* Uma coluna única no mobile */
                 gap: 15px;
                 justify-content: center;
+                /* CORREÇÃO 3: Padding lateral para garantir margem e evitar corte */
                 padding: 0 10px; 
             }
             
@@ -465,7 +466,8 @@
         }
         body.teens-mode .info-button:hover {
             background-color: #e6f0ff; 
-            box-shadow: 0 4px 8px rgba(102, 153, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(102, 153, 255, 0.4);
+            border-color: #3366cc;
         }
         /* Ajuste do Teens em Dark Mode */
         body.teens-mode.dark-mode .info-button {
@@ -936,7 +938,7 @@
                 menu7Title_teens: "Hechos: Impacto y Misión", menu7Subtitle_teens: "El poder del Espíritu para la vida y la misión hoy.", menu7Icon_teens: "⚡",
 
                 // menu8: Psalms
-                menu8Title: "Salmos: Un Camino de Adoración y Transformación", menu8Subtitle: "Aprendiendo a vivir lo cotidiano en la presencia de Dios.", menu8Icon: "🎶",
+                menu8Title: "Salmos: Un Camino de Adoração y Transformación", menu8Subtitle: "Aprendiendo a vivir lo cotidiano en la presencia de Dios.", menu8Icon: "🎶",
                 menu8Title_kids: "Salmos: Aprendiendo a Alabar y Hablar con Dios", menu8Subtitle_kids: "Canciones y oraciones para hablar con Dios.", menu8Icon_kids: "🎤",
                 menu8Title_teens: "Salmos: Encuentra la Paz", menu8Subtitle_teens: "Encuentra consuelo y dirección en momentos difíceis.", menu8Icon_teens: "🧘",
                 
