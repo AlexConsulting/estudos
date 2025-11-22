@@ -16,7 +16,7 @@
             flex-direction: column; 
             align-items: center; 
             min-height: 100vh;
-            padding: 20px;
+            padding: 20px 0; /* Padding vertical para o corpo, horizontal gerenciado pelos containers */
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s; 
         }
@@ -140,89 +140,75 @@
         }
 
         /* ------------------------------------------- */
-        /* LAYOUT GERAL DO CABEÇALHO E SELETORES (DESKTOP) */
+        /* LAYOUT GERAL DO CABEÇALHO (MOBILE-FIRST) */
         /* ------------------------------------------- */
-        /* CORREÇÃO 1: Adicionado position: relative e margin: 0 auto */
+        /* CORREÇÃO CHAVE 1: Configura o container principal e o padding para dar espaço aos controles */
         .main-header {
             text-align: center;
             margin-bottom: 50px;
             color: #1a202c; 
-            padding-top: 50px; /* Ajustado para dar espaço ao logo */
-            position: relative; /* FUNDAMENTAL para ancorar .header-controls */
+            padding: 50px 10px 0 10px; /* Padding para garantir respiro nas laterais e no topo para o logo/controles */
+            position: relative; /* FUNDAMENTAL para ancorar os grupos de controle */
             width: 100%; 
             max-width: 900px;
             margin: 0 auto; /* Centraliza o cabeçalho na página */
-            box-sizing: border-box; /* Garante que padding não estoure a largura */
+            box-sizing: border-box; 
         }
         
-        /* CORREÇÃO 2: Ajustado o posicionamento para Desktop */
-        .header-controls {
+        /* CORREÇÃO CHAVE 2: Posicionamento dos grupos de controle no MOBILE */
+        .header-controls-group-left {
             position: absolute;
             top: 10px; 
-            right: 10px; /* Ancorado a 10px da direita do .main-header */
-            left: auto; 
+            left: 10px; /* Ancorado ao canto superior esquerdo do main-header */
             display: flex; 
             align-items: center;
             gap: 15px; 
-            z-index: 100;
+            z-index: 101; 
         }
         
-        /* REFORÇO NO DESKTOP: Garante que os grupos internos se alinhem corretamente */
-        .header-controls-group-left, .header-controls-group-right {
+        .header-controls-group-right {
+            position: absolute;
+            top: 10px; 
+            right: 10px; /* Ancorado ao canto superior direito do main-header */
             display: flex;
             align-items: center;
             gap: 15px; 
+            z-index: 101;
         }
-        /* FIM DO REFORÇO DESKTOP */
-
 
         /* ------------------------------------------- */
-        /* MODO MOBILE (Ajustes solicitados) */
+        /* LAYOUT DESKTOP (MAIS DE 768px) */
         /* ------------------------------------------- */
-        @media (max-width: 768px) { /* Aplicações para telas de celular/tablet */
+        @media (min-width: 769px) { 
+            /* CORREÇÃO CHAVE 3: No Desktop, os controles ficam lado a lado e alinhados à direita */
             
-            /* REAJUSTE DE PADDING NO main-header para dar espaço aos controles */
-             .main-header {
-                /* Garante que o conteúdo não toque as bordas da tela */
-                padding: 50px 10px 0 10px; 
-                margin-bottom: 50px;
-                width: 100%;
-                max-width: 900px;
-                box-sizing: border-box;
+            /* Remove o posicionamento absoluto dos grupos individuais */
+            .header-controls-group-left, 
+            .header-controls-group-right {
+                position: static;
+                top: auto;
+                left: auto;
+                right: auto;
+                /* Assegura que o display: flex e gap: 15px permaneçam */
             }
 
-            /* CORREÇÃO 3 e 5 REMOVIDAS. Os controles da direita usam a regra geral de .header-controls, ancorada ao .main-header centralizado */
+            /* Cria um container flexível para alinhar ambos os grupos */
+            .header-controls-container {
+                position: absolute; /* Ancorado ao main-header */
+                top: 10px; 
+                right: 10px;
+                left: auto;
+                display: flex; 
+                align-items: center;
+                gap: 15px; /* Espaço entre o grupo de Idioma/Tema e o grupo de Audiência */
+                z-index: 100;
+            }
+            
+            /* Remove padding extra do header (já que os controles não ocupam espaço da tela cheia) */
+            .main-header {
+                padding: 50px 0 0 0; /* Padding lateral é zero, usa max-width */
+            }
 
-            /* CORREÇÃO 4: Posiciona o grupo da esquerda (Audiência) no canto superior esquerdo */
-            .header-controls-group-left {
-                position: absolute;
-                top: 10px; /* Na mesma altura do grupo da direita */
-                left: 10px; /* Ancorado à esquerda do main-header */
-                z-index: 101; 
-                display: flex;
-            }
-            
-            /* CORREÇÃO 6: Centralizar e garantir que os botões do menu não sejam cortados */
-            .menu-container {
-                /* Sobrescreve a definição de grid para desktop */
-                grid-template-columns: 1fr; /* Uma coluna única no mobile */
-                gap: 15px;
-                
-                /* AJUSTE FINAL: Centraliza o conteúdo dentro do grid (era o problema anterior) */
-                justify-content: center;
-                
-                /* Remove max-width e margin para usar a largura total do container pai (body/main-header) */
-                max-width: 100%; 
-                margin: 0; 
-                padding: 0 10px; /* Garante um pequeno respiro nas laterais */
-            }
-            
-            .menu-button {
-                width: 100%;
-                /* Ajustes visuais para melhor preenchimento na coluna única */
-                padding: 15px 20px; 
-                border-radius: 12px;
-            }
         }
 
         /* --- Estilos Comuns para Dropdowns (Idioma e Audiência) --- */
@@ -262,7 +248,7 @@
             display: none; 
             position: absolute;
             top: 40px; 
-            right: 0;
+            right: 0; /* Dropdowns abrem para a esquerda por padrão (no canto direito) */
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -270,15 +256,14 @@
             min-width: 150px; 
         }
         
-        /* Ajuste para o Dropdown de Audiência que está no canto esquerdo do mobile */
+        /* Ajuste no Mobile: Dropdown de Audiência abre para a direita */
         @media (max-width: 768px) {
+            /* Dropdown de Audiência (Grupo Esquerda) */
             #audience-dropdown {
-                /* Inverte o alinhamento para o left (abre para a direita) */
                 right: auto;
                 left: 0;
             }
         }
-
         
         #language-selector-container.open #language-dropdown,
         #audience-selector-container.open #audience-dropdown {
@@ -339,7 +324,7 @@
             transition: color 0.3s;
         }
         
-        /* CORREÇÃO 7: Ajuste no menu-container para desktop */
+        /* Ajuste no menu-container */
         .menu-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -349,6 +334,23 @@
             margin: auto;
             padding: 0 10px;
         }
+        
+        /* Ajuste do menu-container para mobile */
+        @media (max-width: 768px) {
+            .menu-container {
+                grid-template-columns: 1fr; /* Uma coluna única no mobile */
+                gap: 15px;
+                justify-content: center;
+                padding: 0 10px; 
+            }
+            
+            .menu-button {
+                width: 100%;
+                padding: 15px 20px; 
+                border-radius: 12px;
+            }
+        }
+        
         .menu-button {
             display: flex;
             align-items: center;
@@ -602,7 +604,7 @@
     
     <header class="main-header">
         
-        <div class="header-controls">
+        <div class="header-controls-container">
             
             <div class="header-controls-group-left">
                 <div id="audience-selector-container">
@@ -943,7 +945,7 @@
                 modalTitle_credits: "Créditos", modalTitle_privacy: "Política de Privacidad (LGPD)", modalTitle_help: "Ayuda y Contacto", modalTitle_about: "Quienes Somos",
                 creditAuthorTitle: "Autor:", creditTechReviewTitle: "Revisión Técnica:", creditTheologicalReviewTitle: "Revisión Teológica:",
                 modalContent_privacy: 'Esta sección detalla nuestra Política de Privacidad, en cumplimiento con la Ley General de Protección de Datos (LGPD).\n\nDeclaramos que este sitio web/aplicación no recopila datos personales de los usuarios.\n\nNo se almacena ninguna información, excepto sus preferencias locales de idioma e tema (Modo Oscuro/Claro), que se guardan en su propio navegador.',
-                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico: contact@conhecer-e-crer.com.\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, inclua capturas de pantalla si informa un problema técnico.\n\nVersión Actual: v1.0.6 - 2025',
+                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico: contact@conhecer-e-crer.com.\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, inclua capturas de pantalla si informa un problema técnico.\n\nVersão Actual: v1.0.6 - 2025',
                 modalContent_about: 'Somos una iniciativa dedicada a promover el estudio profundo y la devoción cristiana, uniendo el Conocimiento de la Palabra de Dios con la Fe práctica.\n\nNuestros materiales se elaboran basándose en las Sagradas Escrituras para ayudarle en su camino espiritual.'
             },
             'fr-FR': { /* Versão em Francês */
