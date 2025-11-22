@@ -16,7 +16,7 @@
             flex-direction: column; 
             align-items: center; 
             min-height: 100vh;
-            /* CORREÇÃO 1: Removido padding 20px 0 do body para evitar corte */
+            /* Removido padding 20px 0 do body para evitar corte */
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s; 
         }
@@ -142,7 +142,7 @@
         /* ------------------------------------------- */
         /* LAYOUT GERAL DO CABEÇALHO (MOBILE-FIRST) */
         /* ------------------------------------------- */
-        /* CORREÇÃO 2: Ajuste no Padding Superior do Header no Mobile */
+        /* Ajuste no Padding Superior do Header no Mobile */
         .main-header {
             text-align: center;
             margin-bottom: 50px;
@@ -341,13 +341,14 @@
                 grid-template-columns: 1fr; /* Uma coluna única no mobile */
                 gap: 15px;
                 justify-content: center;
-                /* CORREÇÃO 3: Padding lateral para garantir margem e evitar corte */
+                /* Padding lateral para garantir margem e evitar corte */
                 padding: 0 10px; 
             }
             
             .menu-button {
                 width: 100%;
-                padding: 15px 20px; 
+                /* Ajuste o padding lateral para 15px para ficar mais compacto no mobile, seguindo a sugestão do usuário */
+                padding: 15px 15px; 
                 border-radius: 12px;
             }
         }
@@ -365,6 +366,7 @@
             border-radius: 16px; 
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-sizing: border-box; /* CORREÇÃO FINAL: Garante que 100% de largura inclui o padding */
         }
         .menu-button .emoji-icon {
             font-size: 2.5em; 
@@ -914,7 +916,7 @@
                 // menu3: Romans
                 menu3Title: "Devocional Libro de Romanos", menu3Subtitle: "Estudio profundo sobre la Justificación por la Fe.", menu3Icon: "⚖️",
                 menu3Title_kids: "Una Aventura por el Libro de Romanos", menu3Subtitle_kids: "Aprende sobre el perdón de Dios y la salvación.", menu3Icon_kids: "🕵️",
-                menu3Title_teens: "Romanos: ¿Qué es lo que Realmente Importa?", menu3Subtitle_teens: "Entiende la gracia, la Ley y la justificación.", menu3Icon_teens: "🧠",
+                menu3Title_teens: "Romanos: ¿Qué es lo que Realmente Importa?", menu3Subtitle_teens: "Entiende la gracia, la Ley y la justificación.", moenu3Icon_teens: "🧠",
 
                 // menu4: Proverbs
                 menu4Title: "Devocional Libro de Provérbios", menu4Subtitle: "Lições diárias de Sabedoria e Conduta.", menu4Icon: "💡",
@@ -923,7 +925,7 @@
 
                 // menu5: Ecclesiastes
                 menu5Title: "Devocional Libro de Eclesiastés", menu5Subtitle: "Una invitación a reflexionar con Salomón sobre el sentido de la vida.", menu5Icon: "🕰️",
-                menu5Title_kids: "Eclesiastés: La Gran Pregunta", menu5Subtitle_kids: "¿Qué vale la pena en la vida?", menu5Icon_kids: "❓",
+                menu5Title_kids: "Eclesiastés: La Grande Pregunta", menu5Subtitle_kids: "¿Qué vale la pena en la vida?", menu5Icon_kids: "❓",
                 menu5Title_teens: "Eclesiastés: ¿Cuál es el Sentido?", menu5Subtitle_teens: "Reflexiones profundas sobre el propósito y el tiempo.", menu5Icon_teens: "🤯",
                 
                 // menu6: Galatians
@@ -988,7 +990,7 @@
                 // menu7: Acts
                 menu7Title: "Dévotionnel Livre des Actes", menu7Subtitle: "L'Église en Action: La puissance de l'Esprit e la mission.", menu7Icon: "🔥",
                 menu7Title_kids: "L’Aventure du Saint-Esprit dans les Actes", menu7Subtitle_kids: "Histoires sur la façon dont l'Église a commencé et grandi.", menu7Icon_kids: "🚀",
-                menu7Title_teens: "Actes : Impact et Mission", menu7Subtitle_teens: "La puissance de l'Esprit pour la vie et la mission aujourd'hui.", menu7Icon_teens: "⚡",
+                menu7Title_teens: "Actes : Impact et Mission", menu7Subtitle_teens: "A puissance de l'Esprit para a vida e a missão hoje.", menu7Icon_teens: "⚡",
 
                 // menu8: Psalms
                 menu8Title: "Psaumes: Un Chemin d'Adoration et de Transformation", menu8Subtitle: "Apprendre à vivre le quotidien en présence de Dieu.", menu8Icon: "🎶",
@@ -999,9 +1001,9 @@
                 creditsButtonText: "Crédits", privacyButtonText: "Confidentialité (LGPD)", helpButtonText: "Aide", aboutButtonText: "Qui Sommes-Nous",
                 modalTitle_credits: "Crédits", modalTitle_privacy: "Politique de Confidentialité (LGPD)", modalTitle_help: "Aide et Contact", modalTitle_about: "Qui Sommes-Nous",
                 creditAuthorTitle: "Auteur:", creditTechReviewTitle: "Revue Technique:", creditTheologicalReviewTitle: "Revue Théologique:",
-                modalContent_privacy: 'Cette section détaille notre politique de confidentialité, conformément à la loi générale sur la protection des données (LGPD).\n\nNous affirmons que ce site/application ne collecte pas de données personnelles des utilisateurs.\n\nAucune information n\'est stockée, à l\'exception de vos préférences locales de langue et de thème (Mode Sombre/Clair), qui sont enregistrées dans votre propre navigateur.',
-                modalContent_help: 'Pour des questions, suggestions ou support technique, veuillez nous contacter par email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersão Actuelle: v1.0.6 - 2025',
-                modalContent_about: 'Nous sommes une initiative dédiée à promouvoir le étude profond et la dévotion chrétienne, unissant le Connaissance de la Parole de Dieu avec la Foi pratique.\n\nNos matériaux sont élaborés basés sur les Saintes Écritures pour vous aider dans votre cheminement spirituel.'
+                modalContent_privacy: 'Cette section détaille notre politique de confidentialité, conformément à la loi générale sur la protection des données (LGPD).\n\nNous affirmons que ce site/application ne collecte pas de données personnelles des utilisateurs.\n\nAucune information n\'est stockée, à l\'exception de vos préférences locales de langue et de thème (Mode Sombre/Clair), que sont enregistrées dans votre propre navigateur.',
+                modalContent_help: 'Para perguntas, suggestions ou support technique, veuillez nous contacter por email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersão Actuelle: v1.0.6 - 2025',
+                modalContent_about: 'Nous somos uma iniciativa dedicada a promover le étude profond et la dévotion chrétienne, unindo le Connaissance de la Parole de Deus com a Fé prática.\n\nNos materiais são elaborados basés sur les Saintes Écritures pour vous aider dans votre cheminement spirituel.'
             }
         };
 
