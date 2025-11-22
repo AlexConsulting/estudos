@@ -142,22 +142,23 @@
         /* ------------------------------------------- */
         /* LAYOUT GERAL DO CABEÇALHO E SELETORES (DESKTOP) */
         /* ------------------------------------------- */
-
+        /* CORREÇÃO 1: Ajustado padding e removido position: relative */
         .main-header {
             text-align: center;
             margin-bottom: 50px;
             color: #1a202c; 
-            padding-top: 20px;
-            position: relative; 
+            padding-top: 60px; /* Suficiente para não sobrepor os controles */
             width: 100%; 
             max-width: 900px;
         }
         
+        /* CORREÇÃO 2: Ajustado o posicionamento para Desktop */
         .header-controls {
             position: absolute;
-            top: 20px; 
+            top: 10px; /* Ajustado para ficar mais no topo */
             right: 10px; 
-            display: flex; /* Alinha group-left e group-right horizontalmente */
+            left: auto; /* Garante que o left não interfira no Desktop */
+            display: flex; 
             align-items: center;
             gap: 15px; 
             z-index: 100;
@@ -167,7 +168,7 @@
         .header-controls-group-left, .header-controls-group-right {
             display: flex;
             align-items: center;
-            gap: 15px; /* Espaçamento entre os botões dentro dos grupos */
+            gap: 15px; 
         }
         /* FIM DO REFORÇO DESKTOP */
 
@@ -177,46 +178,44 @@
         /* ------------------------------------------- */
         @media (max-width: 768px) { /* Aplicações para telas de celular/tablet */
             
-            /* Ajuste 01: Botão de Audiência no Canto Superior Esquerdo */
-            
-            /* 1. Reset e setup do container pai no mobile */
+            /* CORREÇÃO 3: Reestruturação do posicionamento dos controles no Mobile */
             .header-controls {
-                /* Remove a posição absoluta global do desktop para que os grupos possam ser reposicionados */
-                position: static; 
-                display: flex;
-                /* Empurra o grupo da direita para a extremidade direita do container */
-                justify-content: flex-end; 
-                width: 100%;
-                max-width: 900px;
-                padding-right: 20px; 
-                gap: 0; /* Remove o gap entre os grupos para evitar empurrar demais */
+                /* O container pai (header-controls) se estende por toda a largura */
+                position: absolute; 
+                top: 10px; 
+                left: 0; 
+                right: 0;
+                display: block; /* Permite que os grupos internos sejam posicionados separadamente */
+                padding: 0;
             }
 
-            /* 2. Posiciona o grupo da esquerda (Audiência) absolutamente no canto superior esquerdo */
+            /* CORREÇÃO 4: Posiciona o grupo da esquerda (Audiência) absolutamente no canto superior esquerdo */
             .header-controls-group-left {
                 position: absolute;
-                top: 20px;
-                left: 20px;
+                top: 0; /* Alinhado ao topo */
+                left: 10px; /* Alinhado à esquerda */
                 z-index: 101; 
-                display: flex; /* Mantém o ícone/texto alinhado se houver mais de um item */
+                display: flex;
             }
 
-            /* 3. Garante que o conteúdo principal não fique por baixo dos controles */
-            .main-header {
-                 /* Aumentado para garantir espaço para os controles absolutos */
-                padding-top: 60px; 
-                margin-bottom: 30px; 
+            /* CORREÇÃO 5: Posiciona o grupo da direita (Idioma e Tema) absolutamente no canto superior direito */
+            .header-controls-group-right {
+                position: absolute;
+                top: 0; /* Alinhado ao topo (na mesma altura do esquerdo) */
+                right: 10px; /* Alinhado à direita */
+                z-index: 101; 
+                display: flex;
             }
             
-            /* Ajuste 02: Centralizar os Botões de Acesso (Menu) */
+            /* CORREÇÃO 6: Centralizar e garantir que os botões do menu não sejam cortados */
             .menu-container {
                 /* Sobrescreve a definição de grid para desktop */
                 grid-template-columns: 1fr; /* Uma coluna única no mobile */
                 gap: 15px;
-                max-width: 450px; /* Limita a largura do container para que pareça centralizado */
-                margin-left: auto; /* Centraliza o container */
-                margin-right: auto; /* Centraliza o container */
-                padding: 0 20px; /* Garante que não encoste nas bordas da tela */
+                /* Remove max-width e margin para usar a largura total do container pai (body/main-header) */
+                max-width: 100%; 
+                margin: 0; 
+                padding: 0 10px; /* Garante um pequeno respiro nas laterais */
             }
             
             .menu-button {
@@ -341,6 +340,8 @@
             color: #6b7280;
             transition: color 0.3s;
         }
+        
+        /* CORREÇÃO 7: Ajuste no menu-container para desktop */
         .menu-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -872,7 +873,8 @@
                 
                 // menu6: Galatians
                 menu6Title: "Devotional Book of Galatians", menu6Subtitle: "A journey of grace, identity, and freedom.", menu6Icon: "✝️",
-                menu6Title_kids: "Galatians: The Story of Grace", menu6Subtitle_kids: "How Jesus gave us true freedom.", menu6Icon_kids: "🕊️",
+                menu6Title_kids: "Galatians: The Story of Grace",
+                menu6Subtitle_kids: "How Jesus gave us true freedom.", menu6Icon_kids: "🕊️",
                 menu6Title_teens: "Galatians: Identity and Freedom", menu6Subtitle_teens: "How grace defines who you are.", menu6Icon_teens: "🔗",
                 
                 // menu7: Acts
@@ -988,7 +990,7 @@
 
                 // menu8: Psalms
                 menu8Title: "Psaumes: Un Chemin d'Adoration et de Transformation", menu8Subtitle: "Apprendre à vivre le quotidien en présence de Dieu.", menu8Icon: "🎶",
-                menu8Title_kids: "Psaumes : Apprendre à Louer et à Parler avec Dieu", menu8Subtitle_kids: "Chants et prières pour parler avec Dieu.", menu8Icon_kids: "🎤",
+                menu8Title_kids: "Psaumes : Apprendre à Louer et à Parler avec Dieu", menu8Subtitle_kids: "Chants et prières pour parler com Deus.", menu8Icon_kids: "🎤",
                 menu8Title_teens: "Psaumes : Trouvez la Paix", menu8Subtitle_teens: "Trouvez réconfort et direction dans les moments difficiles.", menu8Icon_teens: "🧘",
                 
                 // MODAL
