@@ -15,7 +15,10 @@
             font-family: 'Georgia', serif;
             margin: 0; background-color: #e6e0d3; color: #333; line-height: 1.6;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            min-height: 100vh; padding: 20px 0; transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh; 
+            /* AJUSTE 1: Remove o espaçamento superior global, mantendo o de baixo se o conteúdo for curto */
+            padding: 0 0 20px 0; 
+            transition: background-color 0.3s, color 0.3s;
         }
         .book-container {
             max-width: 650px; width: 90%; background: #fdfdfd; padding: 30px 40px;
@@ -103,9 +106,13 @@
         .dark-theme #langDropdown a { color: #f4f4f4; }
         .dark-theme #langDropdown a:hover { background-color: #333; }
         
-        /* 5. Menu de Acessibilidade Flutuante (Desktop - Padrão) */
+        /* 5. Menu de Acessibilidade Flutuante (Desktop e Mobile) */
+        /* AJUSTE 2: Fixa A+A- no canto superior direito */
         #accessibilityFloater {
-            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            position: fixed; 
+            right: 20px; 
+            top: 20px; 
+            transform: translateY(0); /* Garante que não use a centralização vertical */
             display: flex; flex-direction: column; z-index: 1000;
             padding: 8px 5px; background: rgba(255, 255, 255, 0.8); border: 1px solid #ccc;
             border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -120,15 +127,17 @@
         .dark-theme #accessibilityFloater button { background-color: #2c2c2c; color: #f4f4f4; border-color: #03dac6; }
         .dark-theme #accessibilityFloater button:hover { background-color: #383838; }
 
-        /* ⚠️ 6. AJUSTES VLIBRAS (Desktop - CORREÇÃO DE SOBREPOSIÇÃO) */
-        /* Move o contêiner principal VLibras para o canto inferior direito e garante z-index baixo */
+        /* ⚠️ 6. AJUSTES VLIBRAS (Desktop e Mobile) */
+        /* AJUSTE 3: Reposiciona VLibras na lateral direita, abaixo do centro (60% do topo) */
         div[vw] {
             position: fixed !important;
-            bottom: 25px !important; 
-            right: 25px !important;
+            right: 15px !important; 
             left: auto !important; 
-            top: auto !important; 
-            z-index: 999 !important; 
+            
+            top: 60% !important; /* Ligeiramente abaixo do centro (50% seria o centro) */
+            bottom: auto !important; 
+            
+            z-index: 998 !important; /* Acima do conteúdo, abaixo de A+A- */
         }
 
         /* 7. ESTILOS DA BARRA DE PROGRESSO E CHECKBOX (MANTIDOS) */
@@ -157,14 +166,14 @@
             /* FIX: Centraliza o conteúdo no mobile */
             main { width: 100%; display: flex; justify-content: center; }
 
-            /* FIX: ESPAÇAMENTO SUPERIOR. Garante espaço para o floater no topo */
+            /* AJUSTE 1 (Mobile): Zera a margem superior do contêiner */
             .book-container {
                 padding: 20px 25px; width: 95%; 
-                margin-top: 10px; /* Adiciona margem para não ficar debaixo do floater */
+                margin-top: 0; /* Zera o espaçamento superior */
                 margin-bottom: 20px;
             }
             
-            /* Reposicionamento do Floater de Acessibilidade (A+/A-) - Fica fixo no topo direito */
+            /* AJUSTE 2 (Mobile): Garante que A+A- fique fixo no canto superior direito (5px de margem) */
             #accessibilityFloater {
                 position: fixed; top: 5px; right: 5px; transform: translateY(0); 
                 flex-direction: row; padding: 5px;
@@ -173,35 +182,26 @@
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
-            /* VLIBRAS (Mobile) - Fica no canto inferior esquerdo */
-            div[vw] {
-                right: auto !important;
-                bottom: auto !important; 
-            }
-            .vw-access-button {
-                bottom: 45px !important; 
-                left: 15px !important;    
-                right: auto !important;   
-                top: auto !important;
-                z-index: 1001 !important; 
-            }
+            /* AJUSTE 3 (Mobile): REMOVE as regras de VLIBRAS que causavam conflito e o faziam sumir, confiando no ajuste global (Seção 6) */
+            /* Regras de VLibras removidas para Mobile: 
+            div[vw] { ... }
+            .vw-access-button { ... } 
+            */
             
-            /* Outros ajustes de mobile */
+            /* Outros ajustes de mobile (Mantidos) */
             .top-utils { 
-                /* Retorna a ser uma linha com espaçamento (padrão) */
                 gap: 10px; 
                 width: 100%;
             }
             
-            /* CORREÇÃO CRÍTICA: Garante que o botão 'Ouça Aqui' fique pequeno e à esquerda */
             #listenToggle {
-                width: auto; /* Deixa o tamanho natural do botão (pequeno) */
-                order: initial; /* Retorna à ordem normal */
+                width: auto; 
+                order: initial; 
                 margin-bottom: 0; 
             }
 
             .navigation { flex-direction: column; gap: 10px; }
-            .navigation .nav-button { width: 100%; } /* Aplica 100% APENAS nos botões de navegação inferiores */
+            .navigation .nav-button { width: 100%; } 
             .progress-check { order: -1; width: 100%; }
         }
 
@@ -769,7 +769,7 @@
         }
 
 
-        // --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
+         // --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
         
         const devotionalContent = {
             1: {pt: {h2: "O Único Evangelho Verdadeiro (Sola Gratia)", versiculos: "Gálatas 1:8-9 (NVI): Mas, ainda que nós ou um anjo do céu pregue um evangelho diferente daquele que lhes pregamos, que seja anátema.", resumo: "Gálatas começa com a defesa de que existe apenas um Evangelho, que é a justificação pela fé em Cristo, separada das obras da Lei (legalismo). Qualquer adição (como circuncisão ou observância ritual) que busque o mérito humano anula a graça de Cristo. Esta é a doutrina da Graça Exclusiva (Sola Gratia): ou é totalmente a Graça, ou não é Graça de forma alguma.", aplicacao: "Em quais áreas você tem adicionado 'esforço humano' ou rituais à obra completa de Cristo, buscando validação ou 'níveis' mais altos de aceitação por Deus? Descanse na suficiência de Cristo (Solus Christus).", oracao: "Ore a Deus agradecendo pela pureza do Evangelho. Peça ao Senhor que o livre de qualquer forma de legalismo ou autojustificação, renovando sua fé na obra completa de Jesus."} , en: {h2: "The Only True Gospel (Sola Gratia)", versiculos: "Galatians 1:8-9 (NIV): But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God's curse!", resumo: "Galatians begins with the defense that there is only one Gospel, which is justification by faith in Christ, separate from the works of the Law (legalism). Any addition (like circumcision or ritual observance) that seeks human merit nullifies the grace of Christ. This is the doctrine of Exclusive Grace (Sola Gratia): it is either entirely Grace, or it is no Grace at all.", aplicacao: "In what areas have you added 'human effort' or rituals to the complete work of Christ, seeking validation or 'higher levels' of acceptance by God? Rest in the sufficiency of Christ (Solus Christus).", oracao: "Pray to God, thanking Him for the purity of the Gospel. Ask the Lord to free you from any form of legalism or self-righteousness, renewing your faith in the completed work of Jesus."}, es: {h2: "The Only True Gospel (Sola Gratia)", versiculos: "Galatians 1:8-9 (NVI): Pero aun si nosotros o un ángel del cielo les predicara un evangelio diferente del que les hemos predicado, ¡que caiga sobre él la maldición!", resumo: "Gálatas comienza con la defensa de que existe solo un Evangelio, que es la justificación por la fe en Cristo, separada de las obras de la Ley (legalismo). Cualquier adición (como la circuncisión o la observancia ritual) que busque el mérito humano anula la gracia de Cristo. Esta es la doctrina de la Gracia Exclusiva (Sola Gratia): o es totalmente la Gracia, o no es Gracia en absoluto.", aplicacao: "¿En qué áreas has añadido 'esfuerzo humano' o rituales a la obra completa de Cristo, buscando validación o 'niveles' más altos de aceptación ante Dios? Descansa en la suficiencia de Cristo (Solus Christus).", oracao: "Ora a Dios agradeciendo por la pureza del Evangelio. Pide al Señor que te libere de cualquier forma de legalismo o autojustificación, renovando tu fe en la obra completa de Jesús."}, fr: {h2: "Le Seul Véritable Évangile (Sola Gratia)", versiculos: "Galates 1:8-9 (Louis Segond): Mais, quand nous-mêmes, quand un ange du ciel annoncerait un Évangile différent de celui que nous vous avons annoncé, qu'il soit anathème!", resumo: "Galates commence par la défense qu'il n'existe qu'un seul Évangile, qui est la justification par la foi en Christ, séparée des œuvres de la Loi (légalisme). Toute addition (comme la circision ou l'observance rituelle) qui cherche le mérite humain annule la grâce du Christ. C'est la doctrine de la Grâce Exclusive (Sola Gratia): soit c'est entièrement la Grâce, soit ce n'est pas la Grâce du tout.", aplicacao: "Dans quels domaines avez-vous ajouté des 'efforts humains' ou des rituels à l'œuvre complète du Christ, cherchant validation ou des 'níveis' supérieurs d'acceptation par Dieu? Reposez-vous dans la suficiência do Christ (Solus Christus).", oracao: "Priez Dieu le remerciant pour la pureté de l'Évangile. Demandez au Seigneur de vous libérer de toute forme de légalisme ou d'auto-justification, renouvelant votre foi dans l'œuvre achevée de Jésus."}},
