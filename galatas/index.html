@@ -152,37 +152,62 @@
             /* FIX: REMOÇÃO DO ESPAÇAMENTO SUPERIOR. */
             .book-container {
                 padding: 20px 25px; width: 95%; 
-                margin-top: 0; /* REMOVIDA A MARGEM SUPERIOR FIXA */
+                margin-top: 0; 
                 margin-bottom: 20px;
             }
             
-            /* AJUSTE CRÍTICO: Configuração do Contêiner dos Botões (Ouça Aqui + A+ A-) */
+            /* Ajuste do Contêiner dos Botões (Ouça Aqui) - Garante que ele fique à esquerda */
             .top-utils { 
                 display: flex; 
                 justify-content: flex-start; /* Alinha os itens à esquerda */
-                align-items: center; /* CENTRALIZA VERTICALMENTE os itens (Ouça Aqui + A+ A-) */
-                gap: 10px; /* Espaçamento entre os botões */
+                align-items: center; 
+                gap: 10px; 
                 width: 100%;
                 margin-bottom: 15px;
             }
             
-            /* Reposicionamento do Floater de Acessibilidade (A+/A-) */
+            /* NOVO: Reposicionamento do Floater de Acessibilidade (A+/A-) para o Canto Superior Direito */
             #accessibilityFloater {
-                /* MUDA DE FIXED PARA PARTE DO FLUXO DO DOCUMENTO */
-                position: static; 
-                top: auto; right: auto; transform: none; /* Remove a posição fixa do desktop */
-                flex-direction: row; /* Garante que os botões A+ A- fiquem na mesma linha */
-                padding: 0; /* Remove padding externo */
-                background: none; /* Remove background */
-                border: none; /* Remove borda */
-                box-shadow: none; /* Remove sombra */
+                /* REVERTE para FIXED para ficar no canto superior direito */
+                position: fixed; 
+                top: 15px; 
+                right: 15px; 
+                transform: none; 
+                flex-direction: row; /* Horizontal */
+                z-index: 1002; 
+                
+                /* Restaura estilos visuais para parecer flutuante */
+                padding: 8px 5px; 
+                background: rgba(255, 255, 255, 0.9); 
+                border: 1px solid #ccc;
+                border-radius: 8px; 
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             }
-            #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
+            
+            /* Garante que os botões dentro do floater estejam formatados */
+            #accessibilityFloater button { 
+                margin: 0 3px; 
+                padding: 5px 8px; 
+                font-size: 1.1em; 
+            }
+            
+            /* Estilo para o Floater no Dark Theme Mobile */
+            .dark-theme #accessibilityFloater { 
+                background: rgba(30, 30, 30, 0.9); 
+                border: 1px solid #444; 
+            }
+            .dark-theme #accessibilityFloater button { 
+                background-color: #2c2c2c; 
+                color: #f4f4f4; 
+                border-color: #03dac6; 
+            }
 
-            /* VLIBRAS (Mobile) - AGORA NO CANTO SUPERIOR DIREITO */
+
+            /* VLIBRAS (Mobile) - AGORA FLUTUANTE NA LATERAL DIREITA, CENTRALIZADO VERTICALMENTE */
             div[vw] {
-                top: 15px !important; /* Move para cima */
+                top: 50% !important; /* Move para o centro vertical */
                 right: 15px !important; /* Mantém na direita */
+                transform: translateY(-50%) !important; /* Centraliza verticalmente o ícone */
                 bottom: auto !important; /* Desabilita o bottom do desktop */
                 left: auto !important;    /* Desabilita o left */
                 z-index: 1001 !important; 
@@ -792,7 +817,7 @@
         };
 
         // FIM DO CONTEÚDO DEVOCIONAL
-
+		
         // * FUNÇÕES DE PERSISTÊNCIA E ESTADO (MANTIDAS) *
         
         function getSavedProgress() {
