@@ -156,7 +156,7 @@
                 margin-bottom: 20px;
             }
             
-            /* AJUSTE CRÍTICO: Configuração do Contêiner dos Botões */
+            /* AJUSTE CRÍTICO: Configuração do Contêiner dos Botões (Ouça Aqui + A+ A-) */
             .top-utils { 
                 display: flex; 
                 justify-content: flex-start; /* Alinha os itens à esquerda */
@@ -179,17 +179,20 @@
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
-            /* VLIBRAS (Mobile) - Fica no canto inferior esquerdo */
+            /* VLIBRAS (Mobile) - AGORA NO CANTO SUPERIOR DIREITO */
             div[vw] {
-                right: auto !important;
-                bottom: auto !important; 
-            }
-            .vw-access-button {
-                bottom: 15px !important; 
-                left: 15px !important;    
-                right: auto !important;   
-                top: auto !important;
+                top: 15px !important; /* Move para cima */
+                right: 15px !important; /* Mantém na direita */
+                bottom: auto !important; /* Desabilita o bottom do desktop */
+                left: auto !important;    /* Desabilita o left */
                 z-index: 1001 !important; 
+            }
+            /* Garante que o botão interno não se posicione de forma estranha */
+            .vw-access-button {
+                top: auto !important; 
+                right: auto !important;
+                bottom: auto !important;
+                left: auto !important;
             }
             
             /* Garante que o botão 'Ouça Aqui' fique pequeno e à esquerda */
@@ -776,7 +779,7 @@
         }
 
 
-       // --- CONTEÚDO DEVOCIONAL (CORRIGIDO A CHAVE 'aplicacion' para 'aplicacao' em 'es') ---
+      // --- CONTEÚDO DEVOCIONAL (CORRIGIDO A CHAVE 'aplicacion' para 'aplicacao' em 'es') ---
         
         const devotionalContent = {
             1: {pt: {h2: "O Único Evangelho Verdadeiro (Sola Gratia)", versiculos: "Gálatas 1:8-9 (NVI): Mas, ainda que nós ou um anjo do céu pregue um evangelho diferente daquele que lhes pregamos, que seja anátema.", resumo: "Gálatas começa com a defesa de que existe apenas um Evangelho, que é a justificação pela fé em Cristo, separada das obras da Lei (legalismo). Qualquer adição (como circuncisão ou observância ritual) que busque o mérito humano anula a graça de Cristo. Esta é a doutrina da Graça Exclusiva (Sola Gratia): ou é totalmente a Graça, ou não é Graça de forma alguma.", aplicacao: "Em quais áreas você tem adicionado 'esforço humano' ou rituais à obra completa de Cristo, buscando validação ou 'níveis' mais altos de aceitação por Deus? Descanse na suficiência de Cristo (Solus Christus).", oracao: "Ore a Deus agradecendo pela pureza do Evangelho. Peça ao Senhor que o livre de qualquer forma de legalismo ou autojustificação, renovando sua fé na obra completa de Jesus."} , en: {h2: "The Only True Gospel (Sola Gratia)", versiculos: "Galatians 1:8-9 (NIV): But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God's curse!", resumo: "Galatians begins with the defense that there is only one Gospel, which is justification by faith in Christ, separate from the works of the Law (legalism). Any addition (like circumcision or ritual observance) that seeks human merit nullifies the grace of Christ. This is the doctrine of Exclusive Grace (Sola Gratia): it is either entirely Grace, or it is no Grace at all.", aplicacao: "In what areas have you added 'human effort' or rituals to the complete work of Christ, seeking validation or 'higher levels' of acceptance by God? Rest in the sufficiency of Christ (Solus Christus).", oracao: "Pray to God, thanking Him for the purity of the Gospel. Ask the Lord to free you from any form of legalism or self-righteousness, renewing your faith in the completed work of Jesus."}, es: {h2: "The Only True Gospel (Sola Gratia)", versiculos: "Galatians 1:8-9 (NVI): Pero aun si nosotros o un ángel del cielo les predicara un evangelio diferente del que les hemos predicado, ¡que caiga sobre él la maldición!", resumo: "Gálatas comienza con la defensa de que existe solo un Evangelio, que es la justificación por la fe en Cristo, separada de las obras de la Ley (legalismo). Cualquier adición (como la circuncisión o la observancia ritual) que busque el mérito humano anula la gracia de Cristo. Esta es la doctrina de la Gracia Exclusiva (Sola Gratia): o es totalmente la Gracia, o no es Gracia en absoluto.", aplicacao: "¿En qué áreas has añadido 'esfuerzo humano' o rituales a la obra completa de Cristo, buscando validación o 'niveles' más altos de aceptación ante Dios? Descansa en la suficiencia de Cristo (Solus Christus).", oracao: "Ora a Dios agradeciendo por la pureza del Evangelio. Pide al Señor que te libere de cualquier forma de legalismo o autojustificación, renovando tu fe en la obra completa de Jesús."}, fr: {h2: "Le Seul Véritable Évangile (Sola Gratia)", versiculos: "Galates 1:8-9 (Louis Segond): Mais, quand nous-mêmes, quand un ange du ciel annoncerait un Évangile différent de celui que nous vous avons annoncé, qu'il soit anathème!", resumo: "Galates commence par la défense qu'il n'existe qu'un seul Évangile, qui est la justification par la foi en Christ, séparée des œuvres de la Loi (légalisme). Toute addition (comme la circision ou l'observance rituelle) qui cherche le mérite humain annule la grâce du Christ. C'est la doctrine de la Grâce Exclusive (Sola Gratia): soit c'est entièrement la Grâce, soit ce n'est pas la Grâce du tout.", aplicacao: "Dans quels domaines avez-vous ajouté des 'efforts humains' ou des rituels à l'œuvre complète du Christ, cherchant validation ou des 'níveis' supérieurs d'acceptation par Dieu? Reposez-vous dans la suficiência do Christ (Solus Christus).", oracao: "Priez Dieu le remerciant pour la pureté de l'Évangile. Demandez au Seigneur de vous libérer de toute forme de légalisme ou d'auto-justification, renouvelant votre foi dans l'œuvre achevée de Jésus."}},
