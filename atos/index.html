@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atos: A Igreja em Ação (Devocional)</title>
+<style>
+        /* 0. Variável CSS para controle de Zoom/Fonte (Acessibilidade) */
+        :root {
+            --base-font-scale: 1.0; /* Valor padrão para 100% */
+        }
+        
+        /* 1. CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0; background-color: #e6e0d3; color: #333; line-height: 1.6;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            min-height: 100vh; 
+            /* AJUSTE 1: Remove o espaçamento superior global, mantendo o de baixo se o conteúdo for curto */
+            padding: 0 0 20px 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .book-container {
+            max-width: 650px; width: 90%; background: #fdfdfd; padding: 30px 40px;
+            border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid #ccc;
+            position: relative; transition: background 0.3s, box-shadow 0.3s;
+            font-size: calc(var(--base-font-scale) * 1em); 
+        }
+        h1 {
+            color: #4b0082; text-align: center; font-family: 'Times New Roman', serif;
+            border-bottom: 2px solid #4b0082; padding-bottom: 10px; margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center; font-style: italic; margin-bottom: 20px; color: #555; font-size: 0.95em;
+        }
+        h2 {
+            color: #007bff; font-size: 1.5em; text-align: center; margin-top: 10px; margin-bottom: 20px;
+        }
+        .versiculos {
+            font-style: italic; background-color: #f0f8ff; padding: 15px;
+            border-left: 5px solid #28a745; margin: 15px 0; font-weight: 500;
+        }
+        .section {
+            margin-top: 20px; padding: 10px; border-bottom: 1px dashed #ddd;
+        }
+        .section strong {
+            display: block; color: #dc3545; margin-bottom: 5px; font-weight: bold;
+        }
+        .oracao-final {
+            margin-top: 25px; padding: 15px; background-color: #fffae0;
+            border-left: 5px solid #ffc107; font-weight: bold; text-align: center; font-style: italic;
+        }
+        
+        /* 2. NAVEGAÇÃO E UTILS */
+        .top-utils {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px; 
+        }
+        .navigation {
+            display: flex; justify-content: space-between; align-items: center; margin-top: 30px;
+            padding-top: 15px; border-top: 1px solid #ddd; flex-wrap: wrap; gap: 15px; 
+        }
+        .nav-button {
+            padding: 10px 15px; cursor: pointer; border: 1px solid #007bff; border-radius: 5px;
+            background-color: #007bff; color: white; transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+        }
+        .nav-button:disabled { opacity: 0.5; cursor: default; }
+        button:focus, a:focus, input:focus, #accessibilityFloater button:focus {
+            outline: 3px solid #00ff73; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 3. DARK THEME CSS (Mantido) */
+        .dark-theme { background-color: #121212; color: #f4f4f4; }
+        .dark-theme .book-container { background: #1e1e1e; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); border-color: #333; }
+        .dark-theme h1 { color: #bb86fc; border-bottom-color: #bb86fc; }
+        .dark-theme .subtitle { color: #aaa; }
+        .dark-theme h2 { color: #03dac6; }
+        .dark-theme .versiculos { background-color: #2c2c2c; border-left-color: #03dac6; }
+        .dark-theme .section { border-bottom-color: #444; }
+        .dark-theme .section strong { color: #cf6679; }
+        .dark-theme .oracao-final { background-color: #33331c; border-left-color: #ffd600; }
+        .dark-theme .nav-button { background-color: #03dac6; border-color: #03dac6; color: #1e1e1e; }
+        
+        /* 4. SELETOR DE IDIOMA, LEITURA E TEMA */
+        /* CORREÇÃO CRÍTICA: Oculta botões de Idioma e Tema em TODAS as resoluções (Desktop e Mobile) */
+        .language-selector-wrapper, #themeToggle {
+            display: none !important;
+        }
+        
+        .language-selector-wrapper { position: relative; display: inline-block; z-index: 10; }
+        #langSelectButton, #themeToggle, #listenToggle { 
+            background-color: #f0f0f0; border: 1px solid #ccc; color: #333; border-radius: 5px;
+            padding: 8px 12px; cursor: pointer; display: flex; align-items: center;
+            font-size: 0.9em; font-weight: bold; transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+        }
+        #listenToggle[disabled] { opacity: 0.6; cursor: wait; }
+        #langSelectButton:hover, #themeToggle:hover, #listenToggle:hover:not([disabled]) { background-color: #e0e0e0; }
+        /* (Estilos de Dropdown e Dark Theme para utilitários mantidos) */
+        .lang-flag-active { width: 24px; height: 18px; margin-right: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        #langDropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 150px; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid #ddd; border-radius: 5px; margin-top: 5px; overflow: hidden; }
+        #langDropdown a { color: #333; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; font-size: 0.9em; }
+        #langDropdown a:hover { background-color: #f5f5f5; }
+        .lang-flag-dropdown { width: 20px; height: 15px; margin-right: 10px; border: 1px solid #eee; }
+        .dark-theme #langSelectButton, .dark-theme #themeToggle, .dark-theme #listenToggle { background-color: #2c2c2c; border-color: #444; color: #f4f4f4; }
+        .dark-theme #langSelectButton:hover, .dark-theme #themeToggle:hover, .dark-theme #listenToggle:hover:not([disabled]) { background-color: #333; }
+        .dark-theme #langDropdown { background-color: #1e1e1e; border-color: #444; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+        .dark-theme #langDropdown a { color: #f4f4f4; }
+        .dark-theme #langDropdown a:hover { background-color: #333; }
+        
+        /* 5. Menu de Acessibilidade Flutuante (Desktop e Mobile) */
+        /* AJUSTE 2: Fixa A+A- no canto superior direito */
+        #accessibilityFloater {
+            position: fixed; 
+            right: 20px; 
+            top: 20px; 
+            transform: translateY(0); /* Garante que não use a centralização vertical */
+            display: flex; flex-direction: column; z-index: 1000;
+            padding: 8px 5px; background: rgba(255, 255, 255, 0.8); border: 1px solid #ccc;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #accessibilityFloater button {
+            padding: 5px 8px; margin: 5px 0; cursor: pointer; border: 1px solid #007bff;
+            background-color: #f0f0f0; color: #333; font-weight: bold; font-size: 1.1em;
+            border-radius: 5px; transition: background-color 0.2s;
+        }
+        #accessibilityFloater button:hover { background-color: #e0e0e0; }
+        .dark-theme #accessibilityFloater { background: rgba(30, 30, 30, 0.8); border: 1px solid #444; }
+        .dark-theme #accessibilityFloater button { background-color: #2c2c2c; color: #f4f4f4; border-color: #03dac6; }
+        .dark-theme #accessibilityFloater button:hover { background-color: #383838; }
+
+        /* ⚠️ 6. AJUSTES VLIBRAS (Desktop e Mobile) */
+        /* AJUSTE 3: Reposiciona VLibras na lateral direita, abaixo do centro (60% do topo) */
+        div[vw] {
+            position: fixed !important;
+            right: 15px !important; 
+            left: auto !important; 
+            
+            top: 60% !important; /* Ligeiramente abaixo do centro (50% seria o centro) */
+            bottom: auto !important; 
+            
+            z-index: 998 !important; /* Acima do conteúdo, abaixo de A+A- */
+        }
+
+        /* 7. ESTILOS DA BARRA DE PROGRESSO E CHECKBOX (MANTIDOS) */
+        .progress-bar-wrapper { background-color: #ddd; border-radius: 10px; height: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
+        .progress-bar { height: 100%; width: 0%; background-color: #28a745; border-radius: 10px; transition: width 0.5s ease-in-out; }
+        .dark-theme #progressLabel { color: #03dac6; }
+        .dark-theme .progress-bar-wrapper { background-color: #333; }
+        .dark-theme .progress-bar { background-color: #03dac6; }
+        .progress-check {
+             display: flex; align-items: center; justify-content: center; margin: 0; flex-grow: 0; flex-shrink: 0;
+             padding: 5px 10px; background-color: #e6f7ff; border: 1px solid #b3e0ff; border-radius: 5px; transition: background-color 0.3s; order: 0;
+        }
+        .progress-check label { margin-left: 10px; font-weight: bold; color: #1e8449; cursor: pointer; }
+        .progress-check input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
+        .dark-theme .progress-check { background-color: #2c2c2c; border-color: #444; }
+        .dark-theme .progress-check label { color: #03dac6; }
+        #audioProgressContainer { height: 5px; width: 100%; background-color: #ddd; border-radius: 2px; overflow: hidden; margin-top: 5px; margin-bottom: 10px; }
+        #audioProgressBar { height: 100%; width: 0%; background-color: #ffc107; transition: width 0.1s linear; }
+        .dark-theme #audioProgressContainer { background-color: #333; }
+        .dark-theme #audioProgressBar { background-color: #ffd600; }
+
+
+        /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
+        @media (max-width: 600px) {
+            
+            /* FIX: Centraliza o conteúdo no mobile */
+            main { width: 100%; display: flex; justify-content: center; }
+
+            /* AJUSTE 1 (Mobile): Zera a margem superior do contêiner */
+            .book-container {
+                padding: 20px 25px; width: 95%; 
+                margin-top: 0; /* Zera o espaçamento superior */
+                margin-bottom: 20px;
+            }
+            
+            /* AJUSTE 2 (Mobile): Garante que A+A- fique fixo no canto superior direito (5px de margem) */
+            #accessibilityFloater {
+                position: fixed; top: 5px; right: 5px; transform: translateY(0); 
+                flex-direction: row; padding: 5px;
+                background: rgba(255, 255, 255, 0.9); border: 1px solid #ccc;
+                border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
+
+            /* AJUSTE 3 (Mobile): Reposiciona VLibras para ficar mais baixo (75% do topo) */
+            div[vw] {
+                top: 72% !important; /* Move para 72% da altura da tela */
+                right: 5px !important; /* Ajusta a margem direita para ser menor no mobile */
+            }
+            
+            /* Outros ajustes de mobile (Mantidos) */
+            .top-utils { 
+                gap: 10px; 
+                width: 100%;
+            }
+            
+            #listenToggle {
+                width: auto; 
+                order: initial; 
+                margin-bottom: 0; 
+            }
+
+            .navigation { flex-direction: column; gap: 10px; }
+            .navigation .nav-button { width: 100%; } 
+            .progress-check { order: -1; width: 100%; }
+        }
+
+        /* MEDIA QUERY: Ajuste para telas muito pequenas, se necessário */
+        @media (max-width: 400px) {
+            #accessibilityFloater { right: 5px; padding: 5px; }
+        }
+    </style>
+</head>
+<body class="light-theme">
+
+    <div id="accessibilityFloater" title="Controles de Acessibilidade">
+        <button id="fontSizeIncrease" title="Aumentar Tamanho da Fonte">A+</button>
+        <button id="fontSizeDecrease" title="Diminuir Tamanho da Fonte">A-</button>
+    </div>
+    
+    <main>
+        <div class="book-container">
+            <div class="top-utils">
+                <div class="language-selector-wrapper">
+                    <button id="langSelectButton" aria-haspopup="true" aria-expanded="false" title="Selecionar Idioma">
+                        </button>
+                    <div id="langDropdown" role="menu">
+                        </div>
+                </div>
+                
+                <button id="listenToggle" class="nav-button" title="Ouvir Conteúdo" disabled>
+                    </button>
+                
+                <button id="themeToggle" class="nav-button" title="Mudar Tema">
+                    </button>
+            </div>
+            
+            <div id="audioProgressContainer" style="display: none;">
+                <div id="audioProgressBar" class="progress-bar"></div>
+            </div>
+
+            <h1 id="mainTitle">Atos: A Igreja em Ação (Devocional)</h1>
+			<p class="subtitle" id="subTitle">28 dias para viver o poder do Espírito e a missão da Igreja.</p>
+            
+            <div id="progressContainer" style="margin-bottom: 15px;">
+                <p id="progressLabel" style="text-align: center; font-size: 0.9em; margin-bottom: 5px; color: #4b0082; font-weight: bold;"></p>
+                <div class="progress-bar-wrapper">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+            </div>
+            <p id="pageCounter" style="text-align: right;"></p>
+            
+            <div id="devotionalContent">
+                </div>
+
+            <div class="navigation">
+                <button id="prevButton" class="nav-button" disabled>← Anterior</button>
+                
+                <div class="progress-check">
+                    <input type="checkbox" id="completedCheck">
+                    <label for="completedCheck" id="checkLabel">Marcar como Concluído</label>
+                </div>
+                
+                <button id="nextButton" class="nav-button">Próximo →</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Devocional adaptado e criado por Alex Silva | <span id="footerText"></span></p>
+    </footer>
+
+    <script>
+        // --- DADOS MULTI-IDIOMA E TEMA ---
+        const flagMap = {
+            'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
+            'en-US': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-dropdown" alt="English">', text: 'English', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-active" alt="English">' },
+            'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
+            'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
+        };
+        
+        const themeMap = {
+            'light': { icon: '☀️', next: 'dark' },
+            'dark': { icon: '🌙', next: 'light' }
+        };
+
+        const SAVED_THEME = localStorage.getItem('theme') || 'light'; 
+        const SAVED_LANG = localStorage.getItem('language') || 'pt-BR'; 
+
+        let currentTheme = SAVED_THEME;
+        
+        // --- VARIÁVEIS DE ESTADO ---
+        const totalDays = 28;
+        let currentDay = 1;
+        let currentLang = SAVED_LANG; 
+        
+        // NOVO TTS: Objetos da Web Speech API e variáveis de controle
+        const synth = window.speechSynthesis; 
+        let utterance = null; 
+        let totalChars = 0; // Para calcular o progresso
+        let ttsVoices = []; // Cache das vozes disponíveis (CORREÇÃO 1)
+        let ttsInitialized = false; // Novo: Variável de controle para inicialização do TTS
+        
+        // CHAVE ÚNICA DO DEVOCIONAL.
+        const DEVOTIONAL_KEY = 'atos'; 
+        
+        // NOVO: VARIÁVEIS DE ESTADO DE ACESSIBILIDADE DE FONTE
+        let currentFontSize = parseFloat(localStorage.getItem('fontSize')) || 1.0; 
+        const FONT_STEP = 0.1; // Incremento de 10%
+        const FONT_MAX = 1.4;  // Tamanho máximo (140%)
+        const FONT_MIN = 0.8;  // Tamanho mínimo (80%)
+        
+        // --- DADOS MULTI-IDIOMA (Traduções) ---
+        const translations = {
+            'pt-BR': {
+                mainTitle: "Atos: A Igreja em Ação",
+				subTitle: "28 dias para viver o poder do Espírito e a missão da Igreja.",
+                dayTitle: "Dia",
+                progressLabelPrefix: "Progresso: ",
+                checkLabel: "Marcar como Concluído",
+                navPrev: "← Anterior",
+                navNext: "Próximo →",
+                footerText: "Direitos Reservados 2024",
+                themeLight: "🌙 Modo Escuro", 
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Ouça Aqui", 
+                listenStop: "🛑 Parar Leitura",
+                listenPause: "⏸️ Pausar Áudio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Conteúdo para leitura não encontrado.",
+                ttsLoading: "⏳ Carregando Áudio...", 
+                ttsUnsupported: "❌ Áudio Indisponível", 
+                versiculoChave: "Versículo Chave:", 
+                resumoMeditacao: "Resumo:", 
+                aplicacaoPratica: "Aplicação Prática:", /* CHAVE CORRETA */
+                oracaoLabel: "Oração:", 
+            },
+            'en-US': {
+                mainTitle: "Acts: The Church in Action",
+				subTitle: "28 days to live the power of the Spirit and the mission of the Church.",
+                dayTitle: "Day",
+                progressLabelPrefix: "Progress: ",
+                checkLabel: "Mark as Completed",
+                navPrev: "← Previous",
+                navNext: "Next →",
+                footerText: "All Rights Reserved 2024",
+                themeLight: "🌙 Dark Mode",
+                themeDark: "☀️ Light Mode",
+                listenStart: "🔊 Listen Here", 
+                listenStop: "🛑 Stop Reading",
+                listenPause: "⏸️ Pause Audio",
+                listenResume: "▶️ Resume",
+                noContentAlert: "Content for reading not found.",
+                ttsLoading: "⏳ Loading Audio...", 
+                ttsUnsupported: "❌ Audio Unavailable",
+                versiculoChave: "Key Verse:", 
+                resumoMeditacao: "Summary:", 
+                aplicacaoPratica: "Practical Application:", /* CHAVE CORRETA */
+                oracaoLabel: "Prayer:",
+            },
+            'es-ES': {
+                mainTitle: "Hechos: La Iglesia en Acción",
+				subTitle: "28 días para vivir el poder del Espíritu y la misión de la Iglesia.",	
+                dayTitle: "Día",
+                progressLabelPrefix: "Progreso: ",
+                checkLabel: "Marcar como Concluido",
+                navPrev: "← Anterior",
+                navNext: "Siguiente →",
+                footerText: "Todos los derechos reservados 2024",
+                themeLight: "🌙 Modo Oscuro",
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Escuchar Aquí", 
+                listenStop: "🛑 Detener Lectura",
+                listenPause: "⏸️ Pausar Audio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Contenido para escuchar no encontrado.",
+                ttsLoading: "⏳ Cargando Audio...", 
+                ttsUnsupported: "❌ Audio No Disponible",
+                versiculoChave: "Versículo Clave:", 
+                resumoMeditacao: "Resumen:", 
+                aplicacaoPratica: "Aplicación Práctica:", /* CHAVE CORRIGIDA */
+                oracaoLabel: "Oración:",
+            },
+            'fr-FR': {
+                mainTitle: "Actes : L’Église en Action",
+				subTitle: "28 jours pour vivre la puissance de l’Esprit et la mission de l’Église.",
+                dayTitle: "Jour",
+                progressLabelPrefix: "Progression : ",
+                checkLabel: "Marquer comme Accomplie",
+                navPrev: "← Précédent",
+                navNext: "Suivant →",
+                footerText: "Tous droits réservés 2024",
+                themeLight: "🌙 Mode Sombre",
+                themeDark: "☀️ Mode Clair",
+                listenStart: "🔊 Écoutez Ici", 
+                listenStop: "🛑 Arrêter Lecture",
+                listenPause: "⏸️ Pause Audio", 
+                listenResume: "▶️ Reprendre",
+                noContentAlert: "Contenu à lire introuvable.",
+                ttsLoading: "⏳ Chargement Audio...", 
+                ttsUnsupported: "❌ Audio Indisponível",
+                versiculoChave: "Verset Clé:", 
+                resumoMeditacao: "Résumé:", 
+                aplicacaoPratica: "Application Pratique:", /* CHAVE CORRIGIDA */
+                oracaoLabel: "Prière:",
+            }
+        };
+
+        // --- ELEMENTOS DOM ---
+        const mainTitle = document.getElementById('mainTitle');
+        const subTitle = document.getElementById('subTitle');
+        const progressLabel = document.getElementById('progressLabel');
+        const checkLabel = document.getElementById('checkLabel');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const completedCheck = document.getElementById('completedCheck');
+        const devotionalContentDiv = document.getElementById('devotionalContent');
+        const footerText = document.getElementById('footerText');
+        const progressBar = document.getElementById('progressBar');
+
+        // ELEMENTOS DOM TTS/TEMA
+        const langSelectButton = document.getElementById('langSelectButton');
+        const langDropdown = document.getElementById('langDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const listenToggle = document.getElementById('listenToggle'); 
+        const audioProgressContainer = document.getElementById('audioProgressContainer');
+        const audioProgressBar = document.getElementById('audioProgressBar');
+
+
+  // * FUNÇÕES DE UTILIDADE *
+    
+        function handleCompletedCheck() {
+			saveCompletion(currentDay, completedCheck.checked);
+
+		if (completedCheck.checked && currentDay < totalDays) {
+			nextDay();
+    }
+}
+        
+        // --- NOVO: FUNÇÕES DE CONTROLE DE FONTE ---
+        function updateFontSize() {
+            // Define a variável CSS na raiz do documento
+            document.documentElement.style.setProperty('--base-font-scale', currentFontSize.toFixed(2));
+            localStorage.setItem('fontSize', currentFontSize.toFixed(2));
+        }
+
+        function increaseFontSize() {
+            if (currentFontSize < FONT_MAX) {
+                currentFontSize = Math.min(FONT_MAX, currentFontSize + FONT_STEP);
+                updateFontSize();
+            }
+        }
+
+        function decreaseFontSize() {
+            if (currentFontSize > FONT_MIN) {
+                currentFontSize = Math.max(FONT_MIN, currentFontSize - FONT_STEP);
+                updateFontSize();
+            }
+        }
+        
+        // --- FUNÇÕES DE TEMA ---
+        function applyTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('theme', theme);
+            
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(theme === 'dark' ? 'dark-theme' : 'light-theme');
+        }
+
+        function toggleDarkMode() {
+            const newTheme = themeMap[currentTheme].next;
+            applyTheme(newTheme);
+            updateTexts(0);
+        }
+
+        function loadThemePreference() {
+            applyTheme(SAVED_THEME);
+        }
+        
+        // --- FUNÇÕES DE IDIOMA (COM BANDEIRAS) ---
+        function setLanguage(langCode) {
+            currentLang = langCode;
+            localStorage.setItem('language', langCode);
+            
+            // Parar a leitura ao trocar de idioma
+            stopSpeaking(); 
+            
+            updateTexts(0);
+            updateLanguageSelector();
+            // Atualiza o estado visual para a nova língua. 
+            updateListenToggle('start'); 
+        }
+
+        function updateLanguageSelector() {
+            if (!langSelectButton || !langDropdown) return;
+            
+            const currentFlag = flagMap[currentLang];
+            // 1. Atualiza o botão com a bandeira e nome do idioma ativo
+            langSelectButton.innerHTML = currentFlag.iconActive + currentFlag.text;
+            
+            // 2. Limpa e reconstrói o dropdown, excluindo o idioma ativo
+            langDropdown.innerHTML = '';
+            Object.keys(flagMap).forEach(lang => {
+                if (lang !== currentLang) {
+                    const flag = flagMap[lang];
+                    const link = document.createElement('a');
+                    link.innerHTML = flag.icon + flag.text; 
+                    link.setAttribute('data-lang', lang);
+                    link.setAttribute('href', '#'); 
+                    
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setLanguage(lang);
+                        langDropdown.style.display = 'none';
+                        // NOVO ARIA: fecha o dropdown, atualiza o status do botão
+                        langSelectButton.setAttribute('aria-expanded', 'false'); 
+                    });
+                    
+                    langDropdown.appendChild(link);
+                }
+            });
+        }
+
+        // FUNÇÃO TTS: Funções de controle da barra de progresso do áudio
+        function resetAudioProgressBar(hide = false) {
+            if (audioProgressBar) audioProgressBar.style.width = '0%';
+            if (audioProgressContainer) {
+                // Apenas esconde se for pedido, para não piscar no início
+                audioProgressContainer.style.display = hide ? 'none' : 'block';
+            }
+        }
+        
+        // --- FUNÇÃO DE ATUALIZAÇÃO DE TEXTOS ---
+        function updateTexts(direction = 1) { 
+            const t = translations[currentLang] || translations['pt-BR']; 
+
+            document.documentElement.lang = currentLang.split('-')[0];
+
+            mainTitle.innerText = t.mainTitle;
+            subTitle.innerText = t.subTitle;
+            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
+            checkLabel.innerText = t.checkLabel;
+            prevButton.innerText = t.navPrev;
+            nextButton.innerText = t.navNext;
+            footerText.innerText = t.footerText;
+            
+            // NOTE: themeToggle is now globally hidden, but the script updates are kept in case they are re-enabled
+            if (currentTheme === 'light') {
+                themeToggle.innerHTML = t.themeLight; 
+            } else {
+                themeToggle.innerHTML = t.themeDark; 
+            }
+
+            const contentLangKey = currentLang.substring(0, 2); 
+            loadDevotionalContent(currentDay, contentLangKey, t);
+
+            updateOverallProgress();
+
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                stopSpeaking(); 
+            }
+        }
+        
+        // --- FUNÇÃO DE CARREGAMENTO DE CONTEÚDO ---
+        function loadDevotionalContent(day, contentLangKey, t) { 
+            const data = devotionalContent[day] ? devotionalContent[day][contentLangKey] || devotionalContent[day]['pt'] : null;
+            
+            if (!data) {
+                devotionalContentDiv.innerHTML = `<p style="text-align: center;">${t.noContentAlert || 'Conteúdo não disponível para o Dia ${day} neste idioma.'}</p>`;
+                return;
+            }
+            
+            devotionalContentDiv.innerHTML = `
+                <h2 id="dayTitle">${t.dayTitle} ${day}: ${data.h2}</h2>
+                <div class="section">
+                    <strong>${t.versiculoChave}</strong>
+                    <p class="versiculos">${data.versiculos}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.resumoMeditacao}</strong>
+                    <p>${data.resumo}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.aplicacaoPratica}</strong>
+                    <p>${data.aplicacao}</p>
+                </div>
+                <p class="oracao-final">${t.oracaoLabel} ${data.oracao}</p>
+            `;
+            
+            document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`; 
+
+            updateListenToggle('start'); 
+        }
+        
+        // --- FUNÇÕES DE NAVEGAÇÃO ---
+        function nextDay() {
+            stopSpeaking(); 
+            if (currentDay < totalDays) {
+                currentDay++;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(1);
+            }
+        }
+        
+        function prevDay() {
+            stopSpeaking();
+            if (currentDay > 1) {
+                currentDay--;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(-1);
+            }
+        }
+
+        // --- FUNÇÕES DE LEITURA (TEXT-TO-SPEECH) ---
+        
+        function getVoiceForLanguage(langCode) {
+            const desiredLang = langCode.toLowerCase();
+            
+            if (ttsVoices.length === 0) {
+                console.warn('TTS: Vozes não carregadas.');
+                return null;
+            }
+            
+            let voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang && v.localService);
+            if (!voice) {
+                voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang);
+            }
+            if (!voice) {
+                const langPrefix = desiredLang.substring(0, 2);
+                voice = ttsVoices.find(v => v.lang.toLowerCase().startsWith(langPrefix));
+            }
+
+            return voice || ttsVoices[0];
+        }
+
+        function speakContent() {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            const contentElement = document.getElementById('devotionalContent');
+            
+            if (!synth || synth.speaking) {
+                return;
+            }
+
+            const textToSpeak = contentElement.innerText || contentElement.textContent;
+
+            if (!textToSpeak) {
+                alert(t.noContentAlert || "Conteúdo para leitura não encontrado.");
+                return;
+            }
+
+            totalChars = textToSpeak.length;
+            resetAudioProgressBar();
+
+            utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = currentLang;
+
+            const voice = getVoiceForLanguage(currentLang);
+            if (voice) {
+                utterance.voice = voice;
+            } else {
+                alert(t.ttsUnsupported + " " + t.noContentAlert);
+                stopSpeaking();
+                return;
+            }
+            
+            utterance.onboundary = (event) => {
+                const progress = (event.charIndex / totalChars) * 100;
+                if (audioProgressBar) audioProgressBar.style.width = `${progress}%`;
+            };
+            
+            utterance.onend = () => {
+                resetAudioProgressBar(true);
+                updateListenToggle('start'); 
+            };
+            
+            synth.speak(utterance);
+            updateListenToggle('speaking'); 
+        }
+
+        function stopSpeaking() {
+            if (synth && synth.speaking) {
+                synth.cancel();
+            }
+            if (synth) {
+                synth.cancel();
+            }
+            resetAudioProgressBar(true); 
+            updateListenToggle('start'); 
+        }
+        
+        function handleListenClick() {
+            if (!synth || listenToggle.disabled) return;
+
+            if (synth.speaking && !synth.paused) {
+                // Pausar
+                synth.pause();
+                updateListenToggle('paused');
+            } 
+            else if (synth.paused) {
+                // Continuar
+                synth.resume();
+                updateListenToggle('speaking');
+            } 
+            else if (!synth.speaking) {
+                // Iniciar a leitura
+                speakContent();
+            }
+        }
+        
+        function initTTS() {
+            if (ttsInitialized) return; 
+            const t = translations[currentLang] || translations['pt-BR']; 
+
+            if (!synth) {
+                listenToggle.innerHTML = t.ttsUnsupported;
+                listenToggle.disabled = true;
+                return;
+            }
+
+            synth.onvoiceschanged = () => {
+                ttsVoices = synth.getVoices();
+                if (ttsVoices.length > 0) {
+                    listenToggle.disabled = false;
+                    updateListenToggle('start'); 
+                    ttsInitialized = true;
+                } else {
+                    listenToggle.innerHTML = t.ttsUnsupported;
+                    listenToggle.disabled = true;
+                }
+            };
+            
+            ttsVoices = synth.getVoices();
+            
+            if (ttsVoices.length > 0) {
+                listenToggle.disabled = false;
+                updateListenToggle('start');
+                ttsInitialized = true;
+                synth.onvoiceschanged = null; 
+            } else {
+                listenToggle.innerHTML = t.ttsLoading;
+                listenToggle.disabled = true;
+            }
+        }
+
+
+        function updateListenToggle(state = 'start') {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            const button = listenToggle;
+            if (!button) return;
+
+            button.style.cssText = ''; 
+            
+            if (state === 'speaking') {
+                button.innerHTML = t.listenPause || '⏸️ Pausar Áudio';
+                button.title = 'Pausar a leitura';
+                button.style.backgroundColor = '#ffc107'; 
+                button.style.color = '#333';
+                
+            } else if (state === 'paused') {
+                button.innerHTML = t.listenResume || '▶️ Continuar';
+                button.title = 'Continuar a leitura';
+                button.style.backgroundColor = '#28a745'; 
+                button.style.color = 'white';
+                
+            } else { // state === 'start' (Ocioso/Parado)
+                button.innerHTML = t.listenStart || '🔊 Ouça Aqui';
+                button.title = 'Iniciar a leitura do devocional';
+            }
+        }
+
+
+    	// --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
+        
+const devotionalContent = {
+1: {pt: {h2: "A Promessa do Espírito Santo", versiculos: "<strong>Atos 1:4-5 (NVI):</strong> 'Não saiam de Jerusalém, mas esperem pela promessa de meu Pai... dentro de poucos dias vocês serão batizados com o Espírito Santo.'", resumo: "A Igreja começa em espera obediente pela promessa. A visão batista com toques reformados ressalta que o Espírito é dom soberano de Deus, concedido para capacitar a missão.", aplicacao: "Aprenda a esperar em obediência: Deus cumpre suas promessas no tempo certo e dá poder para a missão.", oracao: "Senhor, ensina-me a obedecer e a esperar com fé pela ação do Teu Espírito."}, en: {h2: "The Promise of the Holy Spirit", versiculos: "<strong>Acts 1:4-5 (NIV):</strong> 'Do not leave Jerusalem, but wait for the gift my Father promised... you will be baptized with the Holy Spirit.'", resumo: "The Church begins in obedient waiting. Baptist/Reformed emphasis: the Spirit is God’s sovereign gift to empower mission.", aplicacao: "Wait in obedience; God fulfills His promises and empowers you for witness.", oracao: "Lord, teach me to obey and wait in faith for Your Spirit’s work."}, es: {h2: "La Promesa del Espíritu Santo", versiculos: "<strong>Hechos 1:4-5 (NVI):</strong> 'No se vayan de Jerusalén, sino esperen la promesa de mi Padre... serán bautizados con el Espíritu Santo.'", resumo: "La Iglesia comienza esperando en obediencia. Enfoque Bautista/Reformado: el Espíritu es un don soberano para capacitar la misión.", aplicacao: "Espera con obediencia; Dios cumple sus promesas y te capacita para testificar.", oracao: "Señor, enséñame a obedecer y esperar con fe por la obra de Tu Espíritu."}, fr: {h2: "La Promesse du Saint-Esprit", versiculos: "<strong>Actes 1:4-5 (LSG):</strong> 'Ne quittez pas Jérusalem, mais attendez la promesse du Père... vous serez baptisés du Saint-Esprit.'", resumo: "L’Église commence dans l’attente obéissante. Accent Baptiste/Réformé: l’Esprit est un don souverain pour la mission.", aplicacao: "Attendez dans l’obéissance; Dieu accomplit ses promesses et vous rend capables pour témoigner.", oracao: "Seigneur, apprends-moi à obéir et à attendre dans la foi l’œuvre de Ton Esprit."}},
+2: {pt: {h2: "Testemunhas até os confins da terra", versiculos: "<strong>Atos 1:8 (NVI):</strong> 'Mas receberão poder quando o Espírito Santo descer sobre vocês, e serão minhas testemunhas... até os confins da terra.'", resumo: "Atos 1:8 é o eixo do livro: poder do Espírito para testemunho global. A missão nasce do envio de Deus, não da força humana.", aplicacao: "Assuma seu papel de testemunha onde você está e além, confiando no poder do Espírito.", oracao: "Espírito Santo, capacita-me a testemunhar com coragem e amor em todo lugar."}, en: {h2: "Witnesses to the ends of the earth", versiculos: "<strong>Acts 1:8 (NIV):</strong> 'You will receive power... and you will be my witnesses... to the ends of the earth.'", resumo: "Acts 1:8 centers the book: Spirit-given power for global witness. Mission flows from God’s sending.", aplicacao: "Own your calling as a witness locally and beyond, relying on the Spirit.", oracao: "Holy Spirit, empower me to witness with courage and love everywhere."}, es: {h2: "Testigos hasta lo último de la tierra", versiculos: "<strong>Hechos 1:8 (NVI):</strong> 'Recibirán poder... y serán mis testigos... hasta lo último de la tierra.'", resumo: "Hechos 1:8 es el eje: poder del Espíritu para el testimonio global. La misión nace del envío de Dios.", aplicacao: "Abraza tu llamado a testificar aquí y más allá, confiando en el Espíritu.", oracao: "Espíritu Santo, capacítame para testificar con valor y amor en todas partes."}, fr: {h2: "Témoins jusqu’aux extrémités de la terre", versiculos: "<strong>Actes 1:8 (LSG):</strong> 'Vous recevrez une puissance... et vous serez mes témoins... jusqu’aux extrémités de la terre.'", resumo: "Actes 1:8: puissance de l’Esprit pour un témoignage mondial. La mission vient de l’envoi de Dieu.", aplicacao: "Embrassez votre appel à témoigner ici et au loin, comptant sur l’Esprit.", oracao: "Saint-Esprit, rends-moi capable de témoigner avec courage et amour partout."}},
+3: {pt: {h2: "A ascensão e a esperança da volta", versiculos: "<strong>Atos 1:9-11 (NVI):</strong> Jesus foi elevado, e dois anjos disseram: 'Este mesmo Jesus... voltará da mesma forma como o viram subir.'", resumo: "Cristo reina e retornará. A Igreja vive entre a ascensão e a promessa da volta, servindo com esperança.", aplicacao: "Sirva com perseverança, olhando para a promessa do retorno de Cristo.", oracao: "Senhor Jesus, dá-me fidelidade na missão enquanto aguardo a Tua volta."}, en: {h2: "Ascension and hope of His return", versiculos: "<strong>Acts 1:9-11 (NIV):</strong> Jesus was taken up... 'This same Jesus... will come back in the same way.'", resumo: "Christ reigns and will return. The Church serves in hope between ascension and promise.", aplicacao: "Serve faithfully, anchored in the promise of Christ’s return.", oracao: "Lord Jesus, keep me faithful in mission as I await Your return."}, es: {h2: "La ascensión y la esperanza de su retorno", versiculos: "<strong>Hechos 1:9-11 (NVI):</strong> Jesús fue elevado... 'Este mismo Jesús... volverá de la misma manera.'", resumo: "Cristo reina y volverá. La Iglesia sirve con esperanza entre la ascensión y la promesa.", aplicacao: "Sirve con fidelidad, anclado en la promesa del regreso de Cristo.", oracao: "Señor Jesús, dame fidelidad en la misión mientras espero Tu regreso."}, fr: {h2: "L’ascension et l’espérance de son retour", versiculos: "<strong>Actes 1:9-11 (LSG):</strong> Jésus fut enlevé... 'Ce même Jésus... reviendra de la même manière.'", resumo: "Le Christ règne et reviendra. L’Église sert dans l’espérance entre l’ascension et la promesse.", aplicacao: "Servez fidèlement, ancrés dans la promesse du retour du Christ.", oracao: "Seigneur Jésus, rends-moi fidèle dans la mission en attendant Ton retour."}},
+4: {pt: {h2: "Unidade em oração", versiculos: "<strong>Atos 1:14 (NVI):</strong> 'Todos eles se reuniam sempre em oração...'", resumo: "A Igreja primitiva persevera unida em oração. A espiritualidade batista valoriza a oração congregacional como meio de graça.", aplicacao: "Priorize a oração comunitária: unidade e poder fluem quando buscamos a Deus juntos.", oracao: "Senhor, une-nos em oração e derrama Teu poder sobre a Igreja."}, en: {h2: "Unity in prayer", versiculos: "<strong>Acts 1:14 (NIV):</strong> 'They all joined together constantly in prayer...'", resumo: "The early Church persevered together in prayer. Baptist spirituality prizes congregational prayer as a means of grace.", aplicacao: "Prioritize corporate prayer: unity and power come as we seek God together.", oracao: "Lord, unite us in prayer and pour out Your power on the Church."}, es: {h2: "Unidad en oración", versiculos: "<strong>Hechos 1:14 (NVI):</strong> 'Todos se reunían constantemente en oración...'", resumo: "La Iglesia primitiva perseveró unida en oración. La espiritualidad bautista valora la oración congregacional como medio de gracia.", aplicacao: "Prioriza la oración comunitaria: la unidad y el poder fluyen al buscar juntos a Dios.", oracao: "Señor, únenos en oración y derrama Tu poder sobre la Iglesia."}, fr: {h2: "Unité dans la prière", versiculos: "<strong>Actes 1:14 (LSG):</strong> 'Tous persévéraient d’un commun accord dans la prière...'", resumo: "L’Église primitive persévère unie dans la prière. La spiritualité baptiste apprécie la prière communautaire comme moyen de grâce.", aplicacao: "Priorisez la prière communautaire: l’unité et la puissance viennent en cherchant Dieu ensemble.", oracao: "Seigneur, unis-nous dans la prière et répands Ta puissance sur l’Église."}},
+5: {pt: {h2: "Pentecostes: poder do alto", versiculos: "<strong>Atos 2:1-4 (NVI):</strong> 'Todos ficaram cheios do Espírito Santo e começaram a falar noutras línguas...'", resumo: "Pentecostes inaugura a era da Igreja capacitada pelo Espírito. O dom é soberano e visa testemunho eficaz.", aplicacao: "Busque ser cheio do Espírito para viver santo e testemunhar com clareza e amor.", oracao: "Espírito Santo, enche-me e usa-me para a glória de Cristo."}, en: {h2: "Pentecost: power from on high", versiculos: "<strong>Acts 2:1-4 (NIV):</strong> 'All of them were filled with the Holy Spirit and began to speak in other tongues...'", resumo: "Pentecost marks a Spirit-empowered Church. The gift is sovereign and for effective witness.", aplicacao: "Seek to be Spirit-filled for holy living and bold witness.", oracao: "Holy Spirit, fill me and use me for Christ’s glory."}, es: {h2: "Pentecostés: poder de lo alto", versiculos: "<strong>Hechos 2:1-4 (NVI):</strong> 'Todos fueron llenos del Espíritu Santo y comenzaron a hablar en otras lenguas...'", resumo: "Pentecostés inaugura una Iglesia capacitada por el Espíritu. El don es soberano y orientado al testimonio.", aplicacao: "Busca ser lleno del Espíritu para vivir en santidad y testificar con valor.", oracao: "Espíritu Santo, lléname y úsame para la gloria de Cristo."}, fr: {h2: "Pentecôte: puissance d’en haut", versiculos: "<strong>Actes 2:1-4 (LSG):</strong> 'Ils furent tous remplis du Saint-Esprit et se mirent à parler en d’autres langues...'", resumo: "La Pentecôte inaugure une Église rendue capable par l’Esprit. Le don est souverain pour un témoignage efficace.", aplicacao: "Cherchez à être remplis de l’Esprit pour une vie sainte et un témoignage hardi.", oracao: "Saint-Esprit, remplis-moi et utilise-moi pour la gloire du Christ."}},
+6: {pt: {h2: "Jesus é Senhor e Cristo", versiculos: "<strong>Atos 2:36-39 (NVI):</strong> 'Arrependam-se... e recebam o dom do Espírito Santo.'", resumo: "Pedro proclama Jesus como Senhor e Cristo, chamando ao arrependimento e fé. A salvação é pela graça, aplicada pelo Espírito.", aplicacao: "Responda ao senhorio de Jesus com arrependimento contínuo e fé obediente.", oracao: "Senhor, sela em mim o arrependimento e a fé que honram Teu senhorio."}, en: {h2: "Jesus is Lord and Christ", versiculos: "<strong>Acts 2:36-39 (NIV):</strong> 'Repent... and you will receive the gift of the Holy Spirit.'", resumo: "Peter proclaims Jesus as Lord and Christ, calling for repentance and faith. Salvation is by grace, applied by the Spirit.", aplicacao: "Respond to Jesus’ lordship with ongoing repentance and obedient faith.", oracao: "Lord, seal in me repentance and faith that honor Your lordship."}, es: {h2: "Jesús es Señor y Cristo", versiculos: "<strong>Hechos 2:36-39 (NVI):</strong> 'Arrepiéntanse... y recibirán el don del Espíritu Santo.'", resumo: "Pedro proclama a Jesús como Señor y Cristo, llamando al arrepentimiento y la fe. La salvación es por gracia, aplicada por el Espíritu.", aplicacao: "Responde al señorío de Jesús con arrepentimiento continuo y fe obediente.", oracao: "Señor, afirma en mí el arrepentimiento y la fe que honran Tu señorío."}, fr: {h2: "Jésus est Seigneur et Christ", versiculos: "<strong>Actes 2:36-39 (LSG):</strong> 'Repentez-vous... et vous recevrez le don du Saint-Esprit.'", resumo: "Pierre proclame Jésus comme Seigneur et Christ, appelant à la repentance et à la foi. Le salut est par grâce, appliqué par l’Esprit.", aplicacao: "Répondez au seigneurie de Jésus par une repentance continue et une foi obéissante.", oracao: "Seigneur, fais mûrir en moi la repentance et la foi qui honorent Ta seigneurie."}},
+7: {pt: {h2: "Vida comunitária vibrante", versiculos: "<strong>Atos 2:42-47 (NVI):</strong> 'Eles se dedicavam ao ensino dos apóstolos, à comunhão, ao partir do pão e às orações...'", resumo: "A Igreja se estrutura em ensino, comunhão, ceia e oração. Uma espiritualidade batista saudável floresce na congregação.", aplicacao: "Engaje-se na vida da Igreja: aprenda, compartilhe, participe da mesa e ore juntos.", oracao: "Senhor, firma meus passos na vida comunitária que edifica a fé."}, en: {h2: "Vibrant community life", versiculos: "<strong>Acts 2:42-47 (NIV):</strong> 'They devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer...'", resumo: "The Church is shaped by teaching, fellowship, table, and prayer. Healthy Baptist spirituality flourishes congregationally.", aplicacao: "Engage deeply in church life: learn, share, break bread, and pray together.", oracao: "Lord, plant me firmly in a community that builds faith."}, es: {h2: "Vida comunitaria vibrante", versiculos: "<strong>Hechos 2:42-47 (NVI):</strong> 'Se dedicaban a la enseñanza de los apóstoles, a la comunión, al partimiento del pan y a la oración...'", resumo: "La Iglesia se forma en enseñanza, comunión, mesa y oración. La espiritualidad bautista sana florece congregacionalmente.", aplicacao: "Involúcrate en la vida de la Iglesia: aprende, comparte, participa de la mesa y ora juntos.", oracao: "Señor, afianza mis pasos en una comunidad que edifica la fe."}, fr: {h2: "Vie communautaire vivante", versiculos: "<strong>Actes 2:42-47 (LSG):</strong> 'Ils persévéraient dans l’enseignement des apôtres, dans la communion, dans la fraction du pain et dans les prières...'", resumo: "L’Église est façonnée par l’enseignement, la communion, la table et la prière. La spiritualité baptiste saine fleurit en congrégation.", aplicacao: "Engagez-vous dans la vie d’Église: apprenez, partagez, rompez le pain, priez ensemble.", oracao: "Seigneur, affermis-moi dans une communauté qui bâtit la foi."}},
+8: {pt: {h2: "O aleijado anda em nome de Jesus", versiculos: "<strong>Atos 3:6-8 (NVI):</strong> 'Em nome de Jesus Cristo, o Nazareno, ande!'", resumo: "Milagres autenticam a mensagem e apontam para Cristo. O poder é de Deus, o nome de Jesus é central.", aplicacao: "Busque servir com compaixão e apontar pessoas para o nome de Jesus.", oracao: "Senhor, usa-me como instrumento de misericórdia que exalta o Teu nome."}, en: {h2: "The lame walks in Jesus’ name", versiculos: "<strong>Acts 3:6-8 (NIV):</strong> 'In the name of Jesus Christ of Nazareth, walk!'", resumo: "Miracles authenticate the message and point to Christ. Power is God’s; Jesus’ name is central.", aplicacao: "Serve with compassion and point people to Jesus’ name.", oracao: "Lord, use me as an instrument of mercy that exalts Your name."}, es: {h2: "El cojo camina en el nombre de Jesús", versiculos: "<strong>Hechos 3:6-8 (NVI):</strong> 'En el nombre de Jesucristo de Nazaret, ¡camina!'", resumo: "Los milagros autentican el mensaje y señalan a Cristo. El poder es de Dios; el nombre de Jesús es central.", aplicacao: "Sirve con compasión y dirige a las personas al nombre de Jesús.", oracao: "Señor, úsame como instrumento de misericordia que exalte Tu nombre."}, fr: {h2: "Le boiteux marche au nom de Jésus", versiculos: "<strong>Actes 3:6-8 (LSG):</strong> 'Au nom de Jésus-Christ de Nazareth, marche!'", resumo: "Les miracles authentifient le message et pointent vers le Christ. La puissance est à Dieu; le nom de Jésus est central.", aplicacao: "Servez avec compassion et dirigez les gens vers le nom de Jésus.", oracao: "Seigneur, utilise-moi comme instrument de miséricorde qui exalte Ton nom."}},
+9: {pt: {h2: "Salvação somente em Cristo", versiculos: "<strong>Atos 4:12 (NVI):</strong> 'Não há salvação em nenhum outro...'", resumo: "A exclusividade de Cristo na salvação é proclamação central. A graça é oferecida a todos, mas somente por meio de Jesus.", aplicacao: "Afirme com amor que Jesus é o único caminho; compartilhe o Evangelho com clareza.", oracao: "Senhor, dá-me ousadia e humildade para anunciar a salvação em Cristo."}, en: {h2: "Salvation in Christ alone", versiculos: "<strong>Acts 4:12 (NIV):</strong> 'Salvation is found in no one else...'", resumo: "Christ’s exclusivity is central to salvation. Grace is offered to all, only through Jesus.", aplicacao: "Lovingly affirm Jesus as the only way; share the Gospel clearly.", oracao: "Lord, grant me boldness and humility to proclaim salvation in Christ."}, es: {h2: "Salvación solo en Cristo", versiculos: "<strong>Hechos 4:12 (NVI):</strong> 'En ningún otro hay salvación...'", resumo: "La exclusividad de Cristo es central. La gracia se ofrece a todos, solo por medio de Jesús.", aplicacao: "Afirma con amor que Jesús es el único camino; comparte el Evangelio con claridad.", oracao: "Señor, dame valentía y humildad para anunciar la salvación en Cristo."}, fr: {h2: "Le salut en Christ seul", versiculos: "<strong>Actes 4:12 (LSG):</strong> 'Il n’y a de salut en aucun autre...'", resumo: "L’exclusivité du Christ est centrale. La grâce est offerte à tous, uniquement par Jésus.", aplicacao: "Affirmez avec amour que Jésus est l’unique chemin; partagez l’Évangile clairement.", oracao: "Seigneur, donne-moi l’audace et l’humilité pour proclamer le salut en Christ."}},
+10: {pt: {h2: "Ousadia após oração", versiculos: "<strong>Atos 4:31 (NVI):</strong> 'Todos ficaram cheios do Espírito Santo e anunciavam corajosamente a palavra de Deus.'", resumo: "A oração comunitária precede ousadia missionária. Deus enche sua Igreja para proclamar com poder.", aplicacao: "Ore com a Igreja e dependa do Espírito para coragem no testemunho.", oracao: "Senhor, enche-nos de Teu Espírito e dá-nos ousadia para anunciar Tua Palavra."}, en: {h2: "Boldness after prayer", versiculos: "<strong>Acts 4:31 (NIV):</strong> 'They were all filled with the Holy Spirit and spoke the word of God boldly.'", resumo: "Corporate prayer precedes mission boldness. God fills His Church to proclaim with power.", aplicacao: "Pray with the Church and rely on the Spirit for courageous witness.", oracao: "Lord, fill us with Your Spirit and grant boldness to speak Your Word."}, es: {h2: "Valentía después de la oración", versiculos: "<strong>Hechos 4:31 (NVI):</strong> 'Todos fueron llenos del Espíritu Santo y anunciaban con valentía la palabra de Dios.'", resumo: "La oración comunitaria precede la valentía misional. Dios llena a su Iglesia para proclamar con poder.", aplicacao: "Ora con la Iglesia y depende del Espíritu para testificar con coraje.", oracao: "Señor, llénanos de Tu Espíritu y danos valentía para anunciar Tu Palabra."}, fr: {h2: "Audace après la prière", versiculos: "<strong>Actes 4:31 (LSG):</strong> 'Ils furent tous remplis du Saint-Esprit et annonçaient la parole de Dieu avec assurance.'", resumo: "La prière communautaire précède l’audace missionnelle. Dieu remplit son Église pour proclamer avec puissance.", aplicacao: "Priez avec l’Église et comptez sur l’Esprit pour un témoignage courageux.", oracao: "Seigneur, remplis-nous de Ton Esprit et donne l’audace pour annoncer Ta Parole."}},
+11: {pt: {h2: "Antes obedecer a Deus", versiculos: "<strong>Atos 5:29 (NVI):</strong> 'É preciso obedecer a Deus antes que aos homens.'", resumo: "A fidelidade persevera sob pressão. A autoridade de Deus está acima das autoridades humanas.", aplicacao: "Se preciso, pague o preço da obediência a Deus; Ele honra quem O teme.", oracao: "Senhor, sustenta-me quando obedecer a Ti custar caro."}, en: {h2: "Obey God rather than men", versiculos: "<strong>Acts 5:29 (NIV):</strong> 'We must obey God rather than human beings.'", resumo: "Faithfulness endures under pressure. God’s authority outranks human authority.", aplicacao: "Pay the price of obedience if needed; God honors those who fear Him.", oracao: "Lord, strengthen me when obedience to You is costly."}, es: {h2: "Obedecer a Dios antes que a los hombres", versiculos: "<strong>Hechos 5:29 (NVI):</strong> 'Es necesario obedecer a Dios antes que a los hombres.'", resumo: "La fidelidad persevera bajo presión. La autoridad de Dios está por encima de la humana.", aplicacao: "Si es necesario, paga el precio de obedecer a Dios; Él honra a quienes le temen.", oracao: "Señor, fortaléceme cuando obedecerte sea costoso."}, fr: {h2: "Obéir à Dieu plutôt qu’aux hommes", versiculos: "<strong>Actes 5:29 (LSG):</strong> 'Il faut obéir à Dieu plutôt qu’aux hommes.'", resumo: "La fidélité persévère sous la pression. L’autorité de Dieu prime sur l’autorité humaine.", aplicacao: "Payez le prix de l’obéissance si nécessaire; Dieu honore ceux qui le craignent.", oracao: "Seigneur, fortifie-moi quand l’obéissance à Toi est coûteuse."}},
+12: {pt: {h2: "Alegria em meio à perseguição", versiculos: "<strong>Atos 5:41-42 (NVI):</strong> 'Saíram alegres por terem sido considerados dignos de sofrer... e não cessavam de ensinar e anunciar Jesus.'", resumo: "A alegria cristã floresce na fidelidade, mesmo sob dor. A missão continua apesar das ameaças.", aplicacao: "Encontre alegria em sofrer por Cristo e siga anunciando o Evangelho com perseverança.", oracao: "Senhor, dá-me alegria e constância quando enfrentar oposição por Teu nome."}, en: {h2: "Joy amid persecution", versiculos: "<strong>Acts 5:41-42 (NIV):</strong> 'Rejoicing... and day after day, they never stopped teaching and proclaiming Jesus.'", resumo: "Christian joy thrives in faithfulness under pain. Mission continues despite threats.", aplicacao: "Find joy in suffering for Christ and keep proclaiming the Gospel.", oracao: "Lord, grant me joy and perseverance amid opposition for Your name."}, es: {h2: "Gozo en medio de la persecución", versiculos: "<strong>Hechos 5:41-42 (NVI):</strong> 'Se fueron gozosos... y no dejaban de enseñar y anunciar a Jesús.'", resumo: "El gozo cristiano florece en la fidelidad bajo dolor. La misión sigue a pesar de las amenazas.", aplicacao: "Halla gozo al sufrir por Cristo y continúa proclamando el Evangelio.", oracao: "Señor, dame gozo y perseverancia frente a la oposición por Tu nombre."}, fr: {h2: "Joie au milieu de la persécution", versiculos: "<strong>Actes 5:41-42 (LSG):</strong> 'Ils se réjouissaient... et chaque jour, ils ne cessaient d’enseigner et d’annoncer Jésus.'", resumo: "La joie chrétienne s’épanouit dans la fidélité malgré la douleur. La mission continue malgré les menaces.", aplicacao: "Trouve la joie en souffrant pour Christ et continue d’annoncer l’Évangile.", oracao: "Seigneur, donne-moi joie et persévérance face à l’opposition pour Ton nom."}},
+13: {pt: {h2: "Serviço e Palavra: equilíbrio diaconal", versiculos: "<strong>Atos 6:3-4 (NVI):</strong> 'Escolham sete homens... para que nos dediquemos à oração e ao ministério da palavra.'", resumo: "A Igreja organiza o serviço para preservar a centralidade da Palavra e oração. Ministério saudável distribui responsabilidades.", aplicacao: "Sirva com excelência e proteja o foco na oração e na Palavra.", oracao: "Senhor, dá sabedoria para equilibrar serviço e ensino na Igreja."}, en: {h2: "Service and Word: diaconal balance", versiculos: "<strong>Acts 6:3-4 (NIV):</strong> 'Choose seven men... so we will give our attention to prayer and the ministry of the word.'", resumo: "The Church structures service to preserve the primacy of Word and prayer. Healthy ministry shares responsibilities.", aplicacao: "Serve well and guard the focus on prayer and the Word.", oracao: "Lord, grant wisdom to balance service and teaching in the Church."}, es: {h2: "Servicio y Palabra: equilibrio diaconal", versiculos: "<strong>Hechos 6:3-4 (NVI):</strong> 'Elijan a siete hombres... y nos dedicaremos a la oración y al ministerio de la palabra.'", resumo: "La Iglesia organiza el servicio para preservar la primacía de la Palabra y la oración. Un ministerio sano comparte responsabilidades.", aplicacao: "Sirve con excelencia y cuida el enfoque en la oración y la Palabra.", oracao: "Señor, dame sabiduría para equilibrar servicio y enseñanza en la Iglesia."}, fr: {h2: "Service et Parole: équilibre diaconal", versiculos: "<strong>Actes 6:3-4 (LSG):</strong> 'Choisissez sept hommes... afin que nous nous consacrions à la prière et au ministère de la parole.'", resumo: "L’Église organise le service pour préserver la primauté de la Parole et de la prière. Un ministère sain partage les responsabilités.", aplicacao: "Servez avec excellence et gardez le focus sur la prière et la Parole.", oracao: "Seigneur, donne la sagesse pour équilibrer service et enseignement dans l’Église."}},
+14: {pt: {h2: "Estêvão: fidelidade até o fim", versiculos: "<strong>Atos 7:55-60 (NVI):</strong> 'Vejo o céu aberto... Senhor, não lhes imputes este pecado.'", resumo: "Estêvão testemunha com poder e perdoa ao morrer. A semelhança com Cristo molda a missão.", aplicacao: "Busque ser cheio do Espírito para falar com graça e perdoar mesmo sob injustiça.", oracao: "Senhor, dá-me coragem e coração perdoador como o de Estêvão."}, en: {h2: "Stephen: faithful to the end", versiculos: "<strong>Acts 7:55-60 (NIV):</strong> 'I see heaven open... Lord, do not hold this sin against them.'", resumo: "Stephen witnesses with power and forgives in death. Christlike character shapes mission.", aplicacao: "Seek to be Spirit-filled to speak with grace and forgive under injustice.", oracao: "Lord, grant me courage and a forgiving heart like Stephen’s."}, es: {h2: "Esteban: fiel hasta el final", versiculos: "<strong>Hechos 7:55-60 (NVI):</strong> 'Veo el cielo abierto... Señor, no les tomes en cuenta este pecado.'", resumo: "Esteban testifica con poder y perdona al morir. El carácter de Cristo define la misión.", aplicacao: "Busca estar lleno del Espíritu para hablar con gracia y perdonar en la injusticia.", oracao: "Señor, dame valentía y un corazón perdonador como el de Esteban."}, fr: {h2: "Étienne: fidèle jusqu’au bout", versiculos: "<strong>Actes 7:55-60 (LSG):</strong> 'Je vois les cieux ouverts... Seigneur, ne leur impute pas ce péché.'", resumo: "Étienne témoigne avec puissance et pardonne en mourant. Le caractère du Christ façonne la mission.", aplicacao: "Cherchez à être remplis de l’Esprit pour parler avec grâce et pardonner sous l’injustice.", oracao: "Seigneur, donne-moi le courage et un cœur pardonneur comme celui d’Étienne."}},
+15: {pt: {h2: "O Evangelho em Samaria", versiculos: "<strong>Atos 8:4-8 (NVI):</strong> 'E havia grande alegria naquela cidade.'", resumo: "O Evangelho rompe barreiras históricas. A missão alcança novos povos e produz alegria verdadeira.", aplicacao: "Leve a boa nova a lugares improváveis e celebre a alegria do Evangelho.", oracao: "Senhor, abre portas para que tua Palavra traga alegria onde há trevas."}, en: {h2: "The Gospel in Samaria", versiculos: "<strong>Acts 8:4-8 (NIV):</strong> 'There was great joy in that city.'", resumo: "The Gospel breaks historic barriers. Mission reaches new peoples and brings true joy.", aplicacao: "Carry the Good News to unlikely places and celebrate Gospel joy.", oracao: "Lord, open doors for Your Word to bring joy where there is darkness."}, es: {h2: "El Evangelio en Samaria", versiculos: "<strong>Hechos 8:4-8 (NVI):</strong> 'Y hubo gran alegría en aquella ciudad.'", resumo: "El Evangelio rompe barreras históricas. La misión alcanza nuevos pueblos y produce gozo verdadero.", aplicacao: "Lleva las buenas nuevas a lugares improbables y celebra el gozo del Evangelio.", oracao: "Señor, abre puertas para que Tu Palabra traiga gozo donde hay tinieblas."}, fr: {h2: "L’Évangile en Samarie", versiculos: "<strong>Actes 8:4-8 (LSG):</strong> 'Il y eut une grande joie dans cette ville.'", resumo: "L’Évangile brise les barrières historiques. La mission atteint de nouveaux peuples et apporte une vraie joie.", aplicacao: "Apportez la Bonne Nouvelle dans des lieux improbables et célébrez la joie de l’Évangile.", oracao: "Seigneur, ouvre des portes pour que Ta Parole apporte la joie là où il y a des ténèbres."}},
+16: {pt: {h2: "O eunuco etíope e as Escrituras", versiculos: "<strong>Atos 8:26-38 (NVI):</strong> 'Você entende o que está lendo?...' e foi batizado.", resumo: "Felipe explica Isaías e conduz ao batismo. A missão se apoia nas Escrituras e no chamado do Espírito.", aplicacao: "Abra a Bíblia com outros e conduza-os a Cristo com clareza e graça.", oracao: "Senhor, dá-me sensibilidade ao Espírito e fidelidade às Escrituras."}, en: {h2: "The Ethiopian eunuch and Scripture", versiculos: "<strong>Acts 8:26-38 (NIV):</strong> 'Do you understand what you are reading?'... and he was baptized.", resumo: "Philip explains Isaiah and leads to baptism. Mission stands on Scripture and the Spirit’s call.", aplicacao: "Open the Bible with others and lead them to Christ with clarity.", oracao: "Lord, give me sensitivity to the Spirit and fidelity to Scripture."}, es: {h2: "El eunuco etíope y las Escrituras", versiculos: "<strong>Hechos 8:26-38 (NVI):</strong> '¿Entiendes lo que lees?'... y fue bautizado.", resumo: "Felipe explica Isaías y conduce al bautismo. La misión se apoya en la Escritura y el llamado del Espíritu.", aplicacao: "Abre la Biblia con otros y guíalos a Cristo con claridad.", oracao: "Señor, dame sensibilidad al Espíritu y fidelidad a la Escritura."}, fr: {h2: "L’eunuque éthiopien et l’Écriture", versiculos: "<strong>Actes 8:26-38 (LSG):</strong> 'Comprends-tu ce que tu lis?'... et il fut baptisé.", resumo: "Philippe explique Ésaïe et conduit au baptême. La mission repose sur l’Écriture et l’appel de l’Esprit.", aplicacao: "Ouvrez la Bible avec les autres et conduisez-les au Christ avec clarté.", oracao: "Seigneur, donne-moi la sensibilité à l’Esprit et la fidélité à l’Écriture."}},
+17: {pt: {h2: "Saulo encontra o Senhor", versiculos: "<strong>Atos 9:3-6 (NVI):</strong> 'Saulo, Saulo, por que você me persegue?'... 'Senhor, que queres que eu faça?'", resumo: "A conversão é obra da graça soberana. Deus transforma perseguidores em proclamadores.", aplicacao: "Confie no poder de Deus para converter os mais improváveis.", oracao: "Senhor, revela Teu Filho e transforma corações como transformaste o de Saulo."}, en: {h2: "Saul meets the Lord", versiculos: "<strong>Acts 9:3-6 (NIV):</strong> 'Saul, Saul, why do you persecute me?'... 'Lord, what shall I do?'", resumo: "Conversion is a sovereign work of grace. God turns persecutors into proclaimers.", aplicacao: "Trust God’s power to convert the unlikely.", oracao: "Lord, reveal Your Son and transform hearts as You did Saul’s."}, es: {h2: "Saulo se encuentra con el Señor", versiculos: "<strong>Hechos 9:3-6 (NVI):</strong> 'Saulo, Saulo, ¿por qué me persigues?'... 'Señor, ¿qué quieres que haga?'", resumo: "La conversión es obra de la gracia soberana. Dios transforma perseguidores en proclamadores.", aplicacao: "Confía en el poder de Dios para convertir a los menos probables.", oracao: "Señor, revela a Tu Hijo y transforma corazones como el de Saulo."}, fr: {h2: "Saül rencontre le Seigneur", versiculos: "<strong>Actes 9:3-6 (LSG):</strong> 'Saül, Saül, pourquoi me persécutes-tu?'... 'Seigneur, que veux-tu que je fasse?'", resumo: "La conversion est une œuvre de grâce souveraine. Dieu transforme les persécuteurs en proclamateurs.", aplicacao: "Faites confiance à la puissance de Dieu pour convertir les improbables.", oracao: "Seigneur, révèle Ton Fils et transforme les cœurs comme celui de Saül."}},
+18: {pt: {h2: "Crescimento na paz e no temor do Senhor", versiculos: "<strong>Atos 9:31 (NVI):</strong> 'A Igreja... fortalecida pelo Espírito Santo, crescia em número.'", resumo: "O crescimento saudável combina paz, edificação e temor. O Espírito edifica e multiplica.", aplicacao: "Busque edificação e reverência; Deus traz crescimento verdadeiro.", oracao: "Senhor, edifica-nos no temor do Teu nome e faz-nos crescer."}, en: {h2: "Growth in peace and fear of the Lord", versiculos: "<strong>Acts 9:31 (NIV):</strong> 'The church... encouraged by the Holy Spirit, grew in numbers.'", resumo: "Healthy growth blends peace, building up, and reverence. The Spirit strengthens and multiplies.", aplicacao: "Pursue edification and reverence; God brings true growth.", oracao: "Lord, build us up in holy fear and make us grow."}, es: {h2: "Crecimiento en paz y temor del Señor", versiculos: "<strong>Hechos 9:31 (NVI):</strong> 'La Iglesia... fortalecida por el Espíritu Santo, crecía en número.'", resumo: "El crecimiento sano une paz, edificación y reverencia. El Espíritu fortalece y multiplica.", aplicacao: "Busca edificación y reverencia; Dios trae crecimiento verdadero.", oracao: "Señor, edifícanos en el temor de Tu nombre y haznos crecer."}, fr: {h2: "Croissance dans la paix et la crainte du Seigneur", versiculos: "<strong>Actes 9:31 (LSG):</strong> 'L’Église... fortifiée par le Saint-Esprit, s’accroissait en nombre.'", resumo: "La croissance saine allie paix, édification et révérence. L’Esprit fortifie et multiplie.", aplicacao: "Recherchez l’édification et la révérence; Dieu accorde une vraie croissance.", oracao: "Seigneur, édifie-nous dans la crainte de Ton nom et fais-nous croître."}},
+19: {pt: {h2: "Deus não mostra favoritismo", versiculos: "<strong>Atos 10:34-36 (NVI):</strong> 'Deus não trata as pessoas com parcialidade... esta é a mensagem... Jesus Cristo é o Senhor de todos.'", resumo: "O Evangelho alcança gentios: Deus chama todas as nações. A missão derruba preconceitos.", aplicacao: "Receba e alcance pessoas de todas as origens com o Evangelho.", oracao: "Senhor, livra-me de parcialidade e envia-me aos que estão distantes."}, en: {h2: "God shows no favoritism", versiculos: "<strong>Acts 10:34-36 (NIV):</strong> 'God does not show favoritism... the message... Jesus Christ is Lord of all.'", resumo: "The Gospel reaches Gentiles: God calls all nations. Mission breaks prejudice.", aplicacao: "Welcome and reach people of every background with the Gospel.", oracao: "Lord, free me from partiality and send me to the far-off."}, es: {h2: "Dios no hace acepción de personas", versiculos: "<strong>Hechos 10:34-36 (NVI):</strong> 'Dios no muestra favoritismo... el mensaje... Jesucristo es Señor de todos.'", resumo: "El Evangelio llega a los gentiles: Dios llama a todas las naciones. La misión derriba prejuicios.", aplicacao: "Recibe y alcanza a personas de toda procedencia con el Evangelio.", oracao: "Señor, líbrame del favoritismo y envíame a los que están lejos."}, fr: {h2: "Dieu ne fait acception de personnes", versiculos: "<strong>Actes 10:34-36 (LSG):</strong> 'Dieu ne fait point acception de personnes... le message... Jésus-Christ est le Seigneur de tous.'", resumo: "L’Évangile atteint les païens: Dieu appelle toutes les nations. La mission brise les préjugés.", aplicacao: "Accueillez et atteignez des personnes de tous horizons avec l’Évangile.", oracao: "Seigneur, délivre-moi de la partialité et envoie-moi vers les éloignés."}},
+20: {pt: {h2: "Antioquia: graça que fortalece e envia", versiculos: "<strong>Atos 11:23-26 (NVI):</strong> 'Barnabé... animou-os a permanecerem fiéis... e em Antioquia foram chamados cristãos.'", resumo: "A comunidade cresce em graça e ensino e torna-se base missionária. Identidade cristã floresce em discipulado.", aplicacao: "Permaneça fiel em graça e ensino; a Igreja saudável forma e envia discípulos.", oracao: "Senhor, faz de nossa igreja um lugar de graça, ensino e envio."}, en: {h2: "Antioch: grace that strengthens and sends", versiculos: "<strong>Acts 11:23-26 (NIV):</strong> 'Barnabas encouraged them... and in Antioch the disciples were called Christians.'", resumo: "Community grows in grace and teaching and becomes missionary base. Identity blooms in discipleship.", aplicacao: "Remain faithful in grace and teaching; healthy churches form and send disciples.", oracao: "Lord, make our church a place of grace, teaching, and sending."}, es: {h2: "Antioquía: gracia que fortalece y envía", versiculos: "<strong>Hechos 11:23-26 (NVI):</strong> 'Bernabé los animó... y en Antioquía los discípulos fueron llamados cristianos.'", resumo: "La comunidad crece en gracia y enseñanza y llega a ser base misionera. La identidad florece en discipulado.", aplicacao: "Permanece fiel en gracia y enseñanza; las iglesias sanas forman y envían discípulos.", oracao: "Señor, haz de nuestra iglesia un lugar de gracia, enseñanza y envío."}, fr: {h2: "Antioche: grâce qui fortifie et envoie", versiculos: "<strong>Actes 11:23-26 (LSG):</strong> 'Barnabas les exhorta... et à Antioche les disciples furent appelés chrétiens.'", resumo: "La communauté grandit en grâce et en enseignement et devient une base missionnaire. L’identité s’épanouit dans le discipulat.", aplicacao: "Demeurez fidèles dans la grâce et l’enseignement; les Églises saines forment et envoient.", oracao: "Seigneur, fais de notre Église un lieu de grâce, d’enseignement et d’envoi."}},
+21: {pt: {h2: "Resgate miraculoso e oração fervorosa", versiculos: "<strong>Atos 12:5-11 (NVI):</strong> 'Pedro estava guardado... mas a Igreja orava... e o anjo o libertou.'", resumo: "Perseguição não detém a obra de Deus. A oração fervorosa participa dos livramentos do Senhor.", aplicacao: "Ore com fé por presos, perseguidos e necessitados; Deus abre portas.", oracao: "Senhor, intervém com poder e glorifica Teu nome em nossos livramentos."}, en: {h2: "Miraculous rescue and fervent prayer", versiculos: "<strong>Acts 12:5-11 (NIV):</strong> 'Peter was kept in prison, but the church was earnestly praying... and an angel led him out.'", resumo: "Persecution cannot stop God’s work. Fervent prayer participates in the Lord’s deliverances.", aplicacao: "Pray in faith for the imprisoned and persecuted; God opens doors.", oracao: "Lord, intervene with power and glorify Your name in our deliverances."}, es: {h2: "Rescate milagroso y oración ferviente", versiculos: "<strong>Hechos 12:5-11 (NVI):</strong> 'Pedro estaba en la cárcel, pero la Iglesia oraba... y un ángel lo sacó.'", resumo: "La persecución no detiene la obra de Dios. La oración ferviente participa en los rescates del Señor.", aplicacao: "Ora con fe por los presos y perseguidos; Dios abre puertas.", oracao: "Señor, intervén con poder y glorifica Tu nombre en nuestros rescates."}, fr: {h2: "Délivrance miraculeuse et prière fervente", versiculos: "<strong>Actes 12:5-11 (LSG):</strong> 'Pierre était gardé en prison, mais l’Église priait... et un ange le délivra.'", resumo: "La persécution ne stoppe pas l’œuvre de Dieu. La prière fervente participe aux délivrances du Seigneur.", aplicacao: "Priez avec foi pour les prisonniers et les persécutés; Dieu ouvre des portes.", oracao: "Seigneur, interviens avec puissance et glorifie Ton nom dans nos délivrances."}},
+22: {pt: {h2: "Chamados e enviados pelo Espírito", versiculos: "<strong>Atos 13:2-3 (NVI):</strong> 'Separem para mim Barnabé e Saulo... então jejuaram, oraram e os enviaram.'", resumo: "Missões nascem na adoração e discernimento da Igreja. O Espírito chama e a Igreja envia.", aplicacao: "Participe de jejum, oração e envio missionário na sua comunidade.", oracao: "Senhor, fala à Tua Igreja e envia obreiros para a Tua seara."}, en: {h2: "Called and sent by the Spirit", versiculos: "<strong>Acts 13:2-3 (NIV):</strong> 'Set apart for me Barnabas and Saul... they fasted, prayed and sent them off.'", resumo: "Missions are birthed in the Church’s worship and discernment. The Spirit calls and the Church sends.", aplicacao: "Join fasting, prayer, and missionary sending in your community.", oracao: "Lord, speak to Your Church and send workers into Your harvest."}, es: {h2: "Llamados y enviados por el Espíritu", versiculos: "<strong>Hechos 13:2-3 (NVI):</strong> 'Aparten para mí a Bernabé y Saulo... ayunaron, oraron y los enviaron.'", resumo: "Las misiones nacen en la adoración y discernimiento de la Iglesia. El Espíritu llama y la Iglesia envía.", aplicacao: "Participa de ayuno, oración y envío misionero en tu comunidad.", oracao: "Señor, habla a Tu Iglesia y envía obreros a Tu mies."}, fr: {h2: "Appelés et envoyés par l’Esprit", versiculos: "<strong>Actes 13:2-3 (LSG):</strong> 'Mettez à part Barnabas et Saul... ils jeûnèrent, prièrent et les envoyèrent.'", resumo: "Les missions naissent dans l’adoration et le discernement de l’Église. L’Esprit appelle et l’Église envoie.", aplicacao: "Participez au jeûne, à la prière et à l’envoi missionnaire dans votre communauté.", oracao: "Seigneur, parle à Ton Église et envoie des ouvriers dans Ta moisson."}},
+23: {pt: {h2: "Fortalecendo os discípulos", versiculos: "<strong>Atos 14:21-23 (NVI):</strong> 'Fortalecendo os discípulos... e designando presbíteros em cada igreja.'", resumo: "Missão inclui formar e consolidar igrejas com liderança piedosa. Discipulado robusto sustenta a expansão.", aplicacao: "Invista em fortalecer discípulos e estabelecer liderança fiel.", oracao: "Senhor, fortalece Teu povo e levanta presbíteros cheios do Espírito."}, en: {h2: "Strengthening disciples", versiculos: "<strong>Acts 14:21-23 (NIV):</strong> 'Strengthening the disciples... and appointing elders in every church.'", resumo: "Mission includes forming and consolidating churches with godly leadership. Robust discipleship sustains expansion.", aplicacao: "Invest in strengthening disciples and establishing faithful leadership.", oracao: "Lord, strengthen Your people and raise Spirit-filled elders."}, es: {h2: "Fortaleciendo a los discípulos", versiculos: "<strong>Hechos 14:21-23 (NVI):</strong> 'Fortaleciendo a los discípulos... y designando ancianos en cada iglesia.'", resumo: "La misión incluye formar y consolidar iglesias con liderazgo piadoso. El discipulado robusto sostiene la expansión.", aplicacao: "Invierte en fortalecer discípulos y establecer liderazgo fiel.", oracao: "Señor, fortalece a Tu pueblo y levanta ancianos llenos del Espíritu."}, fr: {h2: "Fortifier les disciples", versiculos: "<strong>Actes 14:21-23 (LSG):</strong> 'Fortifiant les disciples... et établissant des anciens dans chaque Église.'", resumo: "La mission inclut la formation et la consolidation d’Églises avec un leadership pieux. Un discipulat robuste soutient l’expansion.", aplicacao: "Investissez dans le renforcement des disciples et l’établissement d’un leadership fidèle.", oracao: "Seigneur, fortifie Ton peuple et suscite des anciens remplis de l’Esprit."}},
+24: {pt: {h2: "Graça para todos: decisão em Jerusalém", versiculos: "<strong>Atos 15:8-11 (NVI):</strong> 'Cremos que somos salvos pela graça do Senhor Jesus...'", resumo: "O Concílio afirma a salvação pela graça para judeus e gentios. Unidade doutrinária fortalece a missão.", aplicacao: "Defenda a verdade da graça e promova unidade em torno do Evangelho.", oracao: "Senhor, guarda-nos na pureza do Evangelho e na unidade do Espírito."}, en: {h2: "Grace for all: Jerusalem’s decision", versiculos: "<strong>Acts 15:8-11 (NIV):</strong> 'We believe it is through the grace of our Lord Jesus that we are saved...'", resumo: "Council affirms grace-salvation for Jews and Gentiles. Doctrinal unity strengthens mission.", aplicacao: "Stand for Gospel grace and promote unity around the truth.", oracao: "Lord, keep us in Gospel purity and Spirit-given unity."}, es: {h2: "Gracia para todos: decisión en Jerusalén", versiculos: "<strong>Hechos 15:8-11 (NVI):</strong> 'Creemos que somos salvos por la gracia del Señor Jesús...'", resumo: "El concilio afirma la salvación por gracia para judíos y gentiles. La unidad doctrinal fortalece la misión.", aplicacao: "Defiende la verdad de la gracia y promueve la unidad en torno al Evangelio.", oracao: "Señor, guárdanos en la pureza del Evangelio y la unidad del Espíritu."}, fr: {h2: "Grâce pour tous: décision à Jérusalem", versiculos: "<strong>Actes 15:8-11 (LSG):</strong> 'Nous croyons que c’est par la grâce du Seigneur Jésus que nous sommes sauvés...'", resumo: "Le concile affirme le salut par grâce pour Juifs et païens. L’unité doctrinale fortifie la mission.", aplicacao: "Défendez la vérité de la grâce et promouvez l’unité autour de l’Évangile.", oracao: "Seigneur, garde-nous dans la pureté de l’Évangile et l’unité de l’Esprit."}},
+25: {pt: {h2: "Meia-noite em Filipos: louvor que liberta", versiculos: "<strong>Atos 16:25-34 (NVI):</strong> 'Paulo e Silas oravam e cantavam... Crê no Senhor Jesus e serão salvos.'", resumo: "Louvor em meio à dor testemunha poderosamente. O Evangelho alcança famílias inteiras.", aplicacao: "Louve em tempos difíceis e compartilhe a fé com sua casa.", oracao: "Senhor, transforma minha noite em louvor e minha casa em um farol do Evangelho."}, en: {h2: "Midnight in Philippi: praise that frees", versiculos: "<strong>Acts 16:25-34 (NIV):</strong> 'Paul and Silas were praying and singing... Believe in the Lord Jesus and you will be saved.'", resumo: "Praise in pain witnesses powerfully. The Gospel reaches whole households.", aplicacao: "Praise in trials and share faith with your household.", oracao: "Lord, turn my midnight into praise and my home into a Gospel light."}, es: {h2: "Medianoche en Filipos: alabanza que libera", versiculos: "<strong>Hechos 16:25-34 (NVI):</strong> 'Pablo y Silas oraban y cantaban... Cree en el Señor Jesús y serás salvo.'", resumo: "La alabanza en el dolor testifica con poder. El Evangelio alcanza familias enteras.", aplicacao: "Alaba en las pruebas y comparte la fe con tu casa.", oracao: "Señor, convierte mi noche en alabanza y mi hogar en luz del Evangelio."}, fr: {h2: "Minuit à Philippes: louange qui libère", versiculos: "<strong>Actes 16:25-34 (LSG):</strong> 'Paul et Silas priaient et chantaient... Crois au Seigneur Jésus et tu seras sauvé.'", resumo: "La louange dans la douleur témoigne puissamment. L’Évangile atteint des familles entières.", aplicacao: "Louez dans l’épreuve et partagez la foi avec votre maison.", oracao: "Seigneur, transforme ma nuit en louange et ma maison en lumière de l’Évangile."}},
+26: {pt: {h2: "Bereia: coração nobre nas Escrituras", versiculos: "<strong>Atos 17:11 (NVI):</strong> 'Examinavam cada dia as Escrituras para ver se tudo era assim.'", resumo: "Discernimento bíblico sustenta a fé e a missão. Igreja saudável prova tudo pela Palavra.", aplicacao: "Examine as Escrituras diariamente e teste ensinamentos à luz da Bíblia.", oracao: "Senhor, dá-me coração nobre e mente saturada pela Tua Palavra."}, en: {h2: "Berea: noble hearts in Scripture", versiculos: "<strong>Acts 17:11 (NIV):</strong> 'They examined the Scriptures every day to see if what Paul said was true.'", resumo: "Biblical discernment sustains faith and mission. Healthy churches test everything by the Word.", aplicacao: "Examine Scripture daily and test teaching by the Bible.", oracao: "Lord, give me a noble heart and a mind saturated with Your Word."}, es: {h2: "Berea: corazones nobles en la Escritura", versiculos: "<strong>Hechos 17:11 (NVI):</strong> 'Examinaban cada día las Escrituras para ver si todo era así.'", resumo: "El discernimiento bíblico sostiene la fe y la misión. Iglesias sanas prueban todo por la Palabra.", aplicacao: "Examina las Escrituras a diario y prueba las enseñanzas por la Biblia.", oracao: "Señor, dame corazón noble y mente saturada de Tu Palabra."}, fr: {h2: "Bérée: cœurs nobles dans l’Écriture", versiculos: "<strong>Actes 17:11 (LSG):</strong> 'Ils examinaient chaque jour les Écritures pour voir si ce qu’on leur disait était exact.'", resumo: "Le discernement biblique soutient la foi et la mission. Les Églises saines éprouvent tout par la Parole.", aplicacao: "Examinez l’Écriture chaque jour et testez les enseignements par la Bible.", oracao: "Seigneur, donne-moi un cœur noble et un esprit saturé de Ta Parole."}},
+27: {pt: {h2: "Ânimo em Corinto: não temas, fala!", versiculos: "<strong>Atos 18:9-11 (NVI):</strong> 'Não tenha medo; continue a falar e não se cale... pois eu estou com você.'", resumo: "Deus encoraja seus servos na missão. A presença de Cristo sustenta em cidades difíceis.", aplicacao: "Permaneça na obra e fale com coragem, confiante que Deus está com você.", oracao: "Senhor, dá-me coragem e perseverança para servir sem calar."}, en: {h2: "Courage in Corinth: do not be afraid", versiculos: "<strong>Acts 18:9-11 (NIV):</strong> 'Do not be afraid; keep on speaking... for I am with you.'", resumo: "God encourages His servants in mission. Christ’s presence sustains in hard places.", aplicacao: "Stay at work and speak boldly, trusting God is with you.", oracao: "Lord, grant courage and perseverance to serve without silence."}, es: {h2: "Ánimo en Corinto: no temas, habla", versiculos: "<strong>Hechos 18:9-11 (NVI):</strong> 'No temas; sigue hablando... porque yo estoy contigo.'", resumo: "Dios anima a sus siervos en la misión. La presencia de Cristo sostiene en lugares difíciles.", aplicacao: "Permanece en la obra y habla con valentía, confiando en Dios.", oracao: "Señor, dame valor y perseverancia para servir sin callar."}, fr: {h2: "Courage à Corinthe: n’aie pas peur", versiculos: "<strong>Actes 18:9-11 (LSG):</strong> 'N’aie pas peur; parle et ne te tais pas... car je suis avec toi.'", resumo: "Dieu encourage ses serviteurs dans la mission. La présence du Christ soutient dans les lieux difficiles.", aplicacao: "Restez à l’œuvre et parlez avec audace, confiants que Dieu est avec vous.", oracao: "Seigneur, donne-moi courage et persévérance pour servir sans me taire."}},
+28: {pt: {h2: "A Palavra corre livre em Roma", versiculos: "<strong>Atos 28:30-31 (NVI):</strong> 'Paulo... pregava o reino de Deus... sem impedir-se por ninguém.'", resumo: "Mesmo preso, Paulo proclama livremente. A missão avança sob a soberania de Deus.", aplicacao: "Proclame com fidelidade, confiando que Deus abre caminhos até em cadeias.", oracao: "Senhor, faz Tua Palavra correr livre através de mim, em toda circunstância."}, en: {h2: "The Word runs free in Rome", versiculos: "<strong>Acts 28:30-31 (NIV):</strong> 'Paul... proclaimed the kingdom of God... without hindrance.'", resumo: "Even imprisoned, Paul preaches freely. Mission advances under God’s sovereignty.", aplicacao: "Proclaim faithfully, trusting God opens ways even in chains.", oracao: "Lord, let Your Word run free through me in every circumstance."}, es: {h2: "La Palabra corre libre en Roma", versiculos: "<strong>Hechos 28:30-31 (NVI):</strong> 'Pablo... predicaba el reino de Dios... sin estorbo.'", resumo: "Aun preso, Pablo predica libremente. La misión avanza bajo la soberanía de Dios.", aplicacao: "Proclama con fidelidad, confiando que Dios abre caminos aun en cadenas.", oracao: "Señor, que Tu Palabra corra libre por medio de mí, en toda circunstancia."}, fr: {h2: "La Parole court librement à Rome", versiculos: "<strong>Actes 28:30-31 (LSG):</strong> 'Paul... prêchait le royaume de Dieu... sans empêchement.'", resumo: "Même prisonnier, Paul prêche librement. La mission avance sous la souveraineté de Dieu.", aplicacao: "Proclamez fidèlement, confiants que Dieu ouvre des voies même dans les chaînes.", oracao: "Seigneur, que Ta Parole coure librement à travers moi, en toute circonstance."}}
+};
+   
+   // FIM DO CONTEÚDO DEVOCIONAL
+
+        // * FUNÇÕES DE PERSISTÊNCIA E ESTADO (MANTIDAS) *
+        
+        function getSavedProgress() {
+            const savedDay = localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`);
+            return savedDay ? parseInt(savedDay, 10) : 1;
+        }
+
+        function getCompletedDays() {
+            const completed = localStorage.getItem(`completedDays_${DEVOTIONAL_KEY}`);
+            return completed ? JSON.parse(completed) : {};
+        }
+
+        function saveCompletion(day, isChecked) {
+            const key = `completedDays_${DEVOTIONAL_KEY}`;
+            const completedDays = getCompletedDays();
+            completedDays[day] = isChecked;
+            localStorage.setItem(key, JSON.stringify(completedDays));
+            updateOverallProgress();
+        }
+
+        function updateCompletedState() {
+            const completedDaysMap = getCompletedDays();
+            completedCheck.checked = completedDaysMap[currentDay] || false;
+        }
+
+        function updateOverallProgress() {
+            const completedDaysMap = getCompletedDays();
+            const completedCount = Object.values(completedDaysMap).filter(v => v).length;
+            const percent = (completedCount / totalDays) * 100;
+            progressBar.style.width = `${percent}%`;
+            prevButton.disabled = currentDay <= 1;
+            nextButton.disabled = currentDay >= totalDays;
+            
+            updateCompletedState();
+        }
+
+        // * EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) *
+       window.onload = () => {
+    
+    // ✅ CORREÇÃO: Cancela imediatamente qualquer leitura que possa ter continuado
+    stopSpeaking(); 
+    
+    // 🚨 LIMPEZA FORÇADA DAS CHAVES ANTIGAS (MANTIDA)
+    localStorage.removeItem('completedDays'); 
+    localStorage.removeItem('devotionalProgress');
+    
+    // 1. Carrega o tema, idioma e FONTE
+    loadThemePreference(); 
+    // NOTE: updateLanguageSelector() is technically unnecessary since the dropdown is hidden, but kept for script integrity
+    updateLanguageSelector();
+    // NOVO: Aplica o tamanho da fonte salvo
+    updateFontSize(); 
+               
+    // 2. Carrega o dia salvo e atualiza a UI
+    currentDay = getSavedProgress();
+    updateTexts(0); 
+    
+    // 3. Configura o TTS (CORREÇÃO CRÍTICA)
+    initTTS(); 
+
+    // 4. Configura os Listeners de Eventos
+    // NOTE: The event listeners for themeToggle and langSelectButton are now irrelevant as they are hidden, but kept for script integrity
+    if (themeToggle) themeToggle.addEventListener('click', toggleDarkMode);
+    
+    if (listenToggle) {
+        listenToggle.addEventListener('click', handleListenClick); 
+        // 🛑 Duplo Clique para STOP explícito
+        listenToggle.addEventListener('dblclick', stopSpeaking);
+    }
+    
+    // Listeners do Seletor de Idioma
+    if (langSelectButton) {
+        langSelectButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isExpanded = langDropdown.style.display === 'block';
+            langDropdown.style.display = isExpanded ? 'none' : 'block';
+            // NOVO ARIA: Atualiza o status de expansão
+            langSelectButton.setAttribute('aria-expanded', !isExpanded); 
+        });
+    }
+    document.addEventListener('click', (event) => {
+        const wrapper = document.querySelector('.language-selector-wrapper');
+        if (langDropdown && langDropdown.style.display === 'block' && wrapper && !wrapper.contains(event.target)) {
+            langDropdown.style.display = 'none';
+            // NOVO ARIA: Garante que o status volte a false ao fechar
+            if (langSelectButton) langSelectButton.setAttribute('aria-expanded', 'false'); 
+        }
+    });
+
+    prevButton.addEventListener('click', prevDay);
+    nextButton.addEventListener('click', nextDay);
+    completedCheck.addEventListener('change', handleCompletedCheck);
+    
+    // NOVO: Listeners para o controle de fonte
+    document.getElementById('fontSizeIncrease').addEventListener('click', increaseFontSize);
+    document.getElementById('fontSizeDecrease').addEventListener('click', decreaseFontSize);
+};
+        
+    </script>
+    
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app', 'vw-plugin-wrapper');
+    </script>
+</body>
+</html>
