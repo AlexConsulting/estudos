@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="title">Super Página em Construção!</title>
+    <!-- Carrega o Tailwind CSS para um estilo moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração do Tailwind com uma fonte amigável (Inter) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f3f3; /* Fundo levemente off-white */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- AJUSTES AQUI: Redução do padding base (p-6) e ajuste no max-w para mobile -->
+    <div id="content-card" class="bg-white p-6 md:p-10 lg:p-14 rounded-3xl shadow-2xl max-w-sm sm:max-w-lg w-full text-center transform transition duration-500 hover:shadow-3xl hover:scale-[1.02]">
+
+        <!-- Seletor de Idioma -->
+        <div class="mb-8 flex items-center justify-center space-x-2 text-gray-500 text-sm">
+            <label for="language-select" class="font-semibold" data-translate="languageLabel">Escolha seu Idioma:</label>
+            <select id="language-select" class="p-2 border border-blue-300 rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100 transition duration-150 focus:ring-2 focus:ring-blue-400">
+                <option value="pt">Português (pt)</option>
+                <option value="en">English (en)</option>
+                <option value="es">Español (es)</option>
+                <option value="fr">Français (fr)</option>
+            </select>
+        </div>
+
+        <!-- Ícone de Construção (Um emoji divertido) -->
+        <div class="text-6xl mb-6 animate-bounce">
+            👷🏗️✨
+        </div>
+        
+        <!-- Título Principal (Texto encurtado) -->
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-indigo-700 mb-4 tracking-tight" data-translate="headline">
+            Quase lá! Nossa super página chega em breve!
+        </h1>
+        
+        <!-- Mensagem para as crianças -->
+        <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" data-translate="message">
+            Estamos trabalhando duro, como verdadeiros super-heróis, para deixar tudo incrível para você. Volte em breve para a diversão!
+        </p>
+
+        <!-- Botão de Voltar -->
+        <button onclick="history.back()" class="w-full md:w-auto px-6 py-3 bg-green-500 text-white font-bold text-lg rounded-xl shadow-lg hover:bg-green-600 transition duration-150 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-300">
+            <span data-translate="backButton">Voltar para onde eu estava</span>
+        </button>
+
+    </div>
+
+    <script>
+        // Objeto de traduções com a linguagem amigável para crianças (9-12 anos)
+        const translations = {
+            'pt': {
+                title: "Super Página em Construção!",
+                headline: "Quase lá! Nossa super página chega em breve!",
+                message: "Estamos trabalhando duro, como verdadeiros super-heróis, para deixar tudo incrível para você. Volte em breve para a diversão!",
+                backButton: "Voltar para onde eu estava",
+                languageLabel: "Escolha seu Idioma:",
+            },
+            'en': {
+                title: "Super Page Under Construction!",
+                headline: "Hold your horses! Our super page is almost ready!",
+                message: "We're working hard, like real superheroes, to make everything awesome for you. Come back soon for the fun!",
+                backButton: "Go back where I was",
+                languageLabel: "Select your Language:",
+            },
+            'es': {
+                title: "¡Súper Página en Construcción!",
+                headline: "¡Aguanta la emoción! ¡Nuestra súper página está casi lista!",
+                message: "Estamos trabajando duro, como verdaderos superhéroes, para dejar todo increíble para ti. ¡Vuelve pronto para la diversión!",
+                backButton: "Volver a donde estaba",
+                languageLabel: "Elige tu Idioma:",
+            },
+            'fr': {
+                title: "Super Page en Construction !",
+                headline: "Garde ton calme ! Notre super page est presque prête !",
+                message: "Nous travaillons dur, comme de vrais super-héros, pour que tout soit génial pour toi. Reviens vite pour t'amuser !",
+                backButton: "Retourner où j'étais",
+                languageLabel: "Choisis ta Langue :",
+            }
+        };
+
+        const langSelect = document.getElementById('language-select');
+
+        // Função para aplicar as traduções
+        function updateContent(lang) {
+            // Atualiza a tag <html> e <title>
+            document.documentElement.lang = lang;
+            
+            const trans = translations[lang];
+
+            // Atualiza todos os elementos com o atributo data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (trans[key]) {
+                    element.textContent = trans[key];
+                }
+            });
+
+            // Atualiza o título da aba do navegador separadamente
+            document.title = trans.title;
+        }
+
+        // Lógica: Ao carregar a página, tenta detectar o idioma ou usa 'pt'
+        document.addEventListener('DOMContentLoaded', () => {
+            let preferredLang = 'pt'; // Define Português como padrão
+
+            // Tenta usar o idioma do navegador, se estiver disponível nas traduções
+            const browserLang = navigator.language.split('-')[0];
+            if (translations[browserLang]) {
+                preferredLang = browserLang;
+            }
+
+            // Define o valor do seletor e atualiza o conteúdo
+            langSelect.value = preferredLang;
+            updateContent(preferredLang);
+        });
+
+        // Event listener para mudar o idioma
+        langSelect.addEventListener('change', (event) => {
+            updateContent(event.target.value);
+        });
+    </script>
+</body>
+</html>
