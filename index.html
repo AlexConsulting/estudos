@@ -332,7 +332,7 @@
             max-width: 900px;
             width: 100%;
             margin: auto;
-            padding: 0 10px; /* Default desktop padding */
+            padding: 0 10px; /* Padding de 10px nas laterais para garantir margem no desktop/telas médias */
         }
         
         /* Ajuste do menu-container para mobile */
@@ -341,14 +341,14 @@
                 grid-template-columns: 1fr; /* Uma coluna única no mobile */
                 gap: 15px;
                 justify-content: center;
-                /* CORREÇÃO: Aumenta o padding lateral para 20px para dar mais respiro nas bordas da tela. */
-                padding: 0 20px; 
+                /* Padding lateral para garantir margem e evitar corte */
+                padding: 0 10px; 
             }
             
             .menu-button {
                 width: 100%;
-                /* Ajuste fino: Reduzindo um pouco mais o padding vertical */
-                padding: 12px 15px; 
+                /* Ajuste o padding lateral para 15px para ficar mais compacto no mobile, seguindo a sugestão do usuário */
+                padding: 15px 15px; 
                 border-radius: 12px;
             }
         }
@@ -366,7 +366,7 @@
             border-radius: 16px; 
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-sizing: border-box; /* Garante que 100% de largura inclui o padding */
+            box-sizing: border-box; /* CORREÇÃO FINAL: Garante que 100% de largura inclui o padding */
         }
         .menu-button .emoji-icon {
             font-size: 2.5em; 
@@ -1002,7 +1002,7 @@
                 modalTitle_credits: "Crédits", modalTitle_privacy: "Politique de Confidentialité (LGPD)", modalTitle_help: "Aide et Contact", modalTitle_about: "Qui Sommes-Nous",
                 creditAuthorTitle: "Auteur:", creditTechReviewTitle: "Revue Technique:", creditTheologicalReviewTitle: "Revue Théologique:",
                 modalContent_privacy: 'Cette section détaille notre politique de confidentialité, conformément à la loi générale sur la protection des données (LGPD).\n\nNous affirmons que ce site/application ne collecte pas de données personnelles des utilisateurs.\n\nAucune information n\'est stockée, à l\'exception de vos préférences locales de langue et de thème (Mode Sombre/Clair), que sont enregistrées dans votre propre navigateur.',
-                modalContent_help: 'Para perguntas, suggestions ou support technique, veuillez nous contacter por email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problema técnico.\n\nVersão Actuelle: v1.0.6 - 2025',
+                modalContent_help: 'Para perguntas, suggestions ou support technique, veuillez nous contacter por email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersão Actuelle: v1.0.6 - 2025',
                 modalContent_about: 'Nous somos uma iniciativa dedicada a promover le étude profond et la dévotion chrétienne, unindo le Connaissance de la Parole de Deus com a Fé prática.\n\nNos materiais são elaborados basés sur les Saintes Écritures pour vous aider dans votre cheminement spirituel.'
             }
         };
