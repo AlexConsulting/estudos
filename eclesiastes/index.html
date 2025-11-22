@@ -13,73 +13,62 @@
         /* 1. CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
         body {
             font-family: 'Georgia', serif;
-            margin: 0; 
-            background-color: #e6e0d3; 
-            color: #333; 
-            line-height: 1.6;
-            display: flex; 
-            flex-direction: column; 
-            /* CORREÇÃO LAYOUT DESKTOP: Inicia o conteúdo do topo, permitindo scroll limpo */
-            justify-content: flex-start; 
-            align-items: center;    
+            margin: 0; background-color: #e6e0d3; color: #333; line-height: 1.6;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             min-height: 100vh; 
-            padding: 0; /* Remove padding do body para usar margem no container */
+            /* AJUSTE 1: Remove o espaçamento superior global, mantendo o de baixo se o conteúdo for curto */
+            padding: 0 0 20px 0; 
             transition: background-color 0.3s, color 0.3s;
         }
         .book-container {
-            /* Uso da variável CSS para aplicar o zoom no corpo do devocional */
-            font-size: calc(16px * var(--base-font-scale)); 
-            max-width: 650px; 
-            width: 90%; 
-            background: #fdfdfd; 
-            padding: 30px 40px;
-            border-radius: 8px; 
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); 
-            border: 1px solid #ccc;
-            position: relative;
-            /* CORREÇÃO LAYOUT DESKTOP: Adiciona margem superior e inferior para espaçamento desktop */
-            margin-top: 30px;
-            margin-bottom: 30px;
-            transition: background 0.3s, box-shadow 0.3s, font-size 0.3s;
+            max-width: 650px; width: 90%; background: #fdfdfd; padding: 30px 40px;
+            border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid #ccc;
+            position: relative; transition: background 0.3s, box-shadow 0.3s;
+            font-size: calc(var(--base-font-scale) * 1em); 
         }
-
-        h1 { color: #4b0082; text-align: center; font-family: 'Times New Roman', serif; border-bottom: 2px solid #4b0082; padding-bottom: 10px; margin-bottom: 10px; }
-        .subtitle { text-align: center; font-style: italic; margin-bottom: 20px; color: #555; font-size: 0.95em; }
-        h2 { color: #007bff; font-size: 1.5em; text-align: center; margin-top: 10px; margin-bottom: 20px; }
-        .versiculos { font-style: italic; background-color: #f0f8ff; padding: 15px; border-left: 5px solid #28a745; margin: 15px 0; font-weight: 500; }
-        .section { margin-top: 20px; padding: 10px; border-bottom: 1px dashed #ddd; }
-        .section strong { display: block; color: #dc3545; margin-bottom: 5px; font-weight: bold; }
-        .oracao-final { margin-top: 25px; padding: 15px; background-color: #fffae0; border-left: 5px solid #ffc107; font-weight: bold; text-align: center; font-style: italic; }
+        h1 {
+            color: #4b0082; text-align: center; font-family: 'Times New Roman', serif;
+            border-bottom: 2px solid #4b0082; padding-bottom: 10px; margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center; font-style: italic; margin-bottom: 20px; color: #555; font-size: 0.95em;
+        }
+        h2 {
+            color: #007bff; font-size: 1.5em; text-align: center; margin-top: 10px; margin-bottom: 20px;
+        }
+        .versiculos {
+            font-style: italic; background-color: #f0f8ff; padding: 15px;
+            border-left: 5px solid #28a745; margin: 15px 0; font-weight: 500;
+        }
+        .section {
+            margin-top: 20px; padding: 10px; border-bottom: 1px dashed #ddd;
+        }
+        .section strong {
+            display: block; color: #dc3545; margin-bottom: 5px; font-weight: bold;
+        }
+        .oracao-final {
+            margin-top: 25px; padding: 15px; background-color: #fffae0;
+            border-left: 5px solid #ffc107; font-weight: bold; text-align: center; font-style: italic;
+        }
         
-        /* 2. NAVEGAÇÃO */
+        /* 2. NAVEGAÇÃO E UTILS */
+        .top-utils {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px; 
+        }
         .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
-            flex-wrap: wrap; 
-            gap: 15px; 
+            display: flex; justify-content: space-between; align-items: center; margin-top: 30px;
+            padding-top: 15px; border-top: 1px solid #ddd; flex-wrap: wrap; gap: 15px; 
         }
-        
-        /* ESTILO PADRÃO DOS BOTÕES DE NAVEGAÇÃO (Anterior/Próximo) */
         .nav-button {
-            padding: 10px 15px;
-            cursor: pointer;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            transition: opacity 0.2s, background 0.2s, border-color 0.2s;
-            font-size: 1em; 
+            padding: 10px 15px; cursor: pointer; border: 1px solid #007bff; border-radius: 5px;
+            background-color: #007bff; color: white; transition: opacity 0.2s, background 0.2s, border-color 0.2s;
         }
-        .nav-button:disabled {
-            opacity: 0.5;
-            cursor: default;
+        .nav-button:disabled { opacity: 0.5; cursor: default; }
+        button:focus, a:focus, input:focus, #accessibilityFloater button:focus {
+            outline: 3px solid #00ff73; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
         }
 
-        /* 3. DARK THEME CSS */
+        /* 3. DARK THEME CSS (Mantido) */
         .dark-theme { background-color: #121212; color: #f4f4f4; }
         .dark-theme .book-container { background: #1e1e1e; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); border-color: #333; }
         .dark-theme h1 { color: #bb86fc; border-bottom-color: #bb86fc; }
@@ -91,268 +80,236 @@
         .dark-theme .oracao-final { background-color: #33331c; border-left-color: #ffd600; }
         .dark-theme .nav-button { background-color: #03dac6; border-color: #03dac6; color: #1e1e1e; }
         
-        /* 4. SELETOR DE IDIOMA E TEMA (REMOVIDO DO HTML/JS) */
-        .lang-flag-dropdown, .lang-flag-active {
-            width: 24px;
-            height: 18px;
-            vertical-align: middle;
-            margin-right: 5px;
-            border: 1px solid #ccc;
+        /* 4. SELETOR DE IDIOMA, LEITURA E TEMA */
+        /* CORREÇÃO CRÍTICA: Oculta botões de Idioma e Tema em TODAS as resoluções (Desktop e Mobile) */
+        .language-selector-wrapper, #themeToggle {
+            display: none !important;
         }
         
-        /* AJUSTE 3: Esconde o botão de Tema (Mantendo A+/A-) */
-        #themeToggleFloater { 
-            display: none !important; 
+        .language-selector-wrapper { position: relative; display: inline-block; z-index: 10; }
+        #langSelectButton, #themeToggle, #listenToggle { 
+            background-color: #f0f0f0; border: 1px solid #ccc; color: #333; border-radius: 5px;
+            padding: 8px 12px; cursor: pointer; display: flex; align-items: center;
+            font-size: 0.9em; font-weight: bold; transition: background-color 0.2s, border-color 0.2s, color 0.2s;
         }
-
-        /* 5. CONTROLES DE ACESSIBILIDADE (Fonte e TTS) */
+        #listenToggle[disabled] { opacity: 0.6; cursor: wait; }
+        #langSelectButton:hover, #themeToggle:hover, #listenToggle:hover:not([disabled]) { background-color: #e0e0e0; }
+        /* (Estilos de Dropdown e Dark Theme para utilitários mantidos) */
+        .lang-flag-active { width: 24px; height: 18px; margin-right: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        #langDropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 150px; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid #ddd; border-radius: 5px; margin-top: 5px; overflow: hidden; }
+        #langDropdown a { color: #333; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; font-size: 0.9em; }
+        #langDropdown a:hover { background-color: #f5f5f5; }
+        .lang-flag-dropdown { width: 20px; height: 15px; margin-right: 10px; border: 1px solid #eee; }
+        .dark-theme #langSelectButton, .dark-theme #themeToggle, .dark-theme #listenToggle { background-color: #2c2c2c; border-color: #444; color: #f4f4f4; }
+        .dark-theme #langSelectButton:hover, .dark-theme #themeToggle:hover, .dark-theme #listenToggle:hover:not([disabled]) { background-color: #333; }
+        .dark-theme #langDropdown { background-color: #1e1e1e; border-color: #444; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+        .dark-theme #langDropdown a { color: #f4f4f4; }
+        .dark-theme #langDropdown a:hover { background-color: #333; }
         
-        /* Floater para A+ e A- */
+        /* 5. Menu de Acessibilidade Flutuante (Desktop e Mobile) */
+        /* AJUSTE 2: Fixa A+A- no canto superior direito */
         #accessibilityFloater {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px; /* Aumentei o gap para melhor separação */
+            position: fixed; 
+            right: 20px; 
+            top: 20px; 
+            transform: translateY(0); /* Garante que não use a centralização vertical */
+            display: flex; flex-direction: column; z-index: 1000;
+            padding: 8px 5px; background: rgba(255, 255, 255, 0.8); border: 1px solid #ccc;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .font-control-btn, #themeToggleFloater {
-            background-color: #fff;
-            color: #4b0082;
-            border: 1px solid #4b0082;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 5px;
-            line-height: 1;
-            transition: background-color 0.2s, color 0.2s;
+        #accessibilityFloater button {
+            padding: 5px 8px; margin: 5px 0; cursor: pointer; border: 1px solid #007bff;
+            background-color: #f0f0f0; color: #333; font-weight: bold; font-size: 1.1em;
+            border-radius: 5px; transition: background-color 0.2s;
         }
-        .font-control-btn:hover, #themeToggleFloater:hover {
-            background-color: #4b0082;
-            color: #fff;
-        }
-        .dark-theme .font-control-btn, .dark-theme #themeToggleFloater {
-            background-color: #1e1e1e;
-            color: #bb86fc;
-            border-color: #bb86fc;
-        }
-        .dark-theme .font-control-btn:hover, .dark-theme #themeToggleFloater:hover {
-            background-color: #bb86fc;
-            color: #1e1e1e;
-        }
-        
-        /* Controles de Leitura (Text-to-Speech) */
-        .tts-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .dark-theme .tts-controls {
-            background-color: #2c2c2c;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
+        #accessibilityFloater button:hover { background-color: #e0e0e0; }
+        .dark-theme #accessibilityFloater { background: rgba(30, 30, 30, 0.8); border: 1px solid #444; }
+        .dark-theme #accessibilityFloater button { background-color: #2c2c2c; color: #f4f4f4; border-color: #03dac6; }
+        .dark-theme #accessibilityFloater button:hover { background-color: #383838; }
 
-        #listenToggle {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        #listenToggle:hover {
-            background-color: #1e7e34;
-        }
-        .dark-theme #listenToggle {
-            background-color: #03dac6;
-            color: #1e1e1e;
-        }
-        .dark-theme #listenToggle:hover {
-            background-color: #01a89c;
-        }
-
-        #audioProgressBar {
-            flex-grow: 1;
-            height: 8px;
-            background-color: #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        #audioProgressFill {
-            height: 100%;
-            width: 0%;
-            background-color: #28a745;
-            transition: width 0.1s linear;
-        }
-        .dark-theme #audioProgressBar {
-             background-color: #444;
-        }
-        .dark-theme #audioProgressFill {
-            background-color: #03dac6;
-        }
-        
-        /* 6. REPOSICIONAMENTO VLIBRAS */
-        body > .vw-plugin-wrapper {
-            /* Reposiciona o VLibras */
+        /* ⚠️ 6. AJUSTES VLIBRAS (Desktop e Mobile) */
+        /* AJUSTE 3: Reposiciona VLibras na lateral direita, abaixo do centro (60% do topo) */
+        div[vw] {
             position: fixed !important;
-            right: 0 !important;
-            /* Posição no Desktop */
-            top: 60% !important; 
-            z-index: 99999999 !important;
-        }
-        
-        /* 7. MEDIA QUERIES (Ajustes para Celular) */
-        @media (max-width: 600px) {
-            .book-container {
-                padding: 20px 25px; 
-                width: 100%; /* Ocupa 100% da largura em mobile */
-                /* Override desktop margin to stick to the top on mobile */
-                margin-top: 0;
-                margin-bottom: 20px; 
-            }
-
-            .navigation {
-                flex-direction: column; 
-                gap: 10px; 
-            }
-            .nav-button {
-                width: 100%; 
-            }
-             
-            .progress-check { 
-                order: -1; 
-                width: 100%; 
-            }
+            right: 15px !important; 
+            left: auto !important; 
             
-            #accessibilityFloater {
-                 /* Posicionamento mais baixo para evitar a barra de endereço */
-                top: auto;
-                bottom: 20px; 
-                right: 20px;
-            }
+            top: 60% !important; /* Ligeiramente abaixo do centro (50% seria o centro) */
+            bottom: auto !important; 
             
-            body > .vw-plugin-wrapper {
-                 /* Posição no Mobile */
-                top: 72% !important;
-            }
-        }
-        
-        /* 8. FOOTER - Posiciona o footer abaixo do book-container, centralizado */
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            width: 100%;
-            max-width: 650px; /* Alinhado com o book-container */
-            font-size: 0.8em;
-            color: #777;
-        }
-        .dark-theme footer {
-            color: #888;
+            z-index: 998 !important; /* Acima do conteúdo, abaixo de A+A- */
         }
 
-        /* 9. ESTILOS DA BARRA DE PROGRESSO E CHECKBOX (mantidos) */
+        /* 7. ESTILOS DA BARRA DE PROGRESSO E CHECKBOX (MANTIDOS) */
         .progress-bar-wrapper { background-color: #ddd; border-radius: 10px; height: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
         .progress-bar { height: 100%; width: 0%; background-color: #28a745; border-radius: 10px; transition: width 0.5s ease-in-out; }
         .dark-theme #progressLabel { color: #03dac6; }
         .dark-theme .progress-bar-wrapper { background-color: #333; }
         .dark-theme .progress-bar { background-color: #03dac6; }
-        .progress-check { display: flex; align-items: center; justify-content: center; margin: 0; flex-grow: 0; flex-shrink: 0; padding: 5px 10px; background-color: #e6f7ff; border: 1px solid #b3e0ff; border-radius: 5px; transition: background-color 0.3s; order: 0; }
+        .progress-check {
+             display: flex; align-items: center; justify-content: center; margin: 0; flex-grow: 0; flex-shrink: 0;
+             padding: 5px 10px; background-color: #e6f7ff; border: 1px solid #b3e0ff; border-radius: 5px; transition: background-color 0.3s; order: 0;
+        }
         .progress-check label { margin-left: 10px; font-weight: bold; color: #1e8449; cursor: pointer; }
         .progress-check input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
         .dark-theme .progress-check { background-color: #2c2c2c; border-color: #444; }
         .dark-theme .progress-check label { color: #03dac6; }
+        #audioProgressContainer { height: 5px; width: 100%; background-color: #ddd; border-radius: 2px; overflow: hidden; margin-top: 5px; margin-bottom: 10px; }
+        #audioProgressBar { height: 100%; width: 0%; background-color: #ffc107; transition: width 0.1s linear; }
+        .dark-theme #audioProgressContainer { background-color: #333; }
+        .dark-theme #audioProgressBar { background-color: #ffd600; }
 
-        /* Animações (Mantidas) */
-        .page-out-left { transform: translateX(-100%); opacity: 0; transition: transform 0.3s ease-in, opacity 0.3s ease-in; position: absolute; width: 100%; }
-        .page-out-right { transform: translateX(100%); opacity: 0; transition: transform 0.3s ease-in, opacity 0.3s ease-in; position: absolute; width: 100%; }
-        .page-in-right { animation: fadeInRight 0.4s ease-out forwards; }
-        .page-in-left { animation: fadeInLeft 0.4s ease-out forwards; }
-        
-        @keyframes fadeInRight { 0% { transform: translateX(50px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeInLeft { 0% { transform: translateX(-50px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
-</style>
+
+        /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
+        @media (max-width: 600px) {
+            
+            /* FIX: Centraliza o conteúdo no mobile */
+            main { width: 100%; display: flex; justify-content: center; }
+
+            /* AJUSTE 1 (Mobile): Zera a margem superior do contêiner */
+            .book-container {
+                padding: 20px 25px; width: 95%; 
+                margin-top: 0; /* Zera o espaçamento superior */
+                margin-bottom: 20px;
+            }
+            
+            /* AJUSTE 2 (Mobile): Garante que A+A- fique fixo no canto superior direito (5px de margem) */
+            #accessibilityFloater {
+                position: fixed; top: 5px; right: 5px; transform: translateY(0); 
+                flex-direction: row; padding: 5px;
+                background: rgba(255, 255, 255, 0.9); border: 1px solid #ccc;
+                border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
+
+            /* AJUSTE 3 (Mobile): Reposiciona VLibras para ficar mais baixo (75% do topo) */
+            div[vw] {
+                top: 72% !important; /* Move para 72% da altura da tela */
+                right: 5px !important; /* Ajusta a margem direita para ser menor no mobile */
+            }
+            
+            /* Outros ajustes de mobile (Mantidos) */
+            .top-utils { 
+                gap: 10px; 
+                width: 100%;
+            }
+            
+            #listenToggle {
+                width: auto; 
+                order: initial; 
+                margin-bottom: 0; 
+            }
+
+            .navigation { flex-direction: column; gap: 10px; }
+            .navigation .nav-button { width: 100%; } 
+            .progress-check { order: -1; width: 100%; }
+        }
+
+        /* MEDIA QUERY: Ajuste para telas muito pequenas, se necessário */
+        @media (max-width: 400px) {
+            #accessibilityFloater { right: 5px; padding: 5px; }
+        }
+    </style>
 </head>
 <body class="light-theme">
 
-    <div id="accessibilityFloater">
-        <button id="fontSizeDecrease" class="font-control-btn" aria-label="Diminuir o tamanho da fonte">A-</button>
-        <button id="fontSizeIncrease" class="font-control-btn" aria-label="Aumentar o tamanho da fonte">A+</button>
-        <button id="themeToggleFloater" class="font-control-btn" title="Mudar Tema"></button>
+    <div id="accessibilityFloater" title="Controles de Acessibilidade">
+        <button id="fontSizeIncrease" title="Aumentar Tamanho da Fonte">A+</button>
+        <button id="fontSizeDecrease" title="Diminuir Tamanho da Fonte">A-</button>
     </div>
-
-    <div class="book-container">
-        <h1 id="mainTitle">12 Dias de Sabedoria em Eclesiastes (Devocional)</h1>
-		<p class="subtitle" id="subTitle">Encontrando propósito e significado em meio à vaidade.</p>
-        
-        <div class="tts-controls">
-            <button id="listenToggle" data-state="stop">Ouça Aqui</button>
-            <div id="audioProgressBar"><div id="audioProgressFill"></div></div>
-        </div>
-        
-        <div id="progressContainer" style="margin-bottom: 15px;">
-            <p id="progressLabel" style="text-align: center; font-size: 0.9em; margin-bottom: 5px; color: #4b0082; font-weight: bold;"></p>
-            <div class="progress-bar-wrapper">
-                <div id="progressBar" class="progress-bar"></div>
-            </div>
-        </div>
-        <p id="pageCounter" style="text-align: right;"></p>
-        
-        <div id="devotionalContent">
-            </div>
-
-        <div class="navigation">
-            <button id="prevButton" class="nav-button" disabled>← Anterior</button>
-            
-            <div class="progress-check">
-                <input type="checkbox" id="completedCheck">
-                <label for="completedCheck" id="checkLabel">Marcar como Concluído</label>
+    
+    <main>
+        <div class="book-container">
+            <div class="top-utils">
+                <div class="language-selector-wrapper">
+                    <button id="langSelectButton" aria-haspopup="true" aria-expanded="false" title="Selecionar Idioma">
+                        </button>
+                    <div id="langDropdown" role="menu">
+                        </div>
+                </div>
+                
+                <button id="listenToggle" class="nav-button" title="Ouvir Conteúdo" disabled>
+                    </button>
+                
+                <button id="themeToggle" class="nav-button" title="Mudar Tema">
+                    </button>
             </div>
             
-            <button id="nextButton" class="nav-button">Próximo →</button>
-        </div>
-    </div>
+            <div id="audioProgressContainer" style="display: none;">
+                <div id="audioProgressBar" class="progress-bar"></div>
+            </div>
 
+            <h1 id="mainTitle">12 Dias de Sabedoria em Eclesiastes (Devocional)</h1>
+			<p class="subtitle" id="subTitle">Encontrando propósito e significado em meio à vaidade.</p>
+            
+            <div id="progressContainer" style="margin-bottom: 15px;">
+                <p id="progressLabel" style="text-align: center; font-size: 0.9em; margin-bottom: 5px; color: #4b0082; font-weight: bold;"></p>
+                <div class="progress-bar-wrapper">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+            </div>
+            <p id="pageCounter" style="text-align: right;"></p>
+            
+            <div id="devotionalContent">
+                </div>
+
+            <div class="navigation">
+                <button id="prevButton" class="nav-button" disabled>← Anterior</button>
+                
+                <div class="progress-check">
+                    <input type="checkbox" id="completedCheck">
+                    <label for="completedCheck" id="checkLabel">Marcar como Concluído</label>
+                </div>
+                
+                <button id="nextButton" class="nav-button">Próximo →</button>
+            </div>
+        </div>
+    </main>
     <footer>
         <p>Devocional adaptado e criado por Alex Silva | <span id="footerText"></span></p>
     </footer>
 
     <script>
         // --- DADOS MULTI-IDIOMA E TEMA ---
+        const flagMap = {
+            'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
+            'en-US': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-dropdown" alt="English">', text: 'English', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-active" alt="English">' },
+            'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
+            'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
+        };
+        
         const themeMap = {
-            'light': { icon: '🌙', next: 'dark' }, 
-            'dark': { icon: '☀️', next: 'light' } 
+            'light': { icon: '☀️', next: 'dark' },
+            'dark': { icon: '🌙', next: 'light' }
         };
 
         const SAVED_THEME = localStorage.getItem('theme') || 'light'; 
+        const SAVED_LANG = localStorage.getItem('language') || 'pt-BR'; 
+
+        let currentTheme = SAVED_THEME;
         
         // --- VARIÁVEIS DE ESTADO ---
-        const totalDays = 12;
+        const totalDays = 7;
         let currentDay = 1;
-        const currentLang = 'pt-BR'; // Assume o português como idioma base e único
-
-        const DEVOTIONAL_KEY = 'sabedoria_eclesiastes'; 
-
-        // NOVO: VARIÁVEIS DE ACESSIBILIDADE E TTS
-        let fontScale = parseFloat(localStorage.getItem('fontScale')) || 1.0;
-        const FONT_MIN = 0.8;
-        const FONT_MAX = 1.4;
-        let speech = null; // Instância SpeechSynthesis
-        let isListening = false;
-        let ttsContent = '';
-        let ttsUtterance = null;
-        let ttsCurrentCharacter = 0;
+        let currentLang = SAVED_LANG; 
         
-        // --- DADOS MULTI-IDIOMA (Traduções - Simplificado para PT-BR) ---
+        // NOVO TTS: Objetos da Web Speech API e variáveis de controle
+        const synth = window.speechSynthesis; 
+        let utterance = null; 
+        let totalChars = 0; // Para calcular o progresso
+        let ttsVoices = []; // Cache das vozes disponíveis (CORREÇÃO 1)
+        let ttsInitialized = false; // Novo: Variável de controle para inicialização do TTS
+        
+        // CHAVE ÚNICA DO DEVOCIONAL.
+        const DEVOTIONAL_KEY = 'galatas'; 
+        
+        // NOVO: VARIÁVEIS DE ESTADO DE ACESSIBILIDADE DE FONTE
+        let currentFontSize = parseFloat(localStorage.getItem('fontSize')) || 1.0; 
+        const FONT_STEP = 0.1; // Incremento de 10%
+        const FONT_MAX = 1.4;  // Tamanho máximo (140%)
+        const FONT_MIN = 0.8;  // Tamanho mínimo (80%)
+        
+        // --- DADOS MULTI-IDIOMA (Traduções) ---
         const translations = {
             'pt-BR': {
                 mainTitle: "12 Dias de Sabedoria em Eclesiastes (Devocional)",
@@ -365,35 +322,90 @@
                 footerText: "Direitos Reservados 2024",
                 themeLight: "🌙 Modo Escuro", 
                 themeDark: "☀️ Modo Claro",
-                ttsListen: "Ouça Aqui",
-                ttsPause: "Pausar",
-                ttsContinue: "Continuar",
-                ttsStop: "Parar",
-                keyVerse: "Versículo Chave",
-                summary: "Resumo/Meditação",
-                application: "Aplicação Prática",
-                prayer: "Oração"
+                listenStart: "🔊 Ouça Aqui", 
+                listenStop: "🛑 Parar Leitura",
+                listenPause: "⏸️ Pausar Áudio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Conteúdo para leitura não encontrado.",
+                ttsLoading: "⏳ Carregando Áudio...", 
+                ttsUnsupported: "❌ Áudio Indisponível", 
+                versiculoChave: "Versículo Chave:", 
+                resumoMeditacao: "Resumo:", 
+                aplicacaoPratica: "Aplicação Prática:", /* CHAVE CORRETA */
+                oracaoLabel: "Oração:", 
+            },
+            'en-US': {
+                mainTitle: "12 Days of Wisdom in Ecclesiastes (Devotional)",
+				subTitle: "Finding purpose and meaning amidst vanity.",
+                dayTitle: "Day",
+                progressLabelPrefix: "Progress: ",
+                checkLabel: "Mark as Completed",
+                navPrev: "← Previous",
+                navNext: "Next →",
+                footerText: "All Rights Reserved 2024",
+                themeLight: "🌙 Dark Mode",
+                themeDark: "☀️ Light Mode",
+                listenStart: "🔊 Listen Here", 
+                listenStop: "🛑 Stop Reading",
+                listenPause: "⏸️ Pause Audio",
+                listenResume: "▶️ Resume",
+                noContentAlert: "Content for reading not found.",
+                ttsLoading: "⏳ Loading Audio...", 
+                ttsUnsupported: "❌ Audio Unavailable",
+                versiculoChave: "Key Verse:", 
+                resumoMeditacao: "Summary:", 
+                aplicacaoPratica: "Practical Application:", /* CHAVE CORRETA */
+                oracaoLabel: "Prayer:",
+            },
+            'es-ES': {
+                mainTitle: "12 Días de Sabiduría en Eclesiastés (Devocional)",
+				subTitle: "Encontrando propósito y significado en medio de la vanidad.",	
+                dayTitle: "Día",
+                progressLabelPrefix: "Progreso: ",
+                checkLabel: "Marcar como Concluido",
+                navPrev: "← Anterior",
+                navNext: "Siguiente →",
+                footerText: "Todos los derechos reservados 2024",
+                themeLight: "🌙 Modo Oscuro",
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Escuchar Aquí", 
+                listenStop: "🛑 Detener Lectura",
+                listenPause: "⏸️ Pausar Audio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Contenido para escuchar no encontrado.",
+                ttsLoading: "⏳ Cargando Audio...", 
+                ttsUnsupported: "❌ Audio No Disponible",
+                versiculoChave: "Versículo Clave:", 
+                resumoMeditacao: "Resumen:", 
+                aplicacaoPratica: "Aplicación Práctica:", /* CHAVE CORRIGIDA */
+                oracaoLabel: "Oración:",
+            },
+            'fr-FR': {
+                mainTitle: "Les 12 jours de sagesse dans l'Ecclésiaste (Méditations)",
+				subTitle: "Trouver un sens et un but au milieu de la vanité.",
+                dayTitle: "Jour",
+                progressLabelPrefix: "Progression : ",
+                checkLabel: "Marquer comme Accomplie",
+                navPrev: "← Précédent",
+                navNext: "Suivant →",
+                footerText: "Tous droits réservés 2024",
+                themeLight: "🌙 Mode Sombre",
+                themeDark: "☀️ Mode Clair",
+                listenStart: "🔊 Écoutez Ici", 
+                listenStop: "🛑 Arrêter Lecture",
+                listenPause: "⏸️ Pause Audio", 
+                listenResume: "▶️ Reprendre",
+                noContentAlert: "Contenu à lire introuvable.",
+                ttsLoading: "⏳ Chargement Audio...", 
+                ttsUnsupported: "❌ Audio Indisponível",
+                versiculoChave: "Verset Clé:", 
+                resumoMeditacao: "Résumé:", 
+                aplicacaoPratica: "Application Pratique:", /* CHAVE CORRIGIDA */
+                oracaoLabel: "Prière:",
             }
-        };
-        
-        // --- DADOS DO DEVOCIONAL (Eclesiastes - Simplificado para PT) ---
-        const devotionalContent = {
-            1: { pt: { h2: "Tudo É Vaidade: A Perspectiva Sob o Sol", versiculos: "<strong>Eclesiastes 1:2-3 (NAA):</strong> 'Vaidade de vaidades', diz o Pregador; 'vaidade de vaidades! Tudo é vaidade.' Que proveito tem o ser humano de todo o seu trabalho, com que se afadiga debaixo do sol?", resumo: "O termo 'vaidade' (hebel) significa 'vapor' ou 'neblina'. É a ideia de algo que não podemos agarrar. O autor, Salomão, está examinando a vida sob a perspectiva puramente humana, 'debaixo do sol'. Tudo o que fazemos, quando desconectado de Deus, não tem significado eterno, é como correr atrás do vento. A busca por propósito nas obras, na riqueza ou no prazer terreno é, em última análise, fútil.", aplicacao: "O que tem consumido a maior parte do seu tempo e energia esta semana? Se este esforço fosse apagado amanhã, que significado eterno ele teria? Gaste tempo hoje reavaliando suas prioridades à luz da eternidade, não apenas 'do sol'.", oracao: "Deus eterno, reconheço que muitas das minhas buscas são apenas vaidade. Perdoa-me por focar no que é passageiro. Ajuda-me a buscar o que tem verdadeiro peso e valor no Teu reino. Amém." } },
-            2: { pt: { h2: "A Busca por Prazer: A Armadilha do Contentamento Temporário", versiculos: "<strong>Eclesiastes 2:10-11 (NAA):</strong> Nada do que os meus olhos desejaram lhes neguei, nem proibi o meu coração de se alegrar por causa de todo o meu trabalho. [...] Então, olhei para todas as obras que as minhas mãos tinham feito [...] e eis que tudo era vaidade e correr atrás do vento.", resumo: "Salomão tentou todos os prazeres: vinho, construção, música, riqueza e até multiplicidade de relacionamentos. Ele concluiu que o prazer, quando buscado como fonte de satisfação última, é uma estrada sem fim. A alegria passageira nunca satisfaz a sede da alma por significado eterno. A sabedoria está em aproveitar os dons de Deus, não em adorá-los.", aplicacao: "Onde você tem buscado atalhos para a felicidade? Em vez de preencher o vazio com prazeres fugazes, peça a Deus a graça de desfrutar das pequenas alegrias (comida, trabalho, descanso) como presentes d'Ele, reconhecendo-O como a verdadeira fonte.", oracao: "Senhor, liberta-me da escravidão de buscar satisfação onde ela não pode ser encontrada. Ensina-me a desfrutar os Teus presentes com gratidão, mas a encontrar a minha alegria e descanso somente em Ti. Amém." } },
-            3: { pt: { h2: "O Tempo e a Soberania: Há Tempo Para Tudo", versiculos: "<strong>Eclesiastes 3:1 (NAA):</strong> Para tudo há um momento certo; há tempo para todo propósito debaixo do céu.", resumo: "Este capítulo é um lembrete da Soberania de Deus sobre o tempo. Salomão argumenta que, embora a vida possa parecer caótica, há um Mestre de Cerimônias por trás de cada evento. Saber que há um 'tempo para todo propósito' nos liberta da ansiedade de tentar forçar as coisas. A verdadeira sabedoria é aceitar o cronograma de Deus e viver com confiança o tempo presente.", aplicacao: "Que área da sua vida você está tentando acelerar ou impedir (tempo de plantar ou arrancar)? Confie que Deus colocou a eternidade em seu coração (Ec 3:11), mas que Ele também governa seu presente. Entregue o controle de seu tempo a Ele.", oracao: "Pai, Tu és o Senhor do tempo. Perdoa-me por minha impaciência e por lutar contra o Teu tempo perfeito. Ajuda-me a abraçar o 'tempo para' que o Senhor me deu hoje e a descansar na Tua soberania. Amém." } },
-            4: { pt: { h2: "O Valor do Companheirismo: Contra a Solidão da Vaidade", versiculos: "<strong>Eclesiastes 4:9-10 (NAA):</strong> Melhor é serem dois do que um, porque têm melhor paga do seu trabalho. Pois se caírem, um levantará o seu companheiro; mas ai do que estiver só, pois, caindo, não haverá quem o levante.", resumo: "Em um mundo de vaidade, onde a riqueza e a fama são temporárias, o companheirismo fiel (um amigo, um cônjuge) tem valor duradouro. A solidão é uma das consequências mais amargas da busca egoísta. A sabedoria de Deus nos leva a investir em relacionamentos de aliança, que são bens preciosos 'acima do sol', mesmo que imperfeitos.", aplicacao: "Você tem se isolado em sua busca por sucesso ou por medo da rejeição? Identifique um relacionamento que precisa de mais investimento (tempo, vulnerabilidade, perdão) e tome uma atitude prática para fortalecê-lo hoje.", oracao: "Deus de Aliança, obrigado pelo dom do companheirismo. Perdoa-me por me isolar. Ajuda-me a ser um amigo fiel e a aceitar a ajuda dos outros, para que eu possa caminhar com mais força e segurança. Amém." } },
-            5: { pt: { h2: "Adoração e Palavra: A Correção da Imprudência", versiculos: "<strong>Eclesiastes 5:1-2 (NAA):</strong> Guarde o pé quando você for à Casa de Deus. Chegue-se mais para ouvir do que para oferecer o sacrifício de tolos, porque eles não sabem que fazem o mal. Não se precipite em falar, nem o seu coração se apresse a proferir coisa alguma diante de Deus.", resumo: "A sabedoria ensinada por Salomão aplica-se também à adoração. A adoração tola é marcada pela imprudência, por muitas palavras e pouca ação. A sabedoria nos chama a 'guardar o pé', ou seja, a abordar Deus com reverência, ouvindo mais do que falando. A verdadeira adoração é um coração que obedece à Palavra que ouviu.", aplicacao: "Como tem sido a sua postura em relação à Palavra de Deus? Você tem se apressado a prometer coisas a Deus (como os tolos), ou tem se dedicado a ouvir e meditar em silêncio? Escolha um versículo e medite nele em silêncio hoje.", oracao: "Deus Santo, ensina-me a Te adorar em espírito e em verdade. Que eu seja tardio para falar e pronto para ouvir. Ajuda-me a guardar os meus passos e a submeter a minha vontade à Tua Palavra. Amém." } },
-            6: { pt: { h2: "Riqueza: O Engano da Acumulação", versiculos: "<strong>Eclesiastes 5:13-14 (NAA):</strong> Há um grave mal que vi debaixo do sol: riquezas que o seu dono guarda para o seu próprio prejuízo. E essas riquezas se perdem num mau negócio; e se ele gerou um filho, nada fica nas mãos deste.", resumo: "Salomão, o homem mais rico, conclui que a riqueza, quando acumulada com apego egoísta ('para o seu próprio prejuízo'), é um grande mal. A riqueza é 'vaidade' porque pode se perder num instante (mau negócio), ou porque quem a acumula não pode levá-la consigo após a morte. A sabedoria não está na quantidade de bens, mas na capacidade de usá-los com moderação e generosidade, como presente de Deus.", aplicacao: "Qual é o seu nível de apego aos seus bens? Lembre-se que o verdadeiro tesouro não está na sua conta bancária. Escolha hoje uma forma de ser generoso com o que Deus lhe deu, combatendo a mentalidade de acumulação.", oracao: "Pai, ajuda-me a ver a riqueza como um presente e não como um deus. Livra-me do apego egoísta. Ensina-me a ser um mordomo fiel e generoso com os bens que Tu me confiaste, investindo no que tem valor eterno. Amém." } },
-            7: { pt: { h2: "Fama e Legado: A Morte e o Esquecimento", versiculos: "<strong>Eclesiastes 7:1 (NAA):</strong> Melhor é a boa reputação do que o melhor perfume, e o dia da morte, do que o dia do nascimento de alguém.", resumo: "Este versículo paradoxal nos lembra de que o fim de uma vida (o dia da morte) é mais significativo do que o seu início, porque revela o verdadeiro legado. A boa reputação ('nome') é um dos poucos bens que 'dura' para além da vida, sendo melhor que o prazer imediato. No entanto, mesmo a memória do homem sábio perece (Ec 9:5). A verdadeira sabedoria é preparar-se para o dia da morte, vivendo para Aquele que não será esquecido.", aplicacao: "Que tipo de 'boa reputação' você está construindo? É baseada em serviço e caráter, ou em status e sucesso? Concentre-se hoje em atos de bondade e fidelidade que reflitam o caráter de Deus, pois apenas Ele é eterno.", oracao: "Senhor, ajuda-me a viver uma vida que honre o Teu nome. Livra-me da busca vazia por fama e aplausos humanos. Que a minha reputação seja de alguém que Te amou e serviu ao próximo fielmente. Amém." } },
-            8: { pt: { h2: "Injustiça e Paciência: O Mistério da Vida", versiculos: "<strong>Eclesiastes 8:14 (NAA):</strong> Há uma vaidade que acontece sobre a terra: há justos a quem acontece o que é próprio da conduta dos ímpios, e há ímpios a quem acontece o que é próprio da conduta dos justos. Digo que também isto é vaidade.", resumo: "Salomão confronta a Injustiça da vida 'debaixo do sol': às vezes, o justo sofre e o ímpio prospera. Não há um sistema de causa e efeito visível no mundo. Diante desse mistério, a sabedoria é ter paciência e aceitar que o ser humano não pode entender completamente as obras de Deus (Ec 8:17). A nossa resposta deve ser a de viver com integridade, independentemente dos resultados visíveis.", aplicacao: "Você está amargurado pela injustiça que sofreu ou testemunhou? Entregue seu desejo por vingança ou explicações a Deus. Viva o presente com fidelidade, confiando que a justiça final não está 'debaixo do sol', mas nas mãos de Deus.", oracao: "Deus Justo, entrego a Ti toda a minha frustração e amargura diante da injustiça. Ajuda-me a andar por fé, não por vista, e a continuar fiel, mesmo que os ímpios prosperem. Que eu encontre a minha paz na certeza do Teu julgamento final. Amém." } },
-            9: { pt: { h2: "O Prazer Simples: Desfrute a Vida na Presença de Deus", versiculos: "<strong>Eclesiastes 9:7-9 (NAA):</strong> Vai, come com alegria o teu pão, e bebe o teu vinho com coração contente, pois Deus já se agrada das tuas obras. [...] Desfruta a vida com a mulher que você ama, todos os dias da sua vida vã que Deus lhe deu debaixo do sol.", resumo: "Em meio à certeza da morte e à incerteza da justiça humana, a resposta de Salomão não é o fatalismo, mas um chamado ao gozo simples. Desfrutar do trabalho, da comida e do relacionamento com quem se ama é a forma como Deus deseja que vivamos a vida 'vã' (limitada). O gozo é um presente de Deus para o homem, não um direito conquistado.", aplicacao: "Você tem permitido que a ansiedade ou o trabalho roubem o gozo das coisas simples? Separe um momento hoje para desfrutar plenamente de uma refeição, de uma conversa ou de um pôr do sol, agradecendo a Deus pelo presente.", oracao: "Deus Generoso, obrigado pelo dom da vida e pelas alegrias simples que Tu me dás. Perdoa-me por deixar o peso do futuro roubar o gozo do presente. Ajuda-me a desfrutar o meu trabalho e a minha família como Teus presentes, com um coração contente. Amém." } },
-            10: { pt: { h2: "A Necessidade de Diligência: Agir com Sabedoria", versiculos: "<strong>Eclesiastes 9:10 (NAA):</strong> Tudo o que as suas mãos tiverem que fazer, faça-o com toda a sua força, porque na sepultura, para onde você vai, não há obra, nem projetos, nem conhecimento, nem sabedoria alguma.", resumo: "Este é um forte chamado à diligência. A vaidade da vida não deve nos levar à preguiça, mas a trabalhar com toda a nossa força enquanto temos tempo. A vida 'debaixo do sol' é curta; a oportunidade de usar nossos talentos é finita. Portanto, devemos agir no presente com seriedade e dedicação, pois o futuro é incerto e a morte é certa.", aplicacao: "Você tem procrastinado alguma tarefa importante ou negligenciado seus deveres? Lembre-se da brevidade da vida. Assuma o compromisso de aplicar toda a sua força na tarefa que está à sua frente hoje, glorificando a Deus no seu trabalho.", oracao: "Senhor, inspira-me a trabalhar com diligência e excelência. Ajuda-me a usar o tempo que me deste com sabedoria. Que a consciência da minha mortalidade me leve a aplicar toda a minha força no que é bom e digno do Teu nome. Amém." } },
-            11: { pt: { h2: "Juventude e Alegria: Lembre-se do Criador", versiculos: "<strong>Eclesiastes 11:9 (NAA):</strong> Jovem, alegre-se enquanto você é moço. Seja feliz nos dias da sua juventude. Siga os caminhos do seu coração e as visões da sua mente, sabendo, porém, que de todas estas coisas Deus o trará a juízo.", resumo: "Salomão encoraja a juventude a desfrutar a vida plenamente ('siga os caminhos do seu coração'), mas imediatamente insere o corretivo da sabedoria: a certeza do Juízo de Deus. O gozo não é um fim em si mesmo, mas deve ser vivido com responsabilidade, sob o olhar de um Deus que vê tudo. O propósito final não é a liberdade, mas a prestação de contas.", aplicacao: "Você tem vivido a sua vida como se não houvesse consequências, ou como se não houvesse um Deus para prestar contas? Encontre o equilíbrio entre o desfrute dos prazeres lícitos e a consciência constante da presença e do juízo do seu Criador.", oracao: "Criador, obrigado pela alegria da vida e da juventude. Que eu desfrute de tudo o que Tu me dás com um senso de responsabilidade para Contigo. Guarda-me da imprudência e ajuda-me a viver cada dia à luz da Tua santidade e do Teu juízo final. Amém." } },
-            12: { pt: { h2: "A Conclusão: Teme a Deus e Guarda os Seus Mandamentos", versiculos: "<strong>Eclesiastes 12:13-14 (NAA):</strong> De tudo o que se tem ouvido, a conclusão é esta: tema a Deus e guarde os seus mandamentos, porque isto é o dever de todo ser humano. Porque Deus há de trazer a juízo todas as obras, até mesmo as que estão escondidas, quer sejam boas, quer sejam más.", resumo: "Após a exaustiva exploração da vida 'debaixo do sol', Salomão oferece a única resposta que dá significado ao 'vapor' da existência: o temor a Deus. O temor não é medo paralisante, mas a reverência que leva à obediência. É a única atitude que prepara o ser humano para o inevitável Juízo final. O sentido da vida não está no que fazemos, mas em Aquele a quem servimos.", aplicacao: "Qual é o seu 'dever de todo ser humano' hoje? É o de viver em reverência a Deus. Reflita sobre onde a sua vida está em desobediência a um mandamento claro d'Ele. Renove hoje o seu compromisso de temê-Lo e servi-Lo acima de todas as coisas e vaidades.", oracao: "Pai, que o temor do Teu nome seja o princípio da minha sabedoria. Ajuda-me a guardar os Teus mandamentos e a viver cada dia à luz do julgamento que virá. Que a minha conclusão de vida seja a mesma do Pregador: servir e obedecer a Ti é tudo o que importa. Em nome de Jesus. Amém." } }
         };
 
         // --- ELEMENTOS DOM ---
-        const root = document.documentElement;
         const mainTitle = document.getElementById('mainTitle');
         const subTitle = document.getElementById('subTitle');
         const progressLabel = document.getElementById('progressLabel');
@@ -404,48 +416,400 @@
         const devotionalContentDiv = document.getElementById('devotionalContent');
         const footerText = document.getElementById('footerText');
         const progressBar = document.getElementById('progressBar');
-        const listenToggle = document.getElementById('listenToggle');
-        const audioProgressFill = document.getElementById('audioProgressFill');
-        const themeToggleFloater = document.getElementById('themeToggleFloater');
+
+        // ELEMENTOS DOM TTS/TEMA
+        const langSelectButton = document.getElementById('langSelectButton');
+        const langDropdown = document.getElementById('langDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const listenToggle = document.getElementById('listenToggle'); 
+        const audioProgressContainer = document.getElementById('audioProgressContainer');
+        const audioProgressBar = document.getElementById('audioProgressBar');
 
 
-  // *************** FUNÇÕES DE PERSISTÊNCIA E PROGRESSO ***************
+  // * FUNÇÕES DE UTILIDADE *
+    
+        function handleCompletedCheck() {
+			saveCompletion(currentDay, completedCheck.checked);
+
+		if (completedCheck.checked && currentDay < totalDays) {
+			nextDay();
+    }
+}
+        
+        // --- NOVO: FUNÇÕES DE CONTROLE DE FONTE ---
+        function updateFontSize() {
+            // Define a variável CSS na raiz do documento
+            document.documentElement.style.setProperty('--base-font-scale', currentFontSize.toFixed(2));
+            localStorage.setItem('fontSize', currentFontSize.toFixed(2));
+        }
+
+        function increaseFontSize() {
+            if (currentFontSize < FONT_MAX) {
+                currentFontSize = Math.min(FONT_MAX, currentFontSize + FONT_STEP);
+                updateFontSize();
+            }
+        }
+
+        function decreaseFontSize() {
+            if (currentFontSize > FONT_MIN) {
+                currentFontSize = Math.max(FONT_MIN, currentFontSize - FONT_STEP);
+                updateFontSize();
+            }
+        }
+        
+        // --- FUNÇÕES DE TEMA ---
+        function applyTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('theme', theme);
+            
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(theme === 'dark' ? 'dark-theme' : 'light-theme');
+        }
+
+        function toggleDarkMode() {
+            const newTheme = themeMap[currentTheme].next;
+            applyTheme(newTheme);
+            updateTexts(0);
+        }
+
+        function loadThemePreference() {
+            applyTheme(SAVED_THEME);
+        }
+        
+        // --- FUNÇÕES DE IDIOMA (COM BANDEIRAS) ---
+        function setLanguage(langCode) {
+            currentLang = langCode;
+            localStorage.setItem('language', langCode);
+            
+            // Parar a leitura ao trocar de idioma
+            stopSpeaking(); 
+            
+            updateTexts(0);
+            updateLanguageSelector();
+            // Atualiza o estado visual para a nova língua. 
+            updateListenToggle('start'); 
+        }
+
+        function updateLanguageSelector() {
+            if (!langSelectButton || !langDropdown) return;
+            
+            const currentFlag = flagMap[currentLang];
+            // 1. Atualiza o botão com a bandeira e nome do idioma ativo
+            langSelectButton.innerHTML = currentFlag.iconActive + currentFlag.text;
+            
+            // 2. Limpa e reconstrói o dropdown, excluindo o idioma ativo
+            langDropdown.innerHTML = '';
+            Object.keys(flagMap).forEach(lang => {
+                if (lang !== currentLang) {
+                    const flag = flagMap[lang];
+                    const link = document.createElement('a');
+                    link.innerHTML = flag.icon + flag.text; 
+                    link.setAttribute('data-lang', lang);
+                    link.setAttribute('href', '#'); 
+                    
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setLanguage(lang);
+                        langDropdown.style.display = 'none';
+                        // NOVO ARIA: fecha o dropdown, atualiza o status do botão
+                        langSelectButton.setAttribute('aria-expanded', 'false'); 
+                    });
+                    
+                    langDropdown.appendChild(link);
+                }
+            });
+        }
+
+        // FUNÇÃO TTS: Funções de controle da barra de progresso do áudio
+        function resetAudioProgressBar(hide = false) {
+            if (audioProgressBar) audioProgressBar.style.width = '0%';
+            if (audioProgressContainer) {
+                // Apenas esconde se for pedido, para não piscar no início
+                audioProgressContainer.style.display = hide ? 'none' : 'block';
+            }
+        }
+        
+        // --- FUNÇÃO DE ATUALIZAÇÃO DE TEXTOS ---
+        function updateTexts(direction = 1) { 
+            const t = translations[currentLang] || translations['pt-BR']; 
+
+            document.documentElement.lang = currentLang.split('-')[0];
+
+            mainTitle.innerText = t.mainTitle;
+            subTitle.innerText = t.subTitle;
+            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
+            checkLabel.innerText = t.checkLabel;
+            prevButton.innerText = t.navPrev;
+            nextButton.innerText = t.navNext;
+            footerText.innerText = t.footerText;
+            
+            // NOTE: themeToggle is now globally hidden, but the script updates are kept in case they are re-enabled
+            if (currentTheme === 'light') {
+                themeToggle.innerHTML = t.themeLight; 
+            } else {
+                themeToggle.innerHTML = t.themeDark; 
+            }
+
+            const contentLangKey = currentLang.substring(0, 2); 
+            loadDevotionalContent(currentDay, contentLangKey, t);
+
+            updateOverallProgress();
+
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                stopSpeaking(); 
+            }
+        }
+        
+        // --- FUNÇÃO DE CARREGAMENTO DE CONTEÚDO ---
+        function loadDevotionalContent(day, contentLangKey, t) { 
+            const data = devotionalContent[day] ? devotionalContent[day][contentLangKey] || devotionalContent[day]['pt'] : null;
+            
+            if (!data) {
+                devotionalContentDiv.innerHTML = `<p style="text-align: center;">${t.noContentAlert || 'Conteúdo não disponível para o Dia ${day} neste idioma.'}</p>`;
+                return;
+            }
+            
+            devotionalContentDiv.innerHTML = `
+                <h2 id="dayTitle">${t.dayTitle} ${day}: ${data.h2}</h2>
+                <div class="section">
+                    <strong>${t.versiculoChave}</strong>
+                    <p class="versiculos">${data.versiculos}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.resumoMeditacao}</strong>
+                    <p>${data.resumo}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.aplicacaoPratica}</strong>
+                    <p>${data.aplicacao}</p>
+                </div>
+                <p class="oracao-final">${t.oracaoLabel} ${data.oracao}</p>
+            `;
+            
+            document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`; 
+
+            updateListenToggle('start'); 
+        }
+        
+        // --- FUNÇÕES DE NAVEGAÇÃO ---
+        function nextDay() {
+            stopSpeaking(); 
+            if (currentDay < totalDays) {
+                currentDay++;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(1);
+            }
+        }
+        
+        function prevDay() {
+            stopSpeaking();
+            if (currentDay > 1) {
+                currentDay--;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(-1);
+            }
+        }
+
+        // --- FUNÇÕES DE LEITURA (TEXT-TO-SPEECH) ---
+        
+        function getVoiceForLanguage(langCode) {
+            const desiredLang = langCode.toLowerCase();
+            
+            if (ttsVoices.length === 0) {
+                console.warn('TTS: Vozes não carregadas.');
+                return null;
+            }
+            
+            let voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang && v.localService);
+            if (!voice) {
+                voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang);
+            }
+            if (!voice) {
+                const langPrefix = desiredLang.substring(0, 2);
+                voice = ttsVoices.find(v => v.lang.toLowerCase().startsWith(langPrefix));
+            }
+
+            return voice || ttsVoices[0];
+        }
+
+        function speakContent() {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            const contentElement = document.getElementById('devotionalContent');
+            
+            if (!synth || synth.speaking) {
+                return;
+            }
+
+            const textToSpeak = contentElement.innerText || contentElement.textContent;
+
+            if (!textToSpeak) {
+                alert(t.noContentAlert || "Conteúdo para leitura não encontrado.");
+                return;
+            }
+
+            totalChars = textToSpeak.length;
+            resetAudioProgressBar();
+
+            utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = currentLang;
+
+            const voice = getVoiceForLanguage(currentLang);
+            if (voice) {
+                utterance.voice = voice;
+            } else {
+                alert(t.ttsUnsupported + " " + t.noContentAlert);
+                stopSpeaking();
+                return;
+            }
+            
+            utterance.onboundary = (event) => {
+                const progress = (event.charIndex / totalChars) * 100;
+                if (audioProgressBar) audioProgressBar.style.width = `${progress}%`;
+            };
+            
+            utterance.onend = () => {
+                resetAudioProgressBar(true);
+                updateListenToggle('start'); 
+            };
+            
+            synth.speak(utterance);
+            updateListenToggle('speaking'); 
+        }
+
+        function stopSpeaking() {
+            if (synth && synth.speaking) {
+                synth.cancel();
+            }
+            if (synth) {
+                synth.cancel();
+            }
+            resetAudioProgressBar(true); 
+            updateListenToggle('start'); 
+        }
+        
+        function handleListenClick() {
+            if (!synth || listenToggle.disabled) return;
+
+            if (synth.speaking && !synth.paused) {
+                // Pausar
+                synth.pause();
+                updateListenToggle('paused');
+            } 
+            else if (synth.paused) {
+                // Continuar
+                synth.resume();
+                updateListenToggle('speaking');
+            } 
+            else if (!synth.speaking) {
+                // Iniciar a leitura
+                speakContent();
+            }
+        }
+        
+        function initTTS() {
+            if (ttsInitialized) return; 
+            const t = translations[currentLang] || translations['pt-BR']; 
+
+            if (!synth) {
+                listenToggle.innerHTML = t.ttsUnsupported;
+                listenToggle.disabled = true;
+                return;
+            }
+
+            synth.onvoiceschanged = () => {
+                ttsVoices = synth.getVoices();
+                if (ttsVoices.length > 0) {
+                    listenToggle.disabled = false;
+                    updateListenToggle('start'); 
+                    ttsInitialized = true;
+                } else {
+                    listenToggle.innerHTML = t.ttsUnsupported;
+                    listenToggle.disabled = true;
+                }
+            };
+            
+            ttsVoices = synth.getVoices();
+            
+            if (ttsVoices.length > 0) {
+                listenToggle.disabled = false;
+                updateListenToggle('start');
+                ttsInitialized = true;
+                synth.onvoiceschanged = null; 
+            } else {
+                listenToggle.innerHTML = t.ttsLoading;
+                listenToggle.disabled = true;
+            }
+        }
+
+
+        function updateListenToggle(state = 'start') {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            const button = listenToggle;
+            if (!button) return;
+
+            button.style.cssText = ''; 
+            
+            if (state === 'speaking') {
+                button.innerHTML = t.listenPause || '⏸️ Pausar Áudio';
+                button.title = 'Pausar a leitura';
+                button.style.backgroundColor = '#ffc107'; 
+                button.style.color = '#333';
+                
+            } else if (state === 'paused') {
+                button.innerHTML = t.listenResume || '▶️ Continuar';
+                button.title = 'Continuar a leitura';
+                button.style.backgroundColor = '#28a745'; 
+                button.style.color = 'white';
+                
+            } else { // state === 'start' (Ocioso/Parado)
+                button.innerHTML = t.listenStart || '🔊 Ouça Aqui';
+                button.title = 'Iniciar a leitura do devocional';
+            }
+        }
+
+
+    	// --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
+        
+const devotionalContent = {
+    1: {pt: {h2: "A Confissão do Mestre: Tudo é Vaidade", versiculos: "<strong>Eclesiastes 1:2-3 (NVI):</strong> “Vaidade! Vaidade!”, diz o Mestre. “Tudo é vaidade! O que o homem ganha com todo o seu trabalho, no qual se esforça debaixo do sol?”", resumo: "A palavra *hebel* (vapor, vaidade) revela a **Depravação Total** do mundo quando visto fora da perspectiva eterna de Deus. O esforço incessante “debaixo do sol” é fútil, pois a felicidade e o propósito não podem ser gerados pelo trabalho humano. Isso aponta para a **insuficiência das obras**, e a solução só é encontrada em **Cristo (Solus Christus)**, o único que não é *hebel*.", aplicacao: "Em que áreas de sua vida você tem corrido atrás do vento, buscando significado em coisas fugazes? Reconheça sua insuficiência e descanse na suficiência de Cristo, confiando que o propósito está em Sua união com Ele.", oracao: "Deus Soberano, confesso a vaidade das minhas ambições terrenas. Ajuda-me a enxergar a vida pela lente da Tua eternidade e a buscar o meu propósito somente em Ti, por Cristo. Amém."} , en: {h2: "The Teacher's Confession: Everything is Meaningless", versiculos: "<strong>Ecclesiastes 1:2-3 (NIV):</strong> “Meaningless! Meaningless!” says the Teacher. “Utterly meaningless! Everything is meaningless! What does man gain from all his labor at which he toils under the sun?”", resumo: "The word *hebel* (vapor, meaningless) reveals the **Total Depravity** of the world when viewed outside of God’s eternal perspective. Incessant toil “under the sun” is futile, as happiness and purpose cannot be generated by human effort. This points to the **insufficiency of works**; the solution is found only in **Christ (Solus Christus)**, the only one who is not *hebel*.", aplicacao: "In which areas of your life have you been chasing the wind, seeking meaning in fleeting things? Acknowledge your insufficiency and rest in the sufficiency of Christ, trusting that purpose is found in your union with Him.", oracao: "Sovereign God, I confess the meaninglessness of my earthly ambitions. Help me to view life through the lens of Your eternity and to seek my purpose only in You, through Christ. Amen."} , es: {h2: "La Confesión del Predicador: Todo es Vanidad", versiculos: "<strong>Eclesiastés 1:2-3 (NVI):</strong> «¡Vanidad de vanidades! —dice el Predicador—. ¡Vanidad de vanidades! ¡Todo es vanidad! ¿Qué provecho saca el hombre de tanto afanarse en esta vida bajo el sol?»", resumo: "La palabra *hebel* (vapor, vanidad) revela la **Depravación Total** del mundo visto fuera de la perspectiva eterna de Dios. El esfuerzo incesante “bajo el sol” es fútil, ya que la felicidad y el propósito no pueden ser generados por el trabajo humano. Esto señala la **insuficiencia de las obras**, y la solución se encuentra solo en **Cristo (Solus Christus)**, el único que no es *hebel*.", aplicacao: "¿En qué áreas de tu vida has estado corriendo tras el viento, buscando significado en cosas fugaces? Reconoce tu insuficiencia y descansa en la suficiencia de Cristo, confiando en que el propósito se encuentra en tu unión con Él.", oracao: "Dios Soberano, confieso la vanidad de mis ambiciones terrenales. Ayúdame a ver la vida a través de la lente de Tu eternidad y a buscar mi propósito solamente en Ti, por medio de Cristo. Amén."} , fr: {h2: "La Confession de l'Orateur: Tout est Vanité", versiculos: "<strong>Ecclésiaste 1:2-3 (Louis Segond):</strong> Vanité des vanités, dit l'Ecclésiaste, vanité des vanités, tout est vanité! Quel avantage revient-il à l'homme de tout le travail qu'il fait sous le soleil?", resumo: "Le mot *hebel* (vapeur, vanité) révèle la **Dépravation Totale** du monde vu en dehors de la perspective éternelle de Dieu. L'effort incessant «sous le soleil» est futile, car le bonheur et le but ne peuvent être générés par le travail humain. Cela souligne l'**insuffisance des œuvres**, et la solution ne se trouve qu'en **Christ (Solus Christus)**, le seul qui n'est pas *hebel*.", aplicacao: "Dans quels domaines de votre vie avez-vous couru après le vent, cherchant un sens dans des choses éphémères? Reconnaissez votre insuffisance et reposez-vous dans la suffisance du Christ, confiant que le but se trouve dans votre union avec Lui.", oracao: "Dieu Souverain, je confesse la vanité de mes ambitions terrestres. Aide-moi à voir la vie à travers la lentille de Ton éternité et à chercher mon but uniquement en Toi, par Christ. Amen."}},
+    2: {pt: {h2: "O Vazio da Riqueza e Prazer", versiculos: "<strong>Eclesiastes 2:10-11 (NVI):</strong> [...] examinei todas as obras que as minhas mãos haviam feito e o trabalho que eu, com fadiga, havia realizado. E tudo era inútil, era correr atrás do vento; não havia qualquer proveito debaixo do sol.", resumo: "Após experimentar os maiores prazeres, o Mestre conclui que a busca por **Justificação pelas obras** ou pelo prazer sensorial é exaustiva e inútil. A satisfação verdadeira reside em **Deus (Soli Deo Gloria)**, e não nos dons que Ele concede. A busca pela felicidade como um fim em si mesma é *hebel*.", aplicacao: "Analise sua fonte de alegria. Abrace a humildade de saber que o **único mérito** está na justiça de Cristo que lhe foi imputada. Desfrutar a vida é uma expressão de gratidão, não um objetivo a ser alcançado. Descanse na suficiência d'Ele.", oracao: "Pai, liberta-me da ilusão de que a próxima conquista trará satisfação duradoura. Ensina-me a adorar somente Aquele que é eterno. Amém."} , en: {h2: "The Emptiness of Wealth and Pleasure", versiculos: "<strong>Ecclesiastes 2:10-11 (NIV):</strong> I considered all that my hands had done and the toil I had expended in doing it, and again, all was meaningless, a chasing after the wind; nothing was gained under the sun.", resumo: "After experiencing the greatest pleasures, the Teacher concludes that the pursuit of **Justification by works** or sensory pleasure is exhausting and useless. True satisfaction lies in **God (Soli Deo Gloria)**, not in the gifts He grants. The pursuit of happiness as an end in itself is *hebel*.", aplicacao: "Analyze your source of joy. Embrace the humility of knowing that the **only merit** lies in the righteousness of Christ imputed to you. Enjoying life is an expression of gratitude, not a goal to be achieved. Rest in His sufficiency.", oracao: "Father, free me from the illusion that the next achievement will bring lasting satisfaction. Teach me to worship only the One who is eternal. Amen."} , es: {h2: "El Vacío de la Riqueza y el Placer", versiculos: "<strong>Eclesiastés 2:10-11 (NVI):</strong> Me dediqué a examinar todas mis obras y el esfuerzo que me había costado realizarlas, ¡y he aquí que todo era vanidad y un correr tras el viento! ¡No había en ello nada de provecho bajo el sol!", resumo: "Después de experimentar los mayores placeres, el Predicador concluye que la búsqueda de **Justificación por obras** o placer sensorial es agotadora e inútil. La verdadera satisfacción reside en **Dios (Soli Deo Gloria)**, y no en los dones que Él concede. La búsqueda de la felicidad como un fin en sí misma es *hebel*.", aplicacao: "Analiza tu fuente de alegría. Abraza la humildad de saber que el **único mérito** reside en la justicia de Cristo imputada a ti. Disfrutar de la vida es una expresión de gratitud, no un objetivo a alcanzar. Descansa en Su suficiencia.", oracao: "Padre, libérame de la ilusión de que el próximo logro traerá satisfacción duradera. Enséñame a adorar solo a Aquel que es eterno. Amén."} , fr: {h2: "Le Vide de la Richesse et du Plaisir", versiculos: "<strong>Ecclésiaste 2:10-11 (Louis Segond):</strong> tout ce que mes yeux avaient désiré, je le leur ai donné, et je n'ai refusé à mon cœur aucune joie [...] Et voici, tout était vanité et poursuite du vent, et il n'y avait rien à gagner sous le soleil.", resumo: "Après avoir expérimenté les plus grands plaisirs, l'Orateur conclut que la poursuite de la **Justification par les œuvres** ou du plaisir sensoriel est épuisante et inutile. La vraie satisfaction réside en **Dieu (Soli Deo Gloria)**, et non dans les dons qu'Il accorde. La quête du bonheur comme un fin en soi est *hebel*.", aplicacao: "Analysez votre source de joie. Adoptez l'humilité de savoir que le **seul mérite** réside dans la justice de Christ qui vous est imputée. Jouir de la vie est une expression de gratitude, pas un objectif à atteindre. Reposez-vous dans Sa suffisance.", oracao: "Père, libère-moi de l'illusion que la prochaine réussite apportera une satisfaction durable. Enseigne-moi à n'adorer que Celui qui est éternel. Amen."}},
+    3: {pt: {h2: "O Tempo Sob a Soberania de Deus", versiculos: "<strong>Eclesiastes 3:1 (NVI):</strong> Para tudo há uma ocasião certa; há um tempo certo para cada propósito debaixo do céu.", resumo: "Este capítulo é um hino à **Soberania e Providência** de Deus. Cada evento da vida é ordenado por Deus em Seu **plano eterno e imutável (Propósito)**. A Teologia Reformada enfatiza que Deus é o Mestre do tempo, convidando-nos à **Confiança** em Sua sabedoria.", aplicacao: "Quando a vida parecer caótica ou lenta, lembre-se do **Calendário de Deus**. A frustração nasce da nossa tentativa de controlar o que Ele já decretou. Seu papel não é entender a totalidade do tempo, mas confiar no 'Quem' que o controla.", oracao: "Deus de toda a Sabedoria, eu Te louvo porque Tu orquestras o universo e minha vida. Dá-me a graça de aceitar o 'tempo' que Tu determinaste. Que a certeza da Tua Soberania me livre da ansiedade. Amém."} , en: {h2: "Time Under God's Sovereignty", versiculos: "<strong>Ecclesiastes 3:1 (NIV):</strong> There is a time for everything, and a season for every activity under the heavens.", resumo: "This chapter is a hymn to God's **Sovereignty and Providence**. Every event in life is ordered by God in His **eternal and immutable plan (Purpose)**. Reformed Theology emphasizes that God is the Master of time, inviting us to **Trust** in His wisdom.", aplicacao: "When life seems chaotic or slow, remember the **Calendar of God**. Frustration arises from our attempt to control what He has already decreed. Your role is not to understand the totality of time, but to trust the 'Who' who controls it.", oracao: "God of all Wisdom, I praise You because You orchestrate the universe and my life. Grant me the grace to accept the 'time' You have determined. May the certainty of Your Sovereignty free me from anxiety. Amen."} , es: {h2: "El Tiempo Bajo la Soberanía de Dios", versiculos: "<strong>Eclesiastés 3:1 (NVI):</strong> Todo tiene su momento oportuno; hay un tiempo para todo lo que se hace bajo el cielo.", resumo: "Este capítulo es un himno a la **Soberanía y Providencia** de Dios. Cada evento de la vida es ordenado por Dios en Su **plan eterno e inmutable (Propósito)**. La Teología Reformada enfatiza que Dios es el Maestro del tiempo, invitándonos a la **Confianza** en Su sabiduría.", aplicacao: "Cuando la vida parezca caótica o lenta, recuerda el **Calendario de Dios**. La frustración nace de nuestro intento de controlar lo que Él ya ha decretado. Tu papel no es entender la totalidad del tiempo, sino confiar en el 'Quién' que lo controla.", oracao: "Dios de toda Sabiduría, Te alabo porque orquestas el universo y mi vida. Dame la gracia de aceptar el 'tiempo' que Tú has determinado. Que la certeza de Tu Soberanía me libre de la ansiedad. Amén."} , fr: {h2: "Le Temps Sous la Souveraineté de Dieu", versiculos: "<strong>Ecclésiaste 3:1 (Louis Segond):</strong> Il y a un temps pour tout, un temps pour toute chose sous les cieux.", resumo: "Ce chapitre est un hymne à la **Souveraineté et à la Providence** de Dieu. Chaque événement de la vie est ordonné par Dieu dans Son **plan éternel et immuable (But)**. La Théologie Réformée souligne que Dieu est le Maître du temps, nous invitant à la **Confiance** en Sa sagesse.", aplicacao: "Lorsque la vie semble chaotique ou lente, rappelez-vous le **Calendrier de Dieu**. La frustration naît de notre tentative de contrôler ce qu'Il a déjà décrété. Votre rôle n'est pas de comprendre la totalité du temps, mais de faire confiance au 'Qui' qui le contrôle.", oracao: "Dieu de toute Sagesse, je Te loue parce que Tu orchestres l'univers et ma vie. Accorde-moi la grâce d'accepter le 'temps' que Tu as déterminé. Que la certitude de Ta Souveraineté me libère de l'anxiété. Amen."}},
+    4: {pt: {h2: "A Responsabilidade das Nossas Palavras", versiculos: "<strong>Eclesiastes 5:4-5 (NVI):</strong> Quando você fizer um voto a Deus, não demore a cumpri-lo. [...] É melhor não fazer voto do que fazer e não cumprir.", resumo: "O Mestre confronta a **adoração vazia** e exige reverência e sinceridade na Casa de Deus. Votos e promessas apressadas são um desprezo ao Deus da Aliança. A ênfase é na **Sinceridade do Coração** e na ética reformada: a obediência é superior ao ritual.", aplicacao: "Examine sua atitude ao se dirigir a Deus. A **Santificação** manifesta-se na disciplina da sua língua e na fidelidade aos seus votos. Leve suas palavras e compromissos a sério, pois o verdadeiro louvor começa na reverência.", oracao: "Senhor, disciplina a minha língua e o meu coração. Que eu seja mais pronto para ouvir a Tua Palavra do que para oferecer palavras vãs. Que a minha vida seja um culto racional e sincero a Ti. Amém."} , en: {h2: "The Responsibility of Our Words", versiculos: "<strong>Ecclesiastes 5:4-5 (NIV):</strong> When you make a vow to God, do not delay to fulfill it. [...] It is better not to make a vow than to make one and not fulfill it.", resumo: "The Teacher confronts **empty worship** and demands reverence and sincerity in the House of God. Hasty vows and promises are a disregard for the God of the Covenant. The emphasis is on the **Sincerity of the Heart** and Reformed ethics: obedience is superior to ritual.", aplicacao: "Examine your attitude when addressing God. **Sanctification** is manifested in the discipline of your tongue and faithfulness to your vows. Take your words and commitments seriously, for true praise begins in reverence.", oracao: "Lord, discipline my tongue and my heart. May I be quicker to listen to Your Word than to offer empty words. May my life be a rational and sincere worship to You. Amen."} , es: {h2: "La Responsabilidad de Nuestras Palabras", versiculos: "<strong>Eclesiastés 5:4-5 (NVI):</strong> Cuando hagas un voto a Dios, no te demores en cumplirlo. [...] Más vale no hacer voto que hacerlo y no cumplirlo.", resumo: "El Predicador confronta la **adoración vacía** y exige reverencia y sinceridad en la Casa de Dios. Los votos y promesas apresuradas son un desprecio al Dios del Pacto. El énfasis está en la **Sinceridad del Corazón** y la ética reformada: la obediencia es superior al ritual.", aplicacao: "Examina tu actitud al dirigirte a Dios. La **Santificación** se manifiesta en la disciplina de tu lengua y la fidelidad a tus votos. Toma tus palabras y compromisos en serio, ya que la verdadera alabanza comienza en la reverencia.", oracao: "Señor, disciplina mi lengua y mi corazón. Que esté más dispuesto a escuchar Tu Palabra que a ofrecer palabras vanas. Que mi vida sea un culto racional y sincero para Ti. Amén."} , fr: {h2: "La Responsabilité de Nos Paroles", versiculos: "<strong>Ecclésiaste 5:4-5 (Louis Segond):</strong> Si tu fais un vœu à Dieu, ne tarde point à l'accomplir [...] Mieux vaut pour toi ne point faire de vœu, que d'en faire un et de ne pas l'accomplir.", resumo: "L'Orateur confronte l'**adoration vide** et exige révérence et sincérité dans la Maison de Dieu. Les vœux et promesses hâtives sont un mépris pour le Dieu de l'Alliance. L'accent est mis sur la **Sincérité du Cœur** et l'éthique réformée: l'obéissance est supérieure au rituel.", aplicacao: "Examinez votre attitude lorsque vous vous adressez à Dieu. La **Sanctification** se manifeste dans la discipline de votre langue et la fidélité à vos vœux. Prenez vos paroles et vos engagements au sérieux, car la vraie louange commence dans la révérence.", oracao: "Seigneur, discipline ma langue et mon cœur. Que je sois plus prompt à écouter Ta Parole qu'à offrir des paroles vaines. Que ma vie soit un culte rationnel et sincère pour Toi. Amen."}},
+    5: {pt: {h2: "O Engano da Acumulação de Riqueza", versiculos: "<strong>Eclesiastes 5:10 (NVI):</strong> Quem ama o dinheiro jamais terá o suficiente; quem ama as riquezas jamais ficará satisfeito. Isso não faz sentido!", resumo: "O amor ao dinheiro é idolatria e a prova irrefutável da **insatisfação humana** no pecado. A riqueza, em si, não é vaidade, mas o **apego a ela** é uma armadilha que rouba o descanso. A verdadeira prosperidade está em ser rico para com Deus (**Santificação**), não em ser escravo da **Acumulação Vã**.", aplicacao: "Você está servindo a Deus ou ao dinheiro? Viva de modo que suas posses não o possuam. Confie que o significado da sua vida não está na sua conta bancária, mas na sua união com Aquele que é eterno.", oracao: "Pai Celestial, liberta-me da ganância. Ajuda-me a confiar na Tua provisão diária e a não buscar segurança nas riquezas, mas somente em Ti. Que a minha generosidade declare que Tu és o meu Tesouro. Amém."} , en: {h2: "The Deception of Wealth Accumulation", versiculos: "<strong>Ecclesiastes 5:10 (NIV):</strong> Whoever loves money never has enough; whoever loves wealth is never satisfied. This too is meaningless.", resumo: "The love of money is idolatry and irrefutable proof of **human dissatisfaction** in sin. Wealth itself is not vanity, but the **attachment to it** is a trap that steals rest. True prosperity is being rich toward God (**Santification**), not being a slave to **Vain Accumulation**.", aplicacao: "Are you serving God or money? Live so that your possessions do not possess you. Trust that the meaning of your life is not in your bank account, but in your union with the One who is eternal.", oracao: "Heavenly Father, free me from greed. Help me to trust in Your daily provision and not seek security in riches, but only in You. May my generosity declare that You are my Treasure. Amen."} , es: {h2: "El Engaño de la Acumulación de Riqueza", versiculos: "<strong>Eclesiastés 5:10 (NVI):</strong> Quien ama el dinero, de dinero no se sacia; quien ama las riquezas, nunca tiene suficientes. ¡También esto es vanidad!", resumo: "El amor al dinero es idolatría y la prueba irrefutable de la **insatisfacción humana** en el pecado. La riqueza, en sí, no es vanidad, pero el **apego a ella** es una trampa que roba el descanso. La verdadera prosperidad está en ser rico para con Dios (**Santificación**), no en ser esclavo de la **Acumulación Vana**.", aplicacao: "¿Estás sirviendo a Dios o al dinero? Vive de modo que tus posesiones no te posean. Confía en que el significado de tu vida no está en tu cuenta bancaria, sino en tu unión con Aquel que es eterno.", oracao: "Padre Celestial, libérame de la codicia. Ayúdame a confiar en Tu provisión diaria y a no buscar seguridad en las riquezas, sino solo en Ti. Que mi generosidad declare que Tú eres mi Tesoro. Amén."} , fr: {h2: "La Tromperie de l'Accumulation de Richesse", versiculos: "<strong>Ecclésiaste 5:10 (Louis Segond):</strong> Celui qui aime l'argent n'est pas rassasié par l'argent, et celui qui aime les richesses n'en a jamais assez. C'est encore là une vanité.", resumo: "L'amour de l'argent est de l'idolâtrie et la preuve irréfutable de l'**insatisfaction humaine** dans le péché. La richesse, en elle-même, n'est pas vanité, mais l'**attachement à elle** est un piège qui vole le repos. La vraie prospérité consiste à être riche envers Dieu (**Santification**), et non à être esclave de l'**Accumulation Vaine**.", aplicacao: "Servez-vous Dieu ou l'argent? Vivez de manière à ce que vos possessions ne vous possèdent pas. Croyez que le sens de votre vie n'est pas dans votre compte bancaire, mais dans votre union avec Celui qui est éternel.", oracao: "Père Céleste, libère-moi de l'avidité. Aide-moi à faire confiance à Ta provision quotidienne et à ne pas chercher la sécurité dans les richesses, mais uniquement en Toi. Que ma générosité déclare que Tu es mon Trésor. Amen."}},
+    6: {pt: {h2: "O Valor da Dor e da Reflexão Sóbria", versiculos: "<strong>Eclesiastes 7:2-4 (NVI):</strong> É melhor ir a uma casa onde há luto do que ir a uma casa em festa, pois a morte é o destino de todos; os vivos devem levar isso a sério.", resumo: "A dor nos força a confrontar a **Realidade do Pecado e da Morte**, nos arrancando da superficialidade. O luto, quando processado sob a luz da Escritura, é um **Meio de Graça** que conduz à **Humildade** e ao crescimento. A dor nos lembra da brevidade da vida.", aplicacao: "Não fuja da dor. Use a tristeza como uma alavanca para a reflexão sóbria e a busca por Deus. Lembre-se: o luto produtivo é mais valioso do que o riso da insensatez.", oracao: "Senhor, não permitas que eu desperdice o sofrimento. Usa minhas dificuldades para me arrancar da superficialidade e me forçar a buscar a Tua Palavra. Que eu aprenda a sabedoria que vem da reflexão sóbria. Amém."} , en: {h2: "The Value of Grief and Sober Reflection", versiculos: "<strong>Ecclesiastes 7:2-4 (NIV):</strong> It is better to go to a house of mourning than to go to a house of feasting, for death is the destiny of everyone, and the living should take this to heart.", resumo: "Pain forces us to confront the **Reality of Sin and Death**, pulling us from superficiality. Grief, when processed under the light of Scripture, is a **Means of Grace** that leads to **Humility** and growth. Pain reminds us of the brevity of life.", aplicacao: "Do not run from pain. Use sadness as a lever for sober reflection and the search for God. Remember: productive mourning is more valuable than the laughter of foolishness.", oracao: "Lord, do not let me waste suffering. Use my difficulties to pull me from superficiality and force me to seek Your Word. May I learn the wisdom that comes from sober reflection. Amen."} , es: {h2: "El Valor del Luto y la Reflexión Sobria", versiculos: "<strong>Eclesiastés 7:2-4 (NVI):</strong> Es mejor ir a una casa de luto que ir a una casa de fiesta, pues la muerte es el fin de todo hombre, y los que viven debieran reflexionar en esto.", resumo: "El dolor nos obliga a confrontar la **Realidad del Pecado y la Muerte**, alejándonos de la superficialidad. El luto, cuando se procesa bajo la luz de la Escritura, es un **Medio de Gracia** que conduce a la **Humildad** y al crecimiento. El dolor nos recuerda la brevedad de la vida.", aplicacao: "No huyas del dolor. Usa la tristeza como palanca para la reflexión sobria y la búsqueda de Dios. Recuerda: el luto productivo es más valioso que la risa de la insensatez.", oracao: "Señor, no permitas que desperdicie el sufrimiento. Usa mis dificultades para alejarme de la superficialidad y obligarme a buscar Tu Palabra. Que aprenda la sabiduría que proviene de la reflexión sobria. Amén."} , fr: {h2: "La Valeur du Deuil et de la Réflexion Sobre", versiculos: "<strong>Ecclésiaste 7:2-4 (Louis Segond):</strong> Mieux vaut aller dans une maison de deuil que d'aller dans une maison de festin; car c'est là la fin de tout homme, et celui qui vit prend la chose à cœur.", resumo: "La douleur nous force à confronter la **Réalité du Péché et de la Mort**, nous arrachant à la superficialité. Le deuil, lorsqu'il est traité sous la lumière de l'Écriture, est un **Moyen de Grâce** qui mène à l'**Humilité** et à la croissance. La douleur nous rappelle la brièveté de la vie.", aplicacao: "Ne fuyez pas la douleur. Utilisez la tristesse comme un levier pour la réflexion sobre et la recherche de Dieu. Rappelez-vous: le deuil productif a plus de valeur que le rire de la folie.", oracao: "Seigneur, ne me laisse pas gaspiller la souffrance. Utilise mes difficultés pour me sortir de la superficialité et me forcer à chercher Ta Parole. Que j'apprenne la sagesse qui vient de la réflexion sobre. Amen."}},
+    7: {pt: {h2: "Aceitação da Providência em Dias Bons e Maus", versiculos: "<strong>Eclesiastes 7:14 (NVI):</strong> Desfrute os dias prósperos, mas, quando vierem os dias maus, considere: foi Deus quem fez tanto uns como os outros, para que o homem não descubra nada sobre o seu futuro.", resumo: "Deus é o autor tanto dos dias de prosperidade quanto dos de adversidade (**Providência Divina**). Essa verdade nos impede de ser orgulhosos na bênção e desesperados na crise. O propósito é nos manter em humilde dependência d'Ele, reconhecendo Sua **Soberania** sobre tudo.", aplicacao: "Mantenha uma perspectiva equilibrada. Viva pela **Fé**, não pelas circunstâncias, aceitando com gratidão os picos e com submissão os vales. O contentamento no presente é um testemunho.", oracao: "Pai Soberano, ensina-me a andar pela fé. Ajuda-me a desfrutar os dias bons com gratidão e a enfrentar os dias maus com submissão à Tua vontade. Que eu não tente controlar o futuro, mas confie em Ti, Autor de todo o tempo. Amém."} , en: {h2: "Acceptance of Providence in Good and Bad Days", versiculos: "<strong>Ecclesiastes 7:14 (NIV):</strong> Enjoy prosperity when it comes, but when adversity hits, consider this: God has made the one as well as the other, so that man may not discover anything about his future.", resumo: "God is the author of both prosperous and adverse days (**Divine Providence**). This truth prevents us from being proud in blessing and desperate in crisis. The purpose is to keep us in humble dependence on Him, recognizing His **Sovereignty** over everything.", aplicacao: "Maintain a balanced perspective. Live by **Faith**, not by circumstances, accepting the peaks with gratitude and the valleys with submission. Contentment in the present is a testimony.", oracao: "Sovereign Father, teach me to walk by faith. Help me to enjoy the good days with gratitude and face the bad days with submission to Your will. May I not try to control the future, but trust in You, Author of all time. Amen."} , es: {h2: "Aceptación de la Providencia en Días Buenos y Malos", versiculos: "<strong>Eclesiastés 7:14 (NVI):</strong> Disfruta de los días buenos, pero en los días malos reflexiona: Dios hizo tanto lo uno como lo otro, de modo que el hombre no puede descubrir nada de su futuro.", resumo: "Dios es el autor tanto de los días de prosperidad como de los de adversidad (**Providencia Divina**). Esta verdad nos impide ser orgullosos en la bendición y desesperados en la crisis. El propósito es mantenernos en humilde dependencia de Él, reconociendo Su **Soberanía** sobre todo.", aplicacao: "Mantén una perspectiva equilibrada. Vive por la **Fe**, no por las circunstancias, aceptando con gratitud los picos y con sumisión los valles. El contentamiento en el presente es un testimonio.", oracao: "Padre Soberano, enséñame a caminar por la fe. Ayúdame a disfrutar los días buenos con gratitud y a enfrentar los días malos con sumisión a Tu voluntad. Que no intente controlar el futuro, sino que confíe en Ti, Autor de todo el tiempo. Amén."} , fr: {h2: "Acceptation de la Providence dans les Bons et Mauvais Jours", versiculos: "<strong>Ecclésiaste 7:14 (Louis Segond):</strong> Jouis du bonheur au jour du bonheur, et au jour du malheur, réfléchis: Dieu a fait l'un comme l'autre, afin que l'homme ne découvre en rien ce qui arrivera après lui.", resumo: "Dieu est l'auteur des jours de prospérité comme des jours d'adversité (**Providence Divine**). Cette vérité nous empêche d'être orgueilleux dans la bénédiction et désespérés dans la crise. Le but est de nous maintenir dans une humble dépendance de Lui, reconnaissant Sa **Souveraineté** sur tout.", aplicacao: "Maintenez une perspective équilibrée. Vivez par la **Foi**, et non par les circonstances, acceptant les sommets avec gratitude et les vallées avec soumission. Le contentement dans le présent est un témoignage.", oracao: "Père Souverain, enseigne-moi à marcher par la foi. Aide-moi à jouir des bons jours avec gratitude et à affronter les mauvais jours avec soumission à Ta volonté. Que je n'essaie pas de contrôler l'avenir, mais que je Te fasse confiance, Auteur de tout temps. Amen."}},
+    8: {pt: {h2: "O Prazer Fiel da Graça Comum", versiculos: "<strong>Eclesiastes 9:7 (NVI):</strong> Vá, coma a sua comida com alegria e beba o seu vinho com o coração contente, pois Deus já se agradou do que você faz.", resumo: "O Mestre nos convida a desfrutar dos prazeres simples da vida como dons da **Graça Comum** de Deus. A alegria piedosa é um ato de adoração que reconhece a bondade do Criador, um resultado da **Justificação pela Fé** que nos liberta do fardo de ter que 'ganhar' a vida.", aplicacao: "Não se sinta culpado por desfrutar dos prazeres lícitos. Seu contentamento no presente é um testemunho. Aproveite as bênçãos diárias com moderação e um coração agradecido, honrando a Deus em todos os seus prazeres lícitos.", oracao: "Senhor, obrigado por todos os Teus dons. Que eu não peque por desprezar ou idolatrar Teus presentes, mas que os receba com alegria, glorificando-Te com o meu desfrute. Amém."} , en: {h2: "The Faithful Pleasure of Common Grace", versiculos: "<strong>Ecclesiastes 9:7 (NIV):</strong> Go, eat your food with gladness, and drink your wine with a joyful heart, for it is now that God favors what you do.", resumo: "The Teacher invites us to enjoy the simple pleasures of life as gifts of God's **Common Grace**. Pious joy is an act of worship that recognizes the Creator's goodness, a result of **Justification by Faith** that frees us from the burden of having to 'earn' life.", aplicacao: "Do not feel guilty about enjoying lawful pleasures. Your contentment in the present is a testimony. Enjoy daily blessings with moderation and a thankful heart, honoring God in all your lawful pleasures.", oracao: "Lord, thank You for all Your gifts. May I not sin by despising or idolizing Your gifts, but receive them with joy, glorifying You with my enjoyment. Amen."} , es: {h2: "El Placer Fiel de la Gracia Común", versiculos: "<strong>Eclesiastés 9:7 (NVI):</strong> Anda, y come tu pan con gozo, y bebe tu vino con corazón alegre, porque Dios ya ha aprobado tus obras.", resumo: "El Predicador nos invita a disfrutar de los placeres sencillos de la vida como dones de la **Gracia Común** de Dios. La alegría piadosa es un acto de adoración que reconoce la bondad del Creador, un resultado de la **Justificación por la Fe** que nos libera de la carga de tener que 'ganar' la vida.", aplicacao: "No te sientas culpable por disfrutar de los placeres lícitos. Tu contentamiento en el presente es un testimonio. Aprovecha las bendiciones diarias con moderación y un corazón agradecido, honrando a Dios en todos tus placeres lícitos.", oracao: "Señor, gracias por todos Tus dones. Que no peque por despreciar o idolatrar Tus regalos, sino que los reciba con alegría, glorificándote con mi disfrute. Amén."} , fr: {h2: "Le Plaisir Fidèle de la Grâce Commune", versiculos: "<strong>Ecclésiaste 9:7 (Louis Segond):</strong> Va, mange ton pain avec joie, et bois ton vin avec un cœur content; car depuis longtemps Dieu prend plaisir à ce que tu fais.", resumo: "L'Orateur nous invite à jouir des plaisirs simples de la vie comme des dons de la **Grâce Commune** de Dieu. La joie pieuse est un acte d'adoration qui reconnaît la bonté du Créateur, un résultat de la **Justification par la Foi** qui nous libère du fardeau de devoir 'gagner' la vie.", aplicacao: "Ne vous sentez pas coupable de jouir des plaisirs licites. Votre contentement dans le présent est un témoignage. Profitez des bénédictions quotidiennes avec modération et un cœur reconnaissant, honorant Dieu dans tous vos plaisirs licites.", oracao: "Seigneur, merci pour tous Tes dons. Que je ne pèche pas en méprisant ou en idolâtrant Tes cadeaux, mais que je les reçoive avec joie, Te glorifiant avec ma jouissance. Amen."}},
+    9: {pt: {h2: "A Tolice da Pequena Negligência", versiculos: "<strong>Eclesiastes 10:1 (NVI):</strong> Assim como moscas mortas fazem com que o perfume do perfumista se estrague e cheire mal, uma pequena tolice pesa mais que a sabedoria e a honra.", resumo: "Uma pequena falha pode arruinar um testemunho de vida. Esta é uma advertência sobre a **Necessidade de Integridade** e o perigo do pecado disfarçado. O pecado, por menor que seja, ofende a um Deus Santo e deve ser combatido com rigor na **Santificação**.", aplicacao: "Não negocie sua consciência em 'pequenas' coisas. O pecado é cumulativo, e a negligência mancha o seu testemunho. Busque andar em constante arrependimento e vigilância, pois a pureza do coração é mais valiosa do que qualquer honra humana.", oracao: "Pai, protege-me da tolice e da negligência. Concede-me vigilância constante e integridade inabalável para que o meu testemunho não seja manchado por um 'pouco de podridão'. Amém."} , en: {h2: "The Folly of Small Negligence", versiculos: "<strong>Ecclesiastes 10:1 (NIV):</strong> As dead flies give perfume a bad smell, so a little folly outweighs wisdom and honor.", resumo: "A small flaw can ruin a lifetime of testimony. This is a warning about the **Need for Integrity** and the danger of disguised sin. Sin, no matter how small, offends a Holy God and must be rigorously fought in **Sanctification**.", aplicacao: "Do not negotiate your conscience on 'small' things. Sin is cumulative, and negligence stains your testimony. Seek to walk in constant repentance and vigilance, for purity of heart is more valuable than any human honor.", oracao: "Father, protect me from foolishness and negligence. Grant me constant vigilance and unwavering integrity so that my testimony is not stained by a 'little folly'. Amen."} , es: {h2: "La Locura de la Pequeña Negligencia", versiculos: "<strong>Eclesiastés 10:1 (NVI):</strong> Las moscas muertas apestan y echan a perder el perfume; un poco de necedad anula mucha sabiduría y honor.", resumo: "Una pequeña falla puede arruinar un testimonio de vida. Esta es una advertencia sobre la **Necesidad de Integridad** y el peligro del pecado disimulado. El pecado, por pequeño que sea, ofende a un Dios Santo y debe ser combatido rigurosamente en la **Santificación**.", aplicacao: "No negocies tu conciencia en 'pequeñas' cosas. El pecado es acumulativo y la negligencia mancha tu testimonio. Busca caminar en arrepentimiento constante y vigilancia, porque la pureza del corazón es más valiosa que cualquier honor humano.", oracao: "Padre, protégeme de la necedad y la negligencia. Concédeme vigilancia constante e integridad inquebrantable para que mi testimonio no sea manchado por un 'poco de locura'. Amén."} , fr: {h2: "La Folie de la Petite Négligence", versiculos: "<strong>Ecclésiaste 10:1 (Louis Segond):</strong> Les mouches mortes gâtent et font fermenter l'huile du parfumeur; un peu de folie fait plus de mal que la sagesse et la gloire réunies.", resumo: "Une petite faille peut ruiner un témoignage d'une vie entière. C'est un avertissement sur le **Besoin d'Intégrité** et le danger du péché déguisé. Le péché, aussi petit soit-il, offense un Dieu Saint et doit être combattu rigoureusement dans la **Sanctification**.", aplicacao: "Ne négociez pas votre conscience sur des 'petites' choses. Le péché est cumulatif et la négligence entache votre témoignage. Cherchez à marcher dans le repentir constant et la vigilance, car la pureté du cœur a plus de valeur que tout honneur humain.", oracao: "Père, protège-moi de la folie et de la négligence. Accorde-moi une vigilance constante et une intégrité inébranlable afin que mon témoignage ne soit pas entaché par un 'peu de folie'. Amen."}},
+    10: {pt: {h2: "O Lançamento do Pão Sobre as Águas: Fé e Generosidade", versiculos: "<strong>Eclesiastes 11:1 (NVI):</strong> Lance o seu pão sobre as águas, porque depois de muitos dias você o tornará a encontrar.", resumo: "Este é um chamado à **Generosidade e à Fé Ativa**. Devemos investir nossos recursos e talentos com coragem e sem medo do retorno, confiando na **Providência** de Deus, que multiplica e recompensa o que é dado com um coração desprendido.", aplicacao: "Onde você tem sido avarento ou medroso em investir seus recursos para o Reino de Deus? Seja generoso com os recursos que Ele lhe confiou, confiando plenamente que Ele é o seu Provedor e Recompensador.", oracao: "Pai, liberta-me do medo da escassez. Que eu seja generoso com os recursos que me confiaste, confiando plenamente que Tu és o meu Provedor e Recompensador. Amém."} , en: {h2: "Cast Your Bread Upon the Waters: Faith and Generosity", versiculos: "<strong>Ecclesiastes 11:1 (NIV):</strong> Ship your grain across the sea; after many days you may receive a return.", resumo: "This is a call to **Generosity and Active Faith**. We must invest our resources and talents boldly and without fear of return, trusting in God's **Providence**, which multiplies and rewards what is given with a detached heart.", aplicacao: "Where have you been stingy or fearful about investing your resources for the Kingdom of God? Be generous with the resources He has entrusted to you, trusting fully that You are my Provider and Rewarder.", oracao: "Father, free me from the fear of scarcity. May I be generous with the resources You have entrusted to me, trusting fully that You are my Provider and Rewarder. Amen."} , es: {h2: "Echa tu Pan sobre las Aguas: Fe y Generosidad", versiculos: "<strong>Eclesiastés 11:1 (NVI):</strong> Echa tu pan sobre las aguas; después de algún tiempo volverás a encontrarlo.", resumo: "Este es un llamado a la **Generosidad y la Fe Ativa**. Debemos invertir nuestros recursos y talentos con valentía y sin temor al retorno, confiando en la **Providência** de Dios, que multiplica y recompensa lo que se da con un corazón desprendido.", aplicacao: "¿Dónde has sido tacaño o temeroso al invertir tus recursos para el Reino de Dios? Sé generoso con los recursos que Él te ha confiado, confiando plenamente en que Él es tu Proveedor y Recompensador.", oracao: "Padre, libérame del miedo a la escasez. Que sea generoso con los recursos que me has confiado, confiando plenamente en que Tú eres mi Proveedor y Recompensador. Amén."} , fr: {h2: "Jette ton Pain sur les Eaux: Foi et Générosité", versiculos: "<strong>Ecclésiaste 11:1 (Louis Segond):</strong> Jette ton pain sur la face des eaux, car après bien des jours tu le retrouveras.", resumo: "Ceci est un appel à la **Générosité et à la Foi Active**. Nous devons investir nos ressources et talents avec courage et sans crainte du retour, faisant confiance à la **Providence** de Dieu, qui multiplie et récompense ce qui est donné avec un cœur détaché.", aplicacao: "Où avez-vous été avare ou craintif à investir vos ressources pour le Royaume de Dieu? Soyez généreux avec les ressources qu'Il vous a confiées, faisant pleinement confiance à ce qu'Il est votre Pourvoyeur et Récompenseur.", oracao: "Père, libère-moi de la peur de la rareté. Que je sois généreux avec les ressources que Tu m'as confiées, faisant pleinement confiance à ce que Tu es mon Pourvoyeur et Récompenseur. Amen."}},
+    11: {pt: {h2: "Lembra-te do Teu Criador: A Urgência da Juventude", versiculos: "<strong>Eclesiastes 12:1 (NVI):</strong> Lembre-se do seu Criador nos dias da sua juventude, antes que cheguem os dias difíceis e se aproximem os anos em que você dirá: 'Não tenho satisfação neles'.", resumo: "O Mestre faz um apelo urgente à **Vocação Cristã**. A juventude deve ser consagrada ao Criador antes que cheguem as limitações da velhice e se aproxime o **Dia do Juízo**. O verdadeiro propósito da vida encontra-se na submissão e no serviço ao Deus que nos fez.", aplicacao: "Use sua energia e tempo de juventude para **Temer a Deus** e servi-Lo. A vida é um vapor que passa rápido. A decisão de buscar a Deus e Sua glória deve ser tomada **sem demora**, pois o tempo para a **Santificação** é agora.", oracao: "Pai, ajuda-me a usar bem o tempo e a energia que tenho. Que eu não adie a minha busca por Ti, mas que o meu coração se lembre do meu Criador em cada decisão, priorizando a eternidade e a Tua glória. Amém."} , en: {h2: "Remember Your Creator: The Urgency of Youth", versiculos: "<strong>Ecclesiastes 12:1 (NIV):</strong> Remember your Creator in the days of your youth, before the days of trouble come and the years approach when you will say, 'I find no pleasure in them.'", resumo: "The Teacher makes an urgent appeal to the **Christian Vocation**. Youth must be consecrated to the Creator before the limitations of old age arrive and the **Day of Judgment** approaches. The true purpose of life is found in submission and service to the God who made us.", aplicacao: "Use your energy and time of youth to **Fear God** and serve Him. Life is a vapor that passes quickly. The decision to seek God and His glory must be made ** without delay**, as the time for **Sanctification** is now.", oracao: "Father, help me to use the time and energy I have well. May I not postpone my search for You, but may my heart remember my Creator in every decision, prioritizing eternity and Your glory. Amen."} , es: {h2: "Acuérdate de tu Creador: La Urgencia de la Juventud", versiculos: "<strong>Eclesiastés 12:1 (NVI):</strong> Acuérdate de tu Creador en los días de tu juventud, antes que lleguen los días malos y vengan los años en que digas: «No encuentro en ellos placer alguno».", resumo: "El Predicador hace un llamado urgente a la **Vocación Cristiana**. La juventud debe ser consagrada al Creador antes de que lleguen las limitaciones de la vejez y se acerque el **Día del Juicio**. El verdadero propósito de la vida se encuentra en la submisión y el servicio al Dios que nos hizo.", aplicacao: "Usa tu energía y tiempo de juventud para **Temer a Dios** y servirle. La vida es un vapor que pasa rápido. La decisión de buscar a Dios y Su gloria debe tomarse **sin demora**, ya que el tiempo para la **Santificación** es ahora.", oracao: "Padre, ayúdame a usar bien el tiempo y la energía que tengo. Que no posponga mi búsqueda de Ti, sino que mi corazón recuerde a mi Creador en cada decisión, priorizando la eternidad y Tu gloria. Amén."} , fr: {h2: "Souviens-toi de ton Créateur: L'Urgence de la Jeunesse", versiculos: "<strong>Ecclésiaste 12:1 (Louis Segond):</strong> Souviens-toi de ton Créateur pendant les jours de ta jeunesse, avant que les jours mauvais arrivent et que les années s'approchent où tu diras: Je n'y prends point de plaisir.", resumo: "L'Orateur lance un appel urgent à la **Vocation Chrétienne**. La jeunesse doit être consacrée au Créateur avant que les limitations de la vieillesse n'arrivent et que le **Jour du Jugement** n'approche. Le véritable but de la vie se trouve dans la soumission et le service au Dieu qui nous a faits.", aplicacao: "Utilisez votre énergie et votre temps de jeunesse pour **Craindre Dieu** et Le servir. La vie est une vapeur qui passe rapidement. La décision de chercher Dieu et Sa gloire doit être prise **sans délai**, car le temps pour la **Sanctification** est maintenant.", oracao: "Père, aide-moi à bien utiliser le temps et l'énergie que j'ai. Que je ne reporte pas ma recherche de Toi, mais que mon cœur se souvienne de mon Créateur dans chaque décision, priorisant l'éternité et Ta gloire. Amen."}},
+    12: {pt: {h2: "A Conclusão do Assunto: O Fim da Vaidade", versiculos: "<strong>Eclesiastes 12:13-14 (NVI):</strong> A conclusão é esta: Tema a Deus e obedeça aos seus mandamentos, porque isso é o dever de todo homem. Pois Deus trará a julgamento tudo o que está oculto, quer seja bom, quer seja mau.", resumo: "O *telos* (fim) de toda a sabedoria é o **Temor a Deus** e a obediência. Essa é a única resposta humana que não é *hebel*. A expectativa do Juízo vindouro reforça a necessidade da **Fidelidade** e da **Santificação**. O propósito final é a glória de Deus.", aplicacao: "Sua vida deve ser definida por reverência e obediência. A **Fé** em Cristo (que cumpriu a lei em nosso lugar) nos permite, pela **Graça**, viver essa obediência. É a única coisa que resta quando a vaidade se esvai: o relacionamento com o Deus Soberano.", oracao: "Deus Fiel, que o temor a Ti guie cada decisão e pensamento meu. Agradeço-Te que em Cristo eu tenha a justificação e, por Teu Espírito, a força para viver em obediência. Que toda a minha vida seja para a Tua glória. Amém."} , en: {h2: "The Conclusion of the Matter: The End of Meaninglessness", versiculos: "<strong>Ecclesiastes 12:13-14 (NIV):</strong> Now all has been heard; here is the conclusion of the matter: Fear God and keep his commandments, for this is the whole duty of man. For God will bring every deed into judgment, including every hidden thing, whether good or evil.", resumo: "The *telos* (end) of all wisdom is the **Fear of God** and obedience. This is the only human response that is not *hebel*. The expectation of the coming Judgment reinforces the need for **Faithfulness** and **Sanctification**. The ultimate purpose is the glory of God.", aplicacao: "Your life must be defined by reverence and obedience. **Faith** in Christ (who fulfilled the law in our place) allows us, through **Grace**, to live this obedience. It is the only thing left when meaninglessness fades away: the relationship with the Sovereign God.", oracao: "Faithful God, may the fear of You guide my every decision and thought. I thank You that in Christ I have justification, and by Your Spirit, the strength to live in obedience. May all my life be for Your glory. Amen."} , es: {h2: "La Conclusión del Asunto: El Fin de la Vanidad", versiculos: "<strong>Eclesiastés 12:13-14 (NVI):</strong> La conclusión es la siguiente: Teme a Dios y cumple sus mandamientos, porque esto es el deber de todo ser humano. Pues Dios juzgará toda obra, buena o mala, incluso la que se haya hecho en secreto.", resumo: "El *telos* (fin) de toda sabiduría es el **Temor a Dios** y la obediencia. Esta es la única respuesta humana que no es *hebel*. La expectativa del Juicio venidero refuerza la necesidad de la **Fidelidad** y la **Santificación**. El propósito final es la gloria de Dios.", aplicacao: "Tu vida debe ser definida por la reverencia y la obediencia. La **Fe** en Cristo (quien cumplió la ley en nuestro lugar) nos permite, por la **Gracia**, vivir esa obediencia. Es lo único que queda cuando la vanidad se desvanece: la relación con el Dios Soberano.", oracao: "Dios Fiel, que el temor a Ti guíe cada decisión y pensamiento mío. Te agradezco que en Cristo tenga la justificación, y por Tu Espíritu, la fuerza para vivir en obediencia. Que toda mi vida sea para Tu gloria. Amén."} , fr: {h2: "La Conclusion de l'Affaire: La Fin de la Vanité", versiculos: "<strong>Ecclésiaste 12:13-14 (Louis Segond):</strong> Écoutons la fin du discours: Crains Dieu et observe ses commandements. C'est là ce qui est le devoir de tout homme. Car Dieu amènera toute œuvre en jugement, au sujet de tout ce qui est caché, soit bien, soit mal.", resumo: "Le *telos* (fin) de toute sagesse est la **Crainte de Dieu** et l'obéissance. C'est la seule réponse humaine qui n'est pas *hebel*. L'attente du Jugement à venir renforce la nécessité de la **Fidélité** et de la **Sanctification**. Le but ultime est la gloire de Dieu.", aplicacao: "Votre vie doit être définie par la révérence et l'obéissance. La **Foi** en Christ (qui a accompli la loi à notre place) nous permet, par la **Grâce**, de vivre cette obéissance. C'est la seule chose qui reste lorsque la vanité s'estompe: la relation avec le Dieu Souverain.", oracao: "Dieu Fidèle, que la crainte de Toi guide chacune de mes décisions et pensées. Je Te remercie de ce qu'en Christ j'ai la justification, et par Ton Esprit, la force de vivre en obéissance. Que toute ma vie soit pour Ta gloire. Amen."}}
+};
+    // FIM DO CONTEÚDO DEVOCIONAL
+
+        // * FUNÇÕES DE PERSISTÊNCIA E ESTADO (MANTIDAS) *
+        
+        function getSavedProgress() {
+            const savedDay = localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`);
+            return savedDay ? parseInt(savedDay, 10) : 1;
+        }
 
         function getCompletedDays() {
-            try {
-                return JSON.parse(localStorage.getItem(`completedDays_${DEVOTIONAL_KEY}`)) || {};
-            } catch (e) {
-                console.error("Erro ao carregar dias concluídos:", e);
-                return {};
-            }
+            const completed = localStorage.getItem(`completedDays_${DEVOTIONAL_KEY}`);
+            return completed ? JSON.parse(completed) : {};
         }
-        
-        function saveCompletion(day, isCompleted) {
+
+        function saveCompletion(day, isChecked) {
+            const key = `completedDays_${DEVOTIONAL_KEY}`;
             const completedDays = getCompletedDays();
-            if (isCompleted) {
-                completedDays[day] = true;
-            } else {
-                delete completedDays[day];
-            }
-            localStorage.setItem(`completedDays_${DEVOTIONAL_KEY}`, JSON.stringify(completedDays));
+            completedDays[day] = isChecked;
+            localStorage.setItem(key, JSON.stringify(completedDays));
             updateOverallProgress();
-            
-            if (isCompleted && isListening) {
-                stopListening();
-            }
-        }
-        
-        function isCompleted(day) {
-            const completedDays = getCompletedDays();
-            return completedDays[day] === true;
         }
 
         function updateCompletedState() {
-            completedCheck.checked = isCompleted(currentDay);
-        }
-
-        function getSavedProgress() {
-            return parseInt(localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`)) || 1;
+            const completedDaysMap = getCompletedDays();
+            completedCheck.checked = completedDaysMap[currentDay] || false;
         }
 
         function updateOverallProgress() {
@@ -459,282 +823,67 @@
             updateCompletedState();
         }
 
-  // *************** FUNÇÕES DE NAVEGAÇÃO E LÓGICA ***************
-    
-		function handleCompletedCheck() {
-			saveCompletion(currentDay, completedCheck.checked);
-
-            if (completedCheck.checked && currentDay < totalDays) {
-                setTimeout(nextDay, 500); 
-            }
-        }
-        
-        function loadDevotionalContent(day, direction) {
-            // currentLang é 'pt-BR' fixo
-            const t = translations['pt-BR']; 
-            // O idioma do conteúdo é fixo para 'pt'
-            const data = devotionalContent[day] ? devotionalContent[day]['pt'] : null;
-            
-            if (!data) {
-                devotionalContentDiv.innerHTML = `<p style="text-align: center;">Conteúdo não disponível para o Dia ${day}.</p>`;
-                return;
-            }
-            
-            if (isListening) stopListening();
-
-            const animationClassIn = direction === 1 ? 'page-in-right' : 'page-in-left';
-            const animationClassOut = direction === 1 ? 'page-out-left' : 'page-out-right';
-            
-            if (direction !== 0) {
-                devotionalContentDiv.classList.add(animationClassOut);
-            }
-            
-            setTimeout(() => {
-                devotionalContentDiv.innerHTML = `
-                    <h2 id="dayTitle">${t.dayTitle} ${day}: ${data.h2}</h2>
-                    <div class="section">
-                        <strong>${t.keyVerse}:</strong>
-                        <p class="versiculos">${data.versiculos}</p>
-                    </div>
-                    <div class="section">
-                        <strong>${t.summary}:</strong>
-                        <p>${data.resumo}</p>
-                    </div>
-                    <div class="section">
-                        <strong>${t.application}:</strong>
-                        <p>${data.aplicacao}</p>
-                    </div>
-                    <p class="oracao-final">${t.prayer}: ${data.oracao}</p>
-                `;
-                
-                document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`;
-
-                if (direction !== 0) {
-                    devotionalContentDiv.classList.remove(animationClassOut);
-                    devotionalContentDiv.classList.add(animationClassIn);
-                } else {
-                    devotionalContentDiv.classList.add('page-in-right');
-                }
-                
-                // Atualiza o conteúdo para leitura de voz
-                ttsContent = devotionalContentDiv.textContent;
-
-                setTimeout(() => { devotionalContentDiv.classList.remove('page-in-left', 'page-in-right'); }, 400);
-
-            }, direction !== 0 ? 300 : 0);
-        }
-        
-        function nextDay() {
-            if (currentDay < totalDays) {
-                currentDay++;
-                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
-                updateTexts(1);
-            }
-        }
-        
-        function prevDay() {
-            if (currentDay > 1) {
-                currentDay--;
-                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
-                updateTexts(-1);
-            }
-        }
-
-        function updateTexts(direction = 0) {
-            const t = translations['pt-BR']; // Idioma fixo
-
-            // REMOVIDO: document.documentElement.lang = 'pt'; (Herda do <html lang="pt-BR">)
-
-            mainTitle.innerText = t.mainTitle;
-            subTitle.innerText = t.subTitle;
-            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
-            checkLabel.innerText = t.checkLabel;
-            prevButton.innerText = t.navPrev;
-            nextButton.innerText = t.navNext;
-            footerText.innerText = t.footerText;
-            
-            updateThemeToggleButtonText(); // Botão de tema oculto, mas a função é chamada para evitar erros
-            updateTtsButtonText();
-
-            loadDevotionalContent(currentDay, direction);
-            updateOverallProgress();
-        }
-
-  // *************** FUNÇÕES DE TEMA (Ocultas, mas funcionais se desocultar o botão) ***************
-
-        let currentTheme = SAVED_THEME;
-        
-        function applyTheme(theme) {
-            currentTheme = theme;
-            localStorage.setItem('theme', theme);
-            document.body.classList.remove('light-theme', 'dark-theme');
-            document.body.classList.add(theme === 'dark' ? 'dark-theme' : 'light-theme');
-        }
-
-        function updateThemeToggleButtonText() {
-            const t = translations['pt-BR']; 
-            if (currentTheme === 'light') {
-                themeToggleFloater.innerHTML = themeMap['light'].icon; 
-                themeToggleFloater.title = t.themeLight;
-            } else {
-                themeToggleFloater.innerHTML = themeMap['dark'].icon; 
-                themeToggleFloater.title = t.themeDark;
-            }
-        }
-        
-        function toggleDarkMode() {
-            const newTheme = themeMap[currentTheme].next;
-            applyTheme(newTheme);
-            updateThemeToggleButtonText(); 
-        }
-
-
-  // *************** NOVAS FUNÇÕES DE ACESSIBILIDADE ***************
-
-        // --- CONTROLE DE FONTE ---
-        function updateFontSize() {
-            fontScale = Math.min(Math.max(fontScale, FONT_MIN), FONT_MAX);
-            root.style.setProperty('--base-font-scale', fontScale);
-            localStorage.setItem('fontScale', fontScale.toFixed(2));
-        }
-
-        function increaseFontSize() {
-            fontScale += 0.1;
-            updateFontSize();
-        }
-
-        function decreaseFontSize() {
-            fontScale -= 0.1;
-            updateFontSize();
-        }
-
-        // --- TEXT-TO-SPEECH (TTS) ---
-        function initTTS() {
-             speech = window.speechSynthesis;
-             if (speech.getVoices().length === 0) {
-                 speech.onvoiceschanged = () => {
-                     setupTtsUtterance(speech.getVoices());
-                 };
-             } else {
-                 setupTtsUtterance(speech.getVoices());
-             }
-        }
-        
-        function setupTtsUtterance(voices) {
-             // Busca por voz em Português
-             let voice = voices.find(v => v.lang.startsWith('pt')) || voices.find(v => v.default) || voices[0];
-             
-             ttsUtterance = new SpeechSynthesisUtterance();
-             ttsUtterance.lang = 'pt-BR';
-             ttsUtterance.voice = voice;
-             ttsUtterance.rate = 1;
-
-             ttsUtterance.onstart = () => {
-                 isListening = true;
-                 listenToggle.setAttribute('data-state', 'pause');
-                 updateTtsButtonText();
-             };
-
-             ttsUtterance.onend = () => {
-                 stopListening();
-             };
-
-             ttsUtterance.onpause = () => {
-                 listenToggle.setAttribute('data-state', 'continue');
-                 updateTtsButtonText();
-             };
-             
-             ttsUtterance.onresume = () => {
-                 listenToggle.setAttribute('data-state', 'pause');
-                 updateTtsButtonText();
-             };
-
-             ttsUtterance.onboundary = (event) => {
-                 if (event.name === 'word') {
-                     ttsCurrentCharacter = event.charIndex;
-                     updateAudioProgress();
-                 }
-             };
-        }
-
-
-        function updateTtsButtonText() {
-            const t = translations['pt-BR']; 
-            const state = listenToggle.getAttribute('data-state');
-            
-            if (state === 'stop' || !isListening) {
-                 listenToggle.innerHTML = `<span role="img" aria-label="Alto-falante">🔊</span> ${t.ttsListen}`;
-            } else if (state === 'pause') {
-                 listenToggle.innerHTML = `<span role="img" aria-label="Pausa">⏸</span> ${t.ttsPause}`;
-            } else if (state === 'continue') {
-                 listenToggle.innerHTML = `<span role="img" aria-label="Reproduzir">▶️</span> ${t.ttsContinue}`;
-            }
-        }
-        
-        function startListening() {
-            if (!ttsContent) return;
-            
-            if (speech.speaking && !speech.paused) {
-                 speech.pause();
-            } else if (speech.paused) {
-                 speech.resume();
-            } else {
-                 if (!ttsUtterance) initTTS(); 
-                 ttsUtterance.text = ttsContent;
-                 speech.speak(ttsUtterance);
-            }
-        }
-
-        function stopListening() {
-            if (speech.speaking) {
-                speech.cancel();
-            }
-            isListening = false;
-            listenToggle.setAttribute('data-state', 'stop');
-            audioProgressFill.style.width = '0%';
-            ttsCurrentCharacter = 0;
-            updateTtsButtonText();
-        }
-
-        function updateAudioProgress() {
-            if (!isListening || !ttsUtterance.text) return;
-
-            const textLength = ttsUtterance.text.length;
-            const progress = (ttsCurrentCharacter / textLength) * 100;
-            audioProgressFill.style.width = `${progress}%`;
-        }
-        
-  // *************** EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) ***************
+        // * EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) *
        window.onload = () => {
-            
-            // 🚨 LIMPEZA FORÇADA DAS CHAVES ANTIGAS (Manter esta linha para garantir que o devocional reinicie em caso de conflito)
-            localStorage.removeItem('completedDays_suficiencia_de_cristo'); 
-            localStorage.removeItem('devotionalProgress_suficiencia_de_cristo');
-            
-            // 1. Carrega as preferências
-            applyTheme(SAVED_THEME);
-            updateFontSize(); 
-            initTTS(); 
+    
+    // ✅ CORREÇÃO: Cancela imediatamente qualquer leitura que possa ter continuado
+    stopSpeaking(); 
+    
+    // 🚨 LIMPEZA FORÇADA DAS CHAVES ANTIGAS (MANTIDA)
+    localStorage.removeItem('completedDays'); 
+    localStorage.removeItem('devotionalProgress');
+    
+    // 1. Carrega o tema, idioma e FONTE
+    loadThemePreference(); 
+    // NOTE: updateLanguageSelector() is technically unnecessary since the dropdown is hidden, but kept for script integrity
+    updateLanguageSelector();
+    // NOVO: Aplica o tamanho da fonte salvo
+    updateFontSize(); 
+               
+    // 2. Carrega o dia salvo e atualiza a UI
+    currentDay = getSavedProgress();
+    updateTexts(0); 
+    
+    // 3. Configura o TTS (CORREÇÃO CRÍTICA)
+    initTTS(); 
 
-            // 2. Carrega o dia salvo e atualiza a UI (direção 0 para sem animação inicial)
-            currentDay = getSavedProgress();
-            updateTexts(0); 
-            
-            // 3. Configura os Listeners de Eventos
-            // O botão de tema está oculto, mas se fosse visível, este listener funcionaria:
-            themeToggleFloater.addEventListener('click', toggleDarkMode); 
-            
-            prevButton.addEventListener('click', prevDay);
-            nextButton.addEventListener('click', nextDay);
-            completedCheck.addEventListener('change', handleCompletedCheck);
-            
-            // Listeners para o controle de fonte
-            document.getElementById('fontSizeIncrease').addEventListener('click', increaseFontSize);
-            document.getElementById('fontSizeDecrease').addEventListener('click', decreaseFontSize);
-            
-            // Listener para o controle de TTS
-            listenToggle.addEventListener('click', startListening);
-        };
+    // 4. Configura os Listeners de Eventos
+    // NOTE: The event listeners for themeToggle and langSelectButton are now irrelevant as they are hidden, but kept for script integrity
+    if (themeToggle) themeToggle.addEventListener('click', toggleDarkMode);
+    
+    if (listenToggle) {
+        listenToggle.addEventListener('click', handleListenClick); 
+        // 🛑 Duplo Clique para STOP explícito
+        listenToggle.addEventListener('dblclick', stopSpeaking);
+    }
+    
+    // Listeners do Seletor de Idioma
+    if (langSelectButton) {
+        langSelectButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isExpanded = langDropdown.style.display === 'block';
+            langDropdown.style.display = isExpanded ? 'none' : 'block';
+            // NOVO ARIA: Atualiza o status de expansão
+            langSelectButton.setAttribute('aria-expanded', !isExpanded); 
+        });
+    }
+    document.addEventListener('click', (event) => {
+        const wrapper = document.querySelector('.language-selector-wrapper');
+        if (langDropdown && langDropdown.style.display === 'block' && wrapper && !wrapper.contains(event.target)) {
+            langDropdown.style.display = 'none';
+            // NOVO ARIA: Garante que o status volte a false ao fechar
+            if (langSelectButton) langSelectButton.setAttribute('aria-expanded', 'false'); 
+        }
+    });
+
+    prevButton.addEventListener('click', prevDay);
+    nextButton.addEventListener('click', nextDay);
+    completedCheck.addEventListener('change', handleCompletedCheck);
+    
+    // NOVO: Listeners para o controle de fonte
+    document.getElementById('fontSizeIncrease').addEventListener('click', increaseFontSize);
+    document.getElementById('fontSizeDecrease').addEventListener('click', decreaseFontSize);
+};
         
     </script>
     
@@ -746,8 +895,7 @@
     </div>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-        // Configuração VLibras
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
+        new window.VLibras.Widget('https://vlibras.gov.br/app', 'vw-plugin-wrapper');
     </script>
 </body>
 </html>
