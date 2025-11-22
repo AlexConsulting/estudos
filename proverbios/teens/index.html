@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="title">Página em Manutenção/Upgrade!</title>
+    <!-- Carrega o Tailwind CSS para um estilo moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração do Tailwind com uma fonte amigável (Inter) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f3f3; /* Fundo levemente off-white */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Card de Conteúdo - Ajustado para ser compacto em mobile -->
+    <div id="content-card" class="bg-white p-6 md:p-10 lg:p-14 rounded-3xl shadow-2xl max-w-sm sm:max-w-lg w-full text-center transform transition duration-500 hover:shadow-3xl hover:scale-[1.02]">
+
+        <!-- Seletor de Idioma -->
+        <div class="mb-8 flex items-center justify-center space-x-2 text-gray-500 text-sm">
+            <label for="language-select" class="font-semibold" data-translate="languageLabel">Escolha seu Idioma:</label>
+            <select id="language-select" class="p-2 border border-blue-300 rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100 transition duration-150 focus:ring-2 focus:ring-blue-400">
+                <option value="pt">Português (pt)</option>
+                <option value="en">English (en)</option>
+                <option value="es">Español (es)</option>
+                <option value="fr">Français (fr)</option>
+            </select>
+        </div>
+
+        <!-- Ícone de Construção (Agora Aventura e Descoberta) -->
+        <div class="text-6xl mb-6 animate-bounce">
+            🚀🗺️🧭
+        </div>
+        
+        <!-- Título Principal (Linguagem Teen) -->
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-indigo-700 mb-4 tracking-tight" data-translate="headline">
+            Atenção! Estamos quase no ar!
+        </h1>
+        
+        <!-- Mensagem para os Teens (Linguagem Teen) -->
+        <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" data-translate="message">
+            Demos um "upgrade" geral! Estamos finalizando a página para deixar ela <em>top</em>. Segura a <em>vibe</em> e volta aqui em breve, beleza?
+        </p>
+
+        <!-- Botão de Voltar (Linguagem Teen) -->
+        <button onclick="history.back()" class="w-full md:w-auto px-6 py-3 bg-green-500 text-white font-bold text-lg rounded-xl shadow-lg hover:bg-green-600 transition duration-150 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-300">
+            <span data-translate="backButton">Voltar pra tela anterior</span>
+        </button>
+
+    </div>
+
+    <script>
+        // Objeto de traduções com a linguagem adaptada para adolescentes (13-17 anos)
+        const translations = {
+            'pt': {
+                title: "Página em Manutenção/Upgrade!",
+                headline: "Atenção! Estamos quase no ar!",
+                message: "Demos um \"upgrade\" geral! Estamos finalizando a página para deixar ela *top*. Segura a *vibe* e volta aqui em breve, beleza?",
+                backButton: "Voltar pra tela anterior",
+                languageLabel: "Escolha seu Idioma:",
+            },
+            'en': {
+                title: "Major Upgrade in Progress!",
+                headline: "Heads up! We're almost live!",
+                message: "We're dropping a major update! We're putting the final touches on this page to make it lit. Keep the good vibes and check back soon, alright?",
+                backButton: "Go back to the previous screen",
+                languageLabel: "Select your Language:",
+            },
+            'es': {
+                title: "¡Gran Actualización en Curso!",
+                headline: "¡Atención! ¡Estamos a punto de lanzarla!",
+                message: "¡Le dimos un \"upgrade\" total! Estamos terminando la página para que quede *increíble*. ¡Mantente al tanto y vuelve pronto, ¿vale?*",
+                backButton: "Volver a la pantalla anterior",
+                languageLabel: "Elige tu Idioma:",
+            },
+            'fr': {
+                title: "Mise à Jour Majeure en Cours !",
+                headline: "Attention ! On arrive bientôt !",
+                message: "On fait une grosse mise à jour ! On met les dernières touches pour que ce soit *incroyable*. Garde la *cool attitude* et reviens vite, d'accord ?",
+                backButton: "Retourner à l'écran précédent",
+                languageLabel: "Choisis ta Langue :",
+            }
+        };
+
+        const langSelect = document.getElementById('language-select');
+
+        // Função para aplicar as traduções
+        function updateContent(lang) {
+            // Atualiza a tag <html> e <title>
+            document.documentElement.lang = lang;
+            
+            const trans = translations[lang];
+
+            // Atualiza todos os elementos com o atributo data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (trans[key]) {
+                    // Para elementos que não são a mensagem (como h1, buttons), usa textContent
+                    let content = trans[key].replace(/\*/g, ''); // Remove * para garantir texto simples
+                    element.textContent = content;
+                }
+            });
+
+            // Tratamento especial para o campo 'message' para permitir <em> (itálico)
+            const messageElement = document.querySelector('[data-translate="message"]');
+            if (messageElement && trans.message) {
+                // Substitui *texto* por <em>texto</em> e atualiza usando innerHTML
+                messageElement.innerHTML = trans.message.replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\\"/g, '"');
+            }
+
+            // Atualiza o título da aba do navegador separadamente
+            document.title = trans.title;
+        }
+
+        // Lógica: Ao carregar a página, tenta detectar o idioma ou usa 'pt'
+        document.addEventListener('DOMContentLoaded', () => {
+            let preferredLang = 'pt'; // Define Português como padrão
+
+            // Tenta usar o idioma do navegador, se estiver disponível nas traduções
+            const browserLang = navigator.language.split('-')[0];
+            if (translations[browserLang]) {
+                preferredLang = browserLang;
+            }
+
+            // Define o valor do seletor e atualiza o conteúdo
+            langSelect.value = preferredLang;
+            updateContent(preferredLang);
+        });
+
+        // Event listener para mudar o idioma
+        langSelect.addEventListener('change', (event) => {
+            updateContent(event.target.value);
+        });
+    </script>
+</body>
+</html>
