@@ -155,7 +155,7 @@
             /* FIX: ESPAÇAMENTO SUPERIOR. Garante espaço para o floater no topo */
             .book-container {
                 padding: 20px 25px; width: 95%; 
-                margin-top: 35px; /* Adiciona margem para não ficar debaixo do floater */
+                margin-top: 0; /* MODIFICADO: Espaçamento superior zerado */
                 margin-bottom: 20px;
             }
             
@@ -183,7 +183,21 @@
             }
             
             /* Outros ajustes de mobile */
-            .top-utils { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .top-utils { 
+                /* MODIFICADO: Para posicionar o botão 'Ouça Aqui' no topo esquerdo */
+                flex-direction: row; 
+                align-items: center; 
+                justify-content: flex-start; /* Alinha à esquerda */
+                gap: 10px; 
+                margin-top: 10px; /* Adiciona um pequeno espaçamento no topo da div */
+            }
+            
+            /* NOVO: Diminui o botão 'Ouça Aqui' para mobile e garante que não seja mais largo que o necessário */
+            #listenToggle {
+                padding: 5px 8px;
+                font-size: 0.8em;
+            }
+
             .navigation { flex-direction: column; gap: 10px; }
             .nav-button { width: 100%; }
             .progress-check { order: -1; width: 100%; }
@@ -805,7 +819,7 @@
                 // CORREÇÃO 2: Alterada a chave de 'aplicacion' para 'aplicacao' para consistência
                 aplicacao: "Mira la lista de los Frutos: ¿cuál es el más evidente en tu vida y cuál necesita ser buscado con más dependencia del Espíritu? Recuerda, el objetivo no es intentar amar, sino andar en el Espíritu, permitiendo que Él produzca el Amor en ti.", 
                 oracao: "Ora a Dios pidiendo que el Espíritu Santo te llene de tal manera que Su fruto sea evidente. Pídele que te ayude a 'mantener el paso' en obediencia, para la gloria de Dios."}, 
-                fr: {h2: "Le Fruit de la Vie Dirigée par l'Esprit", versiculos: "Galates 5:22-25 (Louis Segond): Mais le fruit de l'Esprit est l'amour, la joie, la paix, la patience, la bonté, la bénignité, la fidélité, la douceur, la tempérance. (...) Si nous vivons par l'Esprit, marchons aussi selon l'Esprit.", resumo: "Le Fruit (singulier) est la manifestation visible de la nouvelle vie en Christ. Il est um resultado orgânico de Marcher selon l'Esprit, non une lista de obras que nós tentamos produzir por nós mesmos. Essa lista de virtudes é a natureza mesma do Cristo. O cristão justificado deve marcher aussi selon l'Esprit (*stoichēo* em grego), Lui permettant de produire Son caractère en nous. Preuve de la Régénération.", aplicacao: "Regardez la liste des Fruits: lequel est le plus évident dans votre vie et lequel doit être recherché avec plus de dépendance à l'Esprit? Rappelez-vous, le but n'est pas d'essayer d'aimer, mas de marcher dans l'Esprit, Lui permettant de produire l'Amour em vous.", oracao: "Priez Dieu demandant que le Seigneur vous libère du círculo vicioso d'essayer de gagner la faveur divine par de bonnes obras. Demandez ao Saint-Esprit de vous guider à cada etapa de sua santificação."}}
+                fr: {h2: "Le Fruit de la Vie Dirigée par l'Esprit", versiculos: "Galates 5:22-25 (Louis Segond): Mais le fruit de l'Esprit est l'amour, la joie, la paix, la patience, la bonté, la bénignité, la fidélité, la douceur, la tempérance. (...) Si nous vivons par l'Esprit, marchons aussi selon l'Esprit.", resumo: "Le Fruit (singulier) est la manifestation visible de la nouvelle vie en Christ. Il est um resultado orgânico de Marcher selon l'Esprit, non une lista de obras que nós tentamos produzir por nós mesmos. Essa lista de virtudes é a natureza mesma do Cristo. O cristão justificado deve marcher aussi selon l'Esprit (*stoichēo* em grego), Lui permettant de produire Son caractère en nous. Preuve de la Régénération.", aplicacao: "Regardez la liste des Fruits: lequel est le plus évident dans votre vie et lequel doit être recherché avec plus de dépendance à l'Esprit? Rappelez-vous, le but n'est pas d'essayer d'aimer, mas de marcher dans l'Esprit, Lui permettant de produire l'Amour em vous.", oracao: "Priez Dieu demandant que le Seigneur vous libère du círculo vicioso d'essayer de gagner a favor divina par de bonnes obras. Demandez ao Saint-Esprit de vous guider à cada etapa de sua santificação."}}
         };
 
         // FIM DO CONTEÚDO DEVOCIONAL
