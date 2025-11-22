@@ -9,71 +9,134 @@
         /* Definições básicas e fonte */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff; /* Fundo Padrão (Claro) */
+            background-color: #ffffff; /* Fundo Padrão (Claro) - Puro Branco */
             color: #333; /* Texto Padrão (Claro) */
             margin: 0;
             display: flex;
             flex-direction: column; 
-            align-items: center; /* GARANTE QUE OS BLOCOS PRINCIPAIS ESTEJAM CENTRALIZADOS */
+            align-items: center; 
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s; /* Transição suave */
+            transition: background-color 0.3s, color 0.3s; 
         }
 
         /* ------------------------------------------- */
-        /* ESTILO MODO ESCURO (DARK MODE) - FUNDO PRETO PURO */
+        /* MODO ESCURO (DARK MODE) - ESTILOS EXISTENTES */
         /* ------------------------------------------- */
         body.dark-mode {
-            background-color: #000000; /* Fundo Preto Puro */
+            background-color: #000000; /* Fundo Preto Puro - Combina com o LOGO_DARK */
             color: #e2e8f0; /* Texto Claro */
         }
         
-        body.dark-mode .main-header h1 {
-            color: #90cdf4; /* Título principal mais claro */
-        }
-
-        body.dark-mode .main-header p {
-            color: #a0aec0;
-        }
-
-        body.dark-mode .menu-button {
-            background-color: #1c1c1c; /* Fundo dos cards escuro */
+        body.dark-mode .main-header h1 { color: #90cdf4; }
+        body.dark-mode .main-header p { color: #a0aec0; }
+        body.dark-mode .menu-button { 
+            background-color: #1c1c1c; 
             border-color: #333333;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); 
         }
-        
-        body.dark-mode .menu-button span {
-            color: #e2e8f0; 
-        }
-        
-        body.dark-mode .menu-button small {
-            color: #cbd5e0; 
-        }
-        
-        body.dark-mode .menu-button:hover {
+        body.dark-mode .menu-button span { color: #e2e8f0; }
+        body.dark-mode .menu-button small { color: #cbd5e0; }
+        body.dark-mode .menu-button:hover { 
             background-color: #333333; 
             transform: translateY(-7px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
             border-color: #63b3ed;
         }
-        
-        body.dark-mode .simple-footer {
-            border-top: 1px solid #333333;
-            color: #718096;
-        }
-
-        body.dark-mode #language-dropdown {
+        body.dark-mode .simple-footer { border-top: 1px solid #333333; color: #718096; }
+        body.dark-mode #language-dropdown, body.dark-mode #audience-dropdown {
             background-color: #1c1c1c; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         
-        body.dark-mode .dropdown-item {
-            color: #e2e8f0;
+        body.dark-mode .dropdown-item { color: #e2e8f0; }
+        body.dark-mode .dropdown-item:hover { background-color: #333333; }
+        body.dark-mode #active-language-button, body.dark-mode #active-audience-button {
+            background-color: #000000; 
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2); 
+        }
+        
+        /* ------------------------------------------- */
+        /* ESTILOS MODO KIDS (Verde) */
+        /* ------------------------------------------- */
+        
+        body.kids-mode .main-header h1 { 
+            color: #2ecc71; /* Verde Esmeralda (Vibrante e Neutro) */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        body.kids-mode .menu-button {
+            border: 2px solid #81c784; /* Borda Verde Claro */
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); /* Sombra Verde */
+        }
+        body.kids-mode .menu-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.5);
+            border-color: #2ecc71;
+        }
+        body.kids-mode .menu-button span {
+            color: #2ecc71; /* Verde Esmeralda */
+            font-weight: 700;
+        }
+        
+        /* ------------------------------------------- */
+        /* ESTILOS MODO TEENS */
+        /* ------------------------------------------- */
+        
+        body.teens-mode .main-header h1 { 
+            color: #4a4e69; /* Azul marinho escuro */
+        }
+        body.teens-mode .menu-button {
+            border: 1px solid #6699ff; /* Azul vibrante */
+            border-radius: 10px;
+        }
+        body.teens-mode .menu-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(102, 153, 255, 0.4);
+            border-color: #3366cc;
+        }
+        body.teens-mode .menu-button span {
+            color: #3366cc; 
         }
 
-        body.dark-mode .dropdown-item:hover {
-            background-color: #333333;
+        /* ------------------------------------------- */
+        /* CONTROLE CLARO/ESCURO */
+        /* ------------------------------------------- */
+        #theme-toggle {
+            cursor: pointer;
+            font-size: 1.5em; 
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            background-color: #f3f4f6;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode #theme-toggle {
+            background-color: #1c1c1c; 
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* MODO PADRÃO (CLARO): Esconde o sol e mostra a lua */
+        #theme-toggle .sun-icon {
+            display: none; 
+        }
+
+        #theme-toggle .moon-icon {
+            display: block; 
+        }
+
+        /* MODO ESCURO: Mostra o sol e esconde a lua */
+        body.dark-mode #theme-toggle .sun-icon {
+            display: block; 
+        }
+
+        body.dark-mode #theme-toggle .moon-icon {
+            display: none; 
         }
 
         /* ------------------------------------------- */
@@ -86,68 +149,31 @@
             color: #1a202c; 
             padding-top: 20px;
             position: relative; 
+            width: 100%; 
+            max-width: 900px;
         }
         
         .header-controls {
             position: absolute;
             top: 20px; 
-            right: 0; 
+            right: 10px; 
             display: flex;
             align-items: center;
             gap: 15px; 
             z-index: 100;
         }
 
-        /* --- Estilos de tema e dropdown (Mantidos) --- */
-        
-        #theme-toggle {
-            display: flex; 
-            align-items: center;
-            justify-content: center;
-            width: 45px; 
-            height: 32px; 
-            background-color: transparent; 
-            border-radius: 8px; 
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 20px; 
-        }
-        
-        body:not(.dark-mode) #theme-toggle.light-active { 
-            background-color: #ffffff; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        body.dark-mode #theme-toggle.dark-active {
-            background-color: #000000; 
-            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
-        }
-
-        #theme-toggle:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        body.dark-mode #theme-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        body.dark-mode #theme-toggle .sun-icon {
-            display: none;
-        }
-        
-        body:not(.dark-mode) #theme-toggle .moon-icon {
-            display: none;
-        }
-
-
-        #language-selector-container {
+        /* --- Estilos Comuns para Dropdowns (Idioma e Audiência) --- */
+        #language-selector-container, #audience-selector-container {
             position: relative;
         }
-
-        #active-language-button {
+        
+        #active-language-button, #active-audience-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
+            /* Aumentado o botão de audiência para caber texto e ícone no modo adulto */
+            min-width: 45px; 
             height: 32px;
             background-color: #ffffff;
             border-radius: 8px;
@@ -155,19 +181,23 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: background-color 0.2s;
             border: none;
-            padding: 0; 
+            padding: 0 8px; /* Padding horizontal adicionado */
+            font-size: 0.9em; /* Reduzido o font-size para o texto */
         }
         
-        body.dark-mode #active-language-button {
-            background-color: #000000; 
-            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2); 
+        body.dark-mode #active-language-button, body.dark-mode #active-audience-button {
+            background-color: #1c1c1c; /* Fundo escuro para o botão no modo escuro */
+            color: #e2e8f0;
         }
-
-        #active-language-button:hover {
+        
+        #active-language-button:hover, #active-audience-button:hover {
             background-color: #e5e7eb;
         }
+        body.dark-mode #active-language-button:hover, body.dark-mode #active-audience-button:hover {
+            background-color: #333333;
+        }
 
-        #language-dropdown {
+        #language-dropdown, #audience-dropdown {
             display: none; 
             position: absolute;
             top: 40px; 
@@ -179,7 +209,8 @@
             min-width: 150px; 
         }
         
-        #language-selector-container.open #language-dropdown {
+        #language-selector-container.open #language-dropdown,
+        #audience-selector-container.open #audience-dropdown {
             display: block;
         }
         
@@ -197,75 +228,192 @@
             background-color: #f3f4f6;
         }
         
+        /* Estilos de Bandeiras */
         .lang-flag-dropdown, .lang-flag-active {
             width: 25px; 
             height: auto;
-            margin-right: 0;
+            margin-right: 8px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 3px;
         }
+        
+        /* Ícones da Audiência */
+        .audience-icon-active {
+            font-size: 1.2em;
+            line-height: 1;
+            margin-right: 5px; /* Adicionado margem para separar do texto ativo */
+        }
+        .audience-icon-dropdown {
+            font-size: 1.1em;
+            margin-right: 8px;
+        }
 
+        /* --- Restante dos estilos --- */
 
-        /* ------------------------------------------- */
-        /* ESTILO BOTÕES DE INFORMAÇÃO NA PÁGINA PRINCIPAL */
-        /* ------------------------------------------- */
-        .info-buttons-container {
-            margin-top: 30px;
+        .header-logo {
+            max-width: 230px; 
+            height: auto;
+            margin-bottom: 10px; 
+            transition: filter 0.3s;
+        }
+        .main-header h1 {
+            font-size: 2.2em; 
+            margin-bottom: 5px;
+            color: #2563eb; 
+            transition: color 0.3s;
+        }
+        .main-header p {
+            font-size: 1.2em;
+            color: #6b7280;
+            transition: color 0.3s;
+        }
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px; 
+            max-width: 900px;
+            width: 100%;
+            margin: auto;
+            padding: 0 10px;
+        }
+        .menu-button {
             display: flex;
-            flex-wrap: wrap; 
-            gap: 10px; 
-            justify-content: center; /* Garante que os botões fiquem centralizados */
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            background-color: #ffffff; 
+            border: 1px solid #e2e8f0;
+            color: #1e3a8a; 
+            text-decoration: none;
+            padding: 20px 25px;
+            border-radius: 16px; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .menu-button .emoji-icon {
+            font-size: 2.5em; 
+            min-width: 50px;
+            margin-right: 20px;
+            line-height: 1; 
+            transition: transform 0.3s ease; 
+        }
+        .menu-content {
+            display: flex;
+            flex-direction: column;
+        }
+        /* ATENÇÃO: Os elementos do menu que precisam ser traduzidos/alterados devem usar data-i18n */
+        .menu-button span[data-i18n], .menu-button small[data-i18n] {
+            color: #1a202c; 
+            transition: color 0.3s;
+        }
+        .menu-button small {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-top: 2px;
+            line-height: 1.2;
+        }
+        .menu-button:hover {
+            background-color: #f7f9fd;
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: #93c5fd;
+        }
+        
+        /* ------------------------------------------- */
+        /* ESTILOS BOTÕES DE INFORMAÇÃO */
+        /* ------------------------------------------- */
+
+        /* Container para os botões modais */
+        .info-buttons-container {
+            display: flex;
+            flex-wrap: wrap; /* Permite quebras de linha em telas pequenas */
+            justify-content: center;
+            gap: 10px; /* Espaço entre os botões */
+            margin-top: 30px;
             max-width: 900px;
             width: 100%;
             padding: 0 10px;
         }
 
+        /* Estilo base para os botões modais */
         .info-button {
-            /* AJUSTE PARA DIMINUIR O TAMANHO DOS BOTÕES */
-            padding: 8px 14px; 
-            background-color: #e5e7eb;
-            color: #374151;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            background-color: #f7f9fd; /* Fundo muito claro, quase branco */
+            color: #4a5568; /* Cinza escuro suave */
+            border: 1px solid #e2e8f0;
+            padding: 8px 15px;
+            border-radius: 20px; /* Borda bem arredondada (estilo chip) */
+            font-size: 0.9em;
             cursor: pointer;
-            font-size: 0.85em; 
-            font-weight: 600;
-            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s, border-color 0.2s;
-            flex-grow: 1; 
-            max-width: 200px; 
+            transition: all 0.2s ease-in-out;
+            white-space: nowrap; /* Evita que o texto quebre */
         }
 
         .info-button:hover {
-            background-color: #d1d5db;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #e2e8f0;
+            color: #1a202c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        /* Modo Escuro para os botões de informação */
         body.dark-mode .info-button {
-            background-color: #1c1c1c;
-            color: #e2e8f0;
+            background-color: #1c1c1c; 
             border-color: #333333;
+            color: #a0aec0;
         }
 
         body.dark-mode .info-button:hover {
             background-color: #333333;
-            border-color: #6b7280;
+            color: #e2e8f0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
         
-        /* Ajuste responsivo para os botões - Empilhamento e Centralização no Mobile */
-        @media (max-width: 480px) {
-            .info-buttons-container {
-                flex-direction: column;
-                gap: 5px;
-            }
-            .info-button {
-                max-width: 100%; /* Faz com que o botão preencha o contêiner centralizado */
-            }
+        /* Modo Kids para os botões de informação (Verde) */
+        body.kids-mode .info-button {
+            border-color: #81c784; /* Borda Verde Claro */
+            color: #2ecc71; /* Verde Esmeralda */
+        }
+        body.kids-mode .info-button:hover {
+            background-color: #e8f5e9; /* Fundo Menta no hover */
+            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3); /* Sombra Verde */
+        }
+        /* Ajuste do Kids em Dark Mode */
+        body.kids-mode.dark-mode .info-button {
+            border-color: #90cdf4; /* Azul claro */
+            color: #4ade80; /* Verde Limão */
+        }
+
+        /* Modo Teens para os botões de informação */
+        body.teens-mode .info-button {
+            border-color: #6699ff; /* Azul vibrante */
+            color: #3366cc; /* Azul escuro */
+        }
+        body.teens-mode .info-button:hover {
+            background-color: #e6f0ff; /* Azul muito claro no hover */
+            box-shadow: 0 4px 8px rgba(102, 153, 255, 0.3);
+        }
+        /* Ajuste do Teens em Dark Mode */
+        body.teens-mode.dark-mode .info-button {
+            border-color: #90cdf4; 
+            color: #90cdf4;
         }
 
 
         /* ------------------------------------------- */
-        /* ESTILOS DO MODAL/POP-UP */
+        /* RODAPÉ E MODAL (MANUTENÇÃO) */
         /* ------------------------------------------- */
+        
+        .simple-footer {
+            width: 100%;
+            text-align: center;
+            padding-top: 1.5rem; 
+            margin-top: 3rem; 
+            border-top: 1px solid #e2e8f0; 
+            color: #94a3b8;
+            font-size: 0.875rem; 
+            transition: color 0.3s, border-color 0.3s;
+        }
+        /* Estilos do Modal (Mantidos) */
         .modal-overlay {
             display: none; 
             position: fixed;
@@ -363,95 +511,7 @@
         body.dark-mode .credit-title {
              color: #90cdf4;
         }
-        
-        /* Estilos para o conteúdo genérico (LGPD, Ajuda, Quem Somos) */
-        #modal-body-content p {
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
 
-        /* --- O restante do CSS principal (Mantido) --- */
-        
-        .header-logo {
-            max-width: 230px; 
-            height: auto;
-            margin-bottom: 10px; 
-            transition: filter 0.3s;
-        }
-        .main-header h1 {
-            font-size: 2.2em; 
-            margin-bottom: 5px;
-            color: #2563eb; 
-            transition: color 0.3s;
-        }
-        .main-header p {
-            font-size: 1.2em;
-            color: #6b7280;
-            transition: color 0.3s;
-        }
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px; 
-            max-width: 900px;
-            width: 100%;
-            margin: auto;
-            padding: 0 10px;
-        }
-        .menu-button {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            text-align: left;
-            background-color: #ffffff; 
-            border: 1px solid #e2e8f0;
-            color: #1e3a8a; 
-            text-decoration: none;
-            padding: 20px 25px;
-            border-radius: 16px; 
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .menu-button .emoji-icon {
-            font-size: 2.5em; 
-            min-width: 50px;
-            margin-right: 20px;
-            line-height: 1; 
-            transition: transform 0.3s ease; 
-        }
-        .menu-content {
-            display: flex;
-            flex-direction: column;
-        }
-        .menu-button span {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #1a202c; 
-            transition: color 0.3s;
-        }
-        .menu-button small {
-            font-size: 0.9em;
-            color: #6b7280;
-            margin-top: 2px;
-            line-height: 1.2;
-            transition: color 0.3s;
-        }
-        .menu-button:hover {
-            background-color: #f7f9fd;
-            transform: translateY(-7px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            border-color: #93c5fd;
-        }
-        .simple-footer {
-            width: 100%;
-            text-align: center;
-            padding-top: 1.5rem; 
-            margin-top: 3rem; 
-            border-top: 1px solid #e2e8f0; 
-            color: #94a3b8;
-            font-size: 0.875rem; 
-            transition: color 0.3s, border-color 0.3s;
-        }
     </style>
 </head>
 <body>
@@ -466,9 +526,16 @@
                 </div>
         </div>
     </div>
+    
     <header class="main-header">
         
         <div class="header-controls">
+            
+            <div id="audience-selector-container">
+                <button id="active-audience-button" title="Selecione a audiência"></button>
+                <div id="audience-dropdown">
+                    </div>
+            </div>
             
             <div id="language-selector-container">
                 <button id="active-language-button" title="Selecione o idioma"></button>
@@ -492,64 +559,64 @@
 
     <div class="menu-container">
         
-        <a href="leitura/index.html" class="menu-button">
-            <span class="emoji-icon">🗓️</span>
+        <a href="leitura/index.html" class="menu-button" data-original-href="leitura/index.html" data-menu-id="menu1">
+            <span class="emoji-icon" data-i18n-icon="menu1Icon">🗓️</span>
             <div class="menu-content">
                 <span data-i18n="menu1Title">Plano de Leitura Anual da Bíblia</span>
                 <small data-i18n="menu1Subtitle">Vários planos de leitura bíblica.</small>
             </div>
         </a>
 
-        <a href="joao/index.html" class="menu-button">
-            <span class="emoji-icon">✨</span>
+        <a href="joao/index.html" class="menu-button" data-original-href="joao/index.html" data-menu-id="menu2">
+            <span class="emoji-icon" data-i18n-icon="menu2Icon">✨</span>
             <div class="menu-content">
                 <span data-i18n="menu2Title">Devocional Livro de João</span>
                 <small data-i18n="menu2Subtitle">Conheça Jesus como o Verbo e a Luz do mundo.</small>
             </div>
         </a>
 
-        <a href="proverbios/index.html" class="menu-button">
-            <span class="emoji-icon">💡</span>
+        <a href="proverbios/index.html" class="menu-button" data-original-href="proverbios/index.html" data-menu-id="menu4">
+            <span class="emoji-icon" data-i18n-icon="menu4Icon">💡</span>
             <div class="menu-content">
                 <span data-i18n="menu4Title">Devocional Livro de Provérbios</span>
                 <small data-i18n="menu4Subtitle">Lições diárias de Sabedoria e Conduta.</small>
             </div>
         </a>
 		
-		<a href="romanos/index.html" class="menu-button">
-            <span class="emoji-icon">⚖️</span>
+		<a href="romanos/index.html" class="menu-button" data-original-href="romanos/index.html" data-menu-id="menu3">
+            <span class="emoji-icon" data-i18n-icon="menu3Icon">⚖️</span>
             <div class="menu-content">
                 <span data-i18n="menu3Title">Devocional Livro de Romanos</span>
                 <small data-i18n="menu3Subtitle">Estudo aprofundado sobre a Justificação pela Fé.</small>
             </div>
         </a>
         
-        <a href="eclesiastes/index.html" class="menu-button">
-            <span class="emoji-icon">🕰️</span>
+        <a href="eclesiastes/index.html" class="menu-button" data-original-href="eclesiastes/index.html" data-menu-id="menu5">
+            <span class="emoji-icon" data-i18n-icon="menu5Icon">🕰️</span>
             <div class="menu-content">
                 <span data-i18n="menu5Title">Devocional Livro de Eclesiastes</span>
                 <small data-i18n="menu5Subtitle">Um convite a refletir com Salomão sobre o sentido da vida.</small>
             </div>
         </a>
         
-        <a href="galatas/index.html" class="menu-button">
-            <span class="emoji-icon">✝️</span>
+        <a href="galatas/index.html" class="menu-button" data-original-href="galatas/index.html" data-menu-id="menu6">
+            <span class="emoji-icon" data-i18n-icon="menu6Icon">✝️</span>
             <div class="menu-content">
                 <span data-i18n="menu6Title">Devocional Livro de Gálatas</span>
                 <small data-i18n="menu6Subtitle">Uma caminhada de graça, identidade e liberdade.</small>
             </div>
         </a>
                     
-        <a href="salmos/index.html" class="menu-button">
-            <span class="emoji-icon">🎶</span>
+        <a href="salmos/index.html" class="menu-button" data-original-href="salmos/index.html" data-menu-id="menu8">
+            <span class="emoji-icon" data-i18n-icon="menu8Icon">🎶</span>
             <div class="menu-content">
                 <span data-i18n="menu8Title">Salmos: Um Caminho de Adoração e Transformação</span>
                 <small data-i18n="menu8Subtitle">Aprendendo a viver o cotidiano na presença de Deus.</small>
             </div>
         </a>
 		
-		 <a href="atos/index.html" class="menu-button">
-            <span class="emoji-icon">🔥</span>
+		 <a href="atos/index.html" class="menu-button" data-original-href="atos/index.html" data-menu-id="menu7">
+            <span class="emoji-icon" data-i18n-icon="menu7Icon">🔥</span>
             <div class="menu-content">
                 <span data-i18n="menu7Title">Devocional Livro de Atos</span>
                 <small data-i18n="menu7Subtitle">A Igreja em Ação: O poder do Espírito e a missão.</small>
@@ -574,7 +641,17 @@
         const LOGO_LIGHT = 'img/logo_light.png';
         const LOGO_DARK = 'img/logo_dark.png';
         
-        // Configurações do Idioma
+        // ----------------------------------------------------
+        // CONFIGURAÇÕES DE AUDIÊNCIA
+        // ----------------------------------------------------
+        const DEFAULT_AUDIENCE = 'adult';
+        const audienceMap = {
+            'adult': { icon: '📚', textKey: 'audienceAdult', className: '' }, 
+            'kids': { icon: '🔍', textKey: 'audienceKids', className: 'kids-mode' }, // Lupa (Descoberta/Curiosidade)
+            'teens': { icon: '🧭', textKey: 'audienceTeens', className: 'teens-mode' } // Bússola (Jornada/Guia)
+        };
+
+        // Configurações do Idioma (Mantidas)
         const DEFAULT_LANGUAGE = 'pt-BR';
         const flagMap = {
             'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
@@ -582,186 +659,283 @@
             'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
             'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
         };
-        // *** TRADUÇÕES ATUALIZADAS (com Gálatas, Atos e Salmos) ***
+        // *** TRADUÇÕES ATUALIZADAS E EXPANDIDAS PARA OUSADIA ***
         const translations = {
              'pt-BR': {
                 headerTitle: "Devocionais e Planos de Leitura Bíblica",
                 headerSubtitle: "Seu ponto central para unir Conhecimento e Fé.",
+                
+                // AUDIÊNCIA
+                audienceAdult: "Adulto", audienceKids: "Kids", audienceTeens: "Teens",
+                
+                // menu1: Plano de Leitura
                 menu1Title: "Plano de Leitura Anual da Bíblia",
                 menu1Subtitle: "Vários planos de leitura bíblica.",
+                menu1Icon: "🗓️",
+                menu1Title_kids: "O Desafio da Bíblia!",
+                menu1Subtitle_kids: "Conclua a jornada lendo a Palavra de Deus.",
+                menu1Icon_kids: "🏆",
+                menu1Title_teens: "Guia de Leitura: A Bíblia Toda",
+                menu1Subtitle_teens: "Um mapa para ler a Bíblia em um ano.",
+                menu1Icon_teens: "🗺️",
+                
+                // menu2: João
                 menu2Title: "Devocional Livro de João",
                 menu2Subtitle: "Conheça Jesus como o Verbo e a Luz do mundo.",
+                menu2Icon: "✨",
+                menu2Title_kids: "Livro de João: Quem é Jesus?",
+                menu2Subtitle_kids: "Descubra os milagres e ensinamentos de Jesus.",
+                menu2Icon_kids: "⭐",
+                menu2Title_teens: "João: O Amor Inexplicável",
+                menu2Subtitle_teens: "Descubra a identidade de Jesus e Seu amor.",
+                menu2Icon_teens: "💖",
+
+                // menu3: Romanos
                 menu3Title: "Devocional Livro de Romanos",
                 menu3Subtitle: "Estudo aprofundado sobre a Justificação pela Fé.",
+                menu3Icon: "⚖️",
+                menu3Title_kids: "Uma Aventura pelo Livro de Romanos",
+                menu3Subtitle_kids: "Aprenda sobre o perdão de Deus e a salvação.",
+                menu3Icon_kids: "🕵️‍",
+                menu3Title_teens: "Romanos: O que Realmente Importa?",
+                menu3Subtitle_teens: "Entenda a graça, a Lei e a justificação.",
+                menu3Icon_teens: "🧠",
+
+                // menu4: Provérbios
                 menu4Title: "Devocional Livro de Provérbios",
                 menu4Subtitle: "Lições diárias de Sabedoria e Conduta.",
+                menu4Icon: "💡",
+                menu4Title_kids: "Provérbios: O Manual da Sabedoria",
+                menu4Subtitle_kids: "Dicas de vida para ser sábio e feliz.",
+                menu4Icon_kids: "🧐",
+                menu4Title_teens: "Provérbios: Como Vencer na Vida",
+                menu4Subtitle_teens: "Conselhos práticos para escolhas diárias.",
+                menu4Icon_teens: "⚙️",
+
+                // menu5: Eclesiastes
                 menu5Title: "Devocional Livro de Eclesiastes",
                 menu5Subtitle: "Um convite a refletir com Salomão sobre o sentido da vida.",
-                // Gálatas
+                menu5Icon: "🕰️",
+                menu5Title_kids: "Eclesiastes: A Grande Pergunta",
+                menu5Subtitle_kids: "O que realmente vale a pena na vida?",
+                menu5Icon_kids: "❓",
+                menu5Title_teens: "Eclesiastes: Qual o Sentido?",
+                menu5Subtitle_teens: "Reflexões profundas sobre propósito e tempo.",
+                menu5Icon_teens: "🤯",
+                
+                // menu6: Gálatas
                 menu6Title: "Devocional Livro de Gálatas",
                 menu6Subtitle: "Uma caminhada de graça, identidade e liberdade.",
-                // Atos
+                menu6Icon: "✝️",
+                menu6Title_kids: "Gálatas: A História da Graça",
+                menu6Subtitle_kids: "Como Jesus nos deu liberdade de verdade.",
+                menu6Icon_kids: "🕊️",
+                menu6Title_teens: "Gálatas: Identidade e Liberdade",
+                menu6Subtitle_teens: "Como a graça define quem você é.",
+                menu6Icon_teens: "🔗",
+                
+                // menu7: Atos
                 menu7Title: "Devocional Livro de Atos",
                 menu7Subtitle: "A Igreja em Ação: O poder do Espírito e a missão.",
-                // NOVO: Salmos (Com o texto descritivo fornecido)
+                menu7Icon: "🔥",
+                menu7Title_kids: "A Aventura do Espírito Santo em Atos",
+                menu7Subtitle_kids: "Histórias de como a Igreja começou e cresceu.",
+                menu7Icon_kids: "🚀",
+                menu7Title_teens: "Atos: Impacto e Missão",
+                menu7Subtitle_teens: "O poder do Espírito para a vida e a missão hoje.",
+                menu7Icon_teens: "⚡",
+
+                // menu8: Salmos
                 menu8Title: "Salmos: Um Caminho de Adoração e Transformação",
                 menu8Subtitle: "Aprendendo a viver o cotidiano na presença de Deus.",
+                menu8Icon: "🎶",
+                menu8Title_kids: "Salmos: Aprendendo a Louvar e Conversar com Deus",
+                menu8Subtitle_kids: "Músicas e orações para falar com Deus.",
+                menu8Icon_kids: "🎤",
+                menu8Title_teens: "Salmos: Encontre a Paz",
+                menu8Subtitle_teens: "Encontre conforto e direção nos momentos difíceis.",
+                menu8Icon_teens: "🧘",
                 
-                // Chaves para botões
-                creditsButtonText: "Créditos",
-                privacyButtonText: "Privacidade (LGPD)",
-                helpButtonText: "Ajuda",
-                aboutButtonText: "Quem Somos",
-
-                // Chaves de Título do Modal
-                modalTitle_credits: "Créditos",
-                modalTitle_privacy: "Política de Privacidade (LGPD)",
-                modalTitle_help: "Ajuda e Contato",
-                modalTitle_about: "Quem Somos",
-                
-                // Conteúdo de Créditos (Detalhado)
-                creditAuthorTitle: "Autor:",
-                creditTechReviewTitle: "Revisão Técnica:",
-                creditTheologicalReviewTitle: "Revisão Teológica:",
-                
-                // Conteúdo Genérico para o Modal (LGPD, Ajuda, Quem Somos)
+                // MODAL
+                creditsButtonText: "Créditos", privacyButtonText: "Privacidade (LGPD)", helpButtonText: "Ajuda", aboutButtonText: "Quem Somos",
+                modalTitle_credits: "Créditos", modalTitle_privacy: "Política de Privacidade (LGPD)", modalTitle_help: "Ajuda e Contato", modalTitle_about: "Quem Somos",
+                creditAuthorTitle: "Autor:", creditTechReviewTitle: "Revisão Técnica:", creditTheologicalReviewTitle: "Revisão Teológica:",
                 modalContent_privacy: 'Esta seção detalha nossa Política de Privacidade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\nAfirmamos que este site/aplicativo não coleta dados pessoais dos usuários.\n\nNenhuma informação é armazenada, exceto suas preferências locais de idioma e tema (Modo Escuro/Claro), que são salvas no seu próprio navegador.',
-                modalContent_help: 'Para dúvidas, sugestões ou suporte técnico, por favor, entre em contato através do email: contact@conhecer-e-crer.com\n\nNosso objetivo é fornecer a melhor experiência de estudo bíblico possível. Por favor, inclua capturas de tela se reportar um problema técnico.\n\nVersão Atual: v1.0.5 - 2025',
+                modalContent_help: 'Para dúvidas, sugestões ou suporte técnico, por favor, entre em contato através do email: contact@conhecer-e-crer.com\n\nNosso objetivo é fornecer a melhor experiência de estudo bíblico possível. Por favor, inclua capturas de tela se reportar um problema técnico.\n\nVersão Atual: v1.0.6 - 2025',
                 modalContent_about: 'Somos uma iniciativa dedicada a promover o estudo aprofundado e a devoção Cristã, unindo o Conhecimento da Palavra de Deus com a Fé prática.\n\nNossos materiais são elaborados com base nas Escrituras Sagradas para auxiliar você em sua jornada espiritual.'
             },
-            'en-US': {
-                headerTitle: "Devotionals and Bible Reading Plans",
-                headerSubtitle: "Your central point to unite Knowledge and Faith.",
-                menu1Title: "Annual Bible Reading Plan",
-                menu1Subtitle: "Various Bible reading plans.",
-                menu2Title: "Devotional Book of John",
-                menu2Subtitle: "Know Jesus as the Word and the Light of the world.",
-                menu3Title: "Devotional Book of Romans",
-                menu3Subtitle: "In-depth study on Justification by Faith.",
-                menu4Title: "Devotional Book of Proverbs",
-                menu4Subtitle: "Daily lessons of Wisdom and Conduct.",
-                menu5Title: "Devotional Book of Ecclesiastes",
-                menu5Subtitle: "An invitation to reflect with Solomon on the meaning of life.",
-                // Galatians
-                menu6Title: "Devotional Book of Galatians",
-                menu6Subtitle: "A journey of grace, identity, and freedom.",
-                // Acts
-                menu7Title: "Devotional Book of Acts",
-                menu7Subtitle: "The Church in Action: The power of the Spirit and the mission.",
-                // NEW: Psalms (Translated from PT)
-                menu8Title: "Psalms: A Path of Worship and Transformation",
-                menu8Subtitle: "Learning to live everyday life in the presence of God.",
+            'en-US': { /* Versão em Inglês */
+                headerTitle: "Devotionals and Bible Reading Plans", headerSubtitle: "Your central point to unite Knowledge and Faith.",
+                audienceAdult: "Adult", audienceKids: "Kids", audienceTeens: "Teens",
                 
-                creditsButtonText: "Credits",
-                privacyButtonText: "Privacy (LGPD)",
-                helpButtonText: "Help",
-                aboutButtonText: "About Us",
+                // menu1: Reading Plan
+                menu1Title: "Annual Bible Reading Plan", menu1Subtitle: "Various Bible reading plans.", menu1Icon: "🗓️",
+                menu1Title_kids: "The Bible Challenge!", menu1Subtitle_kids: "Complete the journey by reading God's Word.", menu1Icon_kids: "🏆",
+                menu1Title_teens: "Reading Guide: The Whole Bible", menu1Subtitle_teens: "A map to read the Bible in one year.", menu1Icon_teens: "🗺️",
+                
+                // menu2: John
+                menu2Title: "Devotional Book of John", menu2Subtitle: "Know Jesus as the Word and the Light of the world.", menu2Icon: "✨",
+                menu2Title_kids: "Book of John: Who Is Jesus?", menu2Subtitle_kids: "Discover Jesus' miracles and teachings.", menu2Icon_kids: "⭐",
+                menu2Title_teens: "John: Inexplicable Love", menu2Subtitle_teens: "Discover the identity of Jesus and His love.", menu2Icon_teens: "💖",
 
-                modalTitle_credits: "Credits",
-                modalTitle_privacy: "Privacy Policy (LGPD)",
-                modalTitle_help: "Help & Contact",
-                modalTitle_about: "About Us",
+                // menu3: Romans
+                menu3Title: "Devotional Book of Romans", menu3Subtitle: "In-depth study on Justification by Faith.", menu3Icon: "⚖️",
+                menu3Title_kids: "An Adventure Through the Book of Romans", menu3Subtitle_kids: "Learn about God's forgiveness and salvation.", menu3Icon_kids: "🕵️",
+                menu3Title_teens: "Romans: What Really Matters?", menu3Subtitle_teens: "Understand grace, the Law, and justification.", menu3Icon_teens: "🧠",
+
+                // menu4: Proverbs
+                menu4Title: "Devotional Book of Proverbs", menu4Subtitle: "Daily lessons of Wisdom and Conduct.", menu4Icon: "💡",
+                menu4Title_kids: "Proverbs: The Manual of Wisdom", menu4Subtitle_kids: "Life tips for being wise and happy.", menu4Icon_kids: "🧐",
+                menu4Title_teens: "Proverbs: How to Win at Life", menu4Subtitle_teens: "Practical advice for daily choices.", menu4Icon_teens: "⚙️",
+
+                // menu5: Ecclesiastes
+                menu5Title: "Devotional Book of Ecclesiastes", menu5Subtitle: "An invitation to reflect with Solomon on the meaning of life.", menu5Icon: "🕰️",
+                menu5Title_kids: "Ecclesiastes: The Big Question", menu5Subtitle_kids: "What is truly worthwhile in life?", menu5Icon_kids: "❓",
+                menu5Title_teens: "Ecclesiastes: What's the Point?", menu5Subtitle_teens: "Deep reflections on purpose and time.", menu5Icon_teens: "🤯",
                 
-                creditAuthorTitle: "Author:",
-                creditTechReviewTitle: "Technical Review:",
-                creditTheologicalReviewTitle: "Theological Review:",
+                // menu6: Galatians
+                menu6Title: "Devotional Book of Galatians", menu6Subtitle: "A journey of grace, identity, and freedom.", menu6Icon: "✝️",
+                menu6Title_kids: "Galatians: The Story of Grace", menu6Subtitle_kids: "How Jesus gave us true freedom.", menu6Icon_kids: "🕊️",
+                menu6Title_teens: "Galatians: Identity and Freedom", menu6Subtitle_teens: "How grace defines who you are.", menu6Icon_teens: "🔗",
                 
+                // menu7: Acts
+                menu7Title: "Devotional Book of Acts", menu7Subtitle: "The Church in Action: The power of the Spirit and the mission.", menu7Icon: "🔥",
+                menu7Title_kids: "The Holy Spirit’s Adventure in Acts", menu7Subtitle_kids: "Stories of how the Church started and grew.", menu7Icon_kids: "🚀",
+                menu7Title_teens: "Acts: Impact and Mission", menu7Subtitle_teens: "The power of the Spirit for life and mission today.", menu7Icon_teens: "⚡",
+
+                // menu8: Psalms
+                menu8Title: "Psalms: A Path of Worship and Transformation", menu8Subtitle: "Learning to live everyday life in the presence of God.", menu8Icon: "🎶",
+                menu8Title_kids: "Psalms: Learning to Praise and Talk with God", menu8Subtitle_kids: "Songs and prayers to speak with God.", menu8Icon_kids: "🎤",
+                menu8Title_teens: "Psalms: Find Peace", menu8Subtitle_teens: "Find comfort and direction in difficult times.", menu8Icon_teens: "🧘",
+                
+                // MODAL
+                creditsButtonText: "Credits", privacyButtonText: "Privacy (LGPD)", helpButtonText: "Help", aboutButtonText: "About Us",
+                modalTitle_credits: "Credits", modalTitle_privacy: "Privacy Policy (LGPD)", modalTitle_help: "Help & Contact", modalTitle_about: "About Us",
+                creditAuthorTitle: "Author:", creditTechReviewTitle: "Technical Review:", creditTheologicalReviewTitle: "Theological Review:",
                 modalContent_privacy: 'This section details our Privacy Policy, in compliance with the General Data Protection Law (LGPD).\n\nWe state that this website/application does not collect personal user data.\n\nNo information is stored, except your local language and theme preferences (Dark/Light Mode), which are saved in your own browser.',
-                modalContent_help: 'For questions, suggestions, or technical support, please contact us via email at: contact@conhecer-e-crer.com.\n\nOur goal is to provide the best possible Bible study experience. Please include screenshots if reporting a technical issue.\n\nCurrent Version: v1.0.5 - 2025',
+                modalContent_help: 'For questions, suggestions, or technical support, please contact us via email at: contact@conhecer-e-crer.com.\n\nOur goal is to provide the best possible Bible study experience. Please include screenshots if reporting a technical issue.\n\nCurrent Version: v1.0.6 - 2025',
                 modalContent_about: 'We are an initiative dedicated to promoting in-depth study and Christian devotion, uniting the Knowledge of God\'s Word with practical Faith.\n\nOur materials are developed based on the Holy Scriptures to assist you in your spiritual journey.'
             },
-            'es-ES': {
-                headerTitle: "Devocionales y Planes de Lectura Bíblica",
-                headerSubtitle: "Su punto central para unir Conocimiento y Fe.",
-                menu1Title: "Plan de Lectura Anual de la Biblia",
-                menu1Subtitle: "Varios planes de lectura bíblica.",
-                menu2Title: "Devocional Libro de Juan",
-                menu2Subtitle: "Conozca a Jesús como el Verbo y la Luz del mundo.",
-                menu3Title: "Devocional Libro de Romanos",
-                menu3Subtitle: "Estudio profundo sobre la Justificación por la Fe.",
-                menu4Title: "Devocional Libro de Provérbios",
-                menu4Subtitle: "Lições diárias de Sabedoria e Conduta.",
-                menu5Title: "Devocional Libro de Eclesiastés",
-                menu5Subtitle: "Una invitación a reflexionar con Salomón sobre el sentido de la vida.",
-                // Gálatas
-                menu6Title: "Devocional Libro de Gálatas",
-                menu6Subtitle: "Una caminata de gracia, identidad y libertad.",
-                // Hechos
-                menu7Title: "Devocional Libro de Hechos",
-                menu7Subtitle: "La Iglesia en Acción: El poder del Espíritu y la misión.",
-                // NUEVO: Salmos (Translated from PT)
-                menu8Title: "Salmos: Un Camino de Adoración y Transformación",
-                menu8Subtitle: "Aprendiendo a vivir lo cotidiano en la presencia de Dios.",
+            'es-ES': { /* Versão em Espanhol */
+                headerTitle: "Devocionales y Planes de Lectura Bíblica", headerSubtitle: "Su punto central para unir Conocimiento y Fe.",
+                audienceAdult: "Adulto", audienceKids: "Niños", audienceTeens: "Adolescentes",
                 
-                creditsButtonText: "Créditos",
-                privacyButtonText: "Privacidad (LGPD)",
-                helpButtonText: "Ayuda",
-                aboutButtonText: "Quienes Somos",
+                // menu1: Reading Plan
+                menu1Title: "Plan de Lectura Anual de la Biblia", menu1Subtitle: "Varios planes de lectura bíblica.", menu1Icon: "🗓️",
+                menu1Title_kids: "¡El Desafío de la Biblia!", menu1Subtitle_kids: "Completa el viaje leyendo la Palabra de Dios.", menu1Icon_kids: "🏆",
+                menu1Title_teens: "Guía de Lectura: Toda la Biblia", menu1Subtitle_teens: "Un mapa para leer la Biblia en un año.", menu1Icon_teens: "🗺️",
+                
+                // menu2: John
+                menu2Title: "Devocional Libro de Juan", menu2Subtitle: "Conozca a Jesús como el Verbo y la Luz del mundo.", menu2Icon: "✨",
+                menu2Title_kids: "Libro de Juan: ¿Quién es Jesús?", menu2Subtitle_kids: "Descubre los milagros y enseñanzas de Jesús.", menu2Icon_kids: "⭐",
+                menu2Title_teens: "Juan: El Amor Inexplicable", menu2Subtitle_teens: "Descubre la identidad de Jesús y Su amor.", menu2Icon_teens: "💖",
 
-                modalTitle_credits: "Créditos",
-                modalTitle_privacy: "Política de Privacidad (LGPD)",
-                modalTitle_help: "Ayuda y Contacto",
-                modalTitle_about: "Quienes Somos",
+                // menu3: Romans
+                menu3Title: "Devocional Libro de Romanos", menu3Subtitle: "Estudio profundo sobre la Justificación por la Fe.", menu3Icon: "⚖️",
+                menu3Title_kids: "Una Aventura por el Libro de Romanos", menu3Subtitle_kids: "Aprende sobre el perdón de Dios y la salvación.", menu3Icon_kids: "🕵️",
+                menu3Title_teens: "Romanos: ¿Qué es lo que Realmente Importa?", menu3Subtitle_teens: "Entiende la gracia, la Ley y la justificación.", menu3Icon_teens: "🧠",
+
+                // menu4: Proverbs
+                menu4Title: "Devocional Libro de Provérbios", menu4Subtitle: "Lições diárias de Sabedoria e Conduta.", menu4Icon: "💡",
+                menu4Title_kids: "Proverbios: El Manual de la Sabiduría", menu4Subtitle_kids: "Consejos de vida para ser sabio y feliz.", menu4Icon_kids: "🧐",
+                menu4Title_teens: "Proverbios: Cómo Triunfar en la Vida", menu4Subtitle_teens: "Consejos prácticos para las decisiones diarias.", menu4Icon_teens: "⚙️",
+
+                // menu5: Ecclesiastes
+                menu5Title: "Devocional Libro de Eclesiastés", menu5Subtitle: "Una invitación a reflexionar con Salomón sobre el sentido de la vida.", menu5Icon: "🕰️",
+                menu5Title_kids: "Eclesiastés: La Gran Pregunta", menu5Subtitle_kids: "¿Qué vale la pena en la vida?", menu5Icon_kids: "❓",
+                menu5Title_teens: "Eclesiastés: ¿Cuál es el Sentido?", menu5Subtitle_teens: "Reflexiones profundas sobre el propósito y el tiempo.", menu5Icon_teens: "🤯",
                 
-                creditAuthorTitle: "Autor:",
-                creditTechReviewTitle: "Revisión Técnica:",
-                creditTheologicalReviewTitle: "Revisión Teológica:",
+                // menu6: Galatians
+                menu6Title: "Devocional Libro de Gálatas", menu6Subtitle: "Una caminata de gracia, identidad y libertad.", menu6Icon: "✝️",
+                menu6Title_kids: "Gálatas: La Historia de la Gracia", menu6Subtitle_kids: "Cómo Jesús nos dio la verdadera libertad.", menu6Icon_kids: "🕊️",
+                menu6Title_teens: "Gálatas: Identidad y Libertad", menu6Subtitle_teens: "Cómo la gracia define quién eres.", menu6Icon_teens: "🔗",
                 
-                modalContent_privacy: 'Esta sección detalla nuestra Política de Privacidad, en cumplimiento con la Ley General de Protección de Datos (LGPD).\n\nDeclaramos que este sitio web/aplicación no recopila datos personales de los usuarios.\n\nNo se almacena ninguna información, excepto sus preferencias locales de idioma y tema (Modo Oscuro/Claro), que se guardan en su propio navegador.',
-                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico: contact@conhecer-e-crer.com.\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, incluya capturas de pantalla si informa un problema técnico.\n\nVersión Actual: v1.0.5 - 2025',
+                // menu7: Acts
+                menu7Title: "Devocional Libro de Hechos", menu7Subtitle: "La Iglesia en Acción: El poder del Espíritu y la misión.", menu7Icon: "🔥",
+                menu7Title_kids: "La Aventura del Espíritu Santo en Hechos", menu7Subtitle_kids: "Historias de cómo la Iglesia comenzó y creció.", menu7Icon_kids: "🚀",
+                menu7Title_teens: "Hechos: Impacto y Misión", menu7Subtitle_teens: "El poder del Espíritu para la vida y la misión hoy.", menu7Icon_teens: "⚡",
+
+                // menu8: Psalms
+                menu8Title: "Salmos: Un Camino de Adoración y Transformación", menu8Subtitle: "Aprendiendo a vivir lo cotidiano en la presencia de Dios.", menu8Icon: "🎶",
+                menu8Title_kids: "Salmos: Aprendiendo a Alabar y Hablar con Dios", menu8Subtitle_kids: "Canciones y oraciones para hablar con Dios.", menu8Icon_kids: "🎤",
+                menu8Title_teens: "Salmos: Encuentra la Paz", menu8Subtitle_teens: "Encuentra consuelo y dirección en momentos difíciles.", menu8Icon_teens: "🧘",
+                
+                // MODAL
+                creditsButtonText: "Créditos", privacyButtonText: "Privacidad (LGPD)", helpButtonText: "Ayuda", aboutButtonText: "Quienes Somos",
+                modalTitle_credits: "Créditos", modalTitle_privacy: "Política de Privacidad (LGPD)", modalTitle_help: "Ayuda y Contacto", modalTitle_about: "Quienes Somos",
+                creditAuthorTitle: "Autor:", creditTechReviewTitle: "Revisión Técnica:", creditTheologicalReviewTitle: "Revisión Teológica:",
+                modalContent_privacy: 'Esta sección detalla nuestra Política de Privacidad, en cumplimiento con la Ley General de Protección de Datos (LGPD).\n\nDeclaramos que este sitio web/aplicación no recopila datos personales de los usuarios.\n\nNo se almacena ninguna información, excepto sus preferencias locales de idioma e tema (Modo Oscuro/Claro), que se guardan en su propio navegador.',
+                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico: contact@conhecer-e-crer.com.\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, incluya capturas de pantalla si informa un problema técnico.\n\nVersión Actual: v1.0.6 - 2025',
                 modalContent_about: 'Somos una iniciativa dedicada a promover el estudio profundo y la devoción cristiana, uniendo el Conocimiento de la Palabra de Dios con la Fe práctica.\n\nNuestros materiales se elaboran basándose en las Sagradas Escrituras para ayudarle en su camino espiritual.'
             },
-            'fr-FR': {
-                headerTitle: "Dévotionnels et Plans de Lecture de la Bible",
-                headerSubtitle: "Votre point central pour unir Connaissance et Foi.",
-                menu1Title: "Plan Annuel de Lecture de la Bible",
-                menu1Subtitle: "Divers plans de lecture biblique.",
-                menu2Title: "Dévotionnel Livre de Jean",
-                menu2Subtitle: "Connaissez Jésus comme la Parole et la Lumière du monde.",
-                menu3Title: "Dévotionnel Livre des Romains",
-                menu3Subtitle: "Étude approfondie sur la Justification par la Foi.",
-                menu4Title: "Dévotionnel Livre des Proverbes",
-                menu4Subtitle: "Leçons quotidiennes de Sagesse et de Conduite.",
-                menu5Title: "Dévotionnel Livre de l'Ecclésiaste",
-                menu5Subtitle: "Une invitation à réfléchir avec Salomon sur le sens de la vie.",
-                // Galates
-                menu6Title: "Dévotionnel Livre des Galates",
-                menu6Subtitle: "Un chemin de grâce, d'identité et de liberté.",
-                // Actes
-                menu7Title: "Dévotionnel Livre des Actes",
-                menu7Subtitle: "L'Église en Action: La puissance de l'Esprit et la mission.",
-                // NOUVEAU: Psaumes (Translated from PT)
-                menu8Title: "Psaumes: Un Chemin d'Adoration et de Transformation",
-                menu8Subtitle: "Apprendre à vivre le quotidien en présence de Dieu.",
+            'fr-FR': { /* Versão em Francês */
+                headerTitle: "Dévotionnels et Plans de Lecture de la Bible", headerSubtitle: "Votre point central pour unir Connaissance et Foi.",
+                audienceAdult: "Adulte", audienceKids: "Enfants", audienceTeens: "Ados",
                 
-                creditsButtonText: "Crédits",
-                privacyButtonText: "Confidentialité (LGPD)",
-                helpButtonText: "Aide",
-                aboutButtonText: "Qui Sommes-Nous",
+                // menu1: Reading Plan
+                menu1Title: "Plan Annuel de Lecture de la Bible", menu1Subtitle: "Divers plans de lecture biblique.", menu1Icon: "🗓️",
+                menu1Title_kids: "Le Défi de la Bible !", menu1Subtitle_kids: "Terminez le voyage en lisant la Parole de Dieu.", menu1Icon_kids: "🏆",
+                menu1Title_teens: "Guide de Lecture : Toute la Bible", menu1Subtitle_teens: "Une carte pour lire la Bible en un an.", menu1Icon_teens: "🗺️",
+                
+                // menu2: John
+                menu2Title: "Dévotionnel Livre de Jean", menu2Subtitle: "Connaissez Jésus comme la Parole et la Lumière du monde.", menu2Icon: "✨",
+                menu2Title_kids: "Livre de Jean : Qui est Jésus ?", menu2Subtitle_kids: "Découvrez les miracles et les enseignements de Jésus.", menu2Icon_kids: "⭐",
+                menu2Title_teens: "Jean : L'Amour Inexplicable", menu2Subtitle_teens: "Découvrez l'identité de Jésus et Son amour.", menu2Icon_teens: "💖",
 
-                modalTitle_credits: "Crédits",
-                modalTitle_privacy: "Politique de Confidentialité (LGPD)",
-                modalTitle_help: "Aide et Contact",
-                modalTitle_about: "Qui Sommes-Nous",
+                // menu3: Romans
+                menu3Title: "Dévotionnel Livre des Romains", menu3Subtitle: "Étude approfondie sur la Justification par la Foi.", menu3Icon: "⚖️",
+                menu3Title_kids: "Une Aventure dans le Livre des Romains", menu3Subtitle_kids: "Apprenez le pardon de Dieu et le salut.", menu3Icon_kids: "🕵️",
+                menu3Title_teens: "Romains : Ce qui Compte Vraiment ?", menu3Subtitle_teens: "Comprenez la grâce, la Loi et la justification.", menu3Icon_teens: "🧠",
+
+                // menu4: Proverbs
+                menu4Title: "Dévotionnel Livre des Proverbes", menu4Subtitle: "Leçons quotidiennes de Sagesse et de Conduite.", menu4Icon: "💡",
+                menu4Title_kids: "Proverbes : Le Manuel de la Sagesse", menu4Subtitle_kids: "Conseils de vie pour être sage et heureux.", menu4Icon_kids: "🧐",
+                menu4Title_teens: "Proverbes : Comment Réussir dans la Vie", menu4Subtitle_teens: "Conseils pratiques pour les choix quotidiens.", menu4Icon_teens: "⚙️",
+
+                // menu5: Ecclesiastes
+                menu5Title: "Dévotionnel Livre de l'Ecclésiaste", menu5Subtitle: "Une invitation à réfléchir avec Salomon sur le sens de la vie.", menu5Icon: "🕰️",
+                menu5Title_kids: "Ecclésiaste : La Grande Question", menu5Subtitle_kids: "Qu'est-ce qui vaut vraiment la peine dans la vie ?", menu5Icon_kids: "❓",
+                menu5Title_teens: "Ecclésiaste : Quel est le Sens ?", menu5Subtitle_teens: "Réflexions profondes sur le but et le temps.", menu5Icon_teens: "🤯",
                 
-                creditAuthorTitle: "Auteur:",
-                creditTechReviewTitle: "Revue Technique:",
-                creditTheologicalReviewTitle: "Revue Théologique:",
+                // menu6: Galatians
+                menu6Title: "Dévotionnel Livre des Galates", menu6Subtitle: "Un chemin de grâce, d'identité et de liberté.", menu6Icon: "✝️",
+                menu6Title_kids: "Galates : L’Histoire de la Grâce", menu6Subtitle_kids: "Comment Jésus nous a donné la vraie liberté.", menu6Icon_kids: "🕊️",
+                menu6Title_teens: "Galates : Identité et Liberté", menu6Subtitle_teens: "Comment la grâce définit qui vous êtes.", menu6Icon_teens: "🔗",
                 
+                // menu7: Acts
+                menu7Title: "Dévotionnel Livre des Actes", menu7Subtitle: "L'Église en Action: La puissance de l'Esprit e la mission.", menu7Icon: "🔥",
+                menu7Title_kids: "L’Aventure du Saint-Esprit dans les Actes", menu7Subtitle_kids: "Histoires sur la façon dont l'Église a commencé et grandi.", menu7Icon_kids: "🚀",
+                menu7Title_teens: "Actes : Impact et Mission", menu7Subtitle_teens: "La puissance de l'Esprit pour la vie et la mission aujourd'hui.", menu7Icon_teens: "⚡",
+
+                // menu8: Psalms
+                menu8Title: "Psaumes: Un Chemin d'Adoration et de Transformation", menu8Subtitle: "Apprendre à vivre le quotidien en présence de Dieu.", menu8Icon: "🎶",
+                menu8Title_kids: "Psaumes : Apprendre à Louer et à Parler avec Dieu", menu8Subtitle_kids: "Chants et prières pour parler avec Dieu.", menu8Icon_kids: "🎤",
+                menu8Title_teens: "Psaumes : Trouvez la Paix", menu8Subtitle_teens: "Trouvez réconfort et direction dans les moments difficiles.", menu8Icon_teens: "🧘",
+                
+                // MODAL
+                creditsButtonText: "Crédits", privacyButtonText: "Confidentialité (LGPD)", helpButtonText: "Aide", aboutButtonText: "Qui Sommes-Nous",
+                modalTitle_credits: "Crédits", modalTitle_privacy: "Politique de Confidentialité (LGPD)", modalTitle_help: "Aide et Contact", modalTitle_about: "Qui Sommes-Nous",
+                creditAuthorTitle: "Auteur:", creditTechReviewTitle: "Revue Technique:", creditTheologicalReviewTitle: "Revue Théologique:",
                 modalContent_privacy: 'Cette section détaille notre politique de confidentialité, conformément à la loi générale sur la protection des données (LGPD).\n\nNous affirmons que ce site/application ne collecte pas de données personnelles des utilisateurs.\n\nAucune information n\'est stockée, à l\'exception de vos préférences locales de langue et de thème (Mode Sombre/Clair), qui sont enregistrées dans votre propre navigateur.',
-                modalContent_help: 'Pour des questions, suggestions ou support technique, veuillez nous contacter par email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersão Actuelle: v1.0.5 - 2025',
-                modalContent_about: 'Nous sommes une initiative dédiée à la promotion de l\'étude approfondie et de la dévotion chrétienne, unissant la Connaissance de la Parole de Dieu à la Foi pratique.\n\nNos matériaux sont élaborados à partir des Saintes Écritures pour vous aider dans votre parcours spirituel.'
+                modalContent_help: 'Pour des questions, suggestions ou support technique, veuillez nous contacter par email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersão Actuelle: v1.0.6 - 2025',
+                modalContent_about: 'Nous sommes une initiative dédiée à promouvoir le étude profond et la dévotion chrétienne, unissant le Connaissance de la Parole de Dieu avec la Foi pratique.\n\nNos matériaux sont élaborés basés sur les Saintes Écritures pour vous aider dans votre cheminement spirituel.'
             }
         };
 
 
-        const container = document.getElementById('language-selector-container');
+        const langContainer = document.getElementById('language-selector-container');
         const activeLangButton = document.getElementById('active-language-button');
-        const dropdown = document.getElementById('language-dropdown');
+        const langDropdown = document.getElementById('language-dropdown');
+        
+        // Elementos de Audiência
+        const audienceContainer = document.getElementById('audience-selector-container');
+        const activeAudienceButton = document.getElementById('active-audience-button');
+        const audienceDropdown = document.getElementById('audience-dropdown');
+        
         const themeToggle = document.getElementById('theme-toggle');
         const logo = document.getElementById('header-logo');
         
-        // NOVOS ELEMENTOS DO MODAL
+        // Elementos do Modal
         const infoModal = document.getElementById('info-modal');
         const closeModalBtn = document.getElementById('close-modal-btn');
         const modalBodyElement = document.getElementById('modal-body-content');
@@ -775,13 +949,9 @@
             if (isDark) {
                 document.body.classList.add('dark-mode');
                 logo.src = LOGO_DARK;
-                themeToggle.classList.add('dark-active');
-                themeToggle.classList.remove('light-active');
             } else {
                 document.body.classList.remove('dark-mode');
                 logo.src = LOGO_LIGHT;
-                themeToggle.classList.add('light-active');
-                themeToggle.classList.remove('dark-active');
             }
         }
 
@@ -805,14 +975,20 @@
         
         
         // ----------------------------------------------------
-        // FUNÇÕES PARA SELETOR DE IDIOMAS 
+        // FUNÇÕES PARA SELETOR DE IDIOMAS
         // ----------------------------------------------------
 
-        function toggleDropdown() {
+        function toggleDropdown(container) {
+            // Fecha o outro dropdown se estiver aberto
+            if (container === langContainer) {
+                audienceContainer.classList.remove('open');
+            } else if (container === audienceContainer) {
+                langContainer.classList.remove('open');
+            }
             container.classList.toggle('open');
         }
 
-        function buildDropdown() {
+        function buildLangDropdown() {
             let html = '';
             for (const lang in flagMap) {
                 const data = flagMap[lang];
@@ -822,7 +998,7 @@
                     </div>
                 `;
             }
-            dropdown.innerHTML = html;
+            langDropdown.innerHTML = html;
         }
 
         function setLanguage(lang) {
@@ -833,14 +1009,34 @@
             activeLangButton.innerHTML = flagMap[lang].iconActive;
             
             const currentTranslations = translations[lang];
-            document.querySelectorAll('[data-i18n]').forEach(element => {
+            
+            // 1. Traduzir todos os elementos com data-i18n (Header e Botoes de Info)
+            document.querySelectorAll('h1[data-i18n], p[data-i18n], button[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (currentTranslations[key]) {
                     element.innerText = currentTranslations[key];
                 }
             });
+            
+            // 2. Traduzir os itens do Dropdown de Audiência
+            document.querySelectorAll('#audience-dropdown .dropdown-item').forEach(item => {
+                const key = item.getAttribute('data-i18n');
+                if (currentTranslations[key]) {
+                    const mode = item.getAttribute('data-audience');
+                    const icon = audienceMap[mode].icon;
+                    const translatedText = currentTranslations[key];
+                    
+                    item.innerHTML = `<span class="audience-icon-dropdown">${icon}</span> ${translatedText}`;
+                    item.title = translatedText;
+                }
+            });
 
-            document.querySelectorAll('.dropdown-item').forEach(item => {
+            // 3. Re-aplica a audiência para atualizar o texto do botão ativo e todo o conteúdo do menu
+            const activeAudienceMode = localStorage.getItem('audience') || DEFAULT_AUDIENCE;
+            setAudience(activeAudienceMode, lang);
+
+            // 4. Marca o idioma ativo
+            document.querySelectorAll('#language-dropdown .dropdown-item').forEach(item => {
                 if (item.getAttribute('data-lang') === lang) {
                     item.classList.add('active');
                 } else {
@@ -848,17 +1044,139 @@
                 }
             });
             
-            container.classList.remove('open');
+            langContainer.classList.remove('open');
         }
         
         // ----------------------------------------------------
-        // NOVO: FUNÇÕES DO MODAL DINÂMICO
+        // FUNÇÕES PARA SELETOR DE AUDIÊNCIA
         // ----------------------------------------------------
         
-        // Conteúdo formatado para a seção "Créditos" (Replicando o formato da imagem)
+        function buildAudienceDropdown() {
+            let html = '';
+            for (const mode in audienceMap) {
+                const data = audienceMap[mode];
+                // Usamos data-i18n no item para que o setLanguage possa traduzir o texto
+                html += `
+                    <div class="dropdown-item" data-audience="${mode}" data-i18n="${data.textKey}">
+                        <span class="audience-icon-dropdown">${data.icon}</span> 
+                    </div>
+                `;
+            }
+            audienceDropdown.innerHTML = html;
+        }
+
+        // Função principal para aplicar o modo de audiência
+        function setAudience(mode, currentLang = document.documentElement.lang || DEFAULT_LANGUAGE) {
+            const data = audienceMap[mode];
+            const className = data.className;
+
+            // 1. Aplica a classe visual ao body (limpa as outras antes)
+            document.body.classList.remove('kids-mode', 'teens-mode');
+            if (className) {
+                document.body.classList.add(className);
+            }
+
+            // 2. Atualiza o botão ativo e o texto (traduzido)
+            const currentTranslations = translations[currentLang];
+            const translatedText = currentTranslations[data.textKey] || data.textKey;
+
+            activeAudienceButton.innerHTML = `<span class="audience-icon-active">${data.icon}</span> ${translatedText}`;
+            activeAudienceButton.title = translatedText;
+            
+            // 3. Salva a preferência
+            localStorage.setItem('audience', mode);
+
+            // 4. Atualiza o conteúdo do menu (Títulos, Subtítulos, Ícones)
+            updateMenuContent(mode, currentTranslations);
+
+            // 5. Atualiza os links de navegação (Caminho da URL)
+            updateMenuLinks(mode);
+            
+            audienceContainer.classList.remove('open');
+        }
+        
+        // NOVA FUNÇÃO: Atualiza o conteúdo visual dos botões do menu
+        function updateMenuContent(audienceMode, currentTranslations) {
+            
+            document.querySelectorAll('.menu-button').forEach(button => {
+                const menuId = button.getAttribute('data-menu-id'); // Ex: 'menu1', 'menu2'
+
+                // Constrói as chaves de tradução específicas para a audiência.
+                // Se o modo for 'adult', usa as chaves padrão (sem sufixo).
+                const suffix = audienceMode === 'adult' ? '' : `_${audienceMode}`;
+                
+                const titleKey = `${menuId}Title${suffix}`;
+                const subtitleKey = `${menuId}Subtitle${suffix}`;
+                const iconKey = `${menuId}Icon${suffix}`;
+                
+                // Elementos a serem atualizados
+                const iconElement = button.querySelector('.emoji-icon');
+                const titleElement = button.querySelector('span[data-i18n]');
+                const subtitleElement = button.querySelector('small[data-i18n]');
+                
+                // 1. Atualiza o Ícone Emoji
+                if (iconElement && currentTranslations[iconKey]) {
+                    iconElement.innerText = currentTranslations[iconKey];
+                }
+                
+                // 2. Atualiza o Título
+                if (titleElement && currentTranslations[titleKey]) {
+                    titleElement.innerText = currentTranslations[titleKey];
+                }
+                
+                // 3. Atualiza o Subtítulo
+                if (subtitleElement && currentTranslations[subtitleKey]) {
+                    subtitleElement.innerText = currentTranslations[subtitleKey];
+                }
+                
+            });
+        }
+
+
+        // Função para reescrever todos os links
+        function updateMenuLinks(audienceMode) {
+            
+            document.querySelectorAll('.menu-button').forEach(button => {
+                // Pega o caminho original de destino (ex: joao/index.html)
+                const originalHref = button.getAttribute('data-original-href');
+                
+                if (originalHref) {
+                    
+                    // Exclui o Plano de Leitura (se necessário) - Não tem versão kids/teens de URL
+                    if (originalHref.startsWith('leitura/')) {
+                        button.href = originalHref; 
+                        return;
+                    }
+                    
+                    // SOLUÇÃO: Insere o nome da audiência logo após o nome do livro, ANTES do "/index.html"
+                    const parts = originalHref.split('/');
+                    if (parts.length > 1 && parts[1] === 'index.html') {
+                        const bookName = parts[0]; // Ex: 'joao'
+                        if (audienceMode === 'adult') {
+                            // Ex: 'joao/index.html' (URL padrão)
+                            button.href = originalHref;
+                        } else {
+                            // Ex: 'joao/kids/index.html' (URL adaptada)
+                            button.href = `${bookName}/${audienceMode}/index.html`;
+                        }
+                    } else {
+                        // Se o link não segue o padrão 'livro/index.html', mantém o original
+                        button.href = originalHref;
+                    }
+                }
+            });
+        }
+        
+        function loadAudiencePreference() {
+            const savedAudience = localStorage.getItem('audience') || DEFAULT_AUDIENCE;
+            setAudience(savedAudience);
+        }
+        
+        // ----------------------------------------------------
+        // FUNÇÕES DO MODAL DINÂMICO
+        // ----------------------------------------------------
+        
         function getCreditsHtml(currentTranslations) {
-            // Este formato usa divs para colocar o título (em negrito e azul) e o nome em linhas separadas,
-            // conforme as imagens que você enviou.
             return `
                 <div class="credit-item">
                     <span class="credit-title">${currentTranslations.creditAuthorTitle}</span>
@@ -875,10 +1193,9 @@
             `;
         }
 
-        // Conteúdo genérico para outras seções (Privacidade, Ajuda, Quem Somos)
         function getPlaceholderHtml(key, currentTranslations) {
-            // Obtém o texto do objeto de traduções e quebra em parágrafos onde há '\n'
             const content = currentTranslations[`modalContent_${key}`];
+            // Garante que o conteúdo seja tratado como texto simples e formatado em parágrafos
             const paragraphs = content.split('\n').map(p => `<p>${p.trim()}</p>`).join('');
             return `<div class="modal-body-text">${paragraphs}</div>`;
         }
@@ -888,18 +1205,14 @@
             const currentTranslations = translations[lang];
             const modalTitleElement = document.getElementById('modal-title');
             
-            // 1. Define o título
             modalTitleElement.innerText = currentTranslations[`modalTitle_${type}`];
             
-            // 2. Define o conteúdo
             if (type === 'credits') {
                 modalBodyElement.innerHTML = getCreditsHtml(currentTranslations);
             } else {
-                // Carrega o conteúdo genérico (LGPD, Ajuda, Quem Somos)
                 modalBodyElement.innerHTML = getPlaceholderHtml(type, currentTranslations);
             }
             
-            // 3. Abre o modal
             infoModal.style.display = 'flex';
         }
 
@@ -916,27 +1229,48 @@
             themeToggle.addEventListener('click', toggleDarkMode);
             
             // 2. Inicializa o seletor de idiomas
-            buildDropdown();
-            activeLangButton.addEventListener('click', toggleDropdown);
+            buildLangDropdown();
+            activeLangButton.addEventListener('click', () => toggleDropdown(langContainer));
 
-            document.querySelectorAll('.dropdown-item').forEach(item => {
+            document.querySelectorAll('#language-dropdown .dropdown-item').forEach(item => {
                 item.addEventListener('click', (event) => {
                     const lang = event.currentTarget.getAttribute('data-lang');
                     setLanguage(lang);
                 });
             });
             
+            // Tenta carregar o idioma salvo. Se não houver, usa o padrão.
+            const savedLang = localStorage.getItem('language') || DEFAULT_LANGUAGE;
+            
+            
+            // 3. Inicializa o seletor de audiência
+            buildAudienceDropdown();
+            activeAudienceButton.addEventListener('click', () => toggleDropdown(audienceContainer));
+            
+            document.querySelectorAll('#audience-dropdown .dropdown-item').forEach(item => {
+                item.addEventListener('click', (event) => {
+                    const mode = event.currentTarget.getAttribute('data-audience');
+                    setAudience(mode);
+                });
+            });
+            
+            // 4. Aplica o idioma e, consequentemente, traduz e carrega a audiência e o conteúdo do menu
+            setLanguage(savedLang); 
+            
+            // 5. Fechamento de Dropdowns ao clicar fora
             document.addEventListener('click', (event) => {
-                if (!container.contains(event.target) && container.classList.contains('open')) {
-                    container.classList.remove('open');
+                // Fechar dropdown de Idioma
+                if (!langContainer.contains(event.target) && langContainer.classList.contains('open')) {
+                    langContainer.classList.remove('open');
+                }
+                // Fechar dropdown de Audiência
+                if (!audienceContainer.contains(event.target) && audienceContainer.classList.contains('open')) {
+                    audienceContainer.classList.remove('open');
                 }
             });
 
-            // Tenta carregar o idioma salvo. Se não houver, usa o padrão.
-            const savedLang = localStorage.getItem('language') || DEFAULT_LANGUAGE;
-            setLanguage(savedLang); 
-            
-            // 3. Configura os botões de Modal (Abrir)
+
+            // 6. Configura os botões de Modal (Abrir e Fechar - Mantidos)
             document.querySelectorAll('.info-button').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const type = event.currentTarget.getAttribute('data-modal-type');
@@ -944,16 +1278,13 @@
                 });
             });
             
-            // 4. Configura o fechamento do Modal
             closeModalBtn.addEventListener('click', closeModal);
-            // Fecha ao clicar fora do conteúdo
             infoModal.addEventListener('click', (event) => {
                 if (event.target === infoModal) {
                     closeModal();
                 }
             });
             
-            // Fecha o modal com a tecla ESC
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
                     closeModal();
