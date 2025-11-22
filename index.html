@@ -62,12 +62,12 @@
         /* ------------------------------------------- */
         
         body.kids-mode .main-header h1 { 
-            color: #2ecc71; /* Verde Esmeralda (Vibrante e Neutro) */
+            color: #2ecc71; 
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         body.kids-mode .menu-button {
-            border: 2px solid #81c784; /* Borda Verde Claro */
-            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); /* Sombra Verde */
+            border: 2px solid #81c784; 
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); 
         }
         body.kids-mode .menu-button:hover {
             transform: translateY(-5px);
@@ -75,7 +75,7 @@
             border-color: #2ecc71;
         }
         body.kids-mode .menu-button span {
-            color: #2ecc71; /* Verde Esmeralda */
+            color: #2ecc71; 
             font-weight: 700;
         }
         
@@ -84,10 +84,10 @@
         /* ------------------------------------------- */
         
         body.teens-mode .main-header h1 { 
-            color: #4a4e69; /* Azul marinho escuro */
+            color: #4a4e69; 
         }
         body.teens-mode .menu-button {
-            border: 1px solid #6699ff; /* Azul vibrante */
+            border: 1px solid #6699ff; 
             border-radius: 10px;
         }
         body.teens-mode .menu-button:hover {
@@ -142,22 +142,25 @@
         /* ------------------------------------------- */
         /* LAYOUT GERAL DO CABEÇALHO E SELETORES (DESKTOP) */
         /* ------------------------------------------- */
-        /* CORREÇÃO 1: Ajustado padding e removido position: relative */
+        /* CORREÇÃO 1: Adicionado position: relative e margin: 0 auto */
         .main-header {
             text-align: center;
             margin-bottom: 50px;
             color: #1a202c; 
-            padding-top: 60px; /* Suficiente para não sobrepor os controles */
+            padding-top: 50px; /* Ajustado para dar espaço ao logo */
+            position: relative; /* FUNDAMENTAL para ancorar .header-controls */
             width: 100%; 
             max-width: 900px;
+            margin: 0 auto; /* Centraliza o cabeçalho na página */
+            box-sizing: border-box; /* Garante que padding não estoure a largura */
         }
         
         /* CORREÇÃO 2: Ajustado o posicionamento para Desktop */
         .header-controls {
             position: absolute;
-            top: 10px; /* Ajustado para ficar mais no topo */
-            right: 10px; 
-            left: auto; /* Garante que o left não interfira no Desktop */
+            top: 10px; 
+            right: 10px; /* Ancorado a 10px da direita do .main-header */
+            left: auto; 
             display: flex; 
             align-items: center;
             gap: 15px; 
@@ -178,31 +181,23 @@
         /* ------------------------------------------- */
         @media (max-width: 768px) { /* Aplicações para telas de celular/tablet */
             
-            /* CORREÇÃO 3: Reestruturação do posicionamento dos controles no Mobile */
-            .header-controls {
-                /* O container pai (header-controls) se estende por toda a largura */
-                position: absolute; 
-                top: 10px; 
-                left: 0; 
-                right: 0;
-                display: block; /* Permite que os grupos internos sejam posicionados separadamente */
-                padding: 0;
+            /* REAJUSTE DE PADDING NO main-header para dar espaço aos controles */
+             .main-header {
+                /* Garante que o conteúdo não toque as bordas da tela */
+                padding: 50px 10px 0 10px; 
+                margin-bottom: 50px;
+                width: 100%;
+                max-width: 900px;
+                box-sizing: border-box;
             }
 
-            /* CORREÇÃO 4: Posiciona o grupo da esquerda (Audiência) absolutamente no canto superior esquerdo */
+            /* CORREÇÃO 3 e 5 REMOVIDAS. Os controles da direita usam a regra geral de .header-controls, ancorada ao .main-header centralizado */
+
+            /* CORREÇÃO 4: Posiciona o grupo da esquerda (Audiência) no canto superior esquerdo */
             .header-controls-group-left {
                 position: absolute;
-                top: 0; /* Alinhado ao topo */
-                left: 10px; /* Alinhado à esquerda */
-                z-index: 101; 
-                display: flex;
-            }
-
-            /* CORREÇÃO 5: Posiciona o grupo da direita (Idioma e Tema) absolutamente no canto superior direito */
-            .header-controls-group-right {
-                position: absolute;
-                top: 0; /* Alinhado ao topo (na mesma altura do esquerdo) */
-                right: 10px; /* Alinhado à direita */
+                top: 10px; /* Na mesma altura do grupo da direita */
+                left: 10px; /* Ancorado à esquerda do main-header */
                 z-index: 101; 
                 display: flex;
             }
@@ -213,7 +208,7 @@
                 grid-template-columns: 1fr; /* Uma coluna única no mobile */
                 gap: 15px;
                 
-                /* AJUSTE FINAL: Centraliza o conteúdo dentro do grid */
+                /* AJUSTE FINAL: Centraliza o conteúdo dentro do grid (era o problema anterior) */
                 justify-content: center;
                 
                 /* Remove max-width e margin para usar a largura total do container pai (body/main-header) */
@@ -239,7 +234,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Aumentado o botão de audiência para caber texto e ícone no modo adulto */
             min-width: 45px; 
             height: 32px;
             background-color: #ffffff;
@@ -248,12 +242,12 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: background-color 0.2s;
             border: none;
-            padding: 0 8px; /* Padding horizontal adicionado */
-            font-size: 0.9em; /* Reduzido o font-size para o texto */
+            padding: 0 8px; 
+            font-size: 0.9em; 
         }
         
         body.dark-mode #active-language-button, body.dark-mode #active-audience-button {
-            background-color: #1c1c1c; /* Fundo escuro para o botão no modo escuro */
+            background-color: #1c1c1c; 
             color: #e2e8f0;
         }
         
@@ -318,7 +312,7 @@
         .audience-icon-active {
             font-size: 1.2em;
             line-height: 1;
-            margin-right: 5px; /* Adicionado margem para separar do texto ativo */
+            margin-right: 5px; 
         }
         .audience-icon-dropdown {
             font-size: 1.1em;
@@ -405,9 +399,9 @@
         /* Container para os botões modais */
         .info-buttons-container {
             display: flex;
-            flex-wrap: wrap; /* Permite quebras de linha em telas pequenas */
+            flex-wrap: wrap; 
             justify-content: center;
-            gap: 10px; /* Espaço entre os botões */
+            gap: 10px; 
             margin-top: 30px;
             max-width: 900px;
             width: 100%;
@@ -416,15 +410,15 @@
 
         /* Estilo base para os botões modais */
         .info-button {
-            background-color: #f7f9fd; /* Fundo muito claro, quase branco */
-            color: #4a5568; /* Cinza escuro suave */
+            background-color: #f7f9fd; 
+            color: #4a5568; 
             border: 1px solid #e2e8f0;
             padding: 8px 15px;
-            border-radius: 20px; /* Borda bem arredondada (estilo chip) */
+            border-radius: 20px; 
             font-size: 0.9em;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            white-space: nowrap; /* Evita que o texto quebre */
+            white-space: nowrap; 
         }
 
         .info-button:hover {
@@ -449,26 +443,26 @@
         
         /* Modo Kids para os botões de informação (Verde) */
         body.kids-mode .info-button {
-            border-color: #81c784; /* Borda Verde Claro */
-            color: #2ecc71; /* Verde Esmeralda */
+            border-color: #81c784; 
+            color: #2ecc71; 
         }
         body.kids-mode .info-button:hover {
-            background-color: #e8f5e9; /* Fundo Menta no hover */
-            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3); /* Sombra Verde */
+            background-color: #e8f5e9; 
+            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3); 
         }
         /* Ajuste do Kids em Dark Mode */
         body.kids-mode.dark-mode .info-button {
-            border-color: #90cdf4; /* Azul claro */
-            color: #4ade80; /* Verde Limão */
+            border-color: #90cdf4; 
+            color: #4ade80; 
         }
 
         /* Modo Teens para os botões de informação */
         body.teens-mode .info-button {
-            border-color: #6699ff; /* Azul vibrante */
-            color: #3366cc; /* Azul escuro */
+            border-color: #6699ff; 
+            color: #3366cc; 
         }
         body.teens-mode .info-button:hover {
-            background-color: #e6f0ff; /* Azul muito claro no hover */
+            background-color: #e6f0ff; 
             box-shadow: 0 4px 8px rgba(102, 153, 255, 0.3);
         }
         /* Ajuste do Teens em Dark Mode */
@@ -729,8 +723,8 @@
         const DEFAULT_AUDIENCE = 'adult';
         const audienceMap = {
             'adult': { icon: '📚', textKey: 'audienceAdult', className: '' }, 
-            'kids': { icon: '🔍', textKey: 'audienceKids', className: 'kids-mode' }, // Lupa (Descoberta/Curiosidade)
-            'teens': { icon: '🧭', textKey: 'audienceTeens', className: 'teens-mode' } // Bússola (Jornada/Guia)
+            'kids': { icon: '🔍', textKey: 'audienceKids', className: 'kids-mode' }, 
+            'teens': { icon: '🧭', textKey: 'audienceTeens', className: 'teens-mode' } 
         };
 
         // Configurações do Idioma (Mantidas)
@@ -949,7 +943,7 @@
                 modalTitle_credits: "Créditos", modalTitle_privacy: "Política de Privacidad (LGPD)", modalTitle_help: "Ayuda y Contacto", modalTitle_about: "Quienes Somos",
                 creditAuthorTitle: "Autor:", creditTechReviewTitle: "Revisión Técnica:", creditTheologicalReviewTitle: "Revisión Teológica:",
                 modalContent_privacy: 'Esta sección detalla nuestra Política de Privacidad, en cumplimiento con la Ley General de Protección de Datos (LGPD).\n\nDeclaramos que este sitio web/aplicación no recopila datos personales de los usuarios.\n\nNo se almacena ninguna información, excepto sus preferencias locales de idioma e tema (Modo Oscuro/Claro), que se guardan en su propio navegador.',
-                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico: contact@conhecer-e-crer.com.\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, incluya capturas de pantalla si informa un problema técnico.\n\nVersión Actual: v1.0.6 - 2025',
+                modalContent_help: 'Para preguntas, sugerencias o soporte técnico, por favor, póngase en contacto a través del correo electrónico: contact@conhecer-e-crer.com.\n\nNuestro objetivo es proporcionar la mejor experiencia de estudio bíblico posible. Por favor, inclua capturas de pantalla si informa un problema técnico.\n\nVersión Actual: v1.0.6 - 2025',
                 modalContent_about: 'Somos una iniciativa dedicada a promover el estudio profundo y la devoción cristiana, uniendo el Conocimiento de la Palabra de Dios con la Fe práctica.\n\nNuestros materiales se elaboran basándose en las Sagradas Escrituras para ayudarle en su camino espiritual.'
             },
             'fr-FR': { /* Versão em Francês */
