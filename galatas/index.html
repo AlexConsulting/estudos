@@ -182,11 +182,11 @@
             }
             #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
 
-            /* AJUSTE 3 (Mobile): REMOVE as regras de VLIBRAS que causavam conflito e o faziam sumir, confiando no ajuste global (Seção 6) */
-            /* Regras de VLibras removidas para Mobile: 
-            div[vw] { ... }
-            .vw-access-button { ... } 
-            */
+            /* AJUSTE 3 (Mobile): Reposiciona VLibras para ficar mais baixo (75% do topo) */
+            div[vw] {
+                top: 75% !important; /* Move para 75% da altura da tela */
+                right: 5px !important; /* Ajusta a margem direita para ser menor no mobile */
+            }
             
             /* Outros ajustes de mobile (Mantidos) */
             .top-utils { 
