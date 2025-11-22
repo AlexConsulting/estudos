@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 Dias com Jesus: Aventura no Livro de Gálatas</title>
+<style>
+        /* 0. Variável CSS para controle de Zoom/Fonte (Acessibilidade) */
+        :root {
+            --base-font-scale: 1.0; /* Valor padrão para 100% */
+        }
+        
+        /* 1. CSS PRINCIPAL (LIGHT THEME - PADRÃO) */
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0; background-color: #e6e0d3; color: #333; line-height: 1.6;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            min-height: 100vh; 
+            /* AJUSTE 1: Remove o espaçamento superior global, mantendo o de baixo se o conteúdo for curto */
+            padding: 0 0 20px 0; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .book-container {
+            max-width: 650px; width: 90%; background: #fdfdfd; padding: 30px 40px;
+            border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid #ccc;
+            position: relative; transition: background 0.3s, box-shadow 0.3s;
+            font-size: calc(var(--base-font-scale) * 1em); 
+        }
+        h1 {
+            color: #4b0082; text-align: center; font-family: 'Times New Roman', serif;
+            border-bottom: 2px solid #4b0082; padding-bottom: 10px; margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center; font-style: italic; margin-bottom: 20px; color: #555; font-size: 0.95em;
+        }
+        h2 {
+            color: #007bff; font-size: 1.5em; text-align: center; margin-top: 10px; margin-bottom: 20px;
+        }
+        .versiculos {
+            font-style: italic; background-color: #f0f8ff; padding: 15px;
+            border-left: 5px solid #28a745; margin: 15px 0; font-weight: 500;
+        }
+        .section {
+            margin-top: 20px; padding: 10px; border-bottom: 1px dashed #ddd;
+        }
+        .section strong {
+            display: block; color: #dc3545; margin-bottom: 5px; font-weight: bold;
+        }
+        .oracao-final {
+            margin-top: 25px; padding: 15px; background-color: #fffae0;
+            border-left: 5px solid #ffc107; font-weight: bold; text-align: center; font-style: italic;
+        }
+        
+        /* 2. NAVEGAÇÃO E UTILS */
+        .top-utils {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px; 
+        }
+        .navigation {
+            display: flex; justify-content: space-between; align-items: center; margin-top: 30px;
+            padding-top: 15px; border-top: 1px solid #ddd; flex-wrap: wrap; gap: 15px; 
+        }
+        .nav-button {
+            padding: 10px 15px; cursor: pointer; border: 1px solid #007bff; border-radius: 5px;
+            background-color: #007bff; color: white; transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+        }
+        .nav-button:disabled { opacity: 0.5; cursor: default; }
+        button:focus, a:focus, input:focus, #accessibilityFloater button:focus {
+            outline: 3px solid #00ff73; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 3. DARK THEME CSS (Mantido) */
+        .dark-theme { background-color: #121212; color: #f4f4f4; }
+        .dark-theme .book-container { background: #1e1e1e; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); border-color: #333; }
+        .dark-theme h1 { color: #bb86fc; border-bottom-color: #bb86fc; }
+        .dark-theme .subtitle { color: #aaa; }
+        .dark-theme h2 { color: #03dac6; }
+        .dark-theme .versiculos { background-color: #2c2c2c; border-left-color: #03dac6; }
+        .dark-theme .section { border-bottom-color: #444; }
+        .dark-theme .section strong { color: #cf6679; }
+        .dark-theme .oracao-final { background-color: #33331c; border-left-color: #ffd600; }
+        .dark-theme .nav-button { background-color: #03dac6; border-color: #03dac6; color: #1e1e1e; }
+        
+        /* 4. SELETOR DE IDIOMA, LEITURA E TEMA */
+        /* CORREÇÃO CRÍTICA: Oculta botões de Idioma e Tema em TODAS as resoluções (Desktop e Mobile) */
+        .language-selector-wrapper, #themeToggle {
+            display: none !important;
+        }
+        
+        .language-selector-wrapper { position: relative; display: inline-block; z-index: 10; }
+        #langSelectButton, #themeToggle, #listenToggle { 
+            background-color: #f0f0f0; border: 1px solid #ccc; color: #333; border-radius: 5px;
+            padding: 8px 12px; cursor: pointer; display: flex; align-items: center;
+            font-size: 0.9em; font-weight: bold; transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+        }
+        #listenToggle[disabled] { opacity: 0.6; cursor: wait; }
+        #langSelectButton:hover, #themeToggle:hover, #listenToggle:hover:not([disabled]) { background-color: #e0e0e0; }
+        /* (Estilos de Dropdown e Dark Theme para utilitários mantidos) */
+        .lang-flag-active { width: 24px; height: 18px; margin-right: 8px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        #langDropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 150px; background-color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid #ddd; border-radius: 5px; margin-top: 5px; overflow: hidden; }
+        #langDropdown a { color: #333; padding: 10px 15px; text-decoration: none; display: flex; align-items: center; font-size: 0.9em; }
+        #langDropdown a:hover { background-color: #f5f5f5; }
+        .lang-flag-dropdown { width: 20px; height: 15px; margin-right: 10px; border: 1px solid #eee; }
+        .dark-theme #langSelectButton, .dark-theme #themeToggle, .dark-theme #listenToggle { background-color: #2c2c2c; border-color: #444; color: #f4f4f4; }
+        .dark-theme #langSelectButton:hover, .dark-theme #themeToggle:hover, .dark-theme #listenToggle:hover:not([disabled]) { background-color: #333; }
+        .dark-theme #langDropdown { background-color: #1e1e1e; border-color: #444; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+        .dark-theme #langDropdown a { color: #f4f4f4; }
+        .dark-theme #langDropdown a:hover { background-color: #333; }
+        
+        /* 5. Menu de Acessibilidade Flutuante (Desktop e Mobile) */
+        /* AJUSTE 2: Fixa A+A- no canto superior direito */
+        #accessibilityFloater {
+            position: fixed; 
+            right: 20px; 
+            top: 20px; 
+            transform: translateY(0); /* Garante que não use a centralização vertical */
+            display: flex; flex-direction: column; z-index: 1000;
+            padding: 8px 5px; background: rgba(255, 255, 255, 0.8); border: 1px solid #ccc;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #accessibilityFloater button {
+            padding: 5px 8px; margin: 5px 0; cursor: pointer; border: 1px solid #007bff;
+            background-color: #f0f0f0; color: #333; font-weight: bold; font-size: 1.1em;
+            border-radius: 5px; transition: background-color 0.2s;
+        }
+        #accessibilityFloater button:hover { background-color: #e0e0e0; }
+        .dark-theme #accessibilityFloater { background: rgba(30, 30, 30, 0.8); border: 1px solid #444; }
+        .dark-theme #accessibilityFloater button { background-color: #2c2c2c; color: #f4f4f4; border-color: #03dac6; }
+        .dark-theme #accessibilityFloater button:hover { background-color: #383838; }
+
+        /* ⚠️ 6. AJUSTES VLIBRAS (Desktop e Mobile) */
+        /* AJUSTE 3: Reposiciona VLibras na lateral direita, abaixo do centro (60% do topo) */
+        div[vw] {
+            position: fixed !important;
+            right: 15px !important; 
+            left: auto !important; 
+            
+            top: 60% !important; /* Ligeiramente abaixo do centro (50% seria o centro) */
+            bottom: auto !important; 
+            
+            z-index: 998 !important; /* Acima do conteúdo, abaixo de A+A- */
+        }
+
+        /* 7. ESTILOS DA BARRA DE PROGRESSO E CHECKBOX (MANTIDOS) */
+        .progress-bar-wrapper { background-color: #ddd; border-radius: 10px; height: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
+        .progress-bar { height: 100%; width: 0%; background-color: #28a745; border-radius: 10px; transition: width 0.5s ease-in-out; }
+        .dark-theme #progressLabel { color: #03dac6; }
+        .dark-theme .progress-bar-wrapper { background-color: #333; }
+        .dark-theme .progress-bar { background-color: #03dac6; }
+        .progress-check {
+             display: flex; align-items: center; justify-content: center; margin: 0; flex-grow: 0; flex-shrink: 0;
+             padding: 5px 10px; background-color: #e6f7ff; border: 1px solid #b3e0ff; border-radius: 5px; transition: background-color 0.3s; order: 0;
+        }
+        .progress-check label { margin-left: 10px; font-weight: bold; color: #1e8449; cursor: pointer; }
+        .progress-check input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
+        .dark-theme .progress-check { background-color: #2c2c2c; border-color: #444; }
+        .dark-theme .progress-check label { color: #03dac6; }
+        #audioProgressContainer { height: 5px; width: 100%; background-color: #ddd; border-radius: 2px; overflow: hidden; margin-top: 5px; margin-bottom: 10px; }
+        #audioProgressBar { height: 100%; width: 0%; background-color: #ffc107; transition: width 0.1s linear; }
+        .dark-theme #audioProgressContainer { background-color: #333; }
+        .dark-theme #audioProgressBar { background-color: #ffd600; }
+
+
+        /* 8. MEDIA QUERIES (Ajustes para Celular - max-width: 600px) */
+        @media (max-width: 600px) {
+            
+            /* FIX: Centraliza o conteúdo no mobile */
+            main { width: 100%; display: flex; justify-content: center; }
+
+            /* AJUSTE 1 (Mobile): Zera a margem superior do contêiner */
+            .book-container {
+                padding: 20px 25px; width: 95%; 
+                margin-top: 0; /* Zera o espaçamento superior */
+                margin-bottom: 20px;
+            }
+            
+            /* AJUSTE 2 (Mobile): Garante que A+A- fique fixo no canto superior direito (5px de margem) */
+            #accessibilityFloater {
+                position: fixed; top: 5px; right: 5px; transform: translateY(0); 
+                flex-direction: row; padding: 5px;
+                background: rgba(255, 255, 255, 0.9); border: 1px solid #ccc;
+                border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            #accessibilityFloater button { margin: 0 2px; padding: 3px 6px; font-size: 1em; }
+
+            /* AJUSTE 3 (Mobile): Reposiciona VLibras para ficar mais baixo (75% do topo) */
+            div[vw] {
+                top: 72% !important; /* Move para 72% da altura da tela */
+                right: 5px !important; /* Ajusta a margem direita para ser menor no mobile */
+            }
+            
+            /* Outros ajustes de mobile (Mantidos) */
+            .top-utils { 
+                gap: 10px; 
+                width: 100%;
+            }
+            
+            #listenToggle {
+                width: auto; 
+                order: initial; 
+                margin-bottom: 0; 
+            }
+
+            .navigation { flex-direction: column; gap: 10px; }
+            .navigation .nav-button { width: 100%; } 
+            .progress-check { order: -1; width: 100%; }
+        }
+
+        /* MEDIA QUERY: Ajuste para telas muito pequenas, se necessário */
+        @media (max-width: 400px) {
+            #accessibilityFloater { right: 5px; padding: 5px; }
+        }
+    </style>
+</head>
+<body class="light-theme">
+
+    <div id="accessibilityFloater" title="Controles de Acessibilidade">
+        <button id="fontSizeIncrease" title="Aumentar Tamanho da Fonte">A+</button>
+        <button id="fontSizeDecrease" title="Diminuir Tamanho da Fonte">A-</button>
+    </div>
+    
+    <main>
+        <div class="book-container">
+            <div class="top-utils">
+                <div class="language-selector-wrapper">
+                    <button id="langSelectButton" aria-haspopup="true" aria-expanded="false" title="Selecionar Idioma">
+                        </button>
+                    <div id="langDropdown" role="menu">
+                        </div>
+                </div>
+                
+                <button id="listenToggle" class="nav-button" title="Ouvir Conteúdo" disabled>
+                    </button>
+                
+                <button id="themeToggle" class="nav-button" title="Mudar Tema">
+                    </button>
+            </div>
+            
+            <div id="audioProgressContainer" style="display: none;">
+                <div id="audioProgressBar" class="progress-bar"></div>
+            </div>
+
+            <h1 id="mainTitle">7 Dias com Jesus: Aventura no Livro de Gálatas </h1>
+            <p class="subtitle" id="subTitle">Uma jornada para entender quem somos e como Jesus cuida de nós.</p>
+            
+            <div id="progressContainer" style="margin-bottom: 15px;">
+                <p id="progressLabel" style="text-align: center; font-size: 0.9em; margin-bottom: 5px; color: #4b0082; font-weight: bold;"></p>
+                <div class="progress-bar-wrapper">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+            </div>
+            <p id="pageCounter" style="text-align: right;"></p>
+            
+            <div id="devotionalContent">
+                </div>
+
+            <div class="navigation">
+                <button id="prevButton" class="nav-button" disabled>← Anterior</button>
+                
+                <div class="progress-check">
+                    <input type="checkbox" id="completedCheck">
+                    <label for="completedCheck" id="checkLabel">Marcar como Concluído</label>
+                </div>
+                
+                <button id="nextButton" class="nav-button">Próximo →</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Devocional adaptado e criado por Alex Silva | <span id="footerText"></span></p>
+    </footer>
+
+    <script>
+        // --- DADOS MULTI-IDIOMA E TEMA ---
+        const flagMap = {
+            'pt-BR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-dropdown" alt="Português">', text: 'Português', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/br.svg" class="lang-flag-active" alt="Português">' },
+            'en-US': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-dropdown" alt="English">', text: 'English', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/us.svg" class="lang-flag-active" alt="English">' },
+            'es-ES': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-dropdown" alt="Español">', text: 'Español', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/es.svg" class="lang-flag-active" alt="Español">' },
+            'fr-FR': { icon: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-dropdown" alt="Français">', text: 'Français', iconActive: '<img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" class="lang-flag-active" alt="Français">' }
+        };
+        
+        const themeMap = {
+            'light': { icon: '☀️', next: 'dark' },
+            'dark': { icon: '🌙', next: 'light' }
+        };
+
+        const SAVED_THEME = localStorage.getItem('theme') || 'light'; 
+        const SAVED_LANG = localStorage.getItem('language') || 'pt-BR'; 
+
+        let currentTheme = SAVED_THEME;
+        
+        // --- VARIÁVEIS DE ESTADO ---
+        const totalDays = 7;
+        let currentDay = 1;
+        let currentLang = SAVED_LANG; 
+        
+        // NOVO TTS: Objetos da Web Speech API e variáveis de controle
+        const synth = window.speechSynthesis; 
+        let utterance = null; 
+        let totalChars = 0; // Para calcular o progresso
+        let ttsVoices = []; // Cache das vozes disponíveis (CORREÇÃO 1)
+        let ttsInitialized = false; // Novo: Variável de controle para inicialização do TTS
+        
+        // CHAVE ÚNICA DO DEVOCIONAL.
+        const DEVOTIONAL_KEY = 'galatas_kids'; 
+        
+        // NOVO: VARIÁVEIS DE ESTADO DE ACESSIBILIDADE DE FONTE
+        let currentFontSize = parseFloat(localStorage.getItem('fontSize')) || 1.0; 
+        const FONT_STEP = 0.1; // Incremento de 10%
+        const FONT_MAX = 1.4;  // Tamanho máximo (140%)
+        const FONT_MIN = 0.8;  // Tamanho mínimo (80%)
+        
+        // --- DADOS MULTI-IDIOMA (Traduções) ---
+        const translations = {
+            'pt-BR': {
+                mainTitle: "7 Dias com Jesus: Aventura no Livro de Gálatas",
+				subTitle: "Uma jornada para entender quem somos e como Jesus cuida de nós.",
+                dayTitle: "Dia",
+                progressLabelPrefix: "Progresso: ",
+                checkLabel: "Marcar como Concluído",
+                navPrev: "← Anterior",
+                navNext: "Próximo →",
+                footerText: "Direitos Reservados 2024",
+                themeLight: "🌙 Modo Escuro", 
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Ouça Aqui", 
+                listenStop: "🛑 Parar Leitura",
+                listenPause: "⏸️ Pausar Áudio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Conteúdo para leitura não encontrado.",
+                ttsLoading: "⏳ Carregando Áudio...", 
+                ttsUnsupported: "❌ Áudio Indisponível", 
+                versiculoChave: "Versículo Chave:", 
+                resumoMeditacao: "Resumo:", 
+                aplicacaoPratica: "Aplicação Prática:", /* CHAVE CORRETA */
+                oracaoLabel: "Oração:", 
+            },
+            'en-US': {
+                mainTitle: "7 Days with Jesus: Adventure in the Book of Galatians",
+				subTitle: "A journey to understand who we are and how Jesus cares for us.",
+                dayTitle: "Day",
+                progressLabelPrefix: "Progress: ",
+                checkLabel: "Mark as Completed",
+                navPrev: "← Previous",
+                navNext: "Next →",
+                footerText: "All Rights Reserved 2024",
+                themeLight: "🌙 Dark Mode",
+                themeDark: "☀️ Light Mode",
+                listenStart: "🔊 Listen Here", 
+                listenStop: "🛑 Stop Reading",
+                listenPause: "⏸️ Pause Audio",
+                listenResume: "▶️ Resume",
+                noContentAlert: "Content for reading not found.",
+                ttsLoading: "⏳ Loading Audio...", 
+                ttsUnsupported: "❌ Audio Unavailable",
+                versiculoChave: "Key Verse:", 
+                resumoMeditacao: "Summary:", 
+                aplicacaoPratica: "Practical Application:", /* CHAVE CORRETA */
+                oracaoLabel: "Prayer:",
+            },
+            'es-ES': {
+                mainTitle: "7 Días con Jesús: Aventura en el Libro de Gálatas",
+				subTitle: "Un viaje para entender quiénes somos y cómo Jesús cuida de nosotros.",	
+                dayTitle: "Día",
+                progressLabelPrefix: "Progreso: ",
+                checkLabel: "Marcar como Concluido",
+                navPrev: "← Anterior",
+                navNext: "Siguiente →",
+                footerText: "Todos los derechos reservados 2024",
+                themeLight: "🌙 Modo Oscuro",
+                themeDark: "☀️ Modo Claro",
+                listenStart: "🔊 Escuchar Aquí", 
+                listenStop: "🛑 Detener Lectura",
+                listenPause: "⏸️ Pausar Audio",
+                listenResume: "▶️ Continuar",
+                noContentAlert: "Contenido para escuchar no encontrado.",
+                ttsLoading: "⏳ Cargando Audio...", 
+                ttsUnsupported: "❌ Audio No Disponible",
+                versiculoChave: "Versículo Clave:", 
+                resumoMeditacao: "Resumen:", 
+                aplicacaoPratica: "Aplicación Práctica:", /* CHAVE CORRIGIDA */
+                oracaoLabel: "Oración:",
+            },
+            'fr-FR': {
+                mainTitle: "7 Jours avec Jésus : Aventure dans le Livre de Galates",
+				subTitle: "Un voyage pour comprendre qui nous sommes et comment Jésus prend soin de nous.",
+                dayTitle: "Jour",
+                progressLabelPrefix: "Progression : ",
+                checkLabel: "Marquer comme Accomplie",
+                navPrev: "← Précédent",
+                navNext: "Suivant →",
+                footerText: "Tous droits réservés 2024",
+                themeLight: "🌙 Mode Sombre",
+                themeDark: "☀️ Mode Clair",
+                listenStart: "🔊 Écoutez Ici", 
+                listenStop: "🛑 Arrêter Lecture",
+                listenPause: "⏸️ Pause Audio", 
+                listenResume: "▶️ Reprendre",
+                noContentAlert: "Contenu à lire introuvable.",
+                ttsLoading: "⏳ Chargement Audio...", 
+                ttsUnsupported: "❌ Audio Indisponível",
+                versiculoChave: "Verset Clé:", 
+                resumoMeditacao: "Résumé:", 
+                aplicacaoPratica: "Application Pratique:", /* CHAVE CORRIGIDA */
+                oracaoLabel: "Prière:",
+            }
+        };
+
+        // --- ELEMENTOS DOM ---
+        const mainTitle = document.getElementById('mainTitle');
+        const subTitle = document.getElementById('subTitle');
+        const progressLabel = document.getElementById('progressLabel');
+        const checkLabel = document.getElementById('checkLabel');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const completedCheck = document.getElementById('completedCheck');
+        const devotionalContentDiv = document.getElementById('devotionalContent');
+        const footerText = document.getElementById('footerText');
+        const progressBar = document.getElementById('progressBar');
+
+        // ELEMENTOS DOM TTS/TEMA
+        const langSelectButton = document.getElementById('langSelectButton');
+        const langDropdown = document.getElementById('langDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const listenToggle = document.getElementById('listenToggle'); 
+        const audioProgressContainer = document.getElementById('audioProgressContainer');
+        const audioProgressBar = document.getElementById('audioProgressBar');
+
+
+  // * FUNÇÕES DE UTILIDADE *
+    
+        function handleCompletedCheck() {
+			saveCompletion(currentDay, completedCheck.checked);
+
+		if (completedCheck.checked && currentDay < totalDays) {
+			nextDay();
+    }
+}
+        
+        // --- NOVO: FUNÇÕES DE CONTROLE DE FONTE ---
+        function updateFontSize() {
+            // Define a variável CSS na raiz do documento
+            document.documentElement.style.setProperty('--base-font-scale', currentFontSize.toFixed(2));
+            localStorage.setItem('fontSize', currentFontSize.toFixed(2));
+        }
+
+        function increaseFontSize() {
+            if (currentFontSize < FONT_MAX) {
+                currentFontSize = Math.min(FONT_MAX, currentFontSize + FONT_STEP);
+                updateFontSize();
+            }
+        }
+
+        function decreaseFontSize() {
+            if (currentFontSize > FONT_MIN) {
+                currentFontSize = Math.max(FONT_MIN, currentFontSize - FONT_STEP);
+                updateFontSize();
+            }
+        }
+        
+        // --- FUNÇÕES DE TEMA ---
+        function applyTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('theme', theme);
+            
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(theme === 'dark' ? 'dark-theme' : 'light-theme');
+        }
+
+        function toggleDarkMode() {
+            const newTheme = themeMap[currentTheme].next;
+            applyTheme(newTheme);
+            updateTexts(0);
+        }
+
+        function loadThemePreference() {
+            applyTheme(SAVED_THEME);
+        }
+        
+        // --- FUNÇÕES DE IDIOMA (COM BANDEIRAS) ---
+        function setLanguage(langCode) {
+            currentLang = langCode;
+            localStorage.setItem('language', langCode);
+            
+            // Parar a leitura ao trocar de idioma
+            stopSpeaking(); 
+            
+            updateTexts(0);
+            updateLanguageSelector();
+            // Atualiza o estado visual para a nova língua. 
+            updateListenToggle('start'); 
+        }
+
+        function updateLanguageSelector() {
+            if (!langSelectButton || !langDropdown) return;
+            
+            const currentFlag = flagMap[currentLang];
+            // 1. Atualiza o botão com a bandeira e nome do idioma ativo
+            langSelectButton.innerHTML = currentFlag.iconActive + currentFlag.text;
+            
+            // 2. Limpa e reconstrói o dropdown, excluindo o idioma ativo
+            langDropdown.innerHTML = '';
+            Object.keys(flagMap).forEach(lang => {
+                if (lang !== currentLang) {
+                    const flag = flagMap[lang];
+                    const link = document.createElement('a');
+                    link.innerHTML = flag.icon + flag.text; 
+                    link.setAttribute('data-lang', lang);
+                    link.setAttribute('href', '#'); 
+                    
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setLanguage(lang);
+                        langDropdown.style.display = 'none';
+                        // NOVO ARIA: fecha o dropdown, atualiza o status do botão
+                        langSelectButton.setAttribute('aria-expanded', 'false'); 
+                    });
+                    
+                    langDropdown.appendChild(link);
+                }
+            });
+        }
+
+        // FUNÇÃO TTS: Funções de controle da barra de progresso do áudio
+        function resetAudioProgressBar(hide = false) {
+            if (audioProgressBar) audioProgressBar.style.width = '0%';
+            if (audioProgressContainer) {
+                // Apenas esconde se for pedido, para não piscar no início
+                audioProgressContainer.style.display = hide ? 'none' : 'block';
+            }
+        }
+        
+        // --- FUNÇÃO DE ATUALIZAÇÃO DE TEXTOS ---
+        function updateTexts(direction = 1) { 
+            const t = translations[currentLang] || translations['pt-BR']; 
+
+            document.documentElement.lang = currentLang.split('-')[0];
+
+            mainTitle.innerText = t.mainTitle;
+            subTitle.innerText = t.subTitle;
+            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
+            checkLabel.innerText = t.checkLabel;
+            prevButton.innerText = t.navPrev;
+            nextButton.innerText = t.navNext;
+            footerText.innerText = t.footerText;
+            
+            // NOTE: themeToggle is now globally hidden, but the script updates are kept in case they are re-enabled
+            if (currentTheme === 'light') {
+                themeToggle.innerHTML = t.themeLight; 
+            } else {
+                themeToggle.innerHTML = t.themeDark; 
+            }
+
+            const contentLangKey = currentLang.substring(0, 2); 
+            loadDevotionalContent(currentDay, contentLangKey, t);
+
+            updateOverallProgress();
+
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                stopSpeaking(); 
+            }
+        }
+        
+        // --- FUNÇÃO DE CARREGAMENTO DE CONTEÚDO ---
+        function loadDevotionalContent(day, contentLangKey, t) { 
+            const data = devotionalContent[day] ? devotionalContent[day][contentLangKey] || devotionalContent[day]['pt'] : null;
+            
+            if (!data) {
+                devotionalContentDiv.innerHTML = `<p style="text-align: center;">${t.noContentAlert || 'Conteúdo não disponível para o Dia ${day} neste idioma.'}</p>`;
+                return;
+            }
+            
+            devotionalContentDiv.innerHTML = `
+                <h2 id="dayTitle">${t.dayTitle} ${day}: ${data.h2}</h2>
+                <div class="section">
+                    <strong>${t.versiculoChave}</strong>
+                    <p class="versiculos">${data.versiculos}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.resumoMeditacao}</strong>
+                    <p>${data.resumo}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.aplicacaoPratica}</strong>
+                    <p>${data.aplicacao}</p>
+                </div>
+                <p class="oracao-final">${t.oracaoLabel} ${data.oracao}</p>
+            `;
+            
+            document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`; 
+
+            updateListenToggle('start'); 
+        }
+        
+        // --- FUNÇÕES DE NAVEGAÇÃO ---
+        function nextDay() {
+            stopSpeaking(); 
+            if (currentDay < totalDays) {
+                currentDay++;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(1);
+            }
+        }
+        
+        function prevDay() {
+            stopSpeaking();
+            if (currentDay > 1) {
+                currentDay--;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(-1);
+            }
+        }
+
+        // --- FUNÇÕES DE LEITURA (TEXT-TO-SPEECH) ---
+        
+        function getVoiceForLanguage(langCode) {
+            const desiredLang = langCode.toLowerCase();
+            
+            if (ttsVoices.length === 0) {
+                console.warn('TTS: Vozes não carregadas.');
+                return null;
+            }
+            
+            let voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang && v.localService);
+            if (!voice) {
+                voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang);
+            }
+            if (!voice) {
+                const langPrefix = desiredLang.substring(0, 2);
+                voice = ttsVoices.find(v => v.lang.toLowerCase().startsWith(langPrefix));
+            }
+
+            return voice || ttsVoices[0];
+        }
+
+        function speakContent() {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            const contentElement = document.getElementById('devotionalContent');
+            
+            if (!synth || synth.speaking) {
+                return;
+            }
+
+            const textToSpeak = contentElement.innerText || contentElement.textContent;
+
+            if (!textToSpeak) {
+                alert(t.noContentAlert || "Conteúdo para leitura não encontrado.");
+                return;
+            }
+
+            totalChars = textToSpeak.length;
+            resetAudioProgressBar();
+
+            utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = currentLang;
+
+            const voice = getVoiceForLanguage(currentLang);
+            if (voice) {
+                utterance.voice = voice;
+            } else {
+                alert(t.ttsUnsupported + " " + t.noContentAlert);
+                stopSpeaking();
+                return;
+            }
+            
+            utterance.onboundary = (event) => {
+                const progress = (event.charIndex / totalChars) * 100;
+                if (audioProgressBar) audioProgressBar.style.width = `${progress}%`;
+            };
+            
+            utterance.onend = () => {
+                resetAudioProgressBar(true);
+                updateListenToggle('start'); 
+            };
+            
+            synth.speak(utterance);
+            updateListenToggle('speaking'); 
+        }
+
+        function stopSpeaking() {
+            if (synth && synth.speaking) {
+                synth.cancel();
+            }
+            if (synth) {
+                synth.cancel();
+            }
+            resetAudioProgressBar(true); 
+            updateListenToggle('start'); 
+        }
+        
+        function handleListenClick() {
+            if (!synth || listenToggle.disabled) return;
+
+            if (synth.speaking && !synth.paused) {
+                // Pausar
+                synth.pause();
+                updateListenToggle('paused');
+            } 
+            else if (synth.paused) {
+                // Continuar
+                synth.resume();
+                updateListenToggle('speaking');
+            } 
+            else if (!synth.speaking) {
+                // Iniciar a leitura
+                speakContent();
+            }
+        }
+        
+        function initTTS() {
+            if (ttsInitialized) return; 
+            const t = translations[currentLang] || translations['pt-BR']; 
+
+            if (!synth) {
+                listenToggle.innerHTML = t.ttsUnsupported;
+                listenToggle.disabled = true;
+                return;
+            }
+
+            synth.onvoiceschanged = () => {
+                ttsVoices = synth.getVoices();
+                if (ttsVoices.length > 0) {
+                    listenToggle.disabled = false;
+                    updateListenToggle('start'); 
+                    ttsInitialized = true;
+                } else {
+                    listenToggle.innerHTML = t.ttsUnsupported;
+                    listenToggle.disabled = true;
+                }
+            };
+            
+            ttsVoices = synth.getVoices();
+            
+            if (ttsVoices.length > 0) {
+                listenToggle.disabled = false;
+                updateListenToggle('start');
+                ttsInitialized = true;
+                synth.onvoiceschanged = null; 
+            } else {
+                listenToggle.innerHTML = t.ttsLoading;
+                listenToggle.disabled = true;
+            }
+        }
+
+
+        function updateListenToggle(state = 'start') {
+            const t = translations[currentLang] || translations['pt-BR']; 
+            const button = listenToggle;
+            if (!button) return;
+
+            button.style.cssText = ''; 
+            
+            if (state === 'speaking') {
+                button.innerHTML = t.listenPause || '⏸️ Pausar Áudio';
+                button.title = 'Pausar a leitura';
+                button.style.backgroundColor = '#ffc107'; 
+                button.style.color = '#333';
+                
+            } else if (state === 'paused') {
+                button.innerHTML = t.listenResume || '▶️ Continuar';
+                button.title = 'Continuar a leitura';
+                button.style.backgroundColor = '#28a745'; 
+                button.style.color = 'white';
+                
+            } else { // state === 'start' (Ocioso/Parado)
+                button.innerHTML = t.listenStart || '🔊 Ouça Aqui';
+                button.title = 'Iniciar a leitura do devocional';
+            }
+        }
+
+
+         // --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
+        
+        const devotionalContent = {
+  1: {"pt": {"h2": "O Presente Único de Deus (Sola Gratia)", "versiculos": "Gálatas 1:8-9 (NTLH): Mas que fiquem debaixo da maldição de Deus todos aqueles que anunciarem para vocês uma mensagem diferente da que nós anunciamos...", "resumo": "Existe só uma notícia incrível sobre como ficar amigo de Deus: a salvação é um presente que Jesus nos dá. Não é algo que a gente ganha fazendo coisas boas ou seguindo muitas regras. É somente a graça de Deus que salva, sem misturar o nosso esforço.", "aplicacao": "Você já pensou que precisa ser muito bonzinho ou nunca errar para Deus te amar mais? Lembre-se: o amor de Jesus é um presente completo. Agradeça e não tente 'comprar' o amor dEle! Descanse no que Cristo já fez.", "oracao": "Querido Deus, obrigado porque a salvação é um presente de Jesus, não um pagamento. Me ajuda a entender que o Senhor me ama mesmo quando eu erro. Me livre de pensar que minhas boas ações me salvam. Amém!"}, "en": {"h2": "God's One and Only Gift (Sola Gratia)", "versiculos": "Galatians 1:8-9 (NTLH adapted): But may all who preach a different message than the one we preached be under God’s curse!", "resumo": "There is only one amazing news about becoming God’s friend: salvation is a gift that Jesus gives us. It’s not something we earn by doing good things or following many rules. It is God's grace alone that saves, without mixing in our own efforts.", "aplicacao": "Have you ever thought you need to be super good or never make a mistake for God to love you more? Remember: Jesus’ love is a complete gift. Thank Him and don't try to 'buy' His love! Rest in what Christ has already done.", "oracao": "Dear God, thank you because salvation is a gift from Jesus, not a payment. Help me understand that you love me even when I make mistakes. Keep me from thinking my good deeds save me. Amen!"}, "es": {"h2": "El Único Regalo de Dios (Sola Gratia)", "versiculos": "Gálatas 1:8-9 (NVI, adaptado para NTLH): Pero aun si nosotros o un ángel del cielo les predicara un mensaje diferente del que les hemos predicado, ¡que caiga sobre él la maldición!", "resumo": "Solo hay una noticia increíble sobre cómo ser amigo de Dios: la salvación es un regalo que Jesús nos da. No es algo que ganamos haciendo cosas buenas o siguiendo muchas reglas. Es solo la gracia de Dios la que salva, sin mezclar nuestro esfuerzo.", "aplicacao": "¿Alguna vez pensaste que tienes que ser muy bueno o nunca equivocarte para que Dios te ame más? Recuerda: el amor de Jesús es un regalo completo. ¡Agradécele y no intentes 'comprar' Su amor! Descansa en lo que Cristo ya hizo.", "oracao": "Querido Dios, gracias porque la salvación es un regalo de Jesús, no un pago. Ayúdame a entender que me amas incluso cuando me equivoco. Líbrame de pensar que mis buenas acciones me salvan. Amén."}, "fr": {"h2": "Le Seul Cadeau de Dieu (Sola Gratia)", "versiculos": "Galates 1:8-9 (Louis Segond adapté): Mais, quand nous-mêmes, quand un ange du ciel annoncerait un message différent de celui que nous vous avons annoncé, qu'il soit anathème!", "resumo": "Il n'y a qu'une seule incroyable nouvelle sur la façon de devenir ami avec Dieu: le salut est un cadeau que Jésus nous donne. Ce n'est pas quelque chose que l'on gagne en faisant de bonnes actions ou en suivant beaucoup de règles. C'est seulement la grâce de Dieu qui sauve, sans y ajouter nos propres efforts.", "aplicacao": "Avez-vous déjà pensé que vous deviez être très sage ou ne jamais faire d'erreur pour que Dieu vous aime davantage? Rappelez-vous: l'amour de Jésus est un cadeau complet. Remerciez-le et n'essayez pas 'd'acheter' Son amour! Reposez-vous sur ce que Christ a déjà fait.", "oracao": "Cher Dieu, merci parce que le salut est un cadeau de Jésus, pas un paiement. Aide-moi à comprendre que Tu m'aimes même quand je fais des erreurs. Délivre-moi de penser que mes bonnes actions me sauvent. Amen!"}},
+  2: {"pt": {"h2": "O Velho e o Novo Eu", "versiculos": "Gálatas 2:20 (NTLH): Assim já não sou eu quem vive, mas Cristo é quem vive em mim. E esta vida que vivo agora, eu a vivo pela fé no Filho de Deus, que me amou e se deu a si mesmo por mim.", "resumo": "Quando você crê em Jesus, o seu 'eu' antigo morreu com Ele. Você ganha uma vida novinha em folha, que é a vida de Jesus vivendo em você. Você não vive mais por suas forças, mas confiando (fé) no amor de Jesus por você.", "aplicacao": "Quando você tiver vontade de fazer algo errado, lembre-se: 'O meu 'eu' antigo já morreu! Agora, é Jesus quem está vivendo em mim.' Peça a Ele força para fazer o certo.", "oracao": "Pai do Céu, obrigado porque o Senhor me deu uma vida nova. Ajuda a vida de Jesus que está em mim a ser mais forte que a minha vontade de pecar. Em nome de Jesus, Amém!"}, "en": {"h2": "The Old Self and the New Self", "versiculos": "Galatians 2:20 (NTLH adapted): I have been killed with Christ on the cross. So, it is no longer I who live, but Christ who lives in me. The life I now live, I live by faith in the Son of God, who loved me and gave himself for me.", "resumo": "When you believe in Jesus, your 'old self' died with Him. You get a brand-new life, which is Jesus’ life living in you. You no longer live by your own strength, but by trusting (faith) in Jesus' love for you.", "aplicacao": "When you feel like doing something wrong, remember: 'My old self is already dead! Now, Jesus is living in me.' Ask Him for strength to do what is right.", "oracao": "Heavenly Father, thank you because You gave me a new life. Help Jesus' life in me to be stronger than my desire to sin. In Jesus' name, Amen!"}, "es": {"h2": "El Viejo y el Nuevo Yo", "versiculos": "Gálatas 2:20 (NTLH adaptado): Así que ya no soy yo quien vive, sino que es Cristo quien vive en mí. Y esta vida que vivo ahora, la vivo por la fe en el Hijo de Dios, quien me amó y se entregó por mí.", "resumo": "Cuando crees en Jesús, tu 'yo' antiguo murió con Él. Obtienes una vida nuevecita, que es la vida de Jesús viviendo en ti. Ya no vives por tus fuerzas, sino confiando (fe) en el amor de Jesús por ti.", "aplicacao": "Cuando tengas ganas de hacer algo incorrecto, recuerda: '¡Mi 'yo' antiguo ya murió! Ahora, es Jesús quien está viviendo en mí.' Pídele fuerza para hacer lo correcto.", "oracao": "Padre Celestial, gracias porque me diste una vida nueva. Ayuda a que la vida de Jesús que está en mí sea más fuerte que mis ganas de pecar. En el nombre de Jesús, Amén."}, "fr": {"h2": "Le Vieil Homme et la Nouvelle Vie", "versiculos": "Galates 2:20 (Louis Segond adapté): J'ai été crucifié avec Christ; et si je vis, ce n'est plus moi qui vis, c'est Christ qui vit en moi. La vie que je vis maintenant, je la vis par la foi au Fils de Dieu, qui m'a aimé et s'est donné pour moi.", "resumo": "Quand tu crois en Jésus, ton 'moi' ancien est mort avec Lui. Tu reçois une vie toute neuve, qui est la vie de Jésus vivant en toi. Tu ne vis plus par tes propres forces, mais en faisant confiance (foi) à l'amour de Jésus pour toi.", "aplicacao": "Quand tu as envie de faire quelque chose de mal, souviens-toi: 'Mon 'moi' ancien est déjà mort! Maintenant, c'est Jésus qui vit en moi.' Demande-lui la force de faire le bien.", "oracao": "Père Céleste, merci parce que Tu m'as donné une vie nouvelle. Aide la vie de Jésus en moi à être plus forte que mon désir de pécher. Au nom de Jésus, Amen!"}},
+  3: {"pt": {"h2": "A Bobagem de Tentar Sozinho", "versiculos": "Gálatas 3:3 (NTLH): Como é que vocês podem ter tão pouco juízo? Vocês começaram a sua vida cristã pelo poder do Espírito de Deus e agora querem ir até o fim pelas suas próprias forças?", "resumo": "É bobagem (falta de juízo) tentar ficar 'melhor' por conta própria, se Deus nos salvou de graça! O Espírito Santo é quem nos deu a vida nova (o começo) e Ele é quem nos ajuda a viver essa vida (o desenvolvimento). Não tente viver a vida cristã pelas suas próprias forças!", "aplicacao": "Se você errou, não tente se esconder e se 'consertar' sozinho. Corra imediatamente para Jesus! Ele te perdoa e te dá o poder para mudar e fazer o certo, através do Espírito.", "oracao": "Deus Espírito Santo, eu não consigo ser bom sozinho. Me ajuda a confiar no Senhor todos os dias e em todos os momentos. Me guia para que eu não tente viver só pela minha força. Amém!"}, "en": {"h2": "The Folly of Trying Alone", "versiculos": "Galatians 3:3 (NTLH): How can you be so foolish? You began your Christian life by the power of God’s Spirit, and now you are trying to finish it by your own power?", "resumo": "It is foolish to try to get 'better' by ourselves if God saved us by grace! The Holy Spirit is the one who gave us the new life (the beginning), and He is the one who helps us live this life (the growth). Don't try to live the Christian life by your own strength!", "aplicacao": "If you make a mistake, don't try to hide and 'fix yourself' alone. Run immediately to Jesus! He forgives you and gives you the power to change and do what is right, through the Spirit.", "oracao": "God, Holy Spirit, I can't be good on my own. Help me trust You every day and at all times. Guide me so I don't try to live only by my own strength. Amen!"}, "es": {"h2": "La Tontería de Intentar Solo", "versiculos": "Gálatas 3:3 (NTLH): ¿Cómo es que son tan tontos? Empezaron a vivir la vida cristiana por el poder del Espíritu de Dios, ¿y ahora quieren terminarla con sus propias fuerzas?", "resumo": "Es una tontería (falta de juicio) intentar 'mejorar' por nuestra cuenta, si Dios nos salvó por gracia. El Espíritu Santo es quien nos dio la vida nueva (el comienzo) y Él es quien nos ayuda a vivir esa vida (el desarrollo). ¡No intentes vivir la vida cristiana por tus propias fuerzas!", "aplicacao": "Si te equivocas, no intentes esconderte y 'arreglarte' solo. ¡Corre imediatamente a Jesús! Él te perdona y te da el poder para cambiar y hacer lo correcto, a través del Espíritu.", "oracao": "Dios Espíritu Santo, no puedo ser bueno solo. Ayúdame a confiar en Ti todos los días y en todo momento. Guíame para que no intente vivir solo por mi fuerza. Amén."}, "fr": {"h2": "La Folie d'Essayer Tout Seul", "versiculos": "Galates 3:3 (Louis Segond adapté): Après avoir commencé par l'Esprit, voulez-vous maintenant finir par la chair (vos propres efforts)?", "resumo": "C'est de la folie d'essayer de devenir 'meilleur' par nous-mêmes, si Dieu nous a sauvés par grâce! Le Saint-Esprit est celui qui nous a donné la nouvelle vie (le début) et c'est Lui qui nous aide à vivre cette vie (le développement). N'essayez pas de vivre la vie chrétienne par vos propres forces!", "aplicacao": "Si tu fais une erreur, n'essaie pas de te cacher et de te 'réparer' tout seul. Cours immédiatement vers Jésus! Il te pardonne et te donne le pouvoir de changer et de faire ce qui est juste, par l'Esprit.", "oracao": "Dieu Saint-Esprit, je ne peux pas être bon tout seul. Aide-moi à Te faire confiance tous les jours et à tout moment. Guide-moi pour que je n'essaie pas de vivre seulement par ma propre force. Amen!"}},
+  4: {"pt": {"h2": "De Escravo a Filho Querido", "versiculos": "Gálatas 4:4-7 (NTLH): E, para mostrar que vocês são seus filhos, Deus enviou o Espírito do seu Filho ao nosso coração, o Espírito que exclama: 'Pai, meu Pai.' Assim vocês não são mais escravos; vocês são filhos.", "resumo": "Jesus nos libertou para que fôssemos adotados! Antes éramos como escravos, mas agora somos filhos de Deus! O Espírito Santo no nosso coração nos faz sentir e querer chamar Deus de 'Pai, meu Pai' (Abba). Sua identidade mudou: de servo para Filho Pleno.", "aplicacao": "Você vive com medo de Deus ou com a alegria de ser filho querido? Sua herança (o Céu) já está garantida! Viva feliz e confiante, querendo obedecer por amor ao seu Pai, e não por medo.", "oracao": "Aba, Pai! Que bom que sou Seu filho/filha querido(a)! Tira todo o medo do meu coração e me ajuda a ter a alegria de quem sabe que é amado(a) por Ti. Amém!"}, "en": {"h2": "From Slave to Beloved Child", "versiculos": "Galatians 4:4-7 (NTLH adapted): To show that you are His children, God sent the Spirit of His Son into our hearts, the Spirit who cries out, 'Father, my Father.' So you are no longer slaves; you are children.", "resumo": "Jesus set us free so we could be adopted! Before, we were like slaves, but now we are God's children! The Holy Spirit in our hearts makes us feel and want to call God 'Father, my Father' (Abba). Your identity changed: from servant to Full Child.", "aplicacao": "Do you live with fear of God or with the joy of being a beloved child? Your inheritance (Heaven) is already guaranteed! Live happily and confidently, wanting to obey out of love for your Father, not fear.", "oracao": "Abba, Father! I'm so glad I am Your beloved child! Take all fear from my heart and help me have the joy of someone who knows they are loved by You. Amen!"}, "es": {"h2": "De Esclavo a Hijo Querido", "versiculos": "Gálatas 4:4-7 (NTLH): Y, para demostrar que ustedes son sus hijos, Dios envió a nuestros corazones el Espíritu de su Hijo, el Espíritu que clama: «¡Padre, mi Padre!» Así que ustedes ya no son esclavos, sino hijos.", "resumo": "¡Jesús nos liberó para que fuéramos adoptados! Antes éramos como esclavos, ¡pero ahora somos hijos de Dios! El Espíritu Santo en nuestro corazón nos hace sentir y querer llamar a Dios 'Padre, mi Padre' (Abba). Tu identidad cambió: de siervo a Hijo Pleno.", "aplicacao": "¿Vives con miedo a Dios o con la alegría de ser hijo querido? ¡Tu herencia (el Cielo) ya está garantizada! Vive feliz y confiado, queriendo obedecer por amor a tu Padre, y no por miedo.", "oracao": "¡Abba, Padre! ¡Qué bueno que soy Tu hijo/hija querido(a)! Quita todo el miedo de mi corazón y ayúdame a tener la alegría de quien sabe que es amado(a) por Ti. Amén."}, "fr": {"h2": "D'Esclave à Enfant Bien-Aimé", "versiculos": "Galates 4:4-7 (Louis Segond adapté): Et, pour montrer que vous êtes ses enfants, Dieu a envoyé dans vos cœurs l'Esprit de son Fils, lequel crie: 'Père, mon Père!' Ainsi vous n'êtes plus esclaves, mais enfants.", "resumo": "Jesus nous a libérés pour que nous soyons adoptés! Avant, nous étions comme des esclaves, mais maintenant nous sommes les enfants de Dieu! Le Saint-Esprit dans notre cœur nous fait sentir et vouloir appeler Dieu 'Père, mon Père' (Abba). Ton identité a changé: de serviteur à Enfant Plénier.", "aplicacao": "Vis-tu avec la peur de Dieu ou avec la joie d'être un enfant bien-aimé? Ton héritage (le Ciel) est déjà garanti! Vis heureux et confiant, voulant obéir par amour pour ton Père, et non par peur.", "oracao": "Abba, Père! Je suis si heureux d'être Ton enfant bien-aimé! Enlève toute peur de mon cœur et aide-moi à avoir la joie de celui qui sait qu'il est aimé par Toi. Amen!"}},
+  5: {"pt": {"h2": "Ficar Firme na Liberdade", "versiculos": "Gálatas 5:1 (NTLH): Cristo nos libertou para que nós sejamos realmente livres. Por isso, continuem firmes como pessoas livres e não se tornem escravos novamente.", "resumo": "Jesus nos deu a liberdade de não termos mais que tentar ser bons para sermos salvos. Essa liberdade é um presente precioso! Não deixe ninguém te colocar debaixo de regras humanas ('jugo de escravidão') de novo. Permaneça firme nesse presente.", "aplicacao": "Quais são as regras que as pessoas ou a religião às vezes dizem que você tem que fazer para Deus te aceitar mais? Jogue fora essas regras. Use a sua liberdade para ajudar e amar as outras pessoas.", "oracao": "Senhor Jesus, obrigado porque o Senhor me fez livre! Me dê sabedoria para usar essa liberdade para amar os outros e força para resistir a qualquer regra que me escravize. Amém!"}, "en": {"h2": "Standing Firm in Freedom", "versiculos": "Galatians 5:1 (NTLH): Christ has set us free so that we may be truly free. So stand firm as free people and do not become slaves again.", "resumo": "Jesus gave us the freedom of no longer having to try to be good to be saved. This freedom is a precious gift! Don't let anyone put you back under human rules ('yoke of slavery'). Stand firm in this gift.", "aplicacao": "What are the rules that people or religion sometimes say you have to do for God to accept you more? Throw away those rules. Use your freedom to help and love other people.", "oracao": "Lord Jesus, thank you because You made me free! Give me wisdom to use this freedom to love others and strength to resist any rule that enslaves me. Amen!"}, "es": {"h2": "Mantenerse Firme en la Libertad", "versiculos": "Gálatas 5:1 (NTLH): Cristo nos libertó para que nosotros seamos realmente libres. Por lo tanto, manténganse firmes como personas libres y no se vuelvan esclavos de nuevo.", "resumo": "Jesús nos dio la libertad de no tener que intentar ser buenos para ser salvados. ¡Esta libertad es un regalo precioso! No dejes que nadie te ponga bajo reglas humanas ('yugo de esclavitud') otra vez. Mantente firme en este regalo.", "aplicacao": "¿Cuáles son las reglas que la gente o la religión a veces dicen que tienes que hacer para que Dios te acepte más? Desecha esas reglas. Usa tu libertad para ayudar y amar a otras personas.", "oracao": "Señor Jesús, gracias porque me hiciste libre! Dame sabiduría para usar esta libertad para amar a los demás y fuerza para resistir cualquier regla que me esclavice. Amén."}, "fr": {"h2": "Rester Ferme dans la Liberté", "versiculos": "Galates 5:1 (Louis Segond adapté): C'est pour la liberté que Christ nous a affranchis. Demeurez donc fermes, et ne vous laissez pas remettre sous le joug de la servitude.", "resumo": "Jésus nous a libérés pour que nous soyons vraiment libres. Cette liberté est un cadeau précieux! Ne laisse personne te remettre sous des règles humaines ('joug de la servitude'). Reste ferme dans ce cadeau.", "aplicacao": "Quelles sont les règles que les gens ou la religion disent parfois que tu dois faire pour que Dieu t'accepte davantage? Jette ces règles. Utilise ta liberté pour aider et aimer les autres.", "oracao": "Cher Seigneur Jésus, merci parce que Tu m'as rendu libre! Donne-moi la sagesse d'utiliser cette liberté pour aimer les autres et la force de résister à toute règle qui m'asservit. Amen!"}},
+  6: {"pt": {"h2": "A Briga da Vontade com o Espírito", "versiculos": "Gálatas 5:16-17 (NTLH): Quero dizer a vocês o seguinte: deixem que o Espírito de Deus dirija a vida de vocês e não obedeçam aos desejos da natureza humana. Porque o que a nossa natureza humana quer é contra o que o Espírito quer...", "resumo": "A vida cristã é uma luta de braço todo dia! Seu 'eu' antigo (a carne) quer fazer coisas erradas, e o Espírito Santo quer te guiar. O segredo é: dar a chave da sua vida para o Espírito! É deixar que Ele dirija você em tudo, todos os dias.", "aplicacao": "O que significa 'deixar o Espírito dirigir'? É como dar a chave do carro para Ele. Pergunte: 'O que eu estou querendo fazer agora: a vontade da minha carne (egoísta) ou a vontade do Espírito?'", "oracao": "Deus, eu confesso que preciso do Seu Espírito para me guiar. Ajuda-me a dizer 'não' para as coisas erradas (carne) e a dar a chave do meu coração para o Senhor todos os dias. Amém!"}, "en": {"h2": "The Conflict Between Will and Spirit", "versiculos": "Galatians 5:16-17 (NTLH): I mean this: let the Spirit of God lead your lives, and then you won’t obey your human nature’s desires. Because what our human nature wants is against what the Spirit wants...", "resumo": "The Christian life is a daily arm wrestling match! Your 'old self' (the flesh) wants to do wrong things, and the Holy Spirit wants to guide you. The secret is: hand over the keys of your life to the Spirit! It's letting Him drive you in everything, every day.", "aplicacao": "What does it mean to 'let the Spirit lead'? It's like giving Him the car keys. Ask yourself: 'What do I want to do right now: the will of my flesh (selfish) or the will of the Spirit?'", "oracao": "God, I confess that I need Your Spirit to guide me. Help me say 'no' to wrong things (flesh) and to give the keys to my heart to You every day. Amen!"}, "es": {"h2": "La Lucha de la Voluntad con el Espíritu", "versiculos": "Gálatas 5:16-17 (NTLH): Quiero decirles lo siguiente: dejen que el Espíritu de Dios dirija la vida de ustedes y así no obedecerán a los deseos de la naturaleza humana. Porque lo que nuestra naturaleza humana quiere es contrario a lo que quiere el Espíritu...", "resumo": "¡La vida cristiana es una lucha de brazos todos los días! Tu 'yo' antiguo (la carne) quiere hacer cosas incorrectas, y el Espíritu Santo quiere guiarte. El secreto es: ¡dale la llave de tu vida al Espíritu! Es dejar que Él te dirija en todo, todos los días.", "aplicacao": "¿Qué significa 'dejar que el Espíritu dirija'? Es como darle la llave del coche. Pregúntate: '¿Qué quiero hacer ahora: la voluntad de mi carne (egoísta) o la voluntad del Espíritu?'", "oracao": "Dios, confieso que necesito Tu Espíritu para que me guíe. Ayúdame a decir 'no' a las cosas incorrectas (carne) y a darte la llave de mi corazón todos los días. Amén."}, "fr": {"h2": "Le Conflit entre la Volonté et l'Esprit", "versiculos": "Galates 5:16-17 (Louis Segond adapté): Je dis donc: Laissez l'Esprit de Dieu diriger votre vie, et vous n'obéirez pas aux désirs de la nature humaine. Car ce que notre nature humaine veut est contraire à ce que l'Esprit veut...", "resumo": "La vie chrétienne est une lutte quotidienne! Ton 'moi' ancien (la chair) veut faire de mauvaises choses, et le Saint-Esprit veut te guider. Le secret est: donne la clé de ta vie à l'Esprit! C'est le laisser te conduire en tout, tous les jours.", "aplicacao": "Que signifie 'laisser l'Esprit diriger'? C'est comme lui donner les clés de ta voiture. Demande-toi: 'Que veux-je faire maintenant: la volonté de ma chair (égoïste) ou la volonté de l'Esprit?'", "oracao": "Dieu Saint-Esprit, je ne peux pas être bon tout seul. Aide-moi à Te faire confiance tous les jours et à tout moment. Guide-moi pour que je n'essaie pas de vivre seulement par ma propre force. Amen!"}},
+  7: {"pt": {"h2": "O Fruto da Vida Dirigida pelo Espírito", "versiculos": "Gálatas 5:22-25 (NTLH): Mas o Espírito de Deus produz o amor, a alegria, a paz, a paciência, a delicadeza, a bondade, a fidelidade, a humildade e o domínio próprio. (...) Que o Espírito de Deus, que nos deu a vida, controle também a nossa vida!", "resumo": "O Fruto (uma coisa só, com 9 'sabores'!) é o jeito de Jesus que o Espírito Santo faz crescer em você. Não é uma lista de coisas que você faz por força própria, mas um resultado natural de deixar o Espírito te guiar. O Fruto é a prova de que Deus está em você.", "aplicacao": "Olhe para a lista do Fruto: você tem mostrado mais alegria ou paciência? Lembre-se, o objetivo não é *tentar* ter amor. É andar com o Espírito, permitindo que Ele produza o Fruto em você!", "oracao": "Espírito Santo, eu quero que o Seu Fruto cresça em mim. Me ajuda a ter mais amor e alegria hoje. Eu quero seguir os Seus passos para que todos vejam o Seu bom caráter em mim. Amém!"}, "en": {"h2": "The Fruit of the Spirit-Led Life", "versiculos": "Galatians 5:22-25 (NTLH): But the Spirit of God produces love, joy, peace, patience, kindness, goodness, faithfulness, humility, and self-control. (...) May the Spirit of God, who gave us life, control our lives also!", "resumo": "The Fruit (one thing, with 9 'flavors'!) is the way Jesus is that the Holy Spirit makes grow in you. It's not a list of things you do by your own strength, but a natural result of letting the Spirit guide you. The Fruit proves that God is in you.", "aplicacao": "Look at the list of Fruit: have you shown more joy or patience? Remember, the goal is not to *try* to have love. It is to walk with the Spirit, allowing Him to produce the Fruit in you!", "oracao": "Holy Spirit, I want Your Fruit to grow in me. Help me have more love and joy today. I want to follow Your steps so that everyone sees Your good character in me. Amen!"}, "es": {"h2": "El Fruto de la Vida Guiada por el Espíritu", "versiculos": "Gálatas 5:22-25 (NTLH): Pero el Espíritu de Dios produce amor, alegría, paz, paciencia, amabilidad, bondad, fidelidad, humildad y dominio propio. (...) ¡Que el Espíritu de Dios, que nos dio la vida, controle también nuestra vida!", "resumo": "El Fruto (una cosa, con 9 'sabores'!) es la forma de ser de Jesús que el Espíritu Santo hace crecer en ti. No es una lista de cosas que haces por tu propia fuerza, sino un resultado natural de dejar que el Espíritu te guíe. El Fruto es la prueba de que Dios está en ti.", "aplicacao": "Mira la lista del Fruto: ¿has mostrado más alegría o paciencia? Recuerda, el objetivo no es *intentar* tener amor. Es caminar con el Espíritu, permitiendo que Él produzca el Fruto en ti.", "oracao": "Espíritu Santo, quiero que Tu Fruto crezca en mí. Ayúdame a tener más amor y alegría hoy. Quiero seguir Tus pasos para que todos vean Tu buen carácter en mí. Amén."}, "fr": {"h2": "Le Fruit de la Vie Dirigée par l'Esprit", "versiculos": "Galates 5:22-25 (Louis Segond adapté): Mais le Fruit de l'Esprit est l'amour, la joie, la paix, la patience, la bonté, la bénignité, la fidélité, la douceur, la maîtrise de soi. (...) Que l'Esprit de Dieu, qui nous a donné la vie, contrôle aussi notre vie!", "resumo": "Le Fruit (une seule chose, avec 9 'saveurs'!) est la manière d'être de Jésus que le Saint-Esprit fait grandir en toi. Ce n'est pas une liste de choses que tu fais par ta propre force, mais un résultat naturel de laisser l'Esprit te guider. Le Fruit est la preuve que Dieu est en toi.", "aplicacao": "Regarde la liste du Fruit: as-tu montré plus de joie ou de patience? Rappelle-toi, le but n'est pas d'*essayer* d'avoir de l'amour. C'est de marcher avec l'Esprit, en Lui permettant de produire le Fruit en toi!", "oracao": "Saint-Esprit, je veux que Ton Fruit grandisse en moi. Aide-moi à avoir plus d'amour et de joie aujourd'hui. Je veux seguir Tes pas pour que tout le monde voie Ton bon caractère en moi. Amen!"}}
+
+
+ };
+
+        // FIM DO CONTEÚDO DEVOCIONAL
+
+        // * FUNÇÕES DE PERSISTÊNCIA E ESTADO (MANTIDAS) *
+        
+        function getSavedProgress() {
+            const savedDay = localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`);
+            return savedDay ? parseInt(savedDay, 10) : 1;
+        }
+
+        function getCompletedDays() {
+            const completed = localStorage.getItem(`completedDays_${DEVOTIONAL_KEY}`);
+            return completed ? JSON.parse(completed) : {};
+        }
+
+        function saveCompletion(day, isChecked) {
+            const key = `completedDays_${DEVOTIONAL_KEY}`;
+            const completedDays = getCompletedDays();
+            completedDays[day] = isChecked;
+            localStorage.setItem(key, JSON.stringify(completedDays));
+            updateOverallProgress();
+        }
+
+        function updateCompletedState() {
+            const completedDaysMap = getCompletedDays();
+            completedCheck.checked = completedDaysMap[currentDay] || false;
+        }
+
+        function updateOverallProgress() {
+            const completedDaysMap = getCompletedDays();
+            const completedCount = Object.values(completedDaysMap).filter(v => v).length;
+            const percent = (completedCount / totalDays) * 100;
+            progressBar.style.width = `${percent}%`;
+            prevButton.disabled = currentDay <= 1;
+            nextButton.disabled = currentDay >= totalDays;
+            
+            updateCompletedState();
+        }
+
+        // * EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) *
+       window.onload = () => {
+    
+    // ✅ CORREÇÃO: Cancela imediatamente qualquer leitura que possa ter continuado
+    stopSpeaking(); 
+    
+    // 🚨 LIMPEZA FORÇADA DAS CHAVES ANTIGAS (MANTIDA)
+    localStorage.removeItem('completedDays'); 
+    localStorage.removeItem('devotionalProgress');
+    
+    // 1. Carrega o tema, idioma e FONTE
+    loadThemePreference(); 
+    // NOTE: updateLanguageSelector() is technically unnecessary since the dropdown is hidden, but kept for script integrity
+    updateLanguageSelector();
+    // NOVO: Aplica o tamanho da fonte salvo
+    updateFontSize(); 
+               
+    // 2. Carrega o dia salvo e atualiza a UI
+    currentDay = getSavedProgress();
+    updateTexts(0); 
+    
+    // 3. Configura o TTS (CORREÇÃO CRÍTICA)
+    initTTS(); 
+
+    // 4. Configura os Listeners de Eventos
+    // NOTE: The event listeners for themeToggle and langSelectButton are now irrelevant as they are hidden, but kept for script integrity
+    if (themeToggle) themeToggle.addEventListener('click', toggleDarkMode);
+    
+    if (listenToggle) {
+        listenToggle.addEventListener('click', handleListenClick); 
+        // 🛑 Duplo Clique para STOP explícito
+        listenToggle.addEventListener('dblclick', stopSpeaking);
+    }
+    
+    // Listeners do Seletor de Idioma
+    if (langSelectButton) {
+        langSelectButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isExpanded = langDropdown.style.display === 'block';
+            langDropdown.style.display = isExpanded ? 'none' : 'block';
+            // NOVO ARIA: Atualiza o status de expansão
+            langSelectButton.setAttribute('aria-expanded', !isExpanded); 
+        });
+    }
+    document.addEventListener('click', (event) => {
+        const wrapper = document.querySelector('.language-selector-wrapper');
+        if (langDropdown && langDropdown.style.display === 'block' && wrapper && !wrapper.contains(event.target)) {
+            langDropdown.style.display = 'none';
+            // NOVO ARIA: Garante que o status volte a false ao fechar
+            if (langSelectButton) langSelectButton.setAttribute('aria-expanded', 'false'); 
+        }
+    });
+
+    prevButton.addEventListener('click', prevDay);
+    nextButton.addEventListener('click', nextDay);
+    completedCheck.addEventListener('change', handleCompletedCheck);
+    
+    // NOVO: Listeners para o controle de fonte
+    document.getElementById('fontSizeIncrease').addEventListener('click', increaseFontSize);
+    document.getElementById('fontSizeDecrease').addEventListener('click', decreaseFontSize);
+};
+        
+    </script>
+    
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app', 'vw-plugin-wrapper');
+    </script>
+</body>
+</html>
