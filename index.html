@@ -147,7 +147,8 @@
             text-align: center;
             margin-bottom: 50px;
             color: #1a202c; 
-            padding: 50px 10px 0 10px; /* Padding para garantir respiro nas laterais e no topo para o logo/controles */
+            /* CORREÇÃO FINAL: 24px de padding lateral para garantir espaço nas bordas */
+            padding: 50px 24px 0 24px; 
             position: relative; /* FUNDAMENTAL para ancorar os grupos de controle */
             width: 100%; 
             max-width: 900px;
@@ -331,8 +332,7 @@
             gap: 25px; 
             max-width: 900px;
             width: 100%;
-            margin: auto;
-            padding: 0 10px; /* Padding de 10px nas laterais para garantir margem no desktop/telas médias */
+            padding: 0 10px; /* Default desktop padding */
         }
         
         /* Ajuste do menu-container para mobile */
@@ -341,14 +341,14 @@
                 grid-template-columns: 1fr; /* Uma coluna única no mobile */
                 gap: 15px;
                 justify-content: center;
-                /* Padding lateral para garantir margem e evitar corte */
-                padding: 0 10px; 
+                /* CORREÇÃO FINAL: 24px de padding lateral, igual ao header */
+                padding: 0 24px; 
             }
             
             .menu-button {
                 width: 100%;
-                /* Ajuste o padding lateral para 15px para ficar mais compacto no mobile, seguindo a sugestão do usuário */
-                padding: 15px 15px; 
+                /* Ajuste fino: Reduzindo um pouco mais o padding vertical */
+                padding: 12px 15px; 
                 border-radius: 12px;
             }
         }
@@ -366,7 +366,7 @@
             border-radius: 16px; 
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-sizing: border-box; /* CORREÇÃO FINAL: Garante que 100% de largura inclui o padding */
+            box-sizing: border-box; /* Garante que 100% de largura inclui o padding */
         }
         .menu-button .emoji-icon {
             font-size: 2.5em; 
@@ -410,7 +410,8 @@
             margin-top: 30px;
             max-width: 900px;
             width: 100%;
-            padding: 0 10px;
+            /* CORREÇÃO FINAL: 24px de padding lateral, igual aos outros containers no mobile */
+            padding: 0 24px;
         }
 
         /* Estilo base para os botões modais */
@@ -921,7 +922,7 @@
                 // menu4: Proverbs
                 menu4Title: "Devocional Libro de Provérbios", menu4Subtitle: "Lições diárias de Sabedoria e Conduta.", menu4Icon: "💡",
                 menu4Title_kids: "Proverbios: El Manual de la Sabiduría", menu4Subtitle_kids: "Consejos de vida para ser sabio y feliz.", menu4Icon_kids: "🧐",
-                menu4Title_teens: "Proverbios: Cómo Triunfar en la Vida", menu4Subtitle_teens: "Consejos prácticos para las decisiones diarias.", menu4Icon_teens: "⚙️",
+                menu4Title_teens: "Proverbios: Cómo Triunfar en la Vida", menu4Subtitle_teens: "Consejos prácticos para las decisiones diarias.", moenu4Icon_teens: "⚙️",
 
                 // menu5: Ecclesiastes
                 menu5Title: "Devocional Libro de Eclesiastés", menu5Subtitle: "Una invitación a reflexionar con Salomón sobre el sentido de la vida.", menu5Icon: "🕰️",
@@ -969,12 +970,12 @@
                 // menu3: Romans
                 menu3Title: "Dévotionnel Livre des Romains", menu3Subtitle: "Étude approfondie sur la Justification par la Foi.", menu3Icon: "⚖️",
                 menu3Title_kids: "Une Aventure dans le Livre des Romains", menu3Subtitle_kids: "Apprenez le pardon de Dieu et le salut.", menu3Icon_kids: "🕵️",
-                menu3Title_teens: "Romains : Ce qui Compte Vraiment ?", menu3Subtitle_teens: "Comprenez la grâce, la Loi et la justification.", menu3Icon_teens: "🧠",
+                menu3Title_teens: "Romains : Ce qui Compte Vraiment ?", menu3Subtitle_teens: "Comprenez la grâce, la Loi et la justification.", moenu3Icon_teens: "🧠",
 
                 // menu4: Proverbs
                 menu4Title: "Dévotionnel Livre des Proverbes", menu4Subtitle: "Leçons quotidiennes de Sagesse et de Conduite.", menu4Icon: "💡",
                 menu4Title_kids: "Proverbes : Le Manuel de la Sagesse", menu4Subtitle_kids: "Conseils de vie pour être sage et heureux.", menu4Icon_kids: "🧐",
-                menu4Title_teens: "Proverbes : Comment Réussir dans la Vie", menu4Subtitle_teens: "Conseils pratiques pour les choix quotidiens.", menu4Icon_teens: "⚙️",
+                menu4Title_teens: "Proverbes : Comment Réussir dans la Vie", menu4Subtitle_teens: "Conseils pratiques pour les choix quotidiens.", moenu4Icon_teens: "⚙️",
 
                 // menu5: Ecclesiastes
                 menu5Title: "Dévotionnel Livre de l'Ecclésiaste", menu5Subtitle: "Une invitation à réfléchir avec Salomon sur le sens de la vie.", menu5Icon: "🕰️",
@@ -998,11 +999,11 @@
                 menu8Title_teens: "Psaumes : Trouvez la Paix", menu8Subtitle_teens: "Trouvez réconfort et direction dans les moments difficiles.", menu8Icon_teens: "🧘",
                 
                 // MODAL
-                creditsButtonText: "Crédits", privacyButtonText: "Confidentialité (LGPD)", helpButtonText: "Aide", aboutButtonText: "Qui Sommes-Nous",
+                creditsButtonText: "Créditos", privacyButtonText: "Confidentialité (LGPD)", helpButtonText: "Aide", aboutButtonText: "Qui Sommes-Nous",
                 modalTitle_credits: "Crédits", modalTitle_privacy: "Politique de Confidentialité (LGPD)", modalTitle_help: "Aide et Contact", modalTitle_about: "Qui Sommes-Nous",
                 creditAuthorTitle: "Auteur:", creditTechReviewTitle: "Revue Technique:", creditTheologicalReviewTitle: "Revue Théologique:",
                 modalContent_privacy: 'Cette section détaille notre politique de confidentialité, conformément à la loi générale sur la protection des données (LGPD).\n\nNous affirmons que ce site/application ne collecte pas de données personnelles des utilisateurs.\n\nAucune information n\'est stockée, à l\'exception de vos préférences locales de langue et de thème (Mode Sombre/Clair), que sont enregistrées dans votre propre navigateur.',
-                modalContent_help: 'Para perguntas, suggestions ou support technique, veuillez nous contacter por email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure expérience d\'étude biblique possible. Veuillez inclure des captures d\'écran si vous signalez un problème technique.\n\nVersão Actuelle: v1.0.6 - 2025',
+                modalContent_help: 'Para perguntas, suggestions ou support technique, veuillez nous contacter por email à: contact@conhecer-e-crer.com.\n\nNotre objectif est de vous offrir la meilleure experiência de estudo bíblico possível. Veuillez inclure des captures d\'écran si vous signalez um problema técnico.\n\nVersão Actuelle: v1.0.6 - 2025',
                 modalContent_about: 'Nous somos uma iniciativa dedicada a promover le étude profond et la dévotion chrétienne, unindo le Connaissance de la Parole de Deus com a Fé prática.\n\nNos materiais são elaborados basés sur les Saintes Écritures pour vous aider dans votre cheminement spirituel.'
             }
         };
