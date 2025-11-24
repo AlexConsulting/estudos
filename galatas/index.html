@@ -57,7 +57,7 @@
         }
         .navigation {
             display: flex; justify-content: space-between; align-items: center; margin-top: 30px;
-            padding-top: 15px; border-top: 1px solid #ddd; flex-wrap: wrap; gap: 15px; 
+            padding-top: 15px; border-top: 1px solid #ddd; flex-wrap: wrap; gap: 10px; /* Reduzido o gap para 10px */
         }
         .nav-button {
             padding: 10px 15px; cursor: pointer; border: 1px solid #007bff; border-radius: 5px;
@@ -67,6 +67,53 @@
         button:focus, a:focus, input:focus, #accessibilityFloater button:focus {
             outline: 3px solid #00ff73; outline-offset: 2px; box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
         }
+
+        /* ESTILOS PARA O CONTROLE DE LEMBRETE (MANTIDOS) */
+        #reminderControl {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #reminderTime {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            flex-grow: 1;
+        }
+        #saveReminder, #clearReminder {
+            padding: 8px 12px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        #saveReminder {
+            background-color: #28a745;
+            color: white;
+        }
+        #saveReminder:hover { background-color: #218838; }
+        #clearReminder {
+            background-color: #dc3545;
+            color: white;
+        }
+        #clearReminder:hover { background-color: #c82333; }
+        .dark-theme #reminderControl {
+            background-color: #2c2c2c;
+            border-color: #444;
+        }
+        .dark-theme #reminderTime {
+            background-color: #1e1e1e;
+            border-color: #444;
+            color: #f4f4f4;
+        }
+        /* FIM DOS ESTILOS DE LEMBRETE */
 
         /* 3. DARK THEME CSS (Mantido) */
         .dark-theme { background-color: #121212; color: #f4f4f4; }
@@ -85,7 +132,11 @@
         .language-selector-wrapper, #themeToggle {
             display: none !important;
         }
-        
+        /* ⚠️ CORREÇÃO CRÍTICA: Força a exibição do botão de Ouvir (Listen Toggle) que estava sendo ocultado. */
+        #listenToggle {
+            display: flex !important;
+        }
+
         .language-selector-wrapper { position: relative; display: inline-block; z-index: 10; }
         #langSelectButton, #themeToggle, #listenToggle { 
             background-color: #f0f0f0; border: 1px solid #ccc; color: #333; border-radius: 5px;
@@ -200,14 +251,33 @@
                 margin-bottom: 0; 
             }
 
-            .navigation { flex-direction: column; gap: 10px; }
-            .navigation .nav-button { width: 100%; } 
-            .progress-check { order: -1; width: 100%; }
+            .navigation { 
+                flex-direction: row; /* Volta a ser row para a navegação */
+                flex-wrap: wrap;
+                justify-content: space-around; /* Centraliza melhor os 4 elementos */
+            }
+            .navigation .nav-button, .progress-check { 
+                width: 48%; /* Dá espaço para 2 botões por linha */
+                margin-bottom: 10px; 
+            }
+            .progress-check { order: -1; }
+            
+            /* Ajuste de lembrete para mobile */
+            #reminderControl {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            #reminderControl label {
+                margin-bottom: 5px;
+            }
         }
 
         /* MEDIA QUERY: Ajuste para telas muito pequenas, se necessário */
         @media (max-width: 400px) {
             #accessibilityFloater { right: 5px; padding: 5px; }
+            .navigation .nav-button, .progress-check { 
+                width: 100%; /* Em telas muito pequenas, use 100% */
+            }
         }
     </style>
 </head>
@@ -220,6 +290,13 @@
     
     <main>
         <div class="book-container">
+            
+            <div id="reminderControl">
+                <label for="reminderTime">⏰ Lembrete Diário:</label>
+                <input type="time" id="reminderTime" value="09:00">
+                <button id="saveReminder" title="Salvar Lembrete">Salvar</button>
+                <button id="clearReminder" title="Remover Lembrete">Remover</button>
+            </div>
             <div class="top-utils">
                 <div class="language-selector-wrapper">
                     <button id="langSelectButton" aria-haspopup="true" aria-expanded="false" title="Selecionar Idioma">
@@ -255,6 +332,8 @@
 
             <div class="navigation">
                 <button id="prevButton" class="nav-button" disabled>← Anterior</button>
+                
+                <button id="shareButton" class="nav-button" title="Compartilhar este Devocional">🔗 Compartilhar</button>
                 
                 <div class="progress-check">
                     <input type="checkbox" id="completedCheck">
@@ -385,7 +464,7 @@
 				subTitle: "Un parcours de grâce, d’identité et de liberté.",
                 dayTitle: "Jour",
                 progressLabelPrefix: "Progression : ",
-                checkLabel: "Marquer comme Accomplie",
+                checkLabel: "Marquer como Accomplie",
                 navPrev: "← Précédent",
                 navNext: "Suivant →",
                 footerText: "Tous droits réservés 2024",
@@ -425,6 +504,12 @@
         const audioProgressContainer = document.getElementById('audioProgressContainer');
         const audioProgressBar = document.getElementById('audioProgressBar');
 
+        // NOVOS ELEMENTOS DOM DE LEMBRETE E COMPARTILHAMENTO
+        const reminderTimeInput = document.getElementById('reminderTime');
+        const saveReminderButton = document.getElementById('saveReminder');
+        const clearReminderButton = document.getElementById('clearReminder');
+        const shareButton = document.getElementById('shareButton');
+
 
   // * FUNÇÕES DE UTILIDADE *
     
@@ -436,7 +521,7 @@
     }
 }
         
-        // --- NOVO: FUNÇÕES DE CONTROLE DE FONTE ---
+        // --- FUNÇÕES DE CONTROLE DE FONTE ---
         function updateFontSize() {
             // Define a variável CSS na raiz do documento
             document.documentElement.style.setProperty('--base-font-scale', currentFontSize.toFixed(2));
@@ -493,298 +578,33 @@
         function updateLanguageSelector() {
             if (!langSelectButton || !langDropdown) return;
             
-            const currentFlag = flagMap[currentLang];
+            const currentFlag = flagMap[currentLang]; 
             // 1. Atualiza o botão com a bandeira e nome do idioma ativo
-            langSelectButton.innerHTML = currentFlag.iconActive + currentFlag.text;
-            
+            langSelectButton.innerHTML = currentFlag.iconActive + currentFlag.text; 
+
             // 2. Limpa e reconstrói o dropdown, excluindo o idioma ativo
             langDropdown.innerHTML = '';
             Object.keys(flagMap).forEach(lang => {
                 if (lang !== currentLang) {
                     const flag = flagMap[lang];
                     const link = document.createElement('a');
-                    link.innerHTML = flag.icon + flag.text; 
+                    link.innerHTML = flag.icon + flag.text;
                     link.setAttribute('data-lang', lang);
-                    link.setAttribute('href', '#'); 
-                    
+                    link.setAttribute('href', '#');
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         setLanguage(lang);
                         langDropdown.style.display = 'none';
                         // NOVO ARIA: fecha o dropdown, atualiza o status do botão
-                        langSelectButton.setAttribute('aria-expanded', 'false'); 
+                        langSelectButton.setAttribute('aria-expanded', 'false');
                     });
-                    
                     langDropdown.appendChild(link);
                 }
             });
         }
-
-        // FUNÇÃO TTS: Funções de controle da barra de progresso do áudio
-        function resetAudioProgressBar(hide = false) {
-            if (audioProgressBar) audioProgressBar.style.width = '0%';
-            if (audioProgressContainer) {
-                // Apenas esconde se for pedido, para não piscar no início
-                audioProgressContainer.style.display = hide ? 'none' : 'block';
-            }
-        }
         
-        // --- FUNÇÃO DE ATUALIZAÇÃO DE TEXTOS ---
-        function updateTexts(direction = 1) { 
-            const t = translations[currentLang] || translations['pt-BR']; 
-
-            document.documentElement.lang = currentLang.split('-')[0];
-
-            mainTitle.innerText = t.mainTitle;
-            subTitle.innerText = t.subTitle;
-            progressLabel.innerText = `${t.progressLabelPrefix}${t.dayTitle} ${currentDay} de ${totalDays}`;
-            checkLabel.innerText = t.checkLabel;
-            prevButton.innerText = t.navPrev;
-            nextButton.innerText = t.navNext;
-            footerText.innerText = t.footerText;
-            
-            // NOTE: themeToggle is now globally hidden, but the script updates are kept in case they are re-enabled
-            if (currentTheme === 'light') {
-                themeToggle.innerHTML = t.themeLight; 
-            } else {
-                themeToggle.innerHTML = t.themeDark; 
-            }
-
-            const contentLangKey = currentLang.substring(0, 2); 
-            loadDevotionalContent(currentDay, contentLangKey, t);
-
-            updateOverallProgress();
-
-            if (window.speechSynthesis && window.speechSynthesis.speaking) {
-                stopSpeaking(); 
-            }
-        }
-        
-        // --- FUNÇÃO DE CARREGAMENTO DE CONTEÚDO ---
-        function loadDevotionalContent(day, contentLangKey, t) { 
-            const data = devotionalContent[day] ? devotionalContent[day][contentLangKey] || devotionalContent[day]['pt'] : null;
-            
-            if (!data) {
-                devotionalContentDiv.innerHTML = `<p style="text-align: center;">${t.noContentAlert || 'Conteúdo não disponível para o Dia ${day} neste idioma.'}</p>`;
-                return;
-            }
-            
-            devotionalContentDiv.innerHTML = `
-                <h2 id="dayTitle">${t.dayTitle} ${day}: ${data.h2}</h2>
-                <div class="section">
-                    <strong>${t.versiculoChave}</strong>
-                    <p class="versiculos">${data.versiculos}</p>
-                </div>
-                <div class="section">
-                    <strong>${t.resumoMeditacao}</strong>
-                    <p>${data.resumo}</p>
-                </div>
-                <div class="section">
-                    <strong>${t.aplicacaoPratica}</strong>
-                    <p>${data.aplicacao}</p>
-                </div>
-                <p class="oracao-final">${t.oracaoLabel} ${data.oracao}</p>
-            `;
-            
-            document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`; 
-
-            updateListenToggle('start'); 
-        }
-        
-        // --- FUNÇÕES DE NAVEGAÇÃO ---
-        function nextDay() {
-            stopSpeaking(); 
-            if (currentDay < totalDays) {
-                currentDay++;
-                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
-                updateTexts(1);
-            }
-        }
-        
-        function prevDay() {
-            stopSpeaking();
-            if (currentDay > 1) {
-                currentDay--;
-                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
-                updateTexts(-1);
-            }
-        }
-
-        // --- FUNÇÕES DE LEITURA (TEXT-TO-SPEECH) ---
-        
-        function getVoiceForLanguage(langCode) {
-            const desiredLang = langCode.toLowerCase();
-            
-            if (ttsVoices.length === 0) {
-                console.warn('TTS: Vozes não carregadas.');
-                return null;
-            }
-            
-            let voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang && v.localService);
-            if (!voice) {
-                voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang);
-            }
-            if (!voice) {
-                const langPrefix = desiredLang.substring(0, 2);
-                voice = ttsVoices.find(v => v.lang.toLowerCase().startsWith(langPrefix));
-            }
-
-            return voice || ttsVoices[0];
-        }
-
-        function speakContent() {
-            const t = translations[currentLang] || translations['pt-BR']; 
-            const contentElement = document.getElementById('devotionalContent');
-            
-            if (!synth || synth.speaking) {
-                return;
-            }
-
-            const textToSpeak = contentElement.innerText || contentElement.textContent;
-
-            if (!textToSpeak) {
-                alert(t.noContentAlert || "Conteúdo para leitura não encontrado.");
-                return;
-            }
-
-            totalChars = textToSpeak.length;
-            resetAudioProgressBar();
-
-            utterance = new SpeechSynthesisUtterance(textToSpeak);
-            utterance.lang = currentLang;
-
-            const voice = getVoiceForLanguage(currentLang);
-            if (voice) {
-                utterance.voice = voice;
-            } else {
-                alert(t.ttsUnsupported + " " + t.noContentAlert);
-                stopSpeaking();
-                return;
-            }
-            
-            utterance.onboundary = (event) => {
-                const progress = (event.charIndex / totalChars) * 100;
-                if (audioProgressBar) audioProgressBar.style.width = `${progress}%`;
-            };
-            
-            utterance.onend = () => {
-                resetAudioProgressBar(true);
-                updateListenToggle('start'); 
-            };
-            
-            synth.speak(utterance);
-            updateListenToggle('speaking'); 
-        }
-
-        function stopSpeaking() {
-            if (synth && synth.speaking) {
-                synth.cancel();
-            }
-            if (synth) {
-                synth.cancel();
-            }
-            resetAudioProgressBar(true); 
-            updateListenToggle('start'); 
-        }
-        
-        function handleListenClick() {
-            if (!synth || listenToggle.disabled) return;
-
-            if (synth.speaking && !synth.paused) {
-                // Pausar
-                synth.pause();
-                updateListenToggle('paused');
-            } 
-            else if (synth.paused) {
-                // Continuar
-                synth.resume();
-                updateListenToggle('speaking');
-            } 
-            else if (!synth.speaking) {
-                // Iniciar a leitura
-                speakContent();
-            }
-        }
-        
-        function initTTS() {
-            if (ttsInitialized) return; 
-            const t = translations[currentLang] || translations['pt-BR']; 
-
-            if (!synth) {
-                listenToggle.innerHTML = t.ttsUnsupported;
-                listenToggle.disabled = true;
-                return;
-            }
-
-            synth.onvoiceschanged = () => {
-                ttsVoices = synth.getVoices();
-                if (ttsVoices.length > 0) {
-                    listenToggle.disabled = false;
-                    updateListenToggle('start'); 
-                    ttsInitialized = true;
-                } else {
-                    listenToggle.innerHTML = t.ttsUnsupported;
-                    listenToggle.disabled = true;
-                }
-            };
-            
-            ttsVoices = synth.getVoices();
-            
-            if (ttsVoices.length > 0) {
-                listenToggle.disabled = false;
-                updateListenToggle('start');
-                ttsInitialized = true;
-                synth.onvoiceschanged = null; 
-            } else {
-                listenToggle.innerHTML = t.ttsLoading;
-                listenToggle.disabled = true;
-            }
-        }
-
-
-        function updateListenToggle(state = 'start') {
-            const t = translations[currentLang] || translations['pt-BR']; 
-            const button = listenToggle;
-            if (!button) return;
-
-            button.style.cssText = ''; 
-            
-            if (state === 'speaking') {
-                button.innerHTML = t.listenPause || '⏸️ Pausar Áudio';
-                button.title = 'Pausar a leitura';
-                button.style.backgroundColor = '#ffc107'; 
-                button.style.color = '#333';
-                
-            } else if (state === 'paused') {
-                button.innerHTML = t.listenResume || '▶️ Continuar';
-                button.title = 'Continuar a leitura';
-                button.style.backgroundColor = '#28a745'; 
-                button.style.color = 'white';
-                
-            } else { // state === 'start' (Ocioso/Parado)
-                button.innerHTML = t.listenStart || '🔊 Ouça Aqui';
-                button.title = 'Iniciar a leitura do devocional';
-            }
-        }
-
-
-         // --- CONTEÚDO DEVOCIONAL (COMPLETO) ---
-        
-        const devotionalContent = {
-            1: {pt: {h2: "O Único Evangelho Verdadeiro (Sola Gratia)", versiculos: "Gálatas 1:8-9 (NVI): Mas, ainda que nós ou um anjo do céu pregue um evangelho diferente daquele que lhes pregamos, que seja anátema.", resumo: "Gálatas começa com a defesa de que existe apenas um Evangelho, que é a justificação pela fé em Cristo, separada das obras da Lei (legalismo). Qualquer adição (como circuncisão ou observância ritual) que busque o mérito humano anula a graça de Cristo. Esta é a doutrina da Graça Exclusiva (Sola Gratia): ou é totalmente a Graça, ou não é Graça de forma alguma.", aplicacao: "Em quais áreas você tem adicionado 'esforço humano' ou rituais à obra completa de Cristo, buscando validação ou 'níveis' mais altos de aceitação por Deus? Descanse na suficiência de Cristo (Solus Christus).", oracao: "Ore a Deus agradecendo pela pureza do Evangelho. Peça ao Senhor que o livre de qualquer forma de legalismo ou autojustificação, renovando sua fé na obra completa de Jesus."} , en: {h2: "The Only True Gospel (Sola Gratia)", versiculos: "Galatians 1:8-9 (NIV): But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God's curse!", resumo: "Galatians begins with the defense that there is only one Gospel, which is justification by faith in Christ, separate from the works of the Law (legalism). Any addition (like circumcision or ritual observance) that seeks human merit nullifies the grace of Christ. This is the doctrine of Exclusive Grace (Sola Gratia): it is either entirely Grace, or it is no Grace at all.", aplicacao: "In what areas have you added 'human effort' or rituals to the complete work of Christ, seeking validation or 'higher levels' of acceptance by God? Rest in the sufficiency of Christ (Solus Christus).", oracao: "Pray to God, thanking Him for the purity of the Gospel. Ask the Lord to free you from any form of legalism or self-righteousness, renewing your faith in the completed work of Jesus."}, es: {h2: "The Only True Gospel (Sola Gratia)", versiculos: "Galatians 1:8-9 (NVI): Pero aun si nosotros o un ángel del cielo les predicara un evangelio diferente del que les hemos predicado, ¡que caiga sobre él la maldición!", resumo: "Gálatas comienza con la defensa de que existe solo un Evangelio, que es la justificación por la fe en Cristo, separada de las obras de la Ley (legalismo). Cualquier adición (como la circuncisión o la observancia ritual) que busque el mérito humano anula la gracia de Cristo. Esta es la doctrina de la Gracia Exclusiva (Sola Gratia): o es totalmente la Gracia, o no es Gracia en absoluto.", aplicacao: "¿En qué áreas has añadido 'esfuerzo humano' o rituales a la obra completa de Cristo, buscando validación o 'niveles' más altos de aceptación ante Dios? Descansa en la suficiencia de Cristo (Solus Christus).", oracao: "Ora a Dios agradeciendo por la pureza del Evangelio. Pide al Señor que te libere de cualquier forma de legalismo o autojustificación, renovando tu fe en la obra completa de Jesús."}, fr: {h2: "Le Seul Véritable Évangile (Sola Gratia)", versiculos: "Galates 1:8-9 (Louis Segond): Mais, quand nous-mêmes, quand un ange du ciel annoncerait un Évangile différent de celui que nous vous avons annoncé, qu'il soit anathème!", resumo: "Galates commence par la défense qu'il n'existe qu'un seul Évangile, qui est la justification par la foi en Christ, séparée des œuvres de la Loi (légalisme). Toute addition (comme la circision ou l'observance rituelle) qui cherche le mérite humain annule la grâce du Christ. C'est la doctrine de la Grâce Exclusive (Sola Gratia): soit c'est entièrement la Grâce, soit ce n'est pas la Grâce du tout.", aplicacao: "Dans quels domaines avez-vous ajouté des 'efforts humains' ou des rituels à l'œuvre complète du Christ, cherchant validation ou des 'níveis' supérieurs d'acceptation par Dieu? Reposez-vous dans la suficiência do Christ (Solus Christus).", oracao: "Priez Dieu le remerciant pour la pureté de l'Évangile. Demandez au Seigneur de vous libérer de toute forme de légalisme ou d'auto-justification, renouvelant votre foi dans l'œuvre achevée de Jésus."}},
-            2: {pt: {h2: "Crucificado e Vivendo Pela Fé", versiculos: "Gálatas 2:20 (NVI): Fui crucificado com Cristo. Assim, já não sou eu quem vive, mas Cristo vive em mim. A vida que agora vivo no corpo, vivo-a pela fé no Filho de Deus, que me amou e se entregou por mim.", resumo: "Esta é a essência da Identidade em Cristo. Pela fé (Sola Fide), fomos unidos a Ele em Sua morte e ressurreição (União com Cristo). Isso significa que nossa velha identidade (escrava do pecado e da Lei) morreu, e a nova vida que possuímos é a própria vida de Cristo manifestada em nós. Nossa vida não é mais sobre nossos esforços, mas sobre a fé contínua Nele.", aplicacao: "O que sua vida revela hoje: o 'velho eu' tentando se justificar ou a 'nova vida' confiando na suficiência de Cristo? Proclame essa verdade sobre si mesmo: 'Já não sou eu quem vive.'", oracao: "Ore a Deus pedindo que a verdade da sua crucificação e ressurreição com Cristo se torne a base de todas as suas decisões e a fonte do seu poder para a santificação."}, en: {h2: "Crucified and Living By Faith", versiculos: "Galatians 2:20 (NIV): I have been crucified with Christ and I no longer live, but Christ lives in me. The life I now live in the body, I live by faith in the Son of God, who loved me and gave himself for me.", resumo: "This is the essence of Identity in Christ. By faith (Sola Fide), we have been united with Him in His death and resurrection (Union with Christ). This means that our old identity (slave to sin and the Law) has died, and the new life we possess is Christ's very life manifested in us. Our life is no longer about our efforts but about continuous faith in Him.", aplicacao: "In what areas have you added 'human effort' or rituals to the complete work of Christ, seeking validation or 'higher levels' of acceptance by God? Rest in the sufficiency of Christ (Solus Christus).", oracao: "Pray to God asking that the truth of your crucifixion and resurrection with Christ becomes the basis of all your decisions and the source of your power for sanctification."}, es: {h2: "Crucified and Living By Faith", versiculos: "Galatians 2:20 (NVI): Con Cristo he sido crucificado, y ya no soy yo quien vive, sino que es Cristo quien vive en mí. Y la vida que ahora vivo en el cuerpo, la vivo por la fe en el Hijo de Dios, quien me amó y dio su vida por mí.", resumo: "Esta es la esencia de la Identidade en Cristo. Por la fe (Sola Fide), hemos sido unidos a Él en Su muerte y resurrección (Unión con Cristo). Esto significa que nuestra antigua identidad (esclava del pecado y de la Ley) murió, y la nueva vida que poseemos es la propia vida de Cristo manifestada en nosotros. Nuestra vida ya no se trata de nuestros esfuerzos, sino de la fe continua en Él.", aplicacao: "¿Qué revela tu vida hoy: el 'viejo yo' tratando de justificarse o la 'nueva vida' confiando en la suficiencia de Cristo? Proclama esta verdad sobre ti mismo: 'Ya no soy yo quien vive'.", oracao: "Ora a Dios pidiendo que la verdad de tu crucifixión y resurrección con Cristo se convierta en el fundamento de todas tus decisiones y la fuente de tu poder para la santificación."}, fr: {h2: "Crucifié et Vivant Par la Foi", versiculos: "Galates 2:20 (Louis Segond): J'ai été crucifié avec Christ; et si je vis, ce n'est plus moi qui vis, c'est Christ qui vit en moi; si je vis maintenant dans la chair, je vis dans la foi au Fils de Dieu, qui m'a aimé et qui s'est livré lui-même pour moi.", resumo: "C'est l'essence de l'Identité en Christ. Par la foi (Sola Fide), nous avons été unis à Lui dans Sa mort et Sa résurrection (Union avec Christ). Cela signifie que notre ancienne identité (esclave du péché et de la Loi) est morte, et la nouvelle vie que nous possédons est la vie même du Christ manifestée en nous. Notre vie ne dépend plus de nos efforts, mais de la foi continue en Lui.", aplicacao: "Que révèle votre vie aujourd'hui: le 'vieil homme' qui essaie de se justifier ou la 'nouvelle vie' qui fait confiance à la suffisance du Christ? Proclamez cette vérité sur vous-même: 'Ce n'est plus moi qui vis'.", oracao: "Priez Dieu demandant que la vérité de votre crucifixion et résurrection avec Christ devienne le fondement de toutes vos décisions et la source de votre puissance pour la sanctification."}},
-            3: {pt: {h2: "A Loucura de Tentar o Mérito Humano", versiculos: "Gálatas 3:3 (NVI): Vocês são tão insensatos assim? Tendo começado pelo Espírito, querem agora aperfeiçoar-se pelo esforço próprio?", resumo: "Paulo confronta a incoerência do legalismo. Se a Justificação (o começo) foi inteiramente pela graça por meio da fé, a Santificação (o desenvolvimento) não pode depender do esforço humano (obras). A tentativa de 'aperfeiçoar-se pela carne' é um insulto à suficiência do Espírito Santo. Suficiência do Espírito.", aplicacao: "Quando você peca, sua primeira reação é afastar-se de Deus e tentar 'consertar-se' antes de voltar? Isso é tentar aperfeiçoar-se pela carne. Em vez disso, corra imediatamente para Cristo, que é tanto nosso Justificador quanto nosso Santificador.", oracao: "Ore a Deus pedindo que o Senhor o liberte do círculo vicioso de tentar ganhar o favor divino através de boas obras. Peça ao Espírito Santo que o guie em cada passo da sua santificação."}, en: {h2: "The Folly of Attempting Human Merit", versiculos: "Galatians 3:3 (NIV): Are you so foolish? After beginning by the Spirit, are you now trying to finish by human effort?", resumo: "Paul confronts the inconsistency of legalism. If Justification (the beginning) was entirely by grace through faith, Santification (the development) cannot depend on human effort (works). The attempt to 'finish by the flesh' is an insult to the sufficiency of the Holy Spirit. Sufficiency of the Spirit.", aplicacao: "When you sin, is your first response to withdraw from God and try to 'fix yourself' before returning? That is trying to finish by the flesh. Instead, run immediately to Christ, who is both our Justifier and our Santifier.", oracao: "Pray to God asking the Lord to free you from the vicious cycle of trying to earn divine favor through good works. Ask the Holy Spirit to guide you in every step of your sanctification."}, es: {h2: "The Folly of Attempting Human Merit", versiculos: "Galatians 3:3 (NVI): ¡Tan necios son? Después de haber comenzado con el Espíritu, ¿pretenden perfeccionarse con sus propios esfuerzos?", resumo: "Pablo confronta la incoherencia del legalismo. Si la Justificación (el comienzo) fue enteramente por gracia por medio de la fe, la Santificación (el desarrollo) no puede depender del esfuerzo humano (obras). El intento de 'perfeccionarse con la carne' es un insulto a la suficiencia del Espíritu Santo. Suficiencia del Espíritu.", aplicacao: "Cuando pecas, ¿lo primero que haces es alejarte de Dios e intentar 'arreglarte' antes de volver? Eso es intentar perfeccionarse con la carne. En su lugar, corre inmediatamente a Cristo, que es tanto nuestro Justificador como nuestro Santificador.", oracao: "Ora a Dios pidiendo que el Señor te libere del círculo vicioso de intentar ganar el favor divino mediante buenas obras. Pide al Espíritu Santo que te guíe en cada paso de tu santificación."}, fr: {h2: "La Folie d'Essayer le Mérite Humain", versiculos: "Galates 3:3 (Louis Segond): Après avoir commencé par l'Esprit, voulez-vous maintenant finir par la chair?", resumo: "Paul confronte l'incohérence du légalisme. Si la Justification (le commencement) a été entièrement par la grâce au moyen de la foi, la Sanctification (le développement) ne peut pas dépendre de l'effort humain (œuvres). La tentative de 'finir par la chair' est une insulte à la suffisance du Saint-Esprit. Suffisance de l'Esprit.", aplicacao: "Dans quels domaines avez-vous ajouté des 'efforts humains' ou des rituels à l'œuvre complète du Christ, cherchant validation ou des 'níveis' supérieurs d'acceptation par Dieu? Reposez-vous dans la suficiência do Christ (Solus Christus).", oracao: "Priez Dieu demandant que le Seigneur vous libère du cercle vicieux d'essayer de gagner la faveur divine par de bonnes œuvres. Demandez ao Saint-Esprit de vous guider à chaque étape de votre sanctification."}},
-            4: {pt: {h2: "De Escravo a Filho Adotado", versiculos: "Gálatas 4:4-7 (NVI): (...) para que recebêssemos a adoção de filhos. E, porque vocês são filhos, Deus enviou o Espírito de seu Filho ao coração de vocês, e ele clama: “Aba, Pai.” Assim, você já não é mais escravo, mas filho; e, por ser filho, Deus também o tornou herdeiro.", resumo: "A obra de Cristo na 'plenitude do tempo' tinha um propósito: nos redimir da escravidão da Lei e nos conceder a Adoção. O Espírito Santo (o 'penhor' da nossa herança) testifica em nossos corações que somos herdeiros de Deus. Sua Identidade mudou de servo ou escravo para Filho Pleno.", aplicacao: "Você vive sua vida diária como um escravo que teme punição ou como um filho amado que busca agradar o Pai por amor? Sua herança está garantida; ela não precisa ser conquistada. Viva com a confiança e alegria de um herdeiro.", oracao: "Ore a Deus, com a ousadia que o Espírito lhe dá, clamando 'Aba, Pai.' Agradeça a Ele pelo dom da adoção e peça que a certeza de ser filho Dele remova todo medo da sua vida."}, en: {h2: "From Slave to Adopted Son", versiculos: "Galatians 4:4-7 (NIV): (...) that we might receive adoption as sons. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who cries out, “Abba, Father.” So you are no longer a slave, but God’s child; and since you are his child, God has made you also an heir.", resumo: "Christ's work in the 'fullness of time' had one purpose: to redeem us from the slavery of the Law and grant us Adoption. The Holy Spirit (the 'down payment' of our inheritance) testifies in our hearts that we are God's heirs. Your Identity has changed from servant or slave to Full Son.", aplicacao: "Do you live your daily life as a slave who fears punishment or as a beloved child who seeks to please the Father out of love? Your inheritance is guaranteed; it does not need to be earned. Live with the confidence and joy of an heir.", oracao: "Pray to God, thanking Him for the gift of adoption and ask that the certainty of being His child removes all fear from your life."}, es: {h2: "From Slave to Adopted Son", versiculos: "Galatians 4:4-7 (NVI): (...) para que recibiéramos la adopción de hijos. Y, puesto que ya son hijos, Dios ha enviado a nuestros corazones el Espíritu de su Hijo, que clama: «¡Abba! ¡Padre!» Así que ya no eres esclavo, sino hijo; y como eres hijo, Dios te ha hecho también heredero.", resumo: "La obra de Cristo en la 'plenitud del tiempo' tenía un propósito: redimirnos de la esclavitud de la Ley y concedernos la Adopción. El Espíritu Santo (la 'prenda' de nuestra herencia) testifica en nuestros corazones que somos herederos de Dios. Tu Identidad ha cambiado de sirviente o esclavo a Hijo Pleno.", aplicacao: "¿Vives tu vida diaria como un esclavo que teme el castigo o como un hijo amado que busca agradar al Padre por amor? Tu herencia está garantizada; no necesita ser ganada. Vive con la confianza y alegría de un heredero.", oracao: "Ora a Dios, con la audacia que el Espíritu te da, clamando '¡Abba! ¡Padre!'. Agradécele por el don de la adopción y pide que la certeza de ser Su hijo elimine todo temor de tu vida."}, fr: {h2: "D'Esclave à Fils Adopté", versiculos: "Galates 4:4-7 (Louis Segond): (...) afin que nous reçussions l'adoption. Et parce que vous êtes fils, Dieu a envoyé dans nos coeurs l'Esprit de son Fils, lequel crie: Abba! Père! Ainsi tu n'es plus esclave, mais fils; et si tu es fils, tu es aussi héritier par la grâce de Dieu.", resumo: "L'œuvre du Christ dans la 'plénitude des temps' avait un but: nous racheter de l'esclavage de la Loi et nous accorder l'Adoption. Le Saint-Esprit (le 'gage' de notre héritage) témoigne dans nos cœurs que nous sommes héritiers de Dieu. Votre Identité a changé de serviteur ou d'esclave à Fils Plénier.", aplicacao: "Vivez-vous votre vie quotidienne comme un esclave qui craint la punition ou comme un enfant bien-aimé qui cherche à plaire au Père par amour? Votre héritage est garanti; il n'a pas besoin d'être gagné. Vivez avec la confiance et la joie d'un héritier.", oracao: "Priez Dieu demandant que la vérité de votre crucifixion et résurrection avec Christ devienne le fondement de toutes vos décisions et la source de votre puissance pour la sanctification."}},
-            5: {pt: {h2: "Permanecendo Firmes na Liberdade", versiculos: "Gálatas 5:1 (NVI): Foi para a liberdade que Cristo nos libertou. Portanto, permaneçam firmes e não se deixem submeter novamente a um jugo de escravidão.", resumo: "A Liberdade em Cristo é a libertação do jugo da Lei como meio de justificação e do poder do pecado. Essa liberdade é um presente a ser ativamente guardado. O legalismo (voltar para debaixo da Lei) é uma forma de escravidão que rouba a paz e a alegria da Sola Fide. Manter essa liberdade é a essência da perseverança cristã.", aplicacao: "Quais são os 'jugos de escravidão' (regras humanas, expectativas irrealistas, medo de falhar) que a cultura religiosa tenta lhe impor? Rejeite-os. Use sua liberdade para servir uns aos outros em amor, e não para satisfazer a carne.", oracao: "Ore a Deus agradecendo pela liberdade que Cristo conquistou. Peça sabedoria para usar essa liberdade para a glória Dele e força para resistir a qualquer jugo de escravidão legalista."}, en: {h2: "Standing Firm in Freedom", versiculos: "Galatians 5:1 (NIV): It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery.", resumo: "The Freedom in Christ is liberation from the yoke of the Law as a means of justification and from the power of sin. This freedom is a gift to be actively guarded. Legalism (going back under the Law) is a form of slavery that steals the peace and joy of Sola Fide. Maintaining this freedom is the essence of Christian perseverance.", aplicacao: "What 'yokes of slavery' (human rules, unrealistic expectations, fear of failure) does religious culture try to impose on you? Reject them. Use your freedom to serve one another in love, not to satisfy the flesh.", oracao: "Pray to God, thanking Him for the freedom Christ won. Ask for wisdom to use that freedom for His glory and strength to resist any yoke of legalistic slavery."}, es: {h2: "Standing Firm in Freedom", versiculos: "Galatians 5:1 (NVI): Cristo nos libertó para que vivamos en libertad. Por lo tanto, manténganse firmes y no se sometan nuevamente al yugo de la esclavitud.", resumo: "La Libertad en Cristo es la liberación del yugo de la Ley como medio de justificación y del poder del pecado. Esta libertad es un regalo que debe ser guardado activamente. El legalismo (volver bajo la Ley) es una forma de esclavitud que roba la paz y la alegría de la Sola Fide. Mantener esta libertad es la esencia de la perseverancia cristiana.", aplicacao: "¿Cuáles son los 'yugos de esclavitud' (reglas humanas, expectativas irrealistas, miedo al fracaso) que la cultura religiosa intenta imponerte? Recházalos. Usa tu libertad para servirte los unos a los otros en amor, y no para satisfacer la carne.", oracao: "Ora a Dios agradeciendo por la libertad que Cristo conquistó. Pide sabiduría para usar esa libertad para Su gloria y fuerza para resistir cualquier yugo de esclavitud legalista."}, fr: {h2: "Demeurer Ferme dans la Liberté", versiculos: "Galates 5:1 (Louis Segond): C'est pour la liberté que Christ nous a affranchis. Demeurez donc fermes, et ne vous laissez pas mettre de nouveau sous le joug de la servitude.", resumo: "La Liberté en Christ est la libération du joug de la Loi como meio de justificação et do poder do pecado. Cette liberté est un don à garder activement. Le légalisme (se remettre sous la Loi) est un forme d'esclavage qui vole la paix et la joie de la Sola Fide. Maintenir cette liberté est l'essence de la persévérance chrétienne.", aplicacao: "Quels sont les 'jougs de la servitude' (règles humaines, attentes irréalistes, peur de l'échec) que la culture religieuse tente de vous imposer? Rejetez-les. Utilisez votre liberté pour vous servir les uns les autres dans l'amour, et non pour satisfaire la chair.", oracao: "Priez Dieu demandant que le Seigneur vous libère du cercle vicieux d'essayer de gagner la faveur divine par de bonnes obras. Demandez ao Saint-Esprit de vous guider à cada etapa de sua santificação."}},
-            6: {pt: {h2: "A Luta Entre a Carne e o Espírito", versiculos: "Gálatas 5:16-17 (NVI): Por isso digo: vivam pelo Espírito, e de modo nenhum satisfarão os desejos da carne. Pois a carne deseja o que é contrário ao Espírito, e o Espírito, o que é contrário à carne.", resumo: "A vida cristã é uma Guerra Espiritual diária. O crente (agora justificado) tem duas naturezas em conflito: a carne (o remanescente pecaminoso) e o Espírito (a nova natureza dada na Regeneração). O segredo da Santificação progressiva não é a força de vontade, mas Andar pelo Espírito, submetendo-se ativamente ao Seu controle.", aplicacao: "O que significa 'viver pelo Espírito' na sua rotina hoje? É cultivar as disciplinas espirituais (leitura da Bíblia, oração, comunhão) não por obrigação, mas para obter a 'potência' de que você precisa para resistir aos desejos da carne. Que obras da carne você precisa identificar e confrontar?", oracao: "Ore a Deus confessando sua dependência. Peça ao Espírito Santo que discipline seu coração e lhe dê o poder diário para negar a si mesmo e viver uma vida de obediência radical."}, en: {h2: "The Conflict Between the Flesh and the Spirit", versiculos: "Galatians 5:16-17 (NIV): So I say, walk by the Spirit, and you will not gratify the desires of the flesh. For the flesh desires what is contrary to the Spirit, and the Spirit what is contrary to the flesh.", resumo: "The Christian life is a daily Spiritual War. The believer (now justified) has two conflicting natures: the flesh (the sinful remnant) and the Spirit (the new nature given in Regeneration). The secret to progressive Sanctification is not willpower but to Walk by the Spirit, actively submitting to His control.", aplicacao: "What does your life reveal today: the 'old self' trying to justify itself or the 'new life' trusting in Christ's sufficiency? Proclaim this truth over yourself: 'I no longer live.'", oracao: "Pray to God asking that the truth of your crucifixion and resurrection with Christ becomes the basis of all your decisions and the source of your power for sanctification."}, es: {h2: "The Conflict Between the Flesh and the Spirit", versiculos: "Galatians 5:16-17 (NVI): Así que les digo: Vivan por el Espíritu, y así no satisfarán los deseos de la naturaleza pecaminosa. Porque esta desea lo que es contrario al Espíritu, y el Espíritu lo que es contrario a ella.", resumo: "La vida cristiana es una Guerra Espiritual diaria. El creyente (ahora justificado) tiene dos naturalezas en conflicto: la carne (el remanente pecaminoso) y el Espíritu (la nueva naturaleza dada en la Regeneración). El secreto de la Santificación progresiva no es la fuerza de voluntad, sino Andar por el Espíritu, sometiéndose activamente a Su control.", aplicacao: "¿Qué significa 'vivir por el Espíritu' en tu rutina hoy? Es cultivar las disciplinas espirituales (lectura de la Biblia, oración, comunión) no por obligación, sino para obtener el 'poder' que necesitas para resistir los deseos de la carne. ¿Qué obras de la carne necesitas identificar y confrontar?", oracao: "Ora a Dios confesando tu dependencia. Pide al Espíritu Santo que discipline tu corazón y te dé el poder diario para negarte a ti mismo y vivir una vida de obediencia radical."}, fr: {h2: "Le Conflit Entre la Chair et l'Esprit", versiculos: "Galates 5:16-17 (Louis Segond): Je dis donc: Marchez selon l'Esprit, et vous n'accomplirez point les désirs de la chair. Car la chair a des désirs contraires à ceux de l'Esprit, et l'Esprit en a de contraires à ceux de la chair.", resumo: "La vie chrétienne est une Guerre Spirituelle quotidienne. Le crente (agora justifié) tem duas naturezas em conflito: a carne (o remanescente pecaminoso) e o Espírito (a nova natureza dada na Regeneração). O segredo da Santificação progressiva não é a força de vontade, mas Marcher selon l'Esprit, en se soumettant activement à Son contrôle.", aplicacao: "Que signifie 'marcher selon l'Esprit' dans votre routine aujourd'hui? C'est cultiver les disciplines spirituelles (lecture de la Bible, prière, communion) non par obligation, mais pour obtenir la 'puissance' dont vous avez besoin pour résister aux désirs de la chair. Quelles œuvres de la chair devez-vous identifier et confronter?", oracao: "Priez Dieu demandant que le Seigneur vous libère du cercle vicieux d'essayer de gagner la faveur divine par de bonnes obras. Demandez ao Saint-Esprit de vous guider à cada etapa de sua santificação."}},
-            7: {pt: {h2: "O Fruto da Vida Dirigida pelo Espírito", versiculos: "Gálatas 5:22-25 (NVI): Mas o fruto do Espírito é amor, alegria, paz, paciência, amabilidade, bondade, fidelidade, mansidão e domínio próprio. (...) Uma vez que vivemos pelo Espírito, sigamos também o Espírito.", resumo: "O Fruto (singular) é a manifestação visível da nova vida em Cristo. É um resultado orgânico de Andar pelo Espírito, e não uma lista de obras que tentamos produzir por nós mesmos. Essa lista de virtudes é a própria natureza de Cristo. O cristão justificado deve seguir também o Espírito (*stoichēo* em grego), permitindo que Ele produza o Seu caráter em nós. Evidência da Regeneração.", aplicacao: "Olhe para a lista dos Frutos: qual deles está mais evidente em sua vida e qual precisa ser buscado com mais dependência do Espírito? Lembre-se, o objetivo não é tentar amar, mas andar no Espírito, permitindo que Ele produza o Amor em você.", oracao: "Ore a Deus pedindo que o Espírito Santo o encha de tal maneira que o Seu fruto seja evidente. Peça a Ele que o ajude a 'seguir o passo' em obediência, para a glória de Deus."}, en: {h2: "The Fruit of the Spirit-Led Life", versiculos: "Galatians 5:22-25 (NIV): But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. (...) Since we live by the Spirit, let us keep in step with the Spirit.", resumo: "The Fruit (singular) is the visible manifestation of the new life in Christ. It is an organic result of Walking by the Spirit, not a list of works we try to produce by ourselves. This list of virtues is the very nature of Christ. The justified Christian must keep in step with the Spirit, allowing Him to produce His character in us. Evidence of Regeneration.", aplicacao: "Look at the list of Fruits: which one is most evident in your life, and which one needs to be sought with more dependence on the Spirit? Remember, the goal is not to try to love, but to walk in the Spirit, allowing Him to produce Love in you.", oracao: "Pray to God, asking the Holy Spirit to fill you in such a way that His fruit is evident. Ask Him to help you 'keep in step' in obedience, for the glory of God."}, es: {h2: "The Fruit of the Spirit-Led Life", versiculos: "Galatians 5:22-25 (NVI): En cambio, el fruto del Espíritu es amor, alegría, paz, paciencia, amabilidad, bondad, fidelidad, mansedumbre y dominio propio. (...) Ya que vivimos por el Espíritu, dejémonos guiar por el Espíritu.", resumo: "El Fruto (singular) es la manifestación visible de la nueva vida en Cristo. Es un resultado orgánico de Andar en el Espíritu, no una lista de obras que intentamos producir por nosotros mismos. Esta lista de virtudes es la naturaleza misma de Cristo. El cristiano justificado debe dejarse guiar por el Espíritu, permitiendo que Él produzca Su carácter en nosotros. Evidencia de la Regeneración.", aplicacao: "Mira la lista de los Frutos: ¿cuál es el más evidente en tu vida y cuál necesita ser buscado con más dependencia del Espíritu? Recuerda, el objetivo no es intentar amar, sino andar en el Espíritu, permitiendo que Él produzca el Amor en ti.", oracao: "Ora a Dios pidiendo que el Espíritu Santo te llene de tal manera que Su fruto sea evidente. Pídele que te ayude a 'mantener el paso' en obediencia, para la gloria de Dios."}, fr: {h2: "Le Fruit de la Vie Dirigée par l'Esprit", versiculos: "Galates 5:22-25 (Louis Segond): Mais le fruit de l'Esprit est l'amour, la joie, la paix, la patience, la bonté, la bénignité, la fidélité, la douceur, la tempérance. (...) Si nous vivons par l'Esprit, marchons aussi selon l'Esprit.", resumo: "Le Fruit (singulier) est la manifestation visible de la nouvelle vie en Christ. Il est um resultado orgânico de Marcher selon l'Esprit, non une lista de obras que nós tentamos produzir por nós mesmos. Esse lista de virtudes é a natureza mesma do Cristo. O cristão justificado deve marcher aussi selon l'Esprit, Lui permettant de produire Son caractère en nous. Preuve de la Régénération.", aplicacao: "Regardez la liste des Fruits: lequel est le plus évident dans votre vie et lequel doit être recherché avec plus de dépendance à l'Esprit? Rappelez-vous, le but n'est pas d'essayer d'aimer, mas de marcher dans l'Esprit, Lui permettant de produire l'Amour em vous.", oracao: "Priez Dieu demandant que le Seigneur vous libère do cercle vicieux d'essayer de gagner la faveur divine por de boas obras. Demandez ao Saint-Esprit de vous guider à cada etapa de sua santificação."}}
-        };
-
-        // FIM DO CONTEÚDO DEVOCIONAL
-
-        // * FUNÇÕES DE PERSISTÊNCIA E ESTADO (MANTIDAS) *
-        
+        // --- FUNÇÕES DE PERSISTÊNCIA E ESTADO (MANTIDAS) ---
         function getSavedProgress() {
             const savedDay = localStorage.getItem(`devotionalProgress_${DEVOTIONAL_KEY}`);
             return savedDay ? parseInt(savedDay, 10) : 1;
@@ -810,76 +630,451 @@
 
         function updateOverallProgress() {
             const completedDaysMap = getCompletedDays();
-            const completedCount = Object.values(completedDaysMap).filter(v => v).length;
-            const percent = (completedCount / totalDays) * 100;
-            progressBar.style.width = `${percent}%`;
+            let completedCount = 0;
+            for (let i = 1; i <= totalDays; i++) {
+                if (completedDaysMap[i]) {
+                    completedCount++;
+                }
+            }
+
+            const percentage = (completedCount / totalDays) * 100;
+            progressBar.style.width = `${percentage}%`;
+
+            const t = translations[currentLang] || translations['pt-BR'];
+            progressLabel.innerText = `${t.progressLabelPrefix} ${completedCount} de ${totalDays} dias (${Math.round(percentage)}%)`;
+        }
+
+        // --- FUNÇÕES PRINCIPAIS DE CARREGAMENTO ---
+
+        function updateTexts(direction) {
+            const t = translations[currentLang] || translations['pt-BR'];
+            
+            // 1. Atualiza Navegação
             prevButton.disabled = currentDay <= 1;
             nextButton.disabled = currentDay >= totalDays;
             
+            // 2. Atualiza Textos Estáticos
+            mainTitle.innerText = t.mainTitle;
+            subTitle.innerText = t.subTitle;
+            checkLabel.innerText = t.checkLabel;
+            prevButton.innerText = t.navPrev;
+            nextButton.innerText = t.navNext;
+            footerText.innerText = t.footerText;
+            
+            // 3. Carrega Conteúdo do Devocional
+            loadDevotionalContent(currentDay);
+            
+            // 4. Atualiza Estado de Conclusão e Progresso Geral
             updateCompletedState();
+            updateOverallProgress();
         }
+
+        function loadDevotionalContent(day) {
+            const t = translations[currentLang] || translations['pt-BR'];
+            const contentLangKey = currentLang.substring(0, 2); // 'pt', 'en', 'es', 'fr'
+
+            // Se o dia não existe ou o idioma não tem conteúdo, tenta fallback para pt
+            const data = devotionalContent[day] ? devotionalContent[day][contentLangKey] || devotionalContent[day]['pt'] : null;
+
+            if (!data) {
+                devotionalContentDiv.innerHTML = `<p style="text-align: center;">${t.noContentAlert || `Conteúdo não disponível para o Dia ${day} neste idioma.`}</p>`;
+                return;
+            }
+
+            devotionalContentDiv.innerHTML = `
+                <h2 id="dayTitle">${t.dayTitle} ${day}: ${data.h2}</h2>
+                <div class="section">
+                    <strong>${t.versiculoChave}</strong>
+                    <p class="versiculos">${data.versiculos}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.resumoMeditacao}</strong>
+                    <p>${data.resumo}</p>
+                </div>
+                <div class="section">
+                    <strong>${t.aplicacaoPratica}</strong>
+                    <p>${data.aplicacao}</p>
+                </div>
+                <p class="oracao-final">${t.oracaoLabel} ${data.oracao}</p>
+            `;
+            document.getElementById('pageCounter').innerText = `Página ${day} de ${totalDays}`;
+
+            // Atualiza o botão de áudio após carregar o novo texto
+            updateListenToggle('start'); 
+        }
+
+        // --- FUNÇÕES DE NAVEGAÇÃO ---
+
+        function nextDay() {
+            stopSpeaking();
+            if (currentDay < totalDays) {
+                currentDay++;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(1);
+            }
+        }
+
+        function prevDay() {
+            stopSpeaking();
+            if (currentDay > 1) {
+                currentDay--;
+                localStorage.setItem(`devotionalProgress_${DEVOTIONAL_KEY}`, currentDay);
+                updateTexts(-1);
+            }
+        }
+        
+        // --- FUNÇÕES DE LEMBRETE ---
+
+        function loadReminder() {
+            const savedTime = localStorage.getItem(`reminderTime_${DEVOTIONAL_KEY}`);
+            if (savedTime) {
+                reminderTimeInput.value = savedTime;
+            }
+        }
+
+        function saveReminder() {
+            const time = reminderTimeInput.value;
+            if (time) {
+                localStorage.setItem(`reminderTime_${DEVOTIONAL_KEY}`, time);
+                alert(`Lembrete salvo para as ${time} diariamente.`);
+            } else {
+                alert('Por favor, defina um horário válido.');
+            }
+        }
+
+        function clearReminder() {
+            localStorage.removeItem(`reminderTime_${DEVOTIONAL_KEY}`);
+            reminderTimeInput.value = "09:00"; // Define um valor padrão
+            alert('Lembrete removido.');
+        }
+
+        function checkReminder() {
+            const savedTime = localStorage.getItem(`reminderTime_${DEVOTIONAL_KEY}`);
+            if (!savedTime) return;
+
+            const reminderDateKey = `reminderCheckedDate_${DEVOTIONAL_KEY}`;
+            const lastCheckedDate = localStorage.getItem(reminderDateKey);
+            const today = new Date().toISOString().slice(0, 10); // Formato YYYY-MM-DD
+
+            // Só verifica se o lembrete não foi checado hoje
+            if (lastCheckedDate === today) return;
+
+            const [hours, minutes] = savedTime.split(':').map(Number);
+            const now = new Date();
+            const reminderTime = new Date();
+            reminderTime.setHours(hours, minutes, 0, 0);
+
+            // Verifica se a hora atual é maior ou igual à hora do lembrete
+            if (now >= reminderTime) {
+                // Exibe o alerta de lembrete
+                alert(`⏰ Olá! Já passou das ${savedTime}. Não se esqueça de fazer o seu devocional do Dia ${currentDay} hoje!`);
+                
+                // Marca que o lembrete foi checado para hoje
+                localStorage.setItem(reminderDateKey, today);
+            }
+        }
+
+        // --- FUNÇÕES DE COMPARTILHAMENTO (NOVO) ---
+        async function shareDevotional() {
+            const t = translations[currentLang] || translations['pt-BR'];
+            const contentData = devotionalContent[currentDay][currentLang.substring(0, 2)] || devotionalContent[currentDay]['pt'];
+
+            if (!contentData) {
+                alert(t.noContentAlert || "Conteúdo não encontrado para este dia.");
+                return;
+            }
+
+            const shareText = `
+*${t.mainTitle}*
+📖 ${t.dayTitle} ${currentDay}: *${contentData.h2}*
+
+🔑 ${t.versiculoChave}
+${contentData.versiculos}
+
+📝 ${t.resumoMeditacao}
+${contentData.resumo}
+
+🎯 ${t.aplicacaoPratica}
+${contentData.aplicacao}
+
+🙏 ${t.oracaoLabel}
+${contentData.oracao}
+
+---
+Acompanhe o devocional: ${window.location.href}
+#7DiasNaGraça #Gálatas #Devocional
+            `.trim();
+            
+            const shareData = {
+                title: `${t.dayTitle} ${currentDay}: ${contentData.h2}`,
+                text: shareText,
+                url: window.location.href // Compartilha o link da página
+            };
+
+            // 1. Tenta usar a Web Share API (Melhor para mobile)
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    // Usuário cancelou ou erro, faz o fallback para copiar
+                    if (err.name !== 'AbortError') {
+                        fallbackCopyToClipboard(shareText, t);
+                    }
+                }
+            } else {
+                // 2. Fallback: Copia o texto para a área de transferência
+                fallbackCopyToClipboard(shareText, t);
+            }
+        }
+
+        function fallbackCopyToClipboard(text, t) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('📋 O Devocional do dia foi copiado para a área de transferência! Cole em seu aplicativo de mensagens.');
+                }).catch(err => {
+                    console.error('Erro ao copiar para a área de transferência:', err);
+                    alert('❌ Não foi possível copiar. Por favor, selecione e copie o texto manualmente.');
+                });
+            } else {
+                // Último fallback: ExecCommand (descontinuado, mas como última alternativa)
+                const tempInput = document.createElement('textarea');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('📋 O Devocional do dia foi copiado para a área de transferência (método antigo). Cole em seu aplicativo de mensagens.');
+            }
+        }
+
+
+        // --- FUNÇÕES DE LEITURA (TEXT-TO-SPEECH) ---
+        
+        function getVoiceForLanguage(langCode) {
+            const desiredLang = langCode.toLowerCase();
+            if (ttsVoices.length === 0) {
+                console.warn('TTS: Vozes não carregadas.');
+                return null;
+            }
+            // 1. Tenta encontrar uma voz local de qualidade no idioma exato
+            let voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang && v.localService);
+            if (voice) return voice;
+
+            // 2. Tenta encontrar qualquer voz no idioma exato
+            voice = ttsVoices.find(v => v.lang.toLowerCase() === desiredLang);
+            if (voice) return voice;
+            
+            // 3. Tenta encontrar uma voz no mesmo código de duas letras (ex: 'pt' para 'pt-BR')
+            const shortLang = desiredLang.substring(0, 2);
+            voice = ttsVoices.find(v => v.lang.toLowerCase().startsWith(shortLang));
+            if (voice) return voice;
+
+            console.warn(`TTS: Nenhuma voz adequada encontrada para ${langCode}.`);
+            return null; // Retorna nulo se nenhuma voz for encontrada
+        }
+
+        function initTTS() {
+            if (!synth) {
+                console.error("TTS não suportado neste navegador.");
+                listenToggle.innerHTML = translations[currentLang]?.ttsUnsupported || '❌ Áudio Indisponível';
+                listenToggle.disabled = true;
+                return;
+            }
+
+            // CORREÇÃO: Espera o evento onvoiceschanged para garantir que as vozes foram carregadas
+            synth.onvoiceschanged = () => {
+                ttsVoices = synth.getVoices();
+                if (ttsVoices.length > 0) {
+                    listenToggle.disabled = false;
+                    updateListenToggle('start');
+                    ttsInitialized = true;
+                } else {
+                    listenToggle.innerHTML = translations[currentLang]?.ttsUnsupported || '❌ Áudio Indisponível';
+                    listenToggle.disabled = true;
+                }
+                synth.onvoiceschanged = null; // Remove o listener após a inicialização
+            };
+
+            // Tenta carregar as vozes imediatamente se já estiverem disponíveis
+            ttsVoices = synth.getVoices();
+            if (ttsVoices.length > 0) {
+                listenToggle.disabled = false;
+                updateListenToggle('start');
+                ttsInitialized = true;
+                synth.onvoiceschanged = null;
+            } else {
+                listenToggle.innerHTML = translations[currentLang]?.ttsLoading || '⏳ Carregando Áudio...';
+                listenToggle.disabled = true;
+            }
+        }
+
+        function updateListenToggle(state = 'start') {
+            const t = translations[currentLang] || translations['pt-BR'];
+            const button = listenToggle;
+            if (!button) return;
+
+            // Define o texto do botão com base no estado e idioma
+            if (state === 'speaking') {
+                button.innerHTML = t.listenPause || '⏸️ Pausar Áudio';
+                button.title = 'Pausar a leitura';
+                audioProgressContainer.style.display = 'block';
+            } else if (state === 'paused') {
+                button.innerHTML = t.listenResume || '▶️ Continuar';
+                button.title = 'Continuar a leitura';
+                audioProgressContainer.style.display = 'block';
+            } else if (state === 'start') {
+                // Estado inicial/finalizado
+                if (!ttsInitialized) {
+                    button.innerHTML = t.ttsLoading || '⏳ Carregando Áudio...';
+                    button.disabled = true;
+                } else {
+                    button.innerHTML = t.listenStart || '🔊 Ouça Aqui';
+                    button.title = 'Ouvir o conteúdo deste dia';
+                    button.disabled = false; 
+                }
+                audioProgressContainer.style.display = 'none';
+                audioProgressBar.style.width = '0%';
+            }
+        }
+
+        function startSpeaking() {
+            if (!ttsInitialized) return;
+            const t = translations[currentLang] || translations['pt-BR'];
+            const voice = getVoiceForLanguage(currentLang);
+            
+            if (!voice) {
+                alert(t.ttsUnsupported || "Voz de leitura para este idioma não encontrada.");
+                updateListenToggle('start');
+                return;
+            }
+
+            // Concatena todos os textos que queremos ler
+            const contentData = devotionalContent[currentDay][currentLang.substring(0, 2)] || devotionalContent[currentDay]['pt'];
+            if (!contentData) {
+                alert(t.noContentAlert || "Conteúdo não encontrado para este dia/idioma.");
+                updateListenToggle('start');
+                return;
+            }
+
+            const textToSpeak = [
+                `${t.dayTitle} ${currentDay}: ${contentData.h2}.`,
+                `${t.versiculoChave}: ${contentData.versiculos}.`,
+                `${t.resumoMeditacao}: ${contentData.resumo}.`,
+                `${t.aplicacaoPratica}: ${contentData.aplicacao}.`,
+                `${t.oracaoLabel}: ${contentData.oracao}.`
+            ].join(' ');
+
+            totalChars = textToSpeak.length;
+            utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.voice = voice;
+            utterance.lang = currentLang;
+
+            utterance.onstart = () => { updateListenToggle('speaking'); };
+            utterance.onend = () => { stopSpeaking(); };
+            utterance.onerror = (event) => {
+                console.error('SpeechSynthesisUtterance.onerror', event);
+                stopSpeaking();
+                alert('Erro ao reproduzir áudio: ' + event.error);
+            };
+            
+            utterance.onboundary = (event) => {
+                if (event.name === 'word' && totalChars > 0) {
+                    const percentage = (event.charIndex / totalChars) * 100;
+                    audioProgressBar.style.width = `${percentage}%`;
+                }
+            };
+            
+            synth.speak(utterance);
+        }
+
+        function toggleSpeaking() {
+            if (synth.speaking) {
+                if (synth.paused) {
+                    synth.resume();
+                    updateListenToggle('speaking');
+                } else {
+                    synth.pause();
+                    updateListenToggle('paused');
+                }
+            } else {
+                startSpeaking();
+            }
+        }
+
+        function stopSpeaking() {
+            if (synth.speaking || synth.paused) {
+                synth.cancel();
+            }
+            utterance = null;
+            updateListenToggle('start');
+        }
+
+        // --- DADOS DO DEVOCIONAL (COMPLETOS) ---
+
+        const devotionalContent = {
+            1: {pt: {h2: "A Pureza do Evangelho", versiculos: "Gálatas 1:6-9 (NVI): Admiro-me de que vocês estejam abandonando tão rapidamente aquele que os chamou pela graça de Cristo, para seguirem outro evangelho. O qual não é, de fato, evangelho... quem lhes estiver pregando um evangelho diferente... seja amaldiçoado.", resumo: "O Evangelho é puro e singular. Qualquer tentativa de adicionar obras humanas (legalismo ou esforço ritual) que busca o mérito humano anula a graça de Cristo. É a doutrina da Graça Exclusiva (Sola Gratia): ou é inteiramente a Graça, ou não é a Graça de jeito nenhum.", aplicacao: "Em que áreas você tem adicionado 'esforços humanos' ou rituais à obra completa de Cristo, buscando validação ou 'níveis' superiores de aceitação por Deus? Descanse na suficiência de Cristo (Solus Christus).", oracao: "Ore a Deus agradecendo pela pureza do Evangelho. Peça ao Senhor que o liberte de toda forma de legalismo ou autojustificação, renovando sua fé na obra consumada de Jesus."}, en: {h2: "The Purity of the Gospel", versiculos: "Galatians 1:6-9 (NIV): I am astonished that you are so quickly deserting the one who called you to live in the grace of Christ and are turning to a different gospel—which is really no gospel at all... If anybody is preaching to you a gospel other than what you accepted, let them be under God’s curse!", resumo: "The Gospel is pure and singular. Any attempt to add human works (legalism or ritual effort) seeking human merit nullifies the grace of Christ. It is the doctrine of Exclusive Grace (Sola Gratia): either it is entirely Grace, or it is not Grace at all.", aplicacao: "In what areas have you added 'human effort' or rituals to the complete work of Christ, seeking validation or 'higher levels' of acceptance by God? Rest in the sufficiency of Christ (Solus Christus).", oracao: "Pray to God thanking Him for the purity of the Gospel. Ask the Lord to free you from all forms of legalism or self-justification, renewing your faith in the finished work of Jesus."}, es: {h2: "La Pureza del Evangelio", versiculos: "Gálatas 1:6-9 (NVI): Me asombra que estén abandonando tan pronto a aquel que los llamó por la gracia de Cristo, para seguir otro evangelio —que en realidad no es otro evangelio... si alguien les está predicando un evangelio distinto... sea anatema.", resumo: "El Evangelio es puro y singular. Cualquier intento de añadir obras humanas (legalismo o esfuerzo ritual) que busca el mérito humano anula la gracia de Cristo. Es la doctrina de la Graça Exclusiva (Sola Gratia): o es enteramente la Gracia, o no es la Graça en absoluto.", aplicacao: "En qué áreas has añadido 'esfuerzos humanos' o rituales a la obra completa de Cristo, buscando validación o 'niveles' superiores de aceptación por Dios? Descansa en la suficiencia de Cristo (Solus Christus).", oracao: "Ora a Dios agradeciendo por la pureza del Evangelio. Pide al Señor que te libere de toda forma de legalismo o autojustificación, renovando tu fe en la obra consumada de Jesús."}, fr: {h2: "La Pureté de l'Évangile", versiculos: "Galates 1:6-9 (Louis Segond): Je m'étonne que vous vous détourniez si promptement de celui qui vous a appelés par la grâce de Christ, pour passer à un autre Évangile. Ce n'est pas qu'il y ait un autre Évangile; mais il y a des gens qui vous troublent, et qui veulent renverser l'Évangile de Christ.", resumo: "L'Évangile est pur et singulier. Toute tentative d'ajouter des œuvres humaines (légalisme ou effort rituel) qui cherche le mérite humain annule la grâce du Christ. C'est la doctrine de la Grâce Exclusive (Sola Gratia): soit c'est entièrement la Grâce, soit ce n'est pas la Grâce du tout.", aplicacao: "Dans quels domaines avez-vous ajouté des 'efforts humains' ou des rituels à l'œuvre complète du Christ, cherchant validation ou des 'níveis' supérieurs d'acceptation par Dieu? Reposez-vous dans la suficiência do Christ (Solus Christus).", oracao: "Priez Dieu le remerciant pour la pureté de l'Évangile. Demandez au Seigneur de vous libérer de toute forme de légalisme ou d'auto-justification, renouvelant votre foi dans l'œuvre achevée de Jésus."}},
+            2: {pt: {h2: "Crucificado e Vivendo Pela Fé", versiculos: "Gálatas 2:20 (NVI): Fui crucificado com Cristo. Assim, já não sou eu quem vive, mas Cristo vive em mim. A vida que agora vivo no corpo, vivo-a pela fé no Filho de Deus, que me amou e se entregou por mim.", resumo: "Esta é a essência da Identidade em Cristo. Pela fé (Sola Fide), fomos unidos a Ele em Sua morte e ressurreição (União com Cristo). Isso significa que nossa antiga identidade (escrava do pecado e da Lei) morreu, e a nova vida que possuímos é a própria vida de Cristo manifestada em nós. Nossa vida não depende mais de nossos esforços, mas da fé contínua Nele.", aplicacao: "Que sua vida revele hoje: o 'velho homem' que tenta se justificar ou a 'nova vida' que confia na suficiência de Cristo? Proclame essa verdade sobre você: 'Já não sou eu quem vive'.", oracao: "Ore a Deus pedindo que a verdade de sua crucificação e ressurreição com Cristo se torne a base de todas as suas decisões e a fonte de sua força para a santificação."}, en: {h2: "Crucified and Living By Faith", versiculos: "Galatians 2:20 (NIV): I have been crucified with Christ and I no longer live, but Christ lives in me. The life I now live in the body, I live by faith in the Son of God, who loved me and gave himself for me.", resumo: "This is the essence of Identity in Christ. By faith (Sola Fide), we were united with Him in His death and resurrection (Union with Christ). This means that our old identity (slave to sin and the Law) has died, and the new life we possess is Christ's very life manifested in us. Our life is no longer about our efforts but about continuous faith in Him.", aplicacao: "In what areas have you added 'human effort' or rituals to the complete work of Christ, seeking validation or 'higher levels' of acceptance by God? Rest in the sufficiency of Christ (Solus Christus).", oracao: "Pray to God asking that the truth of your crucifixion and resurrection with Christ becomes the basis of all your decisions and the source of your power for sanctification."}, es: {h2: "Crucified and Living By Faith", versiculos: "Galatians 2:20 (NVI): Con Cristo he sido crucificado, y ya no soy yo quien vive, sino que es Cristo quien vive en mí. Y la vida que ahora vivo en el cuerpo, la vivo por la fe en el Hijo de Dios, quien me amó y dio su vida por mí.", resumo: "Esta es la esencia de la Identidade en Cristo. Por la fe (Sola Fide), hemos sido unidos a Él en Su muerte y resurrección (Unión con Cristo). Esto significa que nuestra antigua identidad (esclava del pecado y de la Ley) murió, y la nueva vida que poseemos es la propia vida de Cristo manifestada en nosotros. Nuestra vida ya no se trata de nuestros esfuerzos, sino de la fe continua en Él.", aplicacao: "¿Qué revela tu vida hoy: el 'viejo hombre' que intenta justificarse o la 'nueva vida' que confía en la suficiencia de Cristo? Proclama esta verdad sobre ti mismo: 'Ya no soy yo quien vive'.", oracao: "Ora a Dios pidiendo que la verdad de tu crucifixión y resurrección con Cristo se convierta en la base de todas tus decisiones y la fuente de tu poder para la santificación."}, fr: {h2: "Crucifié et Vivant Par la Foi", versiculos: "Galates 2:20 (Louis Segond): J'ai été crucifié avec Christ; et si je vis, ce n'est plus moi qui vis, c'est Christ qui vit en moi; si je vis maintenant dans la chair, je vis dans la foi au Fils de Dieu, qui m'a aimé et qui s'est livré lui-même pour moi.", resumo: "C'est l'essence de l'Identité en Christ. Par la foi (Sola Fide), nous avons été unis à Lui dans Sa mort et Sa résurrection (Union avec Christ). Cela signifie que notre ancienne identité (esclave du péché et de la Loi) est morte, et la nouvelle vie que nous possédons est la vie même du Christ manifestée en nous. Notre vie ne dépend plus de nos efforts, mais de la foi continue en Lui.", aplicacao: "Que révèle votre vie aujourd'hui: le 'vieil homme' qui essaie de se justifier ou la 'nouvelle vie' qui fait confiance à la suffisance du Christ? Proclamez cette vérité sur vous-même: 'Ce n'est plus moi qui vis'.", oracao: "Priez Dieu demandant que la vérité de votre crucifixion et résurrection avec Christ devienne le fondement de toutes vos décisions et la source de votre puissance pour la sanctification."}},
+            3: {pt: {h2: "A Loucura de Tentar o Mérito Humano", versiculos: "Gálatas 3:3 (NVI): Vocês são tão insensatos assim? Tendo começado pelo Espírito, querem agora aperfeiçoar-se pelo esforço próprio?", resumo: "Paulo confronta a incoerência do legalismo. Se a Justificação (o começo) foi inteiramente pela graça por meio da fé, a Santificação (o desenvolvimento) não pode depender do esforço humano (obras). A tentativa de 'aperfeiçoar-se com a carne' é um insulto à suficiência do Espírito Santo. Suficiência do Espírito.", aplicacao: "Quando você peca, sua primeira reação é se afastar de Deus e tentar se 'consertar' antes de voltar? Isso é tentar terminar pela carne. Em vez disso, corra imediatamente para Cristo, que é tanto nosso Justificador quanto nosso Santificador.", oracao: "Ore a Deus pedindo que o Senhor o liberte do ciclo vicioso de tentar ganhar o favor divino através de boas obras. Peça ao Espírito Santo para guiá-lo em cada passo de sua santificação."}, en: {h2: "The Folly of Attempting Human Merit", versiculos: "Galatians 3:3 (NIV): Are you so foolish? After beginning by means of the Spirit, are you now trying to finish by human effort?", resumo: "Paul confronts the inconsistency of legalism. If Justification (the beginning) was entirely by grace through faith, Sanctification (the development) cannot depend on human effort (works). The attempt to 'finish by the flesh' is an insult to the sufficiency of the Holy Spirit. Sufficiency of the Spirit.", aplicacao: "When you sin, is your first response to withdraw from God and try to 'fix yourself' before returning? That is trying to finish by the flesh. Instead, run immediately to Christ, who is both our Justifier and our Santifier.", oracao: "Pray to God asking the Lord to free you from the vicious cycle of trying to earn divine favor through good works. Ask the Holy Spirit to guide you in every step of your sanctification."}, es: {h2: "The Folly of Attempting Human Merit", versiculos: "Galatians 3:3 (NVI): ¡Tan necios son? Después de haber comenzado con el Espíritu, ¿pretenden perfeccionarse con sus propios esfuerzos?", resumo: "Pablo confronta la incoerencia del legalismo. Si la Justificación (el comienzo) fue enteramente por gracia por medio de la fe, la Santificación (el desarrollo) no puede depender del esfuerzo humano (obras). El intento de 'perfeccionarse con la carne' es un insulto a la suficiencia del Espíritu Santo. Suficiencia del Espíritu.", aplicacao: "Cuando pecas, ¿lo primero que haces es alejarte de Dios e intentar 'arreglarte' antes de volver? Eso es intentar perfeccionarse con la carne. En su lugar, corre inmediatamente a Cristo, que es tanto nuestro Justificador como nuestro Santificador.", oracao: "Ora a Dios pidiendo que el Señor te libere del círculo vicioso de intentar ganar el favor divino a través de buenas obras. Pide al Espíritu Santo que te guíe en cada paso de tu santificación."}, fr: {h2: "La Folie d'Essayer le Mérite Humain", versiculos: "Galates 3:3 (Louis Segond): Après avoir commencé par l'Esprit, voulez-vous maintenant finir par la chair?", resumo: "Paul confronte l'incohérence du légalisme. Si la Justification (le commencement) fut entièrement par la grâce par la foi, la Sanctification (le développement) ne peut dépendre de l'effort humain (œuvres). La tentative de 'finir par la chair' est une insulte à la suffisance du Saint-Esprit. Suffisance de l'Esprit.", aplicacao: "Lorsque vous péchez, votre première réaction est-elle de vous éloigner de Dieu et d'essayer de vous 'arranger' avant de revenir? C'est essayer de finir par la chair. Au lieu de cela, courez immédiatement vers Christ, qui est à la fois notre Justificateur et notre Sanctificateur.", oracao: "Priez Dieu demandant au Seigneur de vous libérer du cercle vicieux d'essayer de gagner la faveur divine par de bonnes œuvres. Demandez au Saint-Esprit de vous guider à chaque étape de votre sanctification."}},
+            4: {pt: {h2: "De Escravo a Filho Adotado", versiculos: "Gálatas 4:4-7 (NVI): (...) para que recebêssemos a adoção de filhos. E, porque vocês são filhos, Deus enviou o Espírito de seu Filho ao coração de vocês, e ele clama: “Aba, Pai.” Assim, você já não é mais escravo, mas filho; e, por ser filho, Deus também o tornou herdeiro.", resumo: "A obra de Cristo na 'plenitude do tempo' tinha um propósito: nos redimir da escravidão da Lei e nos conceder a Adoção. O Espírito Santo (o 'penhor' da nossa herança) testifica em nossos corações que somos herdeiros de Deus. Sua Identidade mudou de servo ou escravo para Filho Pleno.", aplicacao: "Você vive sua vida diária como um escravo que teme punição ou como um filho amado que busca agradar o Pai por amor? Sua herança está garantida; ela não precisa ser conquistada. Viva com a confiança e alegria de um herdeiro.", oracao: "Ore a Deus, com a ousadia que a filiação lhe confere, agradecendo pelo dom da adoção e pedindo que a certeza de ser filho remova todo medo de sua vida."}, en: {h2: "From Slave to Adopted Son", versiculos: "Galatians 4:4-7 (NIV): (...) that we might receive adoption to sonship. Because you are his sons, God sent the Spirit of his Son into our hearts, the Spirit who cries out, 'Abba, Father.' So you are no longer a slave, but God’s child; and since you are his child, God has made you also an heir.", resumo: "Christ's work in the 'fullness of time' had one purpose: to redeem us from the slavery of the Law and grant us Adoption. The Holy Spirit (the 'pledge' of our inheritance) testifies in our hearts that we are God's heirs. Your Identity has changed from servant or slave to full Son/Daughter.", aplicacao: "Do you live your daily life as a slave who fears punishment or as a beloved child who seeks to please the Father out of love? Your inheritance is guaranteed; it does not need to be earned. Live with the confidence and joy of an heir.", oracao: "Pray to God, thanking Him for the gift of adoption and ask that the certainty of being His child removes all fear from your life."}, es: {h2: "From Slave to Adopted Son", versiculos: "Galatians 4:4-7 (NVI): (...) para que recibiéramos la adopción de hijos. Y, puesto que ya son hijos, Dios ha enviado a nuestros corazones el Espíritu de su Hijo, que clama: «¡Abba! ¡Padre!» Así que ya no eres esclavo, sino hijo; y como eres hijo, Dios te ha hecho también heredero.", resumo: "La obra de Cristo en la 'plenitud del tiempo' tenía un propósito: redimirnos de la esclavitud de la Ley y concedernos la Adopción. El Espíritu Santo (la 'prenda' de nuestra herencia) testifica en nuestros corazones que somos herederos de Dios. Tu Identidad ha cambiado de sirviente o esclavo a Hijo Pleno.", aplicacao: "¿Vives tu vida diaria como un esclavo que teme el castigo o como un hijo amado que busca agradar al Padre por amor? Tu herencia está garantizada; no necesita ser ganada. Vive con la confianza y alegría de un heredero.", oracao: "Ora a Dios, con la audacia que la filiación te confiere, agradeciendo por el don de la adopción y pidiendo que la certeza de ser hijo remueva todo miedo de tu vida."}, fr: {h2: "D'Esclave à Fils Adopté", versiculos: "Galates 4:4-7 (Louis Segond): (...) afin que nous reçussions l'adoption. Et parce que vous êtes fils, Dieu a envoyé dans nos cœurs l'Esprit de son Fils, lequel crie: Abba! Père! Ainsi tu n'es plus esclave, mais fils; et si tu es fils, tu es aussi héritier par la grâce de Dieu.", resumo: "L'œuvre de Christ dans la 'plénitude des temps' avait un but: nous racheter de l'esclavage de la Loi et nous accorder l'Adoption. Le Saint-Esprit (le 'gage' de notre héritage) témoigne dans nos cœurs que nous sommes héritiers de Dieu. Votre Identité est passée de serviteur ou esclave à Fils Plénier.", aplicacao: "Vivez-vous votre vie quotidienne como um escravo que craint a punição ou como um filho amado que busca agradar ao Pai por amor? Votre héritage est garanti; il n'a pas besoin d'être gagné. Vivez avec la confiance et la joie d'un héritier.", oracao: "Priez Dieu, avec l'audace que la filiation vous confère, le remerciant pour le don de l'adoption et demandant que la certitude d'être Son enfant enlève toute peur de votre vie."}},
+            5: {pt: {h2: "Permanecendo Firmes na Liberdade", versiculos: "Gálatas 5:1 (NVI): Foi para a liberdade que Cristo nos libertou. Portanto, permaneçam firmes e não se deixem submeter novamente a um jugo de escravidão.", resumo: "A Liberdade em Cristo é a libertação do jugo da Lei como meio de justificação e do poder do pecado. Essa liberdade é um presente a ser ativamente guardado. O legalismo (voltar para debaixo da Lei) é uma forma de escravidão que rouba a paz e a alegria da Sola Fide. Manter essa liberdade é a essência da perseverança cristã.", aplicacao: "Quais são os 'jugos de escravidão' (regras humanas, expectativas irrealistas, medo de falhar) que a cultura religiosa tenta lhe impor? Rejeite-os. Use sua liberdade para servir uns aos outros em amor, e não para satisfazer a carne.", oracao: "Ore a Deus agradecendo pela liberdade que Cristo conquistou. Peça sabedoria para usar essa liberdade para a glória Dele e força para resistir a qualquer jugo de escravidão legalista."}, en: {h2: "Standing Firm in Freedom", versiculos: "Galatians 5:1 (NIV): It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery.", resumo: "Freedom in Christ is liberation from the yoke of the Law as a means of justification and from the power of sin. This freedom is a gift to be actively guarded. Legalism (going back under the Law) is a form of slavery that steals the peace and joy of Sola Fide. Maintaining this freedom is the essence of Christian perseverance.", aplicacao: "What are the 'yokes of slavery' (human rules, unrealistic expectations, fear of failure) that religious culture tries to impose on you? Reject them. Use your freedom to serve one another in love, not to satisfy the flesh.", oracao: "Pray to God thanking Him for the freedom Christ won. Ask for wisdom to use that freedom for His glory and strength to resist any yoke of legalistic slavery."}, es: {h2: "Standing Firm in Freedom", versiculos: "Galatians 5:1 (NVI): Cristo nos libertó para que vivamos en libertad. Por lo tanto, manténganse firmes y no se sometan nuevamente al yugo de la esclavitud.", resumo: "La Libertad en Cristo es la liberación del yugo de la Ley como medio de justificación y del poder del pecado. Esta libertad es un regalo que debe ser guardado activamente. El legalismo (volver bajo la Ley) es una forma de esclavitud que roba la paz y la alegría de la Sola Fide. Mantener esta libertad es la esencia de la perseverancia cristiana.", aplicacao: "¿Cuáles son los 'yugos de esclavitud' (reglas humanas, expectativas irrealistas, miedo al fracaso) que la cultura religiosa intenta imponerte? Recházalos. Usa tu libertad para servirte los unos a los otros en amor, y no para satisfacer la carne.", oracao: "Ora a Dios agradeciendo por la libertad que Cristo conquistó. Pide sabiduría para usar esa libertad para Su gloria y fuerza para resistir cualquier yugo de esclavitud legalista."}, fr: {h2: "Demeurer Ferme dans la Liberté", versiculos: "Galates 5:1 (Louis Segond): C'est pour la liberté que Christ nous a affranchis. Demeurez donc fermes, et ne vous laissez pas mettre de nouveau sous le joug de la servitude.", resumo: "La Liberté en Christ est la libération du joug de la Loi como meio de justificação e do pouvoir du péché. Cette liberté est um don à garder activement. Le légalisme (revenir sous la Loi) est une forme d'esclavage qui vole la paix et la joie de la Sola Fide. Maintenir cette liberté est l'essence de la persévérance chrétienne.", aplicacao: "Quels sont les 'jougs de servitude' (règles humaines, attentes irréalistes, peur de l'échec) que la culture religieuse tente de vous imposer? Rejetez-les. Utilisez votre liberté pour vous servir les uns les autres par amour, et non pour satisfaire la chair.", oracao: "Priez Dieu le remerciant pour la liberté que Christ a conquise. Demandez-Lui la sagesse d'utiliser cette liberté pour Sa gloire et la force de résister à tout joug d'esclavage légaliste."}},
+            6: {pt: {h2: "A Luta Entre a Carne e o Espírito", versiculos: "Gálatas 5:16-17 (NVI): Por isso digo: vivam pelo Espírito, e de modo nenhum satisfarão os desejos da carne. Pois a carne deseja o que é contrário ao Espírito, e o Espírito, o que é contrário à carne.", resumo: "A vida cristã é uma Guerra Espiritual diária. O crente (agora justificado) tem duas naturezas em conflito: a carne (o remanescente pecaminoso) e o Espírito (a nova natureza dada na Regeneração). O segredo da Santificação progressiva não é a força de vontade, mas Andar pelo Espírito, submetendo-se ativamente ao Seu controle.", aplicacao: "O que significa 'viver pelo Espírito' na sua rotina hoje? É cultivar as disciplinas espirituais (leitura da Bíblia, oração, comunhão) não por obrigação, mas para obter a 'potência' de que você precisa para resistir aos desejos da carne. Que obras da carne você precisa identificar e confrontar?", oracao: "Ore a Deus confessando sua dependência. Peça ao Espírito Santo que discipline seu coração e lhe dê o poder diário para negar a si mesmo e viver uma vida de obediência radical."}, en: {h2: "The Conflict Between the Flesh and the Spirit", versiculos: "Galatians 5:16-17 (NIV): So I say, walk by the Spirit, and you will not gratify the desires of the flesh. For the flesh desires what is contrary to the Spirit, and the Spirit what is contrary to the flesh.", resumo: "The Christian life is a daily Spiritual War. The believer (now justified) has two natures in conflict: the flesh (the sinful remnant) and the Spirit (the new nature given in Regeneration). The secret to progressive Sanctification is not willpower, but Walking by the Spirit, actively submitting to His control.", aplicacao: "What does 'walking by the Spirit' mean in your routine today? It means cultivating spiritual disciplines (Bible reading, prayer, fellowship) not out of obligation, but to obtain the 'power' you need to resist the desires of the flesh. What works of the flesh do you need to identify and confront?", oracao: "Pray to God confessing your dependence. Ask the Holy Spirit to discipline your heart and grant you the daily power to deny yourself and live a life of radical obedience."}, es: {h2: "The Conflict Between the Flesh and the Spirit", versiculos: "Gálatas 5:16-17 (NVI): Por eso les digo: Vivan por el Espíritu, y así no satisfarán los deseos de la naturaleza pecaminosa. Porque esta desea lo que es contrario al Espíritu, y el Espíritu lo que es contrario a ella.", resumo: "La vida cristiana es una Guerra Espiritual diaria. El creyente (ahora justificado) tiene dos naturalezas en conflicto: la carne (el remanente pecaminoso) y el Espíritu (la nueva naturaleza dada en la Regeneración). El secreto de la Santificación progresiva no es la fuerza de vontade, sino Andar por el Espíritu, sometiéndose activamente a Su control.", aplicacao: "¿Qué significa 'vivir por el Espíritu' en tu rutina hoy? Es cultivar las disciplinas espirituales (lectura de la Biblia, oración, comunión) no por obligación, sino para obtener la 'potencia' que necesitas para resistir los deseos de la carne. ¿Qué obras de la carne necesitas identificar y confrontar?", oracao: "Ora a Dios confesando tu dependencia. Pide al Espíritu Santo que discipline tu corazón y te dé el poder diario para negarte a ti mismo y vivir una vida de obediencia radical."}, fr: {h2: "La Lutte Entre la Chair et l'Esprit", versiculos: "Galates 5:16-17 (Louis Segond): Je dis donc: Marchez selon l'Esprit, et vous n'accomplirez pas les désirs de la chair. Car la chair a des désirs contraires à ceux de l'Esprit, et l'Esprit en a de contraires à ceux de la chair; ils sont opposés entre eux, afin que vous ne fassiez point ce que vous voudriez.", resumo: "La vie chrétienne est une Guerre Spirituelle quotidienne. Le croyant (maintenant justifié) a deux natures en conflit: la chair (le restant pécheur) et l'Esprit (la nouvelle nature donnée dans la Régénération). Le secret de la Sanctification progressive n'est pas la force de la volonté, mais de Marcher par l'Esprit, en se soumettant activement à Son contrôle.", aplicacao: "Que signifie 'marcher par l'Esprit' dans votre routine aujourd'hui? C'est cultiver les disciplines spirituelles (lecture de la Bible, prière, communion) non par obligation, mais pour obtenir la 'puissance' dont vous avez besoin pour résister aux désirs de la chair. Quelles œuvres de la chair devez-vous identifier et confronter?", oracao: "Priez Dieu confessant votre dépendance. Demandez au Saint-Esprit de discipliner votre cœur et de vous donner la puissance quotidienne pour vous renier vous-même et vivre une vie d'obéissance radicale."}},
+            7: {pt: {h2: "Colhendo Fruto e Apoiando Uns aos Outros", versiculos: "Gálatas 6:7-10 (NVI): Não se deixem enganar: de Deus não se zomba. Pois o que o homem semear, isso também colherá. (...) Portanto, enquanto temos oportunidade, façamos o bem a todos, especialmente aos da família da fé.", resumo: "O princípio da semeadura e colheita aplica-se à nossa santificação: semear no Espírito resulta em colher a vida eterna, enquanto semear na carne resulta em corrupção. O Fruto do Espírito é a evidência visível (mas não a causa) de uma vida guiada pelo Espírito. Gálatas termina com um apelo à Ação: servir uns aos outros com o peso da graça.", aplicacao: "Como você está 'semeando no Espírito' hoje? (Tempo com Deus, serviço aos outros, negação da carne). Identifique uma área prática onde você pode 'fazer o bem' a alguém da família da fé hoje.", oracao: "Ore a Deus pedindo que Ele lhe dê discernimento para semear no Espírito e que o Fruto do Espírito seja visivelmente evidente em sua vida. Peça força para servir aos outros em amor e ser um portador de fardos."}, en: {h2: "Reaping Fruit and Supporting One Another", versiculos: "Galatians 6:7-10 (NIV): Do not be deceived: God cannot be mocked. A man reaps what he sows. (...) Therefore, as we have opportunity, let us do good to all people, especially to those who belong to the family of faith.", resumo: "The principle of sowing and reaping applies to our sanctification: sowing to the Spirit results in reaping eternal life, while sowing to the flesh results in corruption. The Fruit of the Spirit is the visible evidence (but not the cause) of a Spirit-guided life. Galatians ends with a call to Action: serving one another with the burden of grace.", aplicacao: "How are you 'sowing to the Spirit' today? (Time with God, service to others, denial of the flesh). Identify a practical area where you can 'do good' to someone in the family of faith today.", oracao: "Pray to God asking Him to give you discernment to sow to the Spirit and that the Fruit of the Spirit may be visibly evident in your life. Ask for strength to serve others in love and be a burden-bearer."}, es: {h2: "Cosechando Fruto y Apoyando a Otros", versiculos: "Gálatas 6:7-10 (NVI): No se engañen: de Dios nadie se burla. Cada uno cosecha lo que siembra. (...) Por lo tanto, mientras tengamos oportunidad, hagamos bien a todos, y en especial a los de la familia de la fe.", resumo: "El principio de la siembra y la cosecha se aplica a nuestra santificación: sembrar en el Espíritu resulta en cosechar la vida eterna, mientras que sembrar en la carne resulta en corrupción. El Fruto del Espíritu es la evidencia visible (pero no la causa) de una vida guiada por el Espíritu. Gálatas termina con un llamado a la Acción: servir a los demás con la carga de la gracia.", aplicacao: "¿Cómo estás 'sembrando en el Espíritu' hoy? (Tiempo con Dios, servicio a los demás, negación de la carne). Identifica un área práctica donde puedes 'hacer el bien' a alguien de la familia de la fe hoy.", oracao: "Ora a Dios pidiendo que te dé discernimiento para sembrar en el Espíritu y que el Fruto del Espíritu sea visiblemente evidente en tu vida. Pide fuerza para servir a los demás en amor y ser un portador de cargas."}, fr: {h2: "Récolter le Fruit et Soutenir les Autres", versiculos: "Galates 6:7-10 (Louis Segond): Ne vous y trompez pas: on ne se moque pas de Dieu. Ce qu'un homme aura semé, il le moissonnera aussi. (...) Ainsi donc, pendant que nous en avons l'occasion, pratiquons le bien envers tous, et surtout envers les frères en la foi.", resumo: "Le principe de la semence et de la récolte s'applique à notre santificação: semer dans l'Esprit aboutit à récolter la vie éternelle, tandis que semer dans la chair aboutit à la corruption. Le Fruit de l'Esprit est la preuve visible (mais non la cause) d'une vie guidée par l'Esprit. Galates se termine par un appel à l'Action: servir les uns les autres avec le fardeau de la grâce.", aplicacao: "Comment 'semez-vous dans l'Esprit' aujourd'hui? (Temps avec Dieu, service aux autres, négation de la chair). Identifiez un domaine pratique où vous pouvez 'faire du bien' à quelqu'un de la famille de la foi aujourd'hui.", oracao: "Priez Dieu Lui demandant de vous donner du discernement pour semer dans l'Esprit et que le Fruit de l'Esprit soit visiblement évident dans votre vie. Demandez la force de servir les autres par amour et d'être un porteur de fardeaux."}},
+        }; // FIM DO CONTEÚDO DEVOCIONAL
 
         // * EXECUÇÃO PRINCIPAL (INICIALIZAÇÃO) *
-       window.onload = () => {
-    
-    // ✅ CORREÇÃO: Cancela imediatamente qualquer leitura que possa ter continuado
-    stopSpeaking(); 
-    
-    // 🚨 LIMPEZA FORÇADA DAS CHAVES ANTIGAS (MANTIDA)
-    localStorage.removeItem('completedDays'); 
-    localStorage.removeItem('devotionalProgress');
-    
-    // 1. Carrega o tema, idioma e FONTE
-    loadThemePreference(); 
-    // NOTE: updateLanguageSelector() is technically unnecessary since the dropdown is hidden, but kept for script integrity
-    updateLanguageSelector();
-    // NOVO: Aplica o tamanho da fonte salvo
-    updateFontSize(); 
-               
-    // 2. Carrega o dia salvo e atualiza a UI
-    currentDay = getSavedProgress();
-    updateTexts(0); 
-    
-    // 3. Configura o TTS (CORREÇÃO CRÍTICA)
-    initTTS(); 
+        window.onload = () => {
+            // 1. Inicia o TTS
+            initTTS();
 
-    // 4. Configura os Listeners de Eventos
-    // NOTE: The event listeners for themeToggle and langSelectButton are now irrelevant as they are hidden, but kept for script integrity
-    if (themeToggle) themeToggle.addEventListener('click', toggleDarkMode);
-    
-    if (listenToggle) {
-        listenToggle.addEventListener('click', handleListenClick); 
-        // 🛑 Duplo Clique para STOP explícito
-        listenToggle.addEventListener('dblclick', stopSpeaking);
-    }
-    
-    // Listeners do Seletor de Idioma
-    if (langSelectButton) {
-        langSelectButton.addEventListener('click', (event) => {
-            event.stopPropagation();
-            const isExpanded = langDropdown.style.display === 'block';
-            langDropdown.style.display = isExpanded ? 'none' : 'block';
-            // NOVO ARIA: Atualiza o status de expansão
-            langSelectButton.setAttribute('aria-expanded', !isExpanded); 
-        });
-    }
-    document.addEventListener('click', (event) => {
-        const wrapper = document.querySelector('.language-selector-wrapper');
-        if (langDropdown && langDropdown.style.display === 'block' && wrapper && !wrapper.contains(event.target)) {
-            langDropdown.style.display = 'none';
-            // NOVO ARIA: Garante que o status volte a false ao fechar
-            if (langSelectButton) langSelectButton.setAttribute('aria-expanded', 'false'); 
-        }
-    });
+            // 2. Carrega o dia salvo e atualiza a UI
+            currentDay = getSavedProgress();
+            updateTexts(0);
+            
+            // 3. Aplica o ajuste de fonte salvo
+            updateFontSize();
 
-    prevButton.addEventListener('click', prevDay);
-    nextButton.addEventListener('click', nextDay);
-    completedCheck.addEventListener('change', handleCompletedCheck);
-    
-    // NOVO: Listeners para o controle de fonte
-    document.getElementById('fontSizeIncrease').addEventListener('click', increaseFontSize);
-    document.getElementById('fontSizeDecrease').addEventListener('click', decreaseFontSize);
-};
+            // 4. Carrega as preferências de tema e idioma
+            loadThemePreference();
+            updateLanguageSelector();
+            
+            // 5. Configura Listeners
+            langSelectButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const isExpanded = langDropdown.style.display === 'block';
+                langDropdown.style.display = isExpanded ? 'none' : 'block';
+                // NOVO ARIA: fecha o dropdown, atualiza o status do botão
+                langSelectButton.setAttribute('aria-expanded', !isExpanded); 
+            });
+            document.addEventListener('click', (event) => {
+                const wrapper = document.querySelector('.language-selector-wrapper');
+                if (langDropdown && langDropdown.style.display === 'block' && wrapper && !wrapper.contains(event.target)) {
+                    langDropdown.style.display = 'none';
+                    // NOVO ARIA: Garante que o status volte a false ao fechar
+                    if (langSelectButton) langSelectButton.setAttribute('aria-expanded', 'false'); 
+                }
+            });
+
+            themeToggle.addEventListener('click', toggleDarkMode);
+            listenToggle.addEventListener('click', toggleSpeaking); // Listener para o botão de áudio
+
+            prevButton.addEventListener('click', prevDay);
+            nextButton.addEventListener('click', nextDay);
+            completedCheck.addEventListener('change', handleCompletedCheck);
+            
+            // NOVO: Listener para o botão de compartilhamento
+            shareButton.addEventListener('click', shareDevotional); 
+            
+            // Listeners para o controle de fonte
+            document.getElementById('fontSizeIncrease').addEventListener('click', increaseFontSize);
+            document.getElementById('fontSizeDecrease').addEventListener('click', decreaseFontSize);
+            
+            // Listeners e carregamento para o lembrete
+            loadReminder();
+            saveReminderButton.addEventListener('click', saveReminder);
+            clearReminderButton.addEventListener('click', clearReminder);
+            checkReminder(); // Verifica se o lembrete deve ser acionado ao carregar a página
+        };
         
     </script>
     
@@ -891,7 +1086,7 @@
     </div>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app', 'vw-plugin-wrapper');
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
 </body>
 </html>
