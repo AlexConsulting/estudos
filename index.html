@@ -329,8 +329,7 @@
         .menu-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            /* ALTERADO: Diminui o espaçamento entre os botões no desktop */
-            gap: 20px; 
+            gap: 25px; 
             max-width: 900px;
             width: 100%;
             padding: 0 10px; /* Default desktop padding */
@@ -348,8 +347,8 @@
             
             .menu-button {
                 width: 100%;
-                /* ALTERADO: Padding vertical um pouco menor no mobile */
-                padding: 10px 15px; 
+                /* Ajuste fino: Reduzindo um pouco mais o padding vertical */
+                padding: 12px 15px; 
                 border-radius: 12px;
             }
         }
@@ -363,17 +362,15 @@
             border: 1px solid #e2e8f0;
             color: #1e3a8a; 
             text-decoration: none;
-            /* ALTERADO: Diminui o padding dos botões no desktop */
-            padding: 16px 20px;
+            padding: 20px 25px;
             border-radius: 16px; 
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-sizing: border-box; /* Garante que 100% de largura inclui o padding */
         }
         .menu-button .emoji-icon {
-            /* ALTERADO: Diminui o tamanho do ícone */
-            font-size: 2.2em; 
-            min-width: 45px; /* Ajuste para centralização visual */
+            font-size: 2.5em; 
+            min-width: 50px;
             margin-right: 20px;
             line-height: 1; 
             transition: transform 0.3s ease; 
@@ -941,7 +938,7 @@
                 // menu7: Acts
                 menu7Title: "Devocional Libro de Hechos", menu7Subtitle: "La Iglesia en Acción: El poder del Espíritu y la misión.", menu7Icon: "🔥",
                 menu7Title_kids: "La Aventura del Espíritu Santo en Hechos", menu7Subtitle_kids: "Historias de cómo la Iglesia comenzó y creció.", menu7Icon_kids: "🚀",
-                menu7Title_teens: "Hechos: Impacto y Misión", menu7Subtitle_teens: "El poder del Espíritu para la vida y la misión hoy.", moenu7Icon_teens: "⚡",
+                menu7Title_teens: "Hechos: Impacto y Misión", menu7Subtitle_teens: "El poder del Espíritu para la vida y la misión hoy.", menu7Icon_teens: "⚡",
 
                 // menu8: Psalms
                 menu8Title: "Salmos: Un Camino de Adoração y Transformación", menu8Subtitle: "Aprendiendo a vivir lo cotidiano en la presencia de Dios.", menu8Icon: "🎶",
@@ -986,7 +983,7 @@
                 menu5Title_teens: "Ecclésiaste : Quel est le Sens ?", menu5Subtitle_teens: "Réflexions profondes sur le but et le temps.", menu5Icon_teens: "🤯",
                 
                 // menu6: Galatians
-                menu6Title: "Devocional Livre des Galates", menu6Subtitle: "Un chemin de grâce, d'identité et de liberté.", menu6Icon: "✝️",
+                menu6Title: "Dévotionnel Livre des Galates", menu6Subtitle: "Un chemin de grâce, d'identité et de liberté.", menu6Icon: "✝️",
                 menu6Title_kids: "Galates : L’Histoire de la Grâce",
                 menu6Subtitle_kids: "Comment Jésus nous a donné la vraie liberté.", menu6Icon_kids: "🕊️",
                 menu6Title_teens: "Galates : Identité et Liberté", menu6Subtitle_teens: "Comment la grâce définit qui vous êtes.", menu6Icon_teens: "🔗",
@@ -1379,8 +1376,47 @@
                     closeModal();
                 }
             });
-        });
+  
+            // 7. Funções de Bloqueio de Inspeção (Adicionadas)
+            
+            // 7a. Bloqueia o clique direito (menu de contexto)
+            document.addEventListener('contextmenu', function(e) {
+                // Impede que o menu de contexto (clique direito) seja exibido.
+                e.preventDefault();
+            });
 
+            // 7b. Bloqueia atalhos de teclado de desenvolvedor/código-fonte
+            document.addEventListener('keydown', function(e) {
+                // F12
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                }
+                
+                // Ctrl+Shift+I (Windows/Linux - Inspecionar)
+                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                    e.preventDefault();
+                }
+
+                // Ctrl+Shift+J (Windows/Linux - Console)
+                if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                    e.preventDefault();
+                }
+                
+                // Ctrl+U (Windows/Linux - Ver Código Fonte)
+                if (e.ctrlKey && e.key === 'u') {
+                    e.preventDefault();
+                }
+                
+                // Cmd+Option+I (macOS - Inspecionar/Console)
+                // A key 'I' é o mesmo que a tecla 'i' em minúsculo
+                if (e.metaKey && e.altKey && e.key === 'i') { 
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
